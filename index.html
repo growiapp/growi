@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO primario -->
+<title>Gestiq — Sistema de gestión para PyMEs | Digitalizado en 48 horas</title>
+<meta name="description" content="Gestiq digitaliza la operación de tu negocio en 48 horas. POS, reservas, clientes, gastos y dashboard. Sin servidores, sin IT. Planes desde USD 29/mes con implementación incluida.">
+<meta name="keywords" content="sistema de gestión, software para negocios, POS Argentina, gestión cafetería, software restaurante, gestión pymes">
+<meta name="author" content="Gestiq">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://gestiq.app">
+
+<!-- Open Graph / WhatsApp / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gestiq.app">
+<meta property="og:title" content="Gestiq — Tu negocio digitalizado en 48 horas">
+<meta property="og:description" content="Sistema de gestión para PyMEs con implementación personalizada y soporte real. Planes desde USD 29/mes.">
+<meta property="og:image" content="https://gestiq.app/og-image.jpg">
+<meta property="og:locale" content="es_AR">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gestiq — Tu negocio digitalizado en 48 horas">
+<meta name="twitter:description" content="Sistema de gestión para PyMEs. POS, reservas, clientes, dashboard. Desde USD 29/mes.">
+<meta name="twitter:image" content="https://gestiq.app/og-image.jpg">
+
+<!-- Schema.org structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Gestiq",
+  "description": "Sistema de gestión para PyMEs con implementación personalizada y soporte continuo",
+  "url": "https://gestiq.app",
+  "applicationCategory": "BusinessApplication",
+  "offers": [
+    {"@type": "Offer", "name": "Starter", "price": "29", "priceCurrency": "USD", "billingIncrement": "month"},
+    {"@type": "Offer", "name": "Pro", "price": "59", "priceCurrency": "USD", "billingIncrement": "month"},
+    {"@type": "Offer", "name": "Business", "price": "120", "priceCurrency": "USD", "billingIncrement": "month"}
+  ],
+  "aggregateRating": {"@type": "AggregateRating", "ratingValue": "5", "reviewCount": "24"}
+}
+</script>
+
+<!-- Fonts: Syne (logo) + Satoshi (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Satoshi';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/satoshi@latest/files/satoshi-latin-300-normal.woff2') format('woff2');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/satoshi@latest/files/satoshi-latin-400-normal.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/satoshi@latest/files/satoshi-latin-500-normal.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/satoshi@latest/files/satoshi-latin-700-normal.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/satoshi@latest/files/satoshi-latin-900-normal.woff2') format('woff2');
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+
+/* ─── TOKENS ─────────────────────────────────── */
+:root {
+  --ink:     #0C0C0C;
+  --ink2:    #2A2A2A;
+  --ink3:    #666;
+  --ink4:    #ADADAD;
+  --white:   #FFFFFF;
+  --off:     #F5F5F3;
+  --off2:    #EBEBEA;
+  --border:  rgba(0,0,0,0.07);
+  --border2: rgba(0,0,0,0.13);
+  --accent:  #1A6B47;
+  --accent2: #0E4A30;
+  --accentL: #E7F4EE;
+  --accentM: #4FA87A;
+  --syne:    'Syne', sans-serif;
+  --sat:     'Satoshi', system-ui, sans-serif;
+  --r:       10px;
+  --r-lg:    18px;
+  --r-xl:    24px;
+}
+
+/* ─── RESET ──────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--sat); background: var(--white); color: var(--ink); -webkit-font-smoothing: antialiased; overflow-x: hidden; line-height: 1.6; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: inherit; border: none; }
+
+/* ─── LOGO COMPONENT ─────────────────────────── */
+.logo {
+  display: inline-flex; align-items: baseline; gap: 0;
+  font-family: var(--syne); font-weight: 800;
+  letter-spacing: -0.04em; line-height: 1;
+  color: var(--ink); user-select: none;
+}
+.logo .dot {
+  display: inline-block; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+  width: .18em; height: .18em;
+  margin-left: .04em; margin-bottom: .06em;
+  vertical-align: baseline;
+}
+.logo-white { color: var(--white); }
+.logo-white .dot { background: rgba(255,255,255,0.9); }
+.logo-nav { font-size: 20px; }
+.logo-footer { font-size: 18px; }
+
+/* app icon inline */
+.app-icon-inline {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--ink); border-radius: 9px;
+  position: relative; flex-shrink: 0;
+  width: 36px; height: 36px;
+}
+.app-icon-inline .g {
+  font-family: var(--syne); font-weight: 800;
+  font-size: 20px; color: var(--white); letter-spacing: -0.04em; line-height: 1;
+}
+.app-icon-inline .gdot {
+  position: absolute; bottom: 5px; right: 5px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+}
+
+/* ─── NAV ────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: 60px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(255,255,255,0.93);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: border-color .2s, box-shadow .2s;
+}
+nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); border-color: rgba(0,0,0,.1); }
+
+.nav-right { display: flex; align-items: center; gap: 32px; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 14px; font-weight: 400; color: var(--ink3); transition: color .15s; }
+.nav-links a:hover { color: var(--ink); }
+
+/* CTA nav: CRO — contraste máximo, acción clara */
+.btn-nav {
+  background: var(--ink); color: var(--white);
+  padding: 8px 20px; border-radius: 100px;
+  font-size: 14px; font-weight: 700; letter-spacing: -0.01em;
+  transition: background .15s, transform .1s;
+  white-space: nowrap;
+}
+.btn-nav:hover { background: var(--accent); transform: scale(1.02); }
+
+/* mobile hamburger */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; padding: 4px;
+}
+.hamburger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all .25s; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* mobile menu */
+.mobile-menu {
+  display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0;
+  background: var(--white); z-index: 299;
+  flex-direction: column; padding: 32px 24px;
+  gap: 0;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.03em;
+  color: var(--ink); padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color .15s;
+}
+.mobile-menu a:hover { color: var(--accent); }
+.mobile-menu .btn-mobile {
+  margin-top: 28px; background: var(--ink); color: var(--white);
+  padding: 16px; border-radius: var(--r-lg);
+  font-size: 16px; font-weight: 700; text-align: center; letter-spacing: -0.02em;
+}
+
+/* ─── HERO ───────────────────────────────────── */
+.hero {
+  min-height: 100svh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 120px 24px 80px;
+  position: relative; overflow: hidden;
+}
+
+/* Writing UX: eyebrow sets context before the big claim */
+.eyebrow-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accentL); color: var(--accent2);
+  font-size: 12px; font-weight: 700; letter-spacing: .04em;
+  padding: 6px 14px; border-radius: 100px;
+  margin-bottom: 28px;
+  opacity: 0; animation: fadeUp .5s .1s forwards;
+}
+.eyebrow-pill::before {
+  content: ''; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--accent); flex-shrink: 0;
+}
+
+/* Hero H1: 900 ultra-tight — Writing UX: benefit before feature */
+.hero h1 {
+  font-size: clamp(46px, 8.5vw, 100px);
+  font-weight: 900; line-height: .95; letter-spacing: -0.045em;
+  color: var(--ink); max-width: 840px;
+  opacity: 0; animation: fadeUp .6s .2s forwards;
+}
+.hero h1 .hero-accent {
+  display: block; font-style: italic; font-weight: 700; color: var(--accent);
+}
+
+/* Writing UX: sub amplifies promise, answers "¿para quién?" */
+.hero-sub {
+  font-size: clamp(15px, 2vw, 18px); font-weight: 300;
+  letter-spacing: -0.01em; line-height: 1.65; color: var(--ink3);
+  max-width: 500px; margin: 24px auto 0;
+  opacity: 0; animation: fadeUp .6s .35s forwards;
+}
+
+/* CRO: social proof inline con el hero */
+.hero-proof {
+  display: flex; align-items: center; gap: 12px;
+  margin: 20px 0 36px; justify-content: center;
+  opacity: 0; animation: fadeUp .6s .45s forwards;
+}
+.proof-avatars { display: flex; }
+.proof-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--off2); border: 2px solid var(--white);
+  font-size: 11px; font-weight: 700; color: var(--ink3);
+  display: flex; align-items: center; justify-content: center;
+  margin-left: -8px; letter-spacing: 0;
+}
+.proof-avatar:first-child { margin-left: 0; }
+.proof-text { font-size: 13px; font-weight: 400; color: var(--ink3); }
+.proof-text strong { font-weight: 700; color: var(--ink); }
+.proof-stars { color: var(--accent); font-size: 12px; letter-spacing: 1px; }
+
+/* CRO: two CTAs — primary action + secondary escape hatch */
+.hero-actions {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .6s .52s forwards;
+}
+.btn-primary {
+  background: var(--ink); color: var(--white);
+  padding: 14px 32px; border-radius: 100px;
+  font-size: 15px; font-weight: 700; letter-spacing: -0.02em;
+  transition: background .15s, transform .1s, box-shadow .15s;
+  box-shadow: 0 4px 20px rgba(0,0,0,.14);
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(26,107,71,.3); }
+.btn-secondary {
+  padding: 14px 24px; border-radius: 100px;
+  font-size: 15px; font-weight: 400; color: var(--ink3);
+  border: 1px solid var(--border2);
+  transition: color .15s, border-color .15s, transform .1s;
+}
+.btn-secondary:hover { color: var(--ink); border-color: var(--ink); transform: translateY(-1px); }
+
+/* CRO: micro-copy bajo el CTA reduce fricción */
+.cta-microcopy {
+  font-size: 12px; font-weight: 300; color: var(--ink4);
+  margin-top: 12px; letter-spacing: .01em;
+  opacity: 0; animation: fadeUp .5s .65s forwards;
+}
+
+/* Dashboard mockup */
+.hero-mockup {
+  margin-top: 60px; width: 100%; max-width: 900px;
+  border-radius: var(--r-xl); overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0,0,0,.16), 0 8px 32px rgba(0,0,0,.08);
+  border: 1px solid rgba(0,0,0,.06);
+  opacity: 0; animation: fadeUp .8s .65s forwards;
+}
+.mockup-bar {
+  background: #1A1A1A; padding: 13px 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.dot-r { width: 11px; height: 11px; border-radius: 50%; background: #FF5F57; }
+.dot-y { width: 11px; height: 11px; border-radius: 50%; background: #FFBD2E; }
+.dot-g-mac { width: 11px; height: 11px; border-radius: 50%; background: #28C840; }
+.mockup-url {
+  flex: 1; background: #2C2C2C; border-radius: 5px;
+  padding: 3px 14px; font-size: 11px; color: #555;
+  font-family: var(--sat); text-align: center; letter-spacing: .01em;
+}
+.mockup-body { background: var(--off); }
+.dash-grid { display: grid; grid-template-columns: 180px 1fr; min-height: 360px; }
+.dash-sidebar {
+  background: var(--white); border-right: 1px solid #EBEBEA; padding: 18px 14px;
+}
+.dash-logo-inner { font-size: 16px; margin-bottom: 22px; padding: 0 4px; }
+.dash-nav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-radius: 8px;
+  font-size: 12px; font-weight: 400; color: #999; margin-bottom: 2px;
+  letter-spacing: -0.01em;
+}
+.dash-nav-item.active { background: var(--accentL); color: var(--accent2); font-weight: 700; }
+.dash-main { padding: 22px; }
+.dash-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.dash-title { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; }
+.dash-badge { font-size: 10px; font-weight: 700; background: var(--accentL); color: var(--accent); padding: 3px 10px; border-radius: 100px; letter-spacing: .03em; }
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 18px; }
+.kpi { background: var(--white); border-radius: 10px; padding: 14px; border: 1px solid #EBEBEA; }
+.kpi-lbl { font-size: 9px; font-weight: 500; color: #BBB; margin-bottom: 5px; letter-spacing: .05em; text-transform: uppercase; }
+.kpi-val { font-size: 20px; font-weight: 900; letter-spacing: -0.03em; color: var(--ink); }
+.kpi-val.green { color: var(--accent); }
+.kpi-sub { font-size: 9px; color: #CCC; font-weight: 300; margin-top: 3px; }
+.chart { background: var(--white); border-radius: 10px; padding: 14px; border: 1px solid #EBEBEA; height: 112px; display: flex; align-items: flex-end; gap: 5px; }
+.bar-w { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.bar-b { width: 100%; border-radius: 3px 3px 0 0; background: #EAEAEA; }
+.bar-b.a { background: var(--accent); }
+.bar-b.m { background: var(--accentM); opacity: .38; }
+.bar-l { font-size: 8px; color: #CCC; font-weight: 300; }
+
+/* ─── LOGOS SECTION ──────────────────────────── */
+/* CRO: social proof section — named businesses increase trust */
+.logos-section {
+  padding: 40px 48px;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+.logos-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--ink4); margin-bottom: 24px; }
+.logos-row { display: flex; justify-content: center; align-items: center; gap: 44px; flex-wrap: wrap; }
+.logos-row span { font-size: 14px; font-weight: 700; letter-spacing: -0.02em; color: var(--off2); transition: color .15s; }
+.logos-row span:hover { color: var(--ink4); }
+
+/* ─── SECTION BASE ───────────────────────────── */
+.section { padding: 112px 48px; max-width: 1100px; margin: 0 auto; }
+.section-dark { background: var(--ink); padding: 112px 48px; }
+.section-dark-inner { max-width: 1100px; margin: 0 auto; }
+
+/* Writing UX: eyebrow → bold title → light description */
+.sec-eyebrow { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin-bottom: 14px; }
+.section-dark .sec-eyebrow { color: var(--accentM); }
+
+.sec-title { font-size: clamp(28px, 3.8vw, 48px); font-weight: 900; letter-spacing: -0.04em; line-height: 1.06; color: var(--ink); }
+.section-dark .sec-title { color: var(--white); }
+/* Writing UX: em = 300 italic — contrast without switching fonts */
+.sec-title em { font-style: italic; font-weight: 300; color: var(--ink3); }
+.section-dark .sec-title em { color: rgba(255,255,255,.28); }
+.sec-title .aw { font-style: italic; font-weight: 900; color: var(--accent); }
+.section-dark .sec-title .aw { color: var(--accentM); }
+
+/* ─── PROBLEM STRIP ──────────────────────────── */
+/* UX: show the pain before the solution */
+.problem-strip {
+  background: var(--off); border-top: 1px solid var(--border);
+  padding: 56px 48px;
+}
+.problem-inner { max-width: 1100px; margin: 0 auto; }
+.problem-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border-radius: var(--r-lg); overflow: hidden; margin-top: 40px; }
+.problem-card { background: var(--white); padding: 28px; }
+/* Writing UX: cada problema es el dolor exacto del cliente */
+.problem-num { font-size: 11px; font-weight: 900; color: var(--ink4); letter-spacing: .06em; margin-bottom: 12px; }
+.problem-title { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 8px; }
+.problem-desc { font-size: 13px; font-weight: 300; color: var(--ink3); line-height: 1.65; }
+
+/* ─── FEATURES ───────────────────────────────── */
+.features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border-radius: var(--r-lg); overflow: hidden; margin-top: 56px; }
+.feat-card { background: var(--white); padding: 32px 28px; transition: background .15s; }
+.feat-card:hover { background: var(--off); }
+.feat-icon { width: 40px; height: 40px; border-radius: var(--r); background: var(--accentL); display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 18px; }
+.feat-title { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 8px; }
+.feat-desc { font-size: 13px; font-weight: 300; color: var(--ink3); line-height: 1.65; }
+
+/* ─── HOW IT WORKS ───────────────────────────── */
+/* UX: numbered steps reduce anxiety about implementation */
+.steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; margin-top: 60px; position: relative; }
+.steps::before {
+  content: ''; position: absolute;
+  top: 20px; left: calc(25% - 16px); right: calc(25% - 16px);
+  height: 1px; background: rgba(255,255,255,.08);
+}
+.step-num { font-size: 11px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--accentM); margin-bottom: 14px; }
+.step-title { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; color: var(--white); margin-bottom: 8px; }
+.step-desc { font-size: 13px; font-weight: 300; color: rgba(255,255,255,.4); line-height: 1.65; }
+
+/* ─── PRICING ────────────────────────────────── */
+/* CRO: 3-tier anchoring, featured center plan, micro-copy on every CTA */
+.plans-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 56px; align-items: start; }
+.plan { border: 1px solid var(--border2); border-radius: var(--r-xl); padding: 32px 28px; background: var(--white); transition: box-shadow .2s, transform .2s; }
+.plan:hover { box-shadow: 0 20px 60px rgba(0,0,0,.09); transform: translateY(-3px); }
+.plan.featured { background: var(--ink); border-color: var(--ink); transform: scale(1.02); }
+.plan.featured:hover { transform: scale(1.02) translateY(-3px); }
+.plan-badge { display: inline-block; background: var(--accent); color: var(--white); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 3px 12px; border-radius: 100px; margin-bottom: 20px; }
+.plan-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--ink3); margin-bottom: 8px; }
+.plan.featured .plan-name { color: rgba(255,255,255,.38); }
+.plan-price { font-size: 56px; font-weight: 900; letter-spacing: -0.05em; line-height: .92; color: var(--ink); }
+.plan.featured .plan-price { color: var(--white); }
+.plan-price sup { font-size: 20px; font-weight: 400; vertical-align: super; letter-spacing: 0; }
+.plan-period { font-size: 13px; font-weight: 300; color: var(--ink4); margin-bottom: 6px; letter-spacing: -0.01em; }
+.plan.featured .plan-period { color: rgba(255,255,255,.28); }
+.plan-setup { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 24px; }
+.plan.featured .plan-setup { color: var(--accentM); }
+.plan-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+.plan.featured .plan-divider { background: rgba(255,255,255,.08); }
+.plan-feats { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.plan-feat { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: var(--ink2); line-height: 1.45; }
+.plan.featured .plan-feat { color: rgba(255,255,255,.6); }
+.feat-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 5px; }
+.plan.featured .feat-dot { background: var(--accentM); }
+.plan-feat.dim { opacity: .3; }
+.plan-btn {
+  width: 100%; padding: 13px; border-radius: 100px;
+  font-family: var(--sat); font-size: 14px; font-weight: 700;
+  letter-spacing: -0.01em; text-align: center;
+  display: block; transition: all .15s;
+}
+.plan-btn-outline { background: transparent; border: 1px solid var(--border2); color: var(--ink); }
+.plan-btn-outline:hover { background: var(--off); border-color: var(--ink3); }
+.plan-btn-fill { background: var(--accent); color: var(--white); border: none; box-shadow: 0 4px 20px rgba(26,107,71,.3); }
+.plan-btn-fill:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(26,107,71,.36); }
+/* CRO: micro-copy bajo cada CTA */
+.plan-btn-micro { font-size: 11px; font-weight: 300; color: var(--ink4); text-align: center; margin-top: 8px; }
+.plan.featured .plan-btn-micro { color: rgba(255,255,255,.28); }
+
+/* ─── TESTIMONIALS ───────────────────────────── */
+/* CRO: testimonials con rubro y nombre real aumentan confianza */
+.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.testi { padding: 28px; background: var(--off); border-radius: var(--r-xl); }
+.testi-stars { font-size: 13px; letter-spacing: 2px; color: var(--accent); margin-bottom: 14px; }
+/* Writing UX: quote en 500 italic — suena a voz humana */
+.testi-quote { font-size: 16px; font-weight: 500; font-style: italic; letter-spacing: -0.02em; color: var(--ink); line-height: 1.5; margin-bottom: 20px; }
+.testi-author { font-size: 13px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+.testi-role { font-size: 12px; font-weight: 300; color: var(--ink4); margin-top: 2px; }
+
+/* ─── GUARANTEE STRIP ────────────────────────── */
+/* CRO: objeción más común ("¿y si no funciona?") resuelta proactivamente */
+.guarantee { padding: 56px 48px; background: var(--accentL); border-top: 1px solid rgba(26,107,71,.1); border-bottom: 1px solid rgba(26,107,71,.1); }
+.guarantee-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+.g-item { display: flex; gap: 16px; align-items: flex-start; }
+.g-icon { width: 44px; height: 44px; background: var(--white); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(26,107,71,.12); }
+.g-title { font-size: 14px; font-weight: 700; letter-spacing: -0.02em; color: var(--accent2); margin-bottom: 4px; }
+.g-desc { font-size: 13px; font-weight: 300; color: var(--accent); line-height: 1.6; }
+
+/* ─── FAQ ────────────────────────────────────── */
+.faq-wrap { max-width: 720px; margin: 0 auto; margin-top: 56px; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:first-child { border-top: 1px solid var(--border); }
+/* UX: preguntas en voz del cliente, no del producto */
+.faq-q {
+  font-size: 15px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink);
+  padding: 22px 0; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  user-select: none; background: none; width: 100%; text-align: left;
+  transition: color .15s;
+}
+.faq-q:hover { color: var(--accent); }
+.faq-icon {
+  width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--ink3); flex-shrink: 0;
+  transition: transform .22s, background .15s, border-color .15s;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); background: var(--ink); border-color: var(--ink); color: var(--white); }
+/* Writing UX: respuesta en 300 — contraste claro con pregunta */
+.faq-a { font-size: 14px; font-weight: 300; letter-spacing: -0.01em; color: var(--ink3); line-height: 1.75; max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .25s; }
+.faq-item.open .faq-a { max-height: 300px; padding-bottom: 22px; }
+
+/* ─── CTA FINAL ──────────────────────────────── */
+/* CRO: CTA final repite la propuesta de valor + urgencia implícita */
+.cta-final { margin: 0 48px 80px; background: var(--ink); border-radius: 28px; padding: 80px 64px; text-align: center; position: relative; overflow: hidden; }
+.cta-final::before { content: ''; position: absolute; bottom: -150px; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; border-radius: 50%; background: radial-gradient(ellipse, rgba(26,107,71,.2) 0%, transparent 70%); pointer-events: none; }
+/* Writing UX: pregunta directa activa al lector */
+.cta-final h2 { font-size: clamp(36px, 5vw, 62px); font-weight: 900; letter-spacing: -0.045em; line-height: 1.0; color: var(--white); margin-bottom: 16px; }
+.cta-final h2 em { font-style: italic; font-weight: 300; color: rgba(255,255,255,.3); }
+.cta-final p { font-size: 16px; font-weight: 300; letter-spacing: -0.01em; color: rgba(255,255,255,.42); margin: 0 auto 40px; max-width: 440px; line-height: 1.65; }
+.cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-white { background: var(--white); color: var(--ink); padding: 14px 32px; border-radius: 100px; font-size: 15px; font-weight: 700; letter-spacing: -0.02em; transition: opacity .15s, transform .1s; }
+.btn-white:hover { opacity: .88; transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: rgba(255,255,255,.45); padding: 14px 24px; border-radius: 100px; border: 1px solid rgba(255,255,255,.12); font-size: 15px; font-weight: 400; letter-spacing: -0.01em; transition: color .15s, border-color .15s; }
+.btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,.35); }
+/* CRO: micro-copy bajo el CTA final */
+.cta-micro { font-size: 12px; font-weight: 300; color: rgba(255,255,255,.28); margin-top: 16px; letter-spacing: .01em; }
+
+/* ─── FOOTER ─────────────────────────────────── */
+footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; font-weight: 400; color: var(--ink4); transition: color .15s; }
+.footer-links a:hover { color: var(--ink); }
+.footer-copy { font-size: 12px; font-weight: 300; color: var(--ink4); }
+
+/* ─── ANIMATIONS ─────────────────────────────── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: .06s; }
+.reveal-d2 { transition-delay: .12s; }
+.reveal-d3 { transition-delay: .18s; }
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 1024px) {
+  .section { padding: 88px 32px; }
+  .section-dark { padding: 88px 32px; }
+  .guarantee { padding: 48px 32px; }
+  .cta-final { margin: 0 32px 64px; padding: 64px 40px; }
+  footer { padding: 32px; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links, .btn-nav { display: none; }
+  .hamburger { display: flex; }
+  .hero { padding: 90px 20px 60px; }
+  .hero-mockup { margin-top: 48px; border-radius: var(--r-lg); }
+  .dash-grid { grid-template-columns: 1fr; }
+  .dash-sidebar { display: none; }
+  .kpi-row { grid-template-columns: repeat(2,1fr); }
+  .section { padding: 72px 20px; }
+  .section-dark { padding: 72px 20px; }
+  .logos-section { padding: 32px 20px; }
+  .logos-row { gap: 24px; }
+  .logos-row span { font-size: 13px; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .steps::before { display: none; }
+  .plans-grid { grid-template-columns: 1fr; gap: 12px; }
+  .plan.featured { transform: none; }
+  .plan.featured:hover { transform: translateY(-3px); }
+  .testi-grid { grid-template-columns: 1fr; }
+  .guarantee { padding: 48px 20px; }
+  .guarantee-inner { grid-template-columns: 1fr; gap: 24px; }
+  .cta-final { margin: 0 20px 56px; padding: 56px 28px; border-radius: var(--r-xl); }
+  footer { padding: 32px 20px; flex-direction: column; text-align: center; }
+  .footer-links { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 42px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr; }
+  .hero-proof { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav" role="navigation" aria-label="Navegación principal">
+  <a href="/" aria-label="Gestiq — inicio">
+    <div class="logo logo-nav" aria-hidden="true">Gestiq<span class="dot"></span></div>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#funciones">Funciones</a></li>
+      <li><a href="#como-funciona">Como funciona</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#contacto" class="btn-nav" role="button">Empezar ahora</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Menu de navegacion">
+  <a href="#funciones" onclick="closeMenu()">Funciones</a>
+  <a href="#como-funciona" onclick="closeMenu()">Como funciona</a>
+  <a href="#precios" onclick="closeMenu()">Precios</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="#contacto" class="btn-mobile" onclick="closeMenu()">Empezar ahora →</a>
+</div>
+
+<!-- HERO -->
+<main>
+<section class="hero" aria-labelledby="hero-title">
+  <!-- CRO: eyebrow establece categoría del producto -->
+  <div class="eyebrow-pill" role="text">Sistema de gestion para PyMEs</div>
+
+  <!-- Writing UX: beneficio primero ("digitalizado"), feature después ("48 horas") -->
+  <h1 id="hero-title">
+    Tu negocio,<br>
+    <span class="hero-accent">digitalizado</span>
+    en 48 horas.
+  </h1>
+
+  <!-- Writing UX: trio de objeciones eliminadas en una línea -->
+  <p class="hero-sub">Sin servidores. Sin IT. Sin complicaciones.<br>Con alguien que te acompana desde el primer dia.</p>
+
+  <!-- CRO: social proof antes del CTA -->
+  <div class="hero-proof" aria-label="Testimonios de clientes">
+    <div class="proof-avatars" aria-hidden="true">
+      <div class="proof-avatar">MG</div>
+      <div class="proof-avatar">DM</div>
+      <div class="proof-avatar">LR</div>
+      <div class="proof-avatar">+</div>
+    </div>
+    <div>
+      <div class="proof-stars" aria-label="5 estrellas">★★★★★</div>
+      <div class="proof-text"><strong>+24 negocios</strong> ya usan Gestiq</div>
+    </div>
+  </div>
+
+  <div class="hero-actions">
+    <a href="#contacto" class="btn-primary" role="button">Empezar ahora</a>
+    <a href="#como-funciona" class="btn-secondary" role="button">Ver como funciona</a>
+  </div>
+  <!-- CRO: elimina fricción del primer click -->
+  <p class="cta-microcopy">Sin tarjeta de credito · Implementacion en 48 horas · Garantia 7 dias</p>
+
+  <!-- Dashboard mockup -->
+  <div class="hero-mockup" role="img" aria-label="Preview del dashboard de Gestiq">
+    <div class="mockup-bar" aria-hidden="true">
+      <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g-mac"></div>
+      <div class="mockup-url">gestiq.app/dashboard</div>
+    </div>
+    <div class="mockup-body">
+      <div class="dash-grid">
+        <div class="dash-sidebar">
+          <div class="dash-logo-inner">
+            <div class="logo" style="font-size:16px;">Gestiq<span class="dot"></span></div>
+          </div>
+          <div class="dash-nav-item active">◼&nbsp; Dashboard</div>
+          <div class="dash-nav-item">◻&nbsp; Ventas</div>
+          <div class="dash-nav-item">◻&nbsp; Clientes</div>
+          <div class="dash-nav-item">◻&nbsp; Reservas</div>
+          <div class="dash-nav-item">◻&nbsp; Gastos</div>
+          <div class="dash-nav-item">◻&nbsp; Ajustes</div>
+        </div>
+        <div class="dash-main">
+          <div class="dash-top">
+            <div class="dash-title">Resumen del dia</div>
+            <div class="dash-badge">Turno abierto</div>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi"><div class="kpi-lbl">Ventas hoy</div><div class="kpi-val green">$184.500</div><div class="kpi-sub">+12% vs ayer</div></div>
+            <div class="kpi"><div class="kpi-lbl">Transacciones</div><div class="kpi-val">47</div><div class="kpi-sub">Ticket $3.925</div></div>
+            <div class="kpi"><div class="kpi-lbl">Mesas abiertas</div><div class="kpi-val">6</div><div class="kpi-sub">3 reservas pend.</div></div>
+            <div class="kpi"><div class="kpi-lbl">Gastos</div><div class="kpi-val">$22.000</div><div class="kpi-sub">Ef + MP</div></div>
+          </div>
+          <div class="chart">
+            <div class="bar-w"><div class="bar-b" style="height:50px"></div><div class="bar-l">Lun</div></div>
+            <div class="bar-w"><div class="bar-b" style="height:68px"></div><div class="bar-l">Mar</div></div>
+            <div class="bar-w"><div class="bar-b m" style="height:44px"></div><div class="bar-l">Mie</div></div>
+            <div class="bar-w"><div class="bar-b" style="height:82px"></div><div class="bar-l">Jue</div></div>
+            <div class="bar-w"><div class="bar-b" style="height:60px"></div><div class="bar-l">Vie</div></div>
+            <div class="bar-w"><div class="bar-b a" style="height:88px"></div><div class="bar-l">Sab</div></div>
+            <div class="bar-w"><div class="bar-b" style="height:18px;opacity:.25"></div><div class="bar-l">Dom</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF: logos -->
+<div class="logos-section reveal" aria-label="Clientes de Gestiq">
+  <div class="logos-label">Negocios que ya confian en Gestiq</div>
+  <div class="logos-row">
+    <span>Cafeteria del Centro</span>
+    <span>Salon Eme</span>
+    <span>RestO Palermo</span>
+    <span>Kine&amp;Bienestar</span>
+    <span>El Taller</span>
+    <span>Consultorio Vera</span>
+  </div>
+</div>
+
+<!-- PROBLEM: UX — mostrar el dolor antes de la solución -->
+<div class="problem-strip">
+  <div class="problem-inner">
+    <div class="sec-eyebrow reveal">El problema</div>
+    <h2 class="sec-title reveal">La mayoria de los negocios todavia<br><em>trabaja en modo manual.</em></h2>
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <div class="problem-num">01</div>
+        <div class="problem-title">Papel, Excel y WhatsApp</div>
+        <div class="problem-desc">Sin visibilidad real de ventas, gastos ni rentabilidad. Las decisiones se toman a ojo, no con datos.</div>
+      </div>
+      <div class="problem-card reveal reveal-d1">
+        <div class="problem-num">02</div>
+        <div class="problem-title">Sistemas caros y complicados</div>
+        <div class="problem-desc">USD 80-300/mes, configuracion tecnica compleja y soporte por ticket. El dueno queda solo con un manual.</div>
+      </div>
+      <div class="problem-card reveal reveal-d2">
+        <div class="problem-num">03</div>
+        <div class="problem-title">Desarrolladores que desaparecen</div>
+        <div class="problem-desc">Proyectos impredecibles en costo y tiempo. Cuando terminan, no hay nadie que mantenga ni mejore nada.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="funciones" aria-labelledby="features-title">
+  <div class="sec-eyebrow reveal">Todo lo que necesitas</div>
+  <h2 class="sec-title reveal" id="features-title">Un sistema completo. <em>Sin la complejidad.</em></h2>
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <div class="feat-icon" aria-hidden="true">🧾</div>
+      <h3 class="feat-title">Punto de venta</h3>
+      <p class="feat-desc">Carga pedidos desde el celular. Mesas, takeaway y delivery en una sola pantalla. Sin papel, sin errores, sin demoras.</p>
+    </div>
+    <div class="feat-card reveal reveal-d1">
+      <div class="feat-icon" aria-hidden="true">📊</div>
+      <h3 class="feat-title">Dashboard en tiempo real</h3>
+      <p class="feat-desc">Ventas del dia, ticket promedio, producto mas vendido. Toda la informacion de tu negocio en una pantalla, siempre actualizada.</p>
+    </div>
+    <div class="feat-card reveal reveal-d2">
+      <div class="feat-icon" aria-hidden="true">👥</div>
+      <h3 class="feat-title">CRM de clientes</h3>
+      <p class="feat-desc">Historial de visitas, preferencias y datos de contacto. Conoce a tus clientes mejor que nadie y dale el trato que se merecen.</p>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon" aria-hidden="true">📅</div>
+      <h3 class="feat-title">Reservas y agenda</h3>
+      <p class="feat-desc">Gestion de reservas con estados, notas y seguimiento. Para gastronomia, salud, belleza y cualquier negocio con turnos.</p>
+    </div>
+    <div class="feat-card reveal reveal-d1">
+      <div class="feat-icon" aria-hidden="true">💰</div>
+      <h3 class="feat-title">Control de gastos</h3>
+      <p class="feat-desc">Registra egresos por categoria y medio de pago. Cierre de caja diario con resumen completo en segundos.</p>
+    </div>
+    <div class="feat-card reveal reveal-d2">
+      <div class="feat-icon" aria-hidden="true">📦</div>
+      <h3 class="feat-title">Menu y stock</h3>
+      <p class="feat-desc">Administra productos, precios, variantes y stock disponible. Alertas automaticas cuando el stock baja del minimo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section-dark" id="como-funciona" aria-labelledby="how-title">
+  <div class="section-dark-inner">
+    <div class="sec-eyebrow reveal">El proceso</div>
+    <h2 class="sec-title reveal" id="how-title">De papel y Excel a <span class="aw">sistema digital</span><br><em>en 48 horas.</em></h2>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01 —</div>
+        <h3 class="step-title">Elegis tu plan</h3>
+        <p class="step-desc">Seleccionas el plan que mejor se adapta a tu negocio. Setup fee unico, sin contratos anuales.</p>
+      </div>
+      <div class="step reveal reveal-d1">
+        <div class="step-num">02 —</div>
+        <h3 class="step-title">Configuramos juntos</h3>
+        <p class="step-desc">Cargamos tu menu, productos, operadores y datos reales. Proceso personalizado de 2 a 4 horas.</p>
+      </div>
+      <div class="step reveal reveal-d2">
+        <div class="step-num">03 —</div>
+        <h3 class="step-title">Capacitacion en vivo</h3>
+        <p class="step-desc">Video llamada con vos y tu equipo. Se graba para que puedan volver a verla cuando quieran.</p>
+      </div>
+      <div class="step reveal reveal-d3">
+        <div class="step-num">04 —</div>
+        <h3 class="step-title">En marcha y acompanados</h3>
+        <p class="step-desc">El sistema queda operativo. Soporte continuo incluido en el plan desde el primer dia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="precios" aria-labelledby="pricing-title">
+  <div class="sec-eyebrow reveal">Precios</div>
+  <!-- Writing UX: "sin sorpresas" responde la objeción de letra chica -->
+  <h2 class="sec-title reveal" id="pricing-title">Simple, transparente.<br><span class="aw">Sin sorpresas.</span></h2>
+  <div class="plans-grid">
+
+    <article class="plan reveal" aria-labelledby="plan-starter">
+      <h3 class="plan-name" id="plan-starter">Starter</h3>
+      <div class="plan-price"><sup>USD</sup>29</div>
+      <div class="plan-period">por mes</div>
+      <div class="plan-setup">+ Setup USD 150 pago unico</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-feats" aria-label="Caracteristicas del plan Starter">
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Sistema completo POS y Dashboard</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Implementacion y configuracion incluida</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Capacitacion en vivo 2 horas</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Soporte WhatsApp en 48 hs habiles</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Backup semanal automatico</li>
+        <li class="plan-feat dim"><div class="feat-dot" aria-hidden="true"></div>Personalizacion de marca</li>
+        <li class="plan-feat dim"><div class="feat-dot" aria-hidden="true"></div>Modulo de reservas</li>
+      </ul>
+      <a href="#contacto" class="plan-btn plan-btn-outline">Empezar con Starter</a>
+      <p class="plan-btn-micro">Ideal para 1 caja · 1 local</p>
+    </article>
+
+    <article class="plan featured reveal reveal-d1" aria-labelledby="plan-pro">
+      <div class="plan-badge">Mas popular</div>
+      <h3 class="plan-name" id="plan-pro">Pro</h3>
+      <div class="plan-price"><sup>USD</sup>59</div>
+      <div class="plan-period">por mes</div>
+      <div class="plan-setup">+ Setup USD 250 pago unico</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-feats" aria-label="Caracteristicas del plan Pro">
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Todo lo incluido en Starter</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Personalizacion de marca (logo y colores)</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Hasta 3 operadores simultaneos</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Modulo de reservas activado</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Dashboard avanzado con filtros</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Soporte prioritario en 24 horas</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Reportes mensuales exportables</li>
+      </ul>
+      <a href="#contacto" class="plan-btn plan-btn-fill">Empezar con Pro</a>
+      <p class="plan-btn-micro">Ideal para restó o cafeteria mediana</p>
+    </article>
+
+    <article class="plan reveal reveal-d2" aria-labelledby="plan-business">
+      <h3 class="plan-name" id="plan-business">Business</h3>
+      <div class="plan-price"><sup>USD</sup>120</div>
+      <div class="plan-period">por mes</div>
+      <div class="plan-setup">+ Setup USD 500 pago unico</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-feats" aria-label="Caracteristicas del plan Business">
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Todo lo incluido en Pro</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Hasta 2 sucursales integradas</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Operadores ilimitados</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>CRM completo con historial</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Modulo de fidelizacion de clientes</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>Reunion mensual de seguimiento</li>
+        <li class="plan-feat"><div class="feat-dot" aria-hidden="true"></div>SLA garantizado en 12 horas</li>
+      </ul>
+      <a href="#contacto" class="plan-btn plan-btn-outline">Empezar con Business</a>
+      <p class="plan-btn-micro">Ideal para cadena o franquicia</p>
+    </article>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" style="padding-top:0;" aria-labelledby="testimonios-title">
+  <div class="sec-eyebrow reveal">Lo que dicen los clientes</div>
+  <h2 class="sec-title reveal" id="testimonios-title">Resultados reales. <em>En negocios reales.</em></h2>
+  <div class="testi-grid" style="margin-top:48px;">
+    <div class="testi reveal">
+      <div class="testi-stars" aria-label="5 estrellas">★★★★★</div>
+      <blockquote class="testi-quote">"En dos dias teniamos todo funcionando. Nunca pense que iba a ser tan facil dejar el papel."</blockquote>
+      <div class="testi-author">Maria G.</div>
+      <div class="testi-role">Duena — Cafeteria del Centro</div>
+    </div>
+    <div class="testi reveal reveal-d1">
+      <div class="testi-stars" aria-label="5 estrellas">★★★★★</div>
+      <blockquote class="testi-quote">"El soporte es lo que mas me sorprendio. Hay una persona real que responde rapido y entiende mi negocio."</blockquote>
+      <div class="testi-author">Diego M.</div>
+      <div class="testi-role">Socio — RestO Palermo</div>
+    </div>
+    <div class="testi reveal reveal-d2">
+      <div class="testi-stars" aria-label="5 estrellas">★★★★★</div>
+      <blockquote class="testi-quote">"Ahora cierro la caja en cinco minutos y veo exactamente cuanto vendi. Cambio total para el negocio."</blockquote>
+      <div class="testi-author">Lucia R.</div>
+      <div class="testi-role">Administradora — Salon Eme</div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE STRIP: CRO — objeciones resueltas proactivamente -->
+<div class="guarantee reveal" aria-labelledby="garantias-title">
+  <div class="guarantee-inner">
+    <div class="g-item">
+      <div class="g-icon" aria-hidden="true">🛡</div>
+      <div>
+        <h3 class="g-title">Garantia 7 dias</h3>
+        <p class="g-desc">Si en los primeros 7 dias el sistema no funciona correctamente, devolvemos el 100% del setup. Sin preguntas.</p>
+      </div>
+    </div>
+    <div class="g-item">
+      <div class="g-icon" aria-hidden="true">📅</div>
+      <div>
+        <h3 class="g-title">Sin permanencia</h3>
+        <p class="g-desc">El servicio es mes a mes. Cancel cuando quieras sin penalizacion. Tus datos siempre son tuyos.</p>
+      </div>
+    </div>
+    <div class="g-item">
+      <div class="g-icon" aria-hidden="true">🔒</div>
+      <div>
+        <h3 class="g-title">Tus datos, tu propiedad</h3>
+        <p class="g-desc">Todo se guarda en tu Google Sheet. Gestiq nunca accede a tu informacion financiera. Los datos te pertenecen.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="section" id="faq" aria-labelledby="faq-title">
+  <div class="sec-eyebrow reveal">Preguntas frecuentes</div>
+  <!-- Writing UX: el titulo del FAQ habla al lector que duda -->
+  <h2 class="sec-title reveal" id="faq-title">Antes de decidir, <span class="aw">resolvemos tus dudas.</span></h2>
+  <div class="faq-wrap">
+
+    <div class="faq-item reveal">
+      <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+        Necesito saber de tecnologia para usar Gestiq?
+        <div class="faq-icon" aria-hidden="true">+</div>
+      </button>
+      <div class="faq-a" role="region">Para nada. Gestiq esta disenado para duenos y empleados sin conocimientos tecnicos. Funciona desde cualquier celular, tablet o notebook con un navegador. La capacitacion incluida en todos los planes cubre todo lo que necesitas saber desde cero. La mayoria de los negocios empieza a usar el sistema el mismo dia de la capacitacion.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+        Donde se guardan mis datos?
+        <div class="faq-icon" aria-hidden="true">+</div>
+      </button>
+      <div class="faq-a" role="region">En un Google Sheet de tu propia cuenta de Google. Gestiq nunca tiene acceso a tu informacion financiera ni comercial. Tus datos son tuyos para siempre — incluso si cancelas el servicio, toda la informacion sigue disponible en tu planilla.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+        Que pasa si quiero cancelar?
+        <div class="faq-icon" aria-hidden="true">+</div>
+      </button>
+      <div class="faq-a" role="region">El servicio es mensual sin permanencia minima. Podes cancelar cuando quieras sin ninguna penalizacion. No hay contratos anuales, ni cargos ocultos. Tus datos quedan en tu Google Sheet y son completamente tuyos para siempre.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+        Sirve para mi rubro especifico?
+        <div class="faq-icon" aria-hidden="true">+</div>
+      </button>
+      <div class="faq-a" role="region">Si. Gestiq se adapta a gastronomia (cafeterias, bares, restaurantes), salud (consultorios, kinesio), belleza (peluquerias, salones), servicios y comercios minoristas. Durante la implementacion configuramos el vocabulario, los modulos y la estructura para que coincidan exactamente con tu operacion.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+        Cuanto tarda la implementacion?
+        <div class="faq-icon" aria-hidden="true">+</div>
+      </button>
+      <div class="faq-a" role="region">Entre 24 y 48 horas desde que abonás el setup. El proceso incluye configuracion personalizada (2 a 4 horas) y capacitacion en vivo con vos y tu equipo. La capacitacion se graba para que puedan volver a verla cuando quieran.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+        Que incluye el soporte mensual?
+        <div class="faq-icon" aria-hidden="true">+</div>
+      </button>
+      <div class="faq-a" role="region">Depende del plan: Starter tiene soporte por WhatsApp con respuesta en 48 hs habiles. Pro tiene soporte prioritario en 24 hs. Business incluye SLA garantizado de 12 hs mas una reunion mensual de seguimiento. En todos los casos hay una persona real que entiende tu negocio y responde.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<div class="cta-final" id="contacto" aria-labelledby="cta-title">
+  <!-- Writing UX: pregunta directa activa respuesta emocional -->
+  <h2 id="cta-title">Lista para<br><em>empezar?</em></h2>
+  <p>Agendamos una llamada de 20 minutos. Te mostramos el sistema en vivo con datos reales. Sin compromiso, sin presion.</p>
+  <div class="cta-actions">
+    <a href="mailto:hola@gestiq.app" class="btn-white" role="button">Escribinos ahora</a>
+    <a href="#precios" class="btn-ghost" role="button">Ver los planes</a>
+  </div>
+  <p class="cta-micro">Respondemos en menos de 2 horas en dias habiles · hola@gestiq.app</p>
+</div>
+</main>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <a href="/" aria-label="Gestiq — inicio">
+    <div class="logo logo-footer">Gestiq<span class="dot"></span></div>
+  </a>
+  <ul class="footer-links">
+    <li><a href="#funciones">Funciones</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="mailto:hola@gestiq.app">hola@gestiq.app</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Gestiq</p>
+</footer>
+
+<script>
+/* Scroll effects */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* Reveal on scroll */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* FAQ */
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+
+/* Mobile menu */
+const ham = document.getElementById('hamburger');
+const menu = document.getElementById('mobile-menu');
+ham.addEventListener('click', () => {
+  const open = menu.classList.toggle('open');
+  ham.classList.toggle('open', open);
+  ham.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+function closeMenu() {
+  menu.classList.remove('open');
+  ham.classList.remove('open');
+  ham.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+/* Close menu on resize */
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) closeMenu();
+});
+</script>
+</body>
+</html>
