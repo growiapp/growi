@@ -115,9 +115,23 @@ a { color: inherit; text-decoration: none; }
 button { cursor: pointer; font-family: inherit; border: none; }
 
 /* ─── LOGO COMPONENT ─────────────────────────── */
-/* Logo — SVG inline component */
-.logo-svg { display: inline-flex; align-items: center; line-height: 1; }
-.logo-svg svg { display: block; }
+.logo {
+  display: inline-flex; align-items: baseline; gap: 0;
+  font-family: var(--syne); font-weight: 800;
+  letter-spacing: -0.04em; line-height: 1;
+  color: var(--ink); text-decoration: none; user-select: none;
+}
+.logo .dot {
+  display: inline-block; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+  width: .17em; height: .17em;
+  margin-left: .05em; margin-bottom: .08em;
+  vertical-align: baseline;
+}
+.logo-white { color: var(--white); }
+.logo-white .dot { background: rgba(255,255,255,0.9); }
+.logo-nav { font-size: 20px; }
+.logo-footer { font-size: 18px; }
 
 /* app icon inline */
 .app-icon-inline {
@@ -174,10 +188,11 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); border-color: rgba(0,0,0,
 
 /* mobile menu */
 .mobile-menu {
-  display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0;
+  display: none; position: fixed; top: 60px; left: 0; right: 0;
+  height: calc(100vh - 60px);
   background: var(--white); z-index: 299;
   flex-direction: column; padding: 32px 24px;
-  gap: 0;
+  gap: 0; overflow-y: auto;
 }
 .mobile-menu.open { display: flex; }
 .mobile-menu a {
@@ -195,7 +210,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); border-color: rgba(0,0,0,
 
 /* ─── HERO ───────────────────────────────────── */
 .hero {
-  min-height: 100svh;
+  min-height: 100svh; max-height: none;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center; padding: 120px 24px 80px;
@@ -494,7 +509,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); border-color: rgba(0,0,0,
 .cta-micro { font-size: 12px; font-weight: 300; color: rgba(255,255,255,.28); margin-top: 16px; letter-spacing: .01em; }
 
 /* ─── FOOTER ─────────────────────────────────── */
-footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+footer { padding: 40px 48px 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
 .footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
 .footer-links a { font-size: 13px; font-weight: 400; color: var(--ink4); transition: color .15s; }
 .footer-links a:hover { color: var(--ink); }
@@ -558,12 +573,7 @@ footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex;
 
 <!-- NAV -->
 <nav id="nav" role="navigation" aria-label="Navegación principal">
-  <a href="/" aria-label="Gestiq — inicio" class="logo-svg">
-    <svg height="22" viewBox="0 0 165 62" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <text x="2" y="43" font-family="Syne, Arial Black, sans-serif" font-weight="800" font-size="48" fill="#0C0C0C" letter-spacing="-1">Gestiq</text>
-      <circle cx="155" cy="37" r="4" fill="#1A6B47"/>
-    </svg>
-  </a>
+  <a href="/" aria-label="Gestiq — inicio" class="logo logo-nav">Gestiq<span class="dot" aria-hidden="true"></span></a>
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#funciones">Funciones</a></li>
@@ -634,10 +644,7 @@ footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex;
       <div class="dash-grid">
         <div class="dash-sidebar">
           <div class="dash-logo-inner">
-            <svg height="16" viewBox="0 0 165 62" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <text x="2" y="43" font-family="Syne, Arial Black, sans-serif" font-weight="800" font-size="48" fill="#0C0C0C" letter-spacing="-1">Gestiq</text>
-              <circle cx="155" cy="37" r="4" fill="#1A6B47"/>
-            </svg>
+            <span class="logo" style="font-size:16px;">Gestiq<span class="dot"></span></span>
           </div>
           <div class="dash-nav-item active">◼&nbsp; Dashboard</div>
           <div class="dash-nav-item">◻&nbsp; Ventas</div>
@@ -972,12 +979,7 @@ footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex;
 
 <!-- FOOTER -->
 <footer role="contentinfo">
-  <a href="/" aria-label="Gestiq — inicio" class="logo-svg">
-    <svg height="20" viewBox="0 0 165 62" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <text x="2" y="43" font-family="Syne, Arial Black, sans-serif" font-weight="800" font-size="48" fill="#0C0C0C" letter-spacing="-1">Gestiq</text>
-      <circle cx="155" cy="37" r="4" fill="#1A6B47"/>
-    </svg>
-  </a>
+  <a href="/" aria-label="Gestiq — inicio" class="logo logo-footer">Gestiq<span class="dot" aria-hidden="true"></span></a>
   <ul class="footer-links">
     <li><a href="#funciones">Funciones</a></li>
     <li><a href="#precios">Precios</a></li>
