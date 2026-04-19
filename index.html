@@ -10,21 +10,21 @@
 <meta name="keywords" content="sistema de gestión, software para negocios, POS Argentina, gestión cafetería, software restaurante, gestión pymes">
 <meta name="author" content="Gestiq">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://gestiq.app">
+<link rel="canonical" href="https://gestiq.ar/">
 
 <!-- Open Graph / WhatsApp / LinkedIn -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://gestiq.app">
+<meta property="og:url" content="https://gestiq.ar">
 <meta property="og:title" content="Gestiq — Tu negocio digitalizado en 48 horas">
 <meta property="og:description" content="Sistema de gestión para PyMEs con implementación personalizada y soporte real. Planes desde USD 29/mes.">
-<meta property="og:image" content="https://gestiq.app/og-image.jpg">
+<meta property="og:image" content="https://gestiq.ar/png/og_image_1200x630.png">
 <meta property="og:locale" content="es_AR">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Gestiq — Tu negocio digitalizado en 48 horas">
 <meta name="twitter:description" content="Sistema de gestión para PyMEs. POS, reservas, clientes, dashboard. Desde USD 29/mes.">
-<meta name="twitter:image" content="https://gestiq.app/og-image.jpg">
+<meta name="twitter:image" content="https://gestiq.ar/png/og_image_1200x630.png">
 
 <!-- Schema.org structured data -->
 <script type="application/ld+json">
@@ -33,16 +33,26 @@
   "@type": "SoftwareApplication",
   "name": "Gestiq",
   "description": "Sistema de gestión para PyMEs con implementación personalizada y soporte continuo",
-  "url": "https://gestiq.app",
+  "url": "https://gestiq.ar",
   "applicationCategory": "BusinessApplication",
   "offers": [
     {"@type": "Offer", "name": "Starter", "price": "29", "priceCurrency": "USD", "billingIncrement": "month"},
     {"@type": "Offer", "name": "Pro", "price": "59", "priceCurrency": "USD", "billingIncrement": "month"},
     {"@type": "Offer", "name": "Business", "price": "120", "priceCurrency": "USD", "billingIncrement": "month"}
   ],
+  "logo": "https://gestiq.ar/svg/wordmark_dark_lg.svg",
   "aggregateRating": {"@type": "AggregateRating", "ratingValue": "5", "reviewCount": "24"}
 }
 </script>
+
+<!-- Favicons -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20fill%3D%22%230C0C0C%22%20rx%3D%226%22/%3E%3Ctext%20x%3D%223%22%20y%3D%2225%22%20font-family%3D%22Arial%20Black%2Csans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2222%22%20fill%3D%22%23FFFFFF%22%3EG%3C/text%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2224%22%20r%3D%224%22%20fill%3D%22%231A6B47%22/%3E%3C/svg%3E">
+<link rel="alternate icon" type="image/png" href="favicon/favicon-32x32.png" sizes="32x32">
+<link rel="alternate icon" type="image/png" href="favicon/favicon-16x16.png" sizes="16x16">
+<link rel="shortcut icon" href="favicon/favicon.ico">
+<link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+<meta name="theme-color" content="#0C0C0C">
+<link rel="manifest" href="manifest.json">
 
 <!-- Fonts: Syne (logo) + Satoshi (body) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -105,23 +115,9 @@ a { color: inherit; text-decoration: none; }
 button { cursor: pointer; font-family: inherit; border: none; }
 
 /* ─── LOGO COMPONENT ─────────────────────────── */
-.logo {
-  display: inline-flex; align-items: baseline; gap: 0;
-  font-family: var(--syne); font-weight: 800;
-  letter-spacing: -0.04em; line-height: 1;
-  color: var(--ink); user-select: none;
-}
-.logo .dot {
-  display: inline-block; border-radius: 50%;
-  background: var(--accent); flex-shrink: 0;
-  width: .18em; height: .18em;
-  margin-left: .04em; margin-bottom: .06em;
-  vertical-align: baseline;
-}
-.logo-white { color: var(--white); }
-.logo-white .dot { background: rgba(255,255,255,0.9); }
-.logo-nav { font-size: 20px; }
-.logo-footer { font-size: 18px; }
+/* Logo — SVG inline component */
+.logo-svg { display: inline-flex; align-items: center; line-height: 1; }
+.logo-svg svg { display: block; }
 
 /* app icon inline */
 .app-icon-inline {
@@ -562,8 +558,11 @@ footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex;
 
 <!-- NAV -->
 <nav id="nav" role="navigation" aria-label="Navegación principal">
-  <a href="/" aria-label="Gestiq — inicio">
-    <div class="logo logo-nav" aria-hidden="true">Gestiq<span class="dot"></span></div>
+  <a href="/" aria-label="Gestiq — inicio" class="logo-svg">
+    <svg height="22" viewBox="0 0 165 62" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <text x="2" y="43" font-family="Syne, Arial Black, sans-serif" font-weight="800" font-size="48" fill="#0C0C0C" letter-spacing="-1">Gestiq</text>
+      <circle cx="155" cy="37" r="4" fill="#1A6B47"/>
+    </svg>
   </a>
   <div class="nav-right">
     <ul class="nav-links">
@@ -629,13 +628,16 @@ footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex;
   <div class="hero-mockup" role="img" aria-label="Preview del dashboard de Gestiq">
     <div class="mockup-bar" aria-hidden="true">
       <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g-mac"></div>
-      <div class="mockup-url">gestiq.app/dashboard</div>
+      <div class="mockup-url">gestiq.ar/dashboard</div>
     </div>
     <div class="mockup-body">
       <div class="dash-grid">
         <div class="dash-sidebar">
           <div class="dash-logo-inner">
-            <div class="logo" style="font-size:16px;">Gestiq<span class="dot"></span></div>
+            <svg height="16" viewBox="0 0 165 62" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <text x="2" y="43" font-family="Syne, Arial Black, sans-serif" font-weight="800" font-size="48" fill="#0C0C0C" letter-spacing="-1">Gestiq</text>
+              <circle cx="155" cy="37" r="4" fill="#1A6B47"/>
+            </svg>
           </div>
           <div class="dash-nav-item active">◼&nbsp; Dashboard</div>
           <div class="dash-nav-item">◻&nbsp; Ventas</div>
@@ -961,23 +963,26 @@ footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex;
   <h2 id="cta-title">Lista para<br><em>empezar?</em></h2>
   <p>Agendamos una llamada de 20 minutos. Te mostramos el sistema en vivo con datos reales. Sin compromiso, sin presion.</p>
   <div class="cta-actions">
-    <a href="mailto:hola@gestiq.app" class="btn-white" role="button">Escribinos ahora</a>
+    <a href="mailto:hola@gestiq.ar" class="btn-white" role="button">Escribinos ahora</a>
     <a href="#precios" class="btn-ghost" role="button">Ver los planes</a>
   </div>
-  <p class="cta-micro">Respondemos en menos de 2 horas en dias habiles · hola@gestiq.app</p>
+  <p class="cta-micro">Respondemos en menos de 2 horas en dias habiles · hola@gestiq.ar</p>
 </div>
 </main>
 
 <!-- FOOTER -->
 <footer role="contentinfo">
-  <a href="/" aria-label="Gestiq — inicio">
-    <div class="logo logo-footer">Gestiq<span class="dot"></span></div>
+  <a href="/" aria-label="Gestiq — inicio" class="logo-svg">
+    <svg height="20" viewBox="0 0 165 62" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <text x="2" y="43" font-family="Syne, Arial Black, sans-serif" font-weight="800" font-size="48" fill="#0C0C0C" letter-spacing="-1">Gestiq</text>
+      <circle cx="155" cy="37" r="4" fill="#1A6B47"/>
+    </svg>
   </a>
   <ul class="footer-links">
     <li><a href="#funciones">Funciones</a></li>
     <li><a href="#precios">Precios</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="mailto:hola@gestiq.app">hola@gestiq.app</a></li>
+    <li><a href="mailto:hola@gestiq.ar">hola@gestiq.ar</a></li>
   </ul>
   <p class="footer-copy">© 2025 Gestiq</p>
 </footer>

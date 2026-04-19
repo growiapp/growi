@@ -1,0 +1,27 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap');</style></defs>
+  <rect width="1200" height="630" fill="#0C0C0C"/>
+  <!-- Accent circle decoration -->
+  <circle cx="1050" cy="-80" r="360" fill="#1A6B47" opacity="0.12"/>
+  <!-- Wordmark -->
+  <text x="80" y="290"
+    font-family="Syne, Arial Black, sans-serif"
+    font-weight="800"
+    font-size="120"
+    fill="#FFFFFF"
+    letter-spacing="-5">Gestiq</text>
+  <circle cx="824" cy="228" r="18" fill="#1A6B47" />
+  <!-- Tagline -->
+  <text x="82" y="360"
+    font-family="Arial, sans-serif"
+    font-weight="300"
+    font-size="32"
+    fill="rgba(255,255,255,0.45)"
+    letter-spacing="-0.5">Sistema de gestión para PyMEs</text>
+  <!-- URL -->
+  <text x="82" y="560"
+    font-family="Arial, sans-serif"
+    font-weight="400"
+    font-size="22"
+    fill="#1A6B47">gestiq.ar</text>
+</svg>

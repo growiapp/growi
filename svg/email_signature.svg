@@ -1,0 +1,8 @@
+<svg width="360" height="68" viewBox="0 0 360 68" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="8" width="50" height="50" fill="#0C0C0C" rx="12"/>
+<text x="6" y="46" font-family="Arial Black, Liberation Sans Bold, sans-serif" font-weight="900" font-size="30" fill="#FFFFFF">G</text>
+<circle cx="44" cy="52" r="7" fill="#1A6B47"/>
+<line x1="68" y1="14" x2="68" y2="54" stroke="rgba(0,0,0,0.14)" stroke-width="1"/>
+<text x="80" y="33" font-family="Arial, sans-serif" font-weight="700" font-size="15" fill="#0C0C0C">Nombre Apellido</text>
+<text x="80" y="51" font-family="Arial, sans-serif" font-weight="300" font-size="12" fill="#888">Gestiq  ·  hola@gestiq.ar</text>
+</svg>
