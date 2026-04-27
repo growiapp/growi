@@ -116,6 +116,10 @@ footer{padding:36px 28px;border-top:1px solid var(--line);display:flex;justify-c
 .pricing-lead{max-width:720px;margin:18px 0 0;color:var(--ink2);font-size:17px;line-height:1.6}
 .usecases .sec-title{max-width:900px;margin:0 auto 22px;line-height:1.08;font-size:clamp(34px,4.8vw,58px)}
 .usecases .section-lead{margin:0 auto 42px;max-width:780px}
+/* Anchor offset para que las secciones no queden tapadas por la navegación fija */
+#how,#features,#pricing,#faq,#rubros-growi{scroll-margin-top:140px}
+@media(max-width:880px){#how,#features,#pricing,#faq,#rubros-growi{scroll-margin-top:108px}}
+
 .footer-contact{display:inline-flex;align-items:center;gap:7px}
 .footer-icon{width:15px;height:15px;flex:0 0 auto;color:var(--accent)}
 @media(max-width:880px){.pricing-lead,.how-lead{text-align:center;margin:16px auto 0}.usecases .sec-title{font-size:clamp(32px,9vw,46px);line-height:1.08}.usecases .section-lead{margin-bottom:32px}}
