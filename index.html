@@ -235,6 +235,50 @@ section,header,footer,nav,.hero,.features,.how,.pricing,.usecases,.faq,.testimon
   .cta-final{width:calc(100% - 24px);padding-left:18px;padding-right:18px}
   .footer-links{width:100%}
 }
+
+/* Mobile-first product walkthrough: reemplaza el mockup completo en celular */
+.mobile-walkthrough{display:none}
+@media(max-width:640px){
+  .hero-mockup{background:transparent;border:0;box-shadow:none;backdrop-filter:none;overflow:visible;text-align:left;margin-top:38px;contain:layout paint;}
+  .hero-mockup>.mockup-bar,
+  .hero-mockup>.mockup-body{display:none!important}
+  .mobile-walkthrough{display:block;width:100%;max-width:100%;min-width:0;padding:0;overflow:hidden}
+  .mobile-walkthrough-head{padding:0 2px 18px;text-align:left}
+  .mobile-walkthrough-kicker{display:inline-flex;align-items:center;height:28px;padding:0 10px;border-radius:999px;background:rgba(26,107,71,.10);color:var(--accent2);font-size:11px;font-weight:760;letter-spacing:.02em;text-transform:uppercase;margin-bottom:12px}
+  .mobile-walkthrough h2{font-size:clamp(31px,9.4vw,42px);line-height:.98;letter-spacing:-.06em;margin:0;color:var(--ink)}
+  .mobile-walkthrough p{font-size:15px;line-height:1.55;color:var(--ink2);margin:13px 0 0;max-width:32rem}
+  .mobile-walkthrough-grid{display:grid;grid-template-columns:1fr;gap:12px;width:100%;min-width:0}
+  .mobile-demo-card{position:relative;width:100%;min-width:0;border:1px solid rgba(12,12,12,.08);border-radius:24px;background:linear-gradient(180deg,#fff 0%,#fbfbfa 100%);box-shadow:0 18px 46px rgba(12,12,12,.075);padding:16px;overflow:hidden}
+  .mobile-demo-card::after{content:"";position:absolute;right:-36px;top:-44px;width:110px;height:110px;border-radius:50%;background:rgba(26,107,71,.075);pointer-events:none}
+  .mobile-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;position:relative;z-index:1}
+  .mobile-card-top span{font-size:13px;font-weight:820;letter-spacing:-.03em;color:var(--ink)}
+  .mobile-card-top em{font-style:normal;height:26px;display:inline-flex;align-items:center;padding:0 9px;border-radius:999px;background:var(--accentL);color:var(--accent2);font-size:10.5px;font-weight:760;white-space:nowrap}
+  .mobile-card-main{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:15px;position:relative;z-index:1}
+  .mobile-card-main strong{font-size:clamp(30px,9vw,42px);line-height:.9;letter-spacing:-.065em;color:var(--accent)}
+  .mobile-card-main small{font-size:11px;line-height:1.25;color:var(--ink3);font-weight:650;text-align:right;max-width:110px}
+  .mobile-mini-list{display:grid;gap:8px;position:relative;z-index:1}
+  .mobile-mini-list div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:15px;background:var(--off);border:1px solid rgba(12,12,12,.055)}
+  .mobile-mini-list span{font-size:12px;color:var(--ink3);font-weight:620;min-width:0}
+  .mobile-mini-list b{font-size:13px;color:var(--ink);letter-spacing:-.03em;white-space:nowrap}
+  .mobile-mini-list.compact{margin-top:12px}
+  .mobile-bars{display:grid;gap:8px;margin:6px 0 0;position:relative;z-index:1}
+  .mobile-bars div{height:10px;border-radius:999px;background:rgba(12,12,12,.06);overflow:hidden}
+  .mobile-bars span{display:block;height:100%;width:var(--w);border-radius:inherit;background:linear-gradient(90deg,var(--accent),#2A865D)}
+  .mobile-schedule-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:11px 12px;border-radius:15px;background:#fff;border:1px solid var(--line);position:relative;z-index:1}
+  .mobile-schedule-row b{font-size:12px;color:var(--accent2)}
+  .mobile-schedule-row span{font-size:12px;line-height:1.3;color:var(--ink2);min-width:0}
+  .mobile-schedule-row em{font-style:normal;height:24px;display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;background:rgba(26,107,71,.10);color:var(--accent2);font-size:9.5px;font-weight:760;white-space:nowrap}
+  .mobile-schedule-row em.neutral{background:rgba(12,12,12,.06);color:var(--ink2)}
+  .mobile-walkthrough-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px;justify-items:stretch}
+  .mobile-walkthrough-actions .btn-primary,
+  .mobile-walkthrough-actions .btn-secondary{width:100%;max-width:none;justify-content:center}
+}
+@media(max-width:380px){
+  .mobile-demo-card{border-radius:20px;padding:14px}
+  .mobile-schedule-row{grid-template-columns:1fr;gap:6px}
+  .mobile-schedule-row em{width:max-content}
+}
+
 </style>
 
 <style>
@@ -605,6 +649,57 @@ section,header,footer,nav,.hero,.features,.how,.pricing,.usecases,.faq,.testimon
           </div>
 
         </div>
+      </div>
+    </div>
+
+    <div class="mobile-walkthrough" aria-label="Así se ve Growi en acción en celular">
+      <div class="mobile-walkthrough-head">
+        <div class="mobile-walkthrough-kicker">Demo mobile</div>
+        <h2>Así se ve Growi en acción.</h2>
+        <p>Una vista simple para entender ventas, reservas, clientes y caja sin perseguir datos.</p>
+      </div>
+      <div class="mobile-walkthrough-grid">
+        <article class="mobile-demo-card">
+          <div class="mobile-card-top"><span>Resumen del día</span><em>Hoy</em></div>
+          <div class="mobile-card-main"><strong>$184.500</strong><small>Ventas confirmadas</small></div>
+          <div class="mobile-mini-list">
+            <div><span>Caja estimada</span><b>$147.600</b></div>
+            <div><span>Reservas</span><b>5</b></div>
+            <div><span>Gastos cargados</span><b>$36.900</b></div>
+          </div>
+        </article>
+        <article class="mobile-demo-card">
+          <div class="mobile-card-top"><span>Ventas y pagos</span><em>En vivo</em></div>
+          <div class="mobile-card-main"><strong>138</strong><small>Productos vendidos</small></div>
+          <div class="mobile-bars" aria-hidden="true">
+            <div style="--w:78%"><span></span></div>
+            <div style="--w:54%"><span></span></div>
+            <div style="--w:31%"><span></span></div>
+          </div>
+          <div class="mobile-mini-list compact">
+            <div><span>Ticket promedio</span><b>$3.712</b></div>
+            <div><span>Medios de pago</span><b>3</b></div>
+          </div>
+        </article>
+        <article class="mobile-demo-card">
+          <div class="mobile-card-top"><span>Clientes y reservas</span><em>Agenda</em></div>
+          <div class="mobile-schedule-row"><b>15:30</b><span>Mesa 7 · Florencia M.</span><em>Confirmada</em></div>
+          <div class="mobile-schedule-row"><b>16:15</b><span>Barra · Tomás R.</span><em class="neutral">En camino</em></div>
+          <div class="mobile-schedule-row"><b>17:00</b><span>Mesa 2 · Agustina B.</span><em>Confirmada</em></div>
+        </article>
+        <article class="mobile-demo-card">
+          <div class="mobile-card-top"><span>Caja y gastos</span><em>Control</em></div>
+          <div class="mobile-card-main"><strong>$147.600</strong><small>Saldo estimado del día</small></div>
+          <div class="mobile-mini-list">
+            <div><span>Ingresos</span><b>$184.500</b></div>
+            <div><span>Egresos</span><b>$36.900</b></div>
+            <div><span>Pendientes</span><b>3</b></div>
+          </div>
+        </article>
+      </div>
+      <div class="mobile-walkthrough-actions">
+        <a href="#pricing" class="btn-secondary">Ver planes</a>
+        <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20consultar%20por%20el%20sistema%20de%20gesti%C3%B3n." class="btn-primary" target="_blank" rel="noopener">Hablar por WhatsApp</a>
       </div>
     </div>
   </div>
