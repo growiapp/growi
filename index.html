@@ -363,6 +363,17 @@ section,header,footer,nav,.hero,.features,.how,.pricing,.usecases,.faq,.testimon
 @media(max-width:880px){.hero-mockup{border-radius:26px}.mockup-body{padding:10px}.dynamic-mockup{min-height:700px}.dynamic-mockup .dash-main{min-height:700px}.dynamic-mockup .dash-stage{min-height:570px}.dash-topline{align-items:flex-start}.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr))}.mockup-panels{grid-template-columns:1fr}.panel-card{min-width:0}}
 @media(max-width:640px){.hero{padding-left:16px;padding-right:16px}.hero-mockup{width:100%;border-radius:22px}.mockup-bar{height:48px;padding:0 14px}.mockup-body{padding:8px}.dynamic-mockup{min-height:760px}.dynamic-mockup .dash-main{padding:16px;min-height:760px}.dynamic-mockup .dash-stage{min-height:630px}.dash-header-row{gap:12px}.dash-date{width:max-content;max-width:100%;white-space:normal;height:auto;min-height:32px;padding:8px 12px}.kpi-row{grid-template-columns:1fr}.kpi-card{padding:15px}.mockup-panels{gap:12px}.panel-card{padding:14px}.stat-strip{grid-template-columns:1fr}.chart-area-rich{display:none!important}.sales-spark{height:116px}.price-value{font-size:clamp(40px,13vw,54px)}.plans-grid,.features-grid,.steps,.usecase-grid{grid-template-columns:1fr!important}.sec-head{margin-bottom:34px}.cta-final h2{font-size:clamp(38px,13vw,64px)}}
 @media(max-width:420px){.dynamic-mockup{min-height:820px}.dynamic-mockup .dash-main{min-height:820px}.dynamic-mockup .dash-stage{min-height:690px}.mockup-case-pill,.mockup-live-pill{font-size:11px}.dash-title{font-size:22px}.dash-subtitle{font-size:12px}.panel-head{align-items:flex-start;flex-direction:column}.payment-row{grid-template-columns:1fr;gap:7px}.progress{width:100%}.footer-links{flex-direction:column;gap:12px}}
+
+
+/* FIX mobile walkthrough: el bloque mobile queda fuera del mockup-body oculto */
+@media(max-width:640px){
+  .hero-mockup{height:auto!important;min-height:0!important;padding:0!important;overflow:visible!important;contain:layout!important;margin-top:38px!important;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;}
+  .hero-mockup>.mockup-bar,
+  .hero-mockup>.mockup-body{display:none!important;}
+  .hero-mockup>.mobile-walkthrough{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:2;width:100%!important;max-width:100%!important;min-width:0!important;overflow:visible!important;}
+  .mobile-walkthrough-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;}
+  .mobile-demo-card{display:block!important;max-width:100%!important;min-width:0!important;}
+}
 </style>
 
 </head>
@@ -650,6 +661,7 @@ section,header,footer,nav,.hero,.features,.how,.pricing,.usecases,.faq,.testimon
 
         </div>
       </div>
+    </div>
     </div>
 
     <div class="mobile-walkthrough" aria-label="Así se ve Growi en acción en celular">
