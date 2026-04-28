@@ -382,6 +382,58 @@ section,header,footer,nav,.hero,.features,.how,.pricing,.usecases,.faq,.testimon
 }
 </style>
 
+
+<style>
+/* Preview curada del mockup: cada pantalla entra completa dentro del marco */
+.curated-mockup .dash-main{padding:24px 26px 20px!important;min-height:454px!important}
+.curated-mockup .dash-stage{min-height:334px!important;overflow:hidden!important}
+.curated-mockup .dash-screen{overflow:hidden!important}
+.curated-mockup .dash-header-row{margin-bottom:13px!important}
+.curated-mockup .dash-title{font-size:25px!important;line-height:1.02!important;letter-spacing:-.05em}
+.curated-mockup .dash-subtitle{font-size:12.5px!important;line-height:1.38!important;margin-top:5px!important;max-width:560px}
+.curated-mockup .dash-date{height:30px!important;font-size:11px!important;padding:0 11px!important}
+.curated-mockup .kpi-row{gap:10px!important}
+.curated-mockup .kpi-card{padding:12px 13px!important;border-radius:16px!important;box-shadow:none!important;min-height:78px}
+.curated-mockup .kpi-label{font-size:9.5px!important;letter-spacing:.055em!important;margin-bottom:6px!important}
+.curated-mockup .kpi-val{font-size:21px!important;line-height:1!important;letter-spacing:-.045em}
+.curated-mockup .kpi-sub{font-size:10.5px!important;line-height:1.22!important;margin-top:5px!important}
+.curated-mockup .mockup-panels{margin-top:12px!important;gap:12px!important;grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr)!important}
+.curated-mockup .panel-card{padding:13px 14px!important;border-radius:18px!important;box-shadow:none!important;min-height:138px;overflow:hidden}
+.curated-mockup .panel-head{margin-bottom:9px!important;font-size:12.5px!important}
+.curated-mockup .panel-note{font-size:10px!important}
+.curated-mockup .orders-list,.curated-mockup .schedule-list,.curated-mockup .payment-list{gap:7px!important}
+.curated-mockup .order-item{padding:9px 10px!important;border-radius:13px!important}
+.curated-mockup .order-title{font-size:12px!important;line-height:1.2!important}
+.curated-mockup .order-meta{font-size:10px!important;margin-top:3px!important}
+.curated-mockup .order-price{font-size:13px!important}
+.curated-mockup .schedule-item{padding:9px 10px!important;border-radius:13px!important;grid-template-columns:auto minmax(0,1fr) auto!important}
+.curated-mockup .schedule-time{font-size:11px!important}
+.curated-mockup .status-pill{height:24px!important;font-size:10px!important;padding:0 8px!important}
+.curated-mockup .payment-row{grid-template-columns:68px minmax(0,1fr) auto!important;gap:8px!important;font-size:11px!important}
+.curated-mockup .payment-row strong{font-size:11px!important}
+.curated-mockup .progress{height:8px!important}
+.curated-bars{height:94px;display:flex;align-items:flex-end;gap:13px;padding:4px 4px 0}
+.curated-bars>div{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;min-width:0}
+.curated-bars span{display:block;width:100%;max-width:28px;border-radius:999px;background:linear-gradient(180deg,var(--accent),var(--accent2));box-shadow:0 8px 18px rgba(26,107,71,.14)}
+.curated-bars span.muted{background:#B8C9BF;box-shadow:none}
+.curated-bars span.dark{background:var(--ink);box-shadow:0 8px 18px rgba(12,12,12,.10)}
+.curated-bars em{font-style:normal;font-size:10px;color:#8a8a84;font-weight:600;white-space:nowrap}
+.curated-bars.compact{height:98px;gap:12px}
+.insight-list{display:grid;gap:9px}
+.insight-list div{padding:10px 11px;border-radius:13px;background:var(--off);border:1px solid rgba(12,12,12,.06);font-size:12px;line-height:1.25;color:var(--ink2)}
+.insight-list strong{color:var(--ink)}
+@media(max-width:1040px) and (min-width:641px){
+  .curated-mockup .dash-main{min-height:565px!important}
+  .curated-mockup .dash-stage{min-height:448px!important}
+  .curated-mockup .mockup-panels{grid-template-columns:1fr!important}
+  .curated-mockup .panel-card{min-height:122px}
+  .curated-bars{height:88px}
+}
+@media(max-width:640px){
+  .curated-mockup{display:none!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -432,245 +484,239 @@ section,header,footer,nav,.hero,.features,.how,.pricing,.usecases,.faq,.testimon
       <div class="mockup-url">growi.ar/dashboard</div>
     </div>
     <div class="mockup-body">
-      <div class="dash-inner dynamic-mockup" id="growiMockup">
+      <div class="dash-inner dynamic-mockup curated-mockup" id="growiMockup">
         <div class="dash-sidebar">
           <div class="dash-logo-frame">
             <img src="data:image/png;base64,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NpRounZJhYaGKi4uTjVq1HDbNZ0lPT1dTZo0UXJysukoTvHpp5/qrrvuMh3DJfbt26dOnTrZ4oSdoujWrZu+/PJL0zFK5PDhw+rYsaNycnJKPIa33YMA7kJpUQyVKlXSgQMHbLupkDNkZ2dr586d2rx5s3744QfFxcUZncJrB35+fmrRooW6dOmirl27qnPnzgoJCTEdy+1++OEHtzx58aYbhooVK2rp0qXq1KmTkxIVjenSok6dOnruuefUv39/W04/Rsns3r1bM2fO1Pr16912zfvuu08ffvih267nTK+//rpHHKt55513atWqVaZjuFRJN320Gl9fX33//fdq0aKF6Sglctddd2nLli2lGsOb7kEAd6K0KIapU6fq2WefNR3D7U6fPq01a9Zo7dq12rp1q8efAe9qISEhuu2223TPPfeoZ8+eioyMNB3JbZo2beryI9685YahUaNG+uyzz4wshzBVWlSsWFGTJk3SkCFDPHKaOIrm+++/13PPPee2DQy/+OIL3X777W65ljM5HA41a9as2Ec2Wom/v7+2bNmiJk2amI7iUj/99JOio6Ntf381YMAAvf/++6ZjlMiSJUucMpPaW+5BAHfjEVURBQUFaciQIaZjuM3Fixf19ttvq1u3bmrWrJkmTJigjRs32v4fVCvIzMzUunXrNHLkSNWrV099+vTR6tWrvWI5zb333ms6gkfo0KGDNmzY4DX7N/j6+mrIkCGKj4/XsGHDKCy83G233aZNmzZp7ty5KleunMuvN378eOXm5rr8Os4WGhqqcePGmY5RKoMHD/b4wkKSqlevrqeeesp0jFIJCgrStGnTTMcokcTERE2ZMsV0DADXQWlRRD179lTFihVNx3C57du3a/DgwWrUqJGeffZZxcXFuXUNsbfJy8vTP//5Tz344INq1KiR/vKXvyglJcV0LJfx1DXJ7tS9e3d9+eWXCg8PNx3FLerWrau1a9fqb3/7m9d8zbgxX19fDR06VLt27XL50aSHDx/WW2+95dJruMqQIUNUrVo10zFKpFy5cpo6darpGG4zbtw4W8+8HDZsmG2L9Geffdaj770AT0BpUUR2PWu6qP71r3+pR48e6t69uz777DNbPlWyuwsXLmjmzJlq0qSJ5syZ45GzWtq3b2/LIwStIiYmRsuXL/eafXUeffRRbd26VR07djQdBRZVrVo1ff7553rttddc+vfilVdeUUJCgsvGd5Xg4GBNnDjRdIwSmTRpkq1fxBdX2bJlNWnSJNMxSqR8+fKaMGGC6RglsmHDBn3yySemYwC4AUqLIqhYsaLuuOMO0zFc4vDhw7rvvvt07733atu2babjQD+vh5w9e7batGmj2NhY03GcKjg4WNHR0aZj2FL37t21bNkyryh9QkNDtWjRIs2bN0+hoaGm48AGnnjiCa1fv95lT3rT09NtO338kUcesd0T8Dp16mj48OGmY7jdkCFDVKdOHdMxim38+PEqX7686RjFlpmZqbFjx5qOAaAIKC2KoGfPnh63Q31+fr7mzJmjjh07auPGjabj4BpOnz6t++67T6NHj/aoWRe33HKL6Qi206ZNGy1btswrjvWMiorShg0b1LdvX9NRYDPR0dH6/vvv1a5dO5eMv2LFCm3evNklY7tSQECA7TYRnz17tgICAkzHcLuAgAA9//zzpmMUS82aNTVs2DDTMUpkzpw5OnnypOkYAIrAs16Ju8if/vQn0xGcKiEhQTExMZo9e3apzqKG6xUWFurvf/+7unXrphMnTpiO4xSNGjUyHcFWateurRUrVnjFjIMmTZooNjZWzZs3Nx0FNhUZGamvv/7aJf9uFxYWaty4ccrPz3f62K42aNAg2zzB79q1q+655x7TMYy5//771aZNG9Mximzq1Km2XLK4f/9+zZ8/33QMAEVEaXEDgYGBuu2220zHcJq9e/eqa9eu2r59u+koKIYDBw54zP+32rVrm45gG2XLltXnn3/uFeu6o6Oj9c0336h69eqmo8DmgoODtWzZMvXp08fpYx84cEDvvfee08d1NT8/P02ePNl0jBvy8/PTyy+/bDqGcSaOlC6JW265RQMGDDAdo9gKCws1cuRI9m8DbITS4gZat27tMU844+Pjdffdd9tyMzFIycnJ6tmzp77//nvTUUolKirKdARb8PHx0cKFC1W/fn3TUVyuSZMmWr16tSIiIkxHgYfw9/fXwoUL9cc//tHpY8+aNUuXLl1y+riu1q9fP8vPdHvwwQeZaSWpY8eOtphtMnPmTPn4+JiOUWzvv/++du7caToGgGKgtLiBzp07m47gFCdPnlTv3r2VnJxsOgpKITMzU/3799eePXtMRykxb5g14AyjRo3yuKVp1xIVFaWVK1dSWMDp/P39tWTJEqdPtb9y5Yotj+L09fXVc889ZzrG7woLC9OMGTNMx7CMmTNnyt/f33SM33XHHXfYcpP6hIQE2+0bAoDS4obatm1rOkKpZWVlacCAAbZ8MoTfysjI0AMPPKC0tDTTUUqkbNmypiNYXsuWLb3i5j0kJETLly9nSQhcJjg4WJ988onTZ3h99NFHtlyud//991t2M+SJEyeqUqVKpmNYRr169TR48GDTMa7J19dXs2bNMh2jRCZOnGjb+yfAm1Fa3EDLli1NRyi1GTNmaP/+/aZjwIlOnTplyyd9krziyM7SCA4O1sKFC71i5/zXX39dLVq0MB0DHq5SpUpasmSJU59a/3dTzoKCAqeN6Q4+Pj6WPLq1Vq1aGjFihOkYljN58mSFhYWZjvEbf/7zn225jGfNmjVatWqV6RgASsAnLCys0HQIq4qIiNCpU6dMxyiVPXv2qEuXLra7sQJKyk5PUK4162TWrFkaPXq0gTRF9/LLL5d6o7g+ffpo8eLFzgkEFMFLL73k9E0eX3vtNT3xxBNOHdMdunXrpri4ONMxrlq6dKl69eplOoYlzZkzR7NnzzYd46rg4GD9+9//1k033WQ6SrFkZGSoTZs2Onv2rEuvY/d7EMCqmGlxHY0bNzYdodRmzJhBYQHYRKtWrTRy5EjTMVyuUqVKev31103HgJeZOHGimjZt6tQxX3zxRSUlJTl1THew0ky9Tp06UVhcx6hRo1StWjXTMa4aNmyY7QoL6ec9QlxdWABwHUqL67DLmea/58cff9SGDRtMxwBQBH5+fpo/f758fT3/x/Ls2bNVoUIF0zHgZfz9/TVv3jynnnaQkpKi6dOnO208d+nevbs6duxoOoZ8fX054vQGQkNDLVMyVahQQRMmTDAdo9ji4+P1zjvvmI4BoBSsuy2xBdx8882mI5TKokWLTEcAUESPP/64ZTfIc6ZWrVpp4MCBpmNYwsWLF3X69GklJCTo4sWLunjxopKTk5WamqqUlBRlZGTI4XAoOztbWVlZKigoUH5+vvLz8+Xr6ys/Pz/5+/srKChIQUFBKlOmjEJDQ1W+fHmFh4crMjJSlSpVUtWqVVWtWjXVqlXL609padeune6//359/vnnThtz6dKleuyxx9S6dWunjekO06ZNM35C0QMPPOARe4e52oMPPqj58+fr4MGDRnNMmDBB4eHhRjMUV35+vkaNGqX8/HzTUQCUAqXFddh5R/uCggKtXr3adAwARVC+fHlLbo7nCi+88ILpCG535swZ/fjjj/rxxx916NAhHTlyRMeOHVNmZqbbs4SFhalevXpq2LChGjdurFtuuUWtW7f2qjJj+vTpWr16tdNexBQUFGjcuHH617/+5dRZHK7WpUsXdevWTd9++62R65cpU8YrTklyhv+e1tG3b19jGWrWrKlhw4YZu35JLViwQLt37zYdA0ApUVpcR9WqVU1HKLG4uDglJiaajgGgCMaPH+8VyyXatm2rbt26mY7hckeOHFFsbKw2b96sbdu26fz586YjXZWenq74+HjFx8df/TUfHx/VqVNHnTt31u23364777xT5cuXN5bR1erWras+ffrok08+cdqYcXFx+uCDDyx7ROXvmTZtmrHSYty4cba+z3K3mJgYdenSRZs2bTJy/enTp9vu9K8zZ85o5syZpmMAcALPXzxdCpGRkaYjlNjWrVtNRwBQBNWqVbPl06uS8ORNRn/88UdNmzZNLVq0UKtWrTR+/HitWrXKUoXF7yksLNSxY8euvui++eabdc8992jx4sW6cuWK6Xgu8dRTTzl9zOeff14pKSlOH9eV2rVrpz/84Q9uv27NmjU9+ueBq8yePdvIbJ7o6Gj179/f7dctrbFjx8rhcJiOAcAJKC2uw85PPvfu3Ws6AoAiGDt2rIKDg03HcLkqVaro3nvvNR3DqRwOh/7v//5PHTp0UOfOnfW3v/1Nx48fNx2r1PLy8vTdd99p5MiRql+/vp588knt27fPdCynat26tVq1auXUMZOSkmy5/GnatGlufyH8/PPPe8XPPWdr2bKl+vXr5/brzpw501ZLnyRp9erVWrdunekYAJyE0uI6wsLCTEcosaNHj5qOAOAGIiIi9Mgjj5iO4RYDBgyQn5+f6RhO4XA49Oqrr6px48YaM2aM9u/fbzqSyzgcDi1dulS33nqrBg4caHwjQGcaNGiQ08dctGiRfvzxR6eP60rR0dG6++673Xa99u3bG3nh7SlmzJihoKAgt12ve/futlvWl5aWpnHjxpmOAcCJ2NPiOkJDQ01HKLGEhATTEWxjz549tj8pxs7Kli1rOoIxQ4cOtfXPmeLwlBcpn3zyiaZOnep1P2MLCwv11Vdfae3atRo2bJimT59u+z+79913nyZOnOjUUwXy8/P1zDPPaOPGjU4b0x2mTZumNWvWqKCgwKXX8fHx0SuvvOLSa3i6/26IOW/ePJdfy9fX15Z7QkybNk0XLlwwHQOAEzHT4joCAgJMRygxu62rBbzRo48+ajqCW9SqVUstWrQwHaNUkpKS1L9/fw0ZMsTrCov/lZeXp7feeku33nqr9uzZYzpOqVSuXFnt27d3+rg7duzQsmXLnD6uKzVp0kS9e/d2+XUGDBhgu6NhrWjChAlu2Sx34MCBatasmcuv40w7duzQokWLTMcA4GSUFtfh72/fiShZWVmmIwC4ATsfq1wcPXr0MB2hVPbs2aPOnTvrm2++MR3FMo4dO6bu3bvriy++MB2lVLp37+6ScadNm6a0tDSXjO0qkydPdukSrtDQUI44dZLy5ctr/PjxLr1GSEiIpk+f7tJrOFteXp5GjRrl8hlDANyP0uI6CgsLTUcoMV9f/tcCsAa7rYf+Xzt27NBdd92ls2fPmo5iOZmZmXr44YedenSou7nqz+alS5dsN62+fv36GjBggMvGHzVqlKKiolw2vrd58sknVbNmTZeNP3z4cNsV6/PmzfPoPYYAb+YTFhZm31fmLpacnGzb2RY33XQTS0SKiD0tzHL2nhZ2e7ppSn5+vk6fPq0zZ87ozJkzOn/+vC5evKiLFy8qOTlZKSkpSk1NVWZmpjIzM5WVlaW8vDwVFBQoLy+vWNc6cuSIqlat6qKvxHUOHDigHj16eOyxn87i7++vzz//XLfffrvpKMWWk5Oj6tWrKzs72+lj+/v7a/PmzWratKnTx3aVkydPqlWrVsrNzXXquFFRUdq9e7dCQkKcOq63W758uR5//HGnjxsREaG9e/eqXLlyTh/bVU6cOKH27dsrMzPTaA473YN4855isB97viJ3k5ycHNuWFlWrVqW0ACDp56n8//73v3XgwAEdOHBAhw4d0unTp53+wuRaoqKibFlYpKena8CAARQWRZCXl6fBgwdr27Ztqlatmuk4xRIYGKhmzZopLi7O6WPn5eVp3LhxWrt2rdPHdpXatWtr0KBBWrx4sVPHnTFjBoWFC/Tv319vvvmm4uPjnTrus88+a6vCQpJGjx5tvLAA4DqsIbiOjIwM0xFKrEGDBqYjADAgMzNT3333nebMmaNevXqpRo0aio6O1mOPPaa//vWvWrNmjY4dO+aWwkKS7TZx+69p06bpxIkTpmPYxuXLlzV27FjTMUrElTMhtmzZouXLl7tsfFd49tlnnXqkZps2bTRw4ECnjedqn3zyiW2Wg/n4+GjWrFlOHbN27dp64oknnDqmq3388cf617/+ZToGABeitLiO9PR00xFKrGXLlqYjAHCDgoIC7dixQ6+88opiYmJUo0YN3XPPPZo9e7ZiY2OVmppqNF+jRo2MXr8kDh06xO7zJfD1119r8+bNpmMUW8OGDV06/tSpU231EKRGjRoaPHiwU8by8fHRnDlznDKWO5w4cUKjRo3S008/bTpKkXXt2lUxMTFOG2/GjBm2Oj0vOTlZkydPNh0DgItRWlzH5cuXTUcoMTuuLQZQNA6HQytXrtQTTzyhOnXq6M4779SsWbO0detW5eTkmI73C3bcL+b1119Xfn6+6Ri29Nprr5mOUGx169Z16fjnz5/XSy+95NJrONuECROcspyjT58+LjlW1hUKCgo0dOhQZWRkaOPGjVqyZInpSEX24osvOuXkl1atWqlv375OSOQ+kydP1qVLl0zHAOBilBbXkZiYaDpCibVu3dqlu0oDcK/s7GytXr1agwYNUu3atfXwww/r448/VlJSkulo11WjRg3TEYrlv4UQSmbjxo06f/686RjF4o4TEhYsWKBDhw65/DrOUqVKlVIvEQgJCdGLL77opESu9/rrr2vbtm1X/3vy5Mn66aefDCYquiZNmuiBBx4o9TjOXmriaps2bdKyZctMxwDgBpQW15GQkGA6Qqk8+uijpiMAKKV9+/Zp/Pjxqlu3rh588EF98cUXttpsrHLlyqYjFMu//vUvORwO0zFsq6CgwFYbT0o/v0B3tdzcXI0fP97l13GmcePGqUyZMiX+/BEjRuimm25yYiLX2bt3729mw6SmpmrUqFGGEhXf1KlTFRoaWuLPj4mJUZcuXZyYyLVycnI0evRoFRZyCCLgDSgtruPcuXOmI5TK448/brvdnwH8/MJv1apV6tGjhzp27Kh3333X+N4UJVWxYkXTEYpl69atpiPYnt2+h5GRkW65zrfffmurWTwRERF68sknS/S51apV04QJE5ycyDWys7P1xBNPXHNp3bp162zzJL969eoaMWJEiT7Xz89PM2fOdHIi15o7d66OHDliOgYAN6G0uI6TJ0+ajlAq5cuX18SJE03HAFBEubm5WrRokaKjo/XQQw/9YqqyXdntHPiDBw+ajmB7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WVlZOnfunM6dO6eEhARdvHhRSUlJunz5slJTU5WRkaGMjAw5HI6rRzvn5eX94ihAf3//q8c1BwUFXT2eOTw8XOXLl1eFChVUqVIlValSRdWrV9dNN93EC19Jb7/9tm0KC+nnF0HTpk3Tu+++azqKJb311luWLCwkaeXKlVq1apXuu+8+01Esadq0aR5VWABwHWZaOEG1atX07bffetWTKthXSkqK7rnnHv3444+Sfl6/fvToUWMvZphp4V18fX21efNmNW/e3HQUeKFLly6pRYsWtvo5If38c3rdunXq2LGj6SiWcvDgQXXp0kVZWVmmo/yuSpUqaefOnSwT+ZUdO3aoR48eHnd8tJ1+tnjjPQjsi9NDnCAhIUG9e/e21Q8qeKeUlBT17NnzamEhSc2aNePpK9ymoKBAo0ePNrI0Apg8ebIt/60uLCzUuHHjPO4FXmnk5uZq6NChli4spJ+LsnHjxpmOYSl5eXkaNWoUf54BFBmlhZPs379fffv2VWZmpukowDUlJSWpZ8+eio+P/8Wv33HHHWYCwWvt3LlTb731lukY8DLr16/Xxx9/bDpGie3du1cLFy40HcMyXn75Ze3evdt0jCL57LPP9MUXX5iOYRnz5s3T/v37TccAYCMsD3GyO+64Q8uXL1dwcLDpKMBV586d07333qvDhw//5vdWr15ttLhgeYh3Cg4O1rfffqumTZuajgIvkJiYqA4dOujChQumo5RK+fLltXv3blWsWNF0FKN27typHj16/GKPF6urXLmydu7cqYiICNNRjDpx4oTat2/vsQ/5uAcBXIOZFk4WGxurvn37KiMjw3QUQJL0n//8Rz169LhmYREYGMgaaRiRlZWlBx54QFeuXDEdBR6uoKBAjz76qO0LC+nnJX7Tp083HcMoh8OhJ554wlaFhSRdvHiRZSKSxowZ47GFBQDXobRwge+++0533323EhMTTUeBl4uNjVX37t115syZa/5+69atFRIS4uZUwM+OHz+uhx56SHl5eaajwINNmjRJ3377rekYTrNs2TLt3LnTdAxjJk+erGPHjpmOUSIrVqzw6mUiy5cvV2xsrOkYAGyI0sJF4uLi1K1bNx08eNB0FHipBQsWqE+fPtd9kt2lSxc3JgJ+KzY2ViNGjGBjTrjEG2+8oQULFpiO4VQFBQUaP368V/6dWb9+vf7+97+bjlEqY8eOVXJysukYbpecnKznnnvOdAwANkVp4UKnTp3S7bffrq+++sp0FHiRrKwsDR06VBMnTrzhE+xOnTq5KRXw+/7xj39wogic7v3339e0adNMx3CJf//731q0aJHpGG6VnJysp556yvY/J7x1mciUKVN06dIl0zEA2BSlhYulp6frgQce0NSpU5Wbm2s6DjzcwYMHdfvtt+ujjz664cf6+vqqXbt2bkgF3NiiRYs0bNgwlorAKebPn69x48bZ/gXu9bzwwgte9cR+zJgxOn/+vOkYTvHpp5/q66+/Nh3DbTZt2qSlS5eajgHAxigt3KCwsFBvvPGG7rzzzmtuhgg4w+LFi9W1a1ft27evSB/fpEkThYWFuTgVUHQfffSR+vTpY6vd12EthYWFeu655zR58mSPLiwk6fLly3rhhRdMx3CLTz/9VJ9//rnpGE41evRoryidcnJymEkHoNQoLdxo9+7d6tSpk15//XXb7XoN60pISFDfvn01cuRIORyOIn9e27ZtXZgKKJnY2Fh17dpVhw4dMh0FNnPlyhX169dPb775pukobrNo0SLFx8ebjuFS586d09ixY03HcLoLFy5owoQJpmO43Ny5c3XkyBHTMQDYHKWFm2VlZWn69Onq0qWLtm/fbjoObG7ZsmVq166d1q1bV+zPZWkIrOrIkSPq2rWrli1bZjoKbCIuLk6dO3cu0c9COysoKPD4ZTDDhw9Xamqq6RgusXz5co9eJnL48GHNnTvXdAwAHoDSwpC9e/eqR48eGjJkyO8eRwn8nsOHD+vuu+/W8OHDlZKSUqIxoqOjnZoJcKaMjAwNHz5cDz/8MJu34Xfl5eVpzpw56tGjh06cOGE6jhE7duzw2ILvnXfe8ajjaq/Fk5eJjBo1StnZ2aZjAPAAPmFhYZ5bz9tEcHCwHn/8cY0fP16RkZGm48DC0tLS9PLLL+vdd99VTk5OiccJCgrS+fPn5e/v78R0JVO2bFmnjmen/RCc/bV7qsjISM2aNUuDBg2Sj4+P6TiwiJ07d2r06NHau3ev6SjGVapUSbt371Z4eLjpKE5z5MgRderUSZmZmaajuNyf//xnLVy40HQMp/rwww/11FNPmY7hdtyDAK7BTAsLyMrK0ptvvqkmTZroueeeU0JCgulIsJjc3Fy9//77uuWWWzR//vxSFRaSVK9ePUsUFkBRJCUl6cknn9Sdd97Jsjrop59+0pNPPqnu3btTWPx/ly5d0syZM03HcJq8vDwNGTLEKwoLyfOWiSQmJmrKlCmmYwDwIJQWFuJwOPTmm2+qWbNmGj58uPbs2WM6EgwrKCjQRx99pFatWumZZ55RYmKiU8Zt3LixU8YB3Gnnzp3q3r27BgwYwM9HL3T58mXNmDFDLVu21NKlS1VQUGA6kqUsXLiwyKdHWd1f/vIX7d6923QMtxozZoyuXLliOoZTTJo0yWOXvAAwg9LCgnJycrRs2TJ16tRJMTEx+vTTT0v9ZB32kpeXp2XLlql169YaOnSoTp486dTx69Sp49TxAHf6+uuv1blzZ/Xv31/btm0zHQculpCQoClTpqhp06Z67bXXinVKkjfJz8/XuHHjTMcotbi4OL366qumY7jd+fPnNXHiRNMxSm3jxo1avny56RgAPAx7WthEZGSkBgwYoEGDBql58+am48BF0tLS9MEHH2jBggU6ffq0y67z1ltv6eGHH3bZ+MXBnhYorVatWmnYsGHq06ePgoKCTMeBk+zYsUPvvvuuVq1aRXFfDO+9954GDhxoOkaJZGZmqlOnTl59ROaKFSsUExNjOkaJZGZmql27dk5/0GIn3IMArkFpYUONGzfWn//8Z/Xu3Vs333yz6ThwggMHDuj//u//9I9//EPp6ekuv97q1at1xx13uPw6RUFpAWcJDw/XgAEDNHDgQLVu3dp0HJTAxYsXtWLFCn3wwQc6cOCA6Ti2VKVKFcXHxyssLMx0lGKbMGGC3nnnHdMxjKpevbp27typcuXKmY5SbDNmzNBrr71mOoZR3IMArkFpYXMtWrRQz549dffdd6tZs2am46AY0tPTtXLlSn3wwQdu31xw+/btatKkiVuv+XsoLeAKN998s3r37q2ePXtSYFjcpUuX9PXXX2vlypX67rvvlJ+fbzqS7Y0cOVIvvfSS6RjFEhsbq/vuu0+FhdyWDho0yHblzYEDB9S5c2fl5uaajmIU9yCAa1BaeJAaNWqoR48euvPOO9W1a1eVL1/edCT8SlZWljZs2KBPPvlEa9euNbYz+pEjR1S1alUj1/41Sgu4WvXq1dWjRw/FxMSoS5cu/Gw0rLCwUPHx8dqwYYPWrl2ruLg4igonCwgI0JYtW2yz6XJqaqratWunn376yXQUy7DTMpHCwkJ1795dO3bsMB3FOO5BANegtPBQfn5+atGihbp06aJOnTqpffv2ioiIMB3LK6Wmpuqf//ynvvrqK61du9YSm8hduHBBoaGhpmNIorSAe/33Z2Pnzp116623ql27dqpUqZLpWB4tLy9Pe/fu1Q8//KAtW7Zo06ZNnCzgBrfddpttjtEcMmSIPvnkE9MxLMVOy0Tee+89j9gE1hm4BwFcg9LCS/j4+Kh+/fpq06aN2rZtq5YtW6pp06YKDg42Hc3j5OXlaffu3YqNjdX69eu1a9cuyz1FTE1Nla+vNQ4PorSAabVr11abNm0UHR2tli1bqnnz5qpQoYLpWLZUUFCgI0eOaM+ePdq9e7fi4uIUHx9vibLWGy1evFh9+vQxHeO6Pv/8cz3yyCOmY1iSHZaJnD9/Xq1bt/aY41pLi3sQwDUoLbyYv7+/6tWrp1tuuUWNGzdW48aN1ahRI9WuXVt+fn6m49lGenq6du3apR07dmjLli3avn27MjIyTMe6rmHDhpmOcNW7775rOgLwG9WqVVOzZs3UqFEjNWjQQPXr11edOnVUrVo109EsISsrS6dOndLRo0d1+PBhHTp0SPv379ehQ4eMLXsDAACeidICvxEQEKDatWurTp06ql27tm6++WbVrl1btWrVUs2aNW0xVdFVEhMTdeDAAe3Zs0d79+7V7t27dejQIRUUFJiOBsANQkNDVbt2bdWsWVO1atVSVFSUqlevfvWtcuXKtn96VVBQoMTERF24cEE//fSTEhISdObMGZ07d06nT5/WyZMnde7cOX7uAQAAt6C0QLGFhYUpKipKNWrUUPXq1VWtWjVVqVJFVapUUeXKla++2fXGPSkpSadOndKJEyd0+vRpHTt2TIcPH9bhw4eVlJRkOh4AiwsODlblypUVGRmpyMhIRUREKDw8XOHh4SpfvrzKli2rsLAwlS1bVqGhoQoNDVVwcLBCQ0MVEBCgoKAgBQUFyd/fX35+fvL395evr698fHx+sazrv8vO8vPzlZeXp/z8fOXm5ionJ0fZ2dnKycmRw+FQZmamHA6HMjIylJ6errS0NKWlpSklJUWpqalKTk5WUlLS1bfExETLLWkDAADei9ICLuPv768KFSooIiLi6vvy5curTJkyCg8PV9myZVWuXDmVKVNGoaGhCgkJ+cX7wMBABQQEXH0fFBQkPz+/qzfvfn5+v7iJz8/PV35+vgoKCpSXl6esrCw5HA5lZ2fL4XDoypUrSk9PV0pKilJSUn5xk56QkKCEhASdP39e2dnZhr9zAAAAAACJ0gIAAAAAAFiUNY4PAAAAAAAA+BVKCwAAAAAAYEmUFgAAAAAAwJIoLQAAAAAAgCVRWgAAAAAAAEuitAAAAAAAAJZEaQEAAAAAACyJ0gIAAAAAAFgSpQUAAAAAALAkSgsAAAAAAGBJlBYAAAAAAMCSKC0AAAAAAIAlUVoAAAAAAABLorQAAAAAAACWRGkBAAAAAAAsidICAAAAAABYEqUFAAAAAACwJEoLAAAAAABgSZQWAAAAAADAkigtAAAAAACAJVFaAAAAAAAAS6K0AAAAAAAAlkRpAQAAAAAALInSAgAAAAAAWBKlBQAAAAAAsCRKCwAAAAAAYEmUFgAAAAAAwJIoLQAAAAAAgCVRWgAAAAAAAEuitAAAAAAAAJZEaQEAAAAAACyJ0gIAAAAAAFgSpQUAAAAAALAkSgsAAAAAAGBJlBYAAAAAAMCSKC0AAAAAAIAlUVoAAAAAAABLorQAAAAAAACWRGkBAAAAAAAsidICAAAAAABYEqUFAAAAAACwJEoLAAAAAABgSZQWAAAAAADAkigtAAAAAACAJVFaAAAAAAAAS6K0AAAAAAAAlkRpAQAAAAAALInSAgAAAAAAWBKlBQAAAAAAsCRKCwAAAAAAYEmUFgAAAAAAwJIoLQAAAAAAgCVRWgAAAAAAAEuitAAAAAAAAJZEaQEAAAAAACyJ0gIAAAAAAFgSpQUAAAAAALAkSgsAAAAAAGBJlBYAAAAAAMCS/h+B6rpSyh0pUwAAAABJRU5ErkJggg==" alt="Growi" class="dash-logo-img">
           </div>
-          <button type="button" class="dash-nav-item active" data-target="dashboard">Dashboard</button>
+          <button type="button" class="dash-nav-item active" data-target="resumen">Resumen</button>
           <button type="button" class="dash-nav-item" data-target="ventas">Ventas</button>
           <button type="button" class="dash-nav-item" data-target="clientes">Clientes</button>
           <button type="button" class="dash-nav-item" data-target="reservas">Reservas</button>
-          <button type="button" class="dash-nav-item" data-target="gastos">Gastos</button>
-          <button type="button" class="dash-nav-item" data-target="ajustes">Ajustes</button>
-        </div>
-
-        <div class="mockup-mobile-tabs" role="tablist" aria-label="Pantallas de la demo Growi">
-          <button type="button" class="mobile-demo-tab active" data-target="dashboard">Resumen</button>
-          <button type="button" class="mobile-demo-tab" data-target="ventas">Ventas</button>
-          <button type="button" class="mobile-demo-tab" data-target="clientes">Clientes</button>
-          <button type="button" class="mobile-demo-tab" data-target="reservas">Reservas</button>
-          <button type="button" class="mobile-demo-tab" data-target="gastos">Caja</button>
-          <button type="button" class="mobile-demo-tab" data-target="ajustes">Ajustes</button>
+          <button type="button" class="dash-nav-item" data-target="caja">Caja</button>
+          <button type="button" class="dash-nav-item" data-target="reportes">Reportes</button>
         </div>
 
         <div class="dash-main">
-          <div class="dash-topline">
-            <div class="mockup-case-pill">Caso real · cafetería</div>
+          <div class="mockup-mobile-tabs" aria-label="Navegación demo Growi">
+            <button type="button" class="mobile-demo-tab active" data-target="resumen">Resumen</button>
+            <button type="button" class="mobile-demo-tab" data-target="ventas">Ventas</button>
+            <button type="button" class="mobile-demo-tab" data-target="clientes">Clientes</button>
+            <button type="button" class="mobile-demo-tab" data-target="reservas">Reservas</button>
+            <button type="button" class="mobile-demo-tab" data-target="caja">Caja</button>
+            <button type="button" class="mobile-demo-tab" data-target="reportes">Reportes</button>
           </div>
 
-          <div class="dash-stage" aria-live="polite">
-          <div class="dash-screen active" data-screen="dashboard">
-            <div class="dash-header-row">
-              <div>
-                <div class="dash-title">Resumen del día</div>
-                <div class="dash-subtitle">Todo lo importante de la operación en una sola vista, sin depender de planillas sueltas.</div>
-              </div>
-              <div class="dash-date">Sáb 18 abr · turno abierto</div>
-            </div>
-            <div class="kpi-row">
-              <div class="kpi-card"><div class="kpi-label">Ventas hoy</div><div class="kpi-val green">$184.500</div><div class="kpi-sub">+12% vs ayer</div></div>
-              <div class="kpi-card"><div class="kpi-label">Transacciones</div><div class="kpi-val">47</div><div class="kpi-sub">Ticket promedio $3.925</div></div>
-              <div class="kpi-card"><div class="kpi-label">Mesas activas</div><div class="kpi-val">6</div><div class="kpi-sub">3 reservas por llegar</div></div>
-              <div class="kpi-card"><div class="kpi-label">Gastos del día</div><div class="kpi-val">$22.000</div><div class="kpi-sub">Caja + Mercado Pago</div></div>
-            </div>
-            <div class="mockup-panels">
-              <div class="panel-card">
-                <div class="panel-head"><span>Ventas semanales</span><span class="panel-note">Últimos 7 días</span></div>
-                <div class="chart-area chart-area-rich">
-                  <div class="bar-wrap"><div class="bar" style="height:50px"></div><div class="bar-lbl">Lun</div></div>
-                  <div class="bar-wrap"><div class="bar" style="height:68px"></div><div class="bar-lbl">Mar</div></div>
-                  <div class="bar-wrap"><div class="bar m" style="height:44px"></div><div class="bar-lbl">Mié</div></div>
-                  <div class="bar-wrap"><div class="bar" style="height:82px"></div><div class="bar-lbl">Jue</div></div>
-                  <div class="bar-wrap"><div class="bar" style="height:60px"></div><div class="bar-lbl">Vie</div></div>
-                  <div class="bar-wrap"><div class="bar a" style="height:88px"></div><div class="bar-lbl">Sáb</div></div>
-                  <div class="bar-wrap"><div class="bar m" style="height:18px"></div><div class="bar-lbl">Dom</div></div>
-                </div>
-              </div>
-              <div class="panel-card">
-                <div class="panel-head"><span>Actividad reciente</span><span class="panel-note">En vivo</span></div>
-                <div class="orders-list">
-                  <div class="order-item"><div><div class="order-title">Mesa 4 · Latte + tostado</div><div class="order-meta">Hace 2 min · Pago mixto</div></div><div class="order-price">$11.200</div></div>
-                  <div class="order-item"><div><div class="order-title">Take away · 2 cappuccinos</div><div class="order-meta">Hace 6 min · Mercado Pago</div></div><div class="order-price">$8.600</div></div>
-                  <div class="order-item"><div><div class="order-title">Mesa 1 · Brunch para 2</div><div class="order-meta">Hace 11 min · Efectivo</div></div><div class="order-price">$19.800</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="dash-stage">
 
-          <div class="dash-screen" data-screen="ventas">
-            <div class="dash-header-row">
-              <div>
-                <div class="dash-title">Ventas en tiempo real</div>
-                <div class="dash-subtitle">Seguimiento simple de facturación, productos, ticket promedio y medios de pago.</div>
+            <div class="dash-screen active" data-screen="resumen">
+              <div class="dash-header-row">
+                <div>
+                  <div class="dash-title">Resumen del día</div>
+                  <div class="dash-subtitle">Ventas, reservas, caja y actividad reciente en una vista clara.</div>
+                </div>
+                <div class="dash-date">Turno abierto · hoy</div>
               </div>
-              <div class="dash-date">Actualizado hace 14 seg</div>
-            </div>
-            <div class="kpi-row">
-              <div class="kpi-card"><div class="kpi-label">Facturación</div><div class="kpi-val green">$512.300</div><div class="kpi-sub">Objetivo del día: 79%</div></div>
-              <div class="kpi-card"><div class="kpi-label">Productos vendidos</div><div class="kpi-val">138</div><div class="kpi-sub">Pico: 10:30 a 12:00</div></div>
-              <div class="kpi-card"><div class="kpi-label">Ticket promedio</div><div class="kpi-val">$3.712</div><div class="kpi-sub">+7% vs semana pasada</div></div>
-              <div class="kpi-card"><div class="kpi-label">Medios de pago</div><div class="kpi-val">3</div><div class="kpi-sub">Efectivo, MP y transferencia</div></div>
-            </div>
-            <div class="mockup-panels">
-              <div class="panel-card">
-                <div class="panel-head"><span>Canales de venta</span><span class="panel-note">Distribución</span></div>
-                <div class="payment-list">
-                  <div class="payment-row"><span>Salón</span><div class="progress" style="--w:78%"><span></span></div><strong>78%</strong></div>
-                  <div class="payment-row"><span>Take away</span><div class="progress" style="--w:54%"><span></span></div><strong>54%</strong></div>
-                  <div class="payment-row"><span>Delivery</span><div class="progress" style="--w:31%"><span></span></div><strong>31%</strong></div>
+              <div class="kpi-row">
+                <div class="kpi-card"><div class="kpi-label">Ventas hoy</div><div class="kpi-val green">$184.500</div><div class="kpi-sub">+12% vs ayer</div></div>
+                <div class="kpi-card"><div class="kpi-label">Transacciones</div><div class="kpi-val">47</div><div class="kpi-sub">Ticket $3.925</div></div>
+                <div class="kpi-card"><div class="kpi-label">Reservas</div><div class="kpi-val">6</div><div class="kpi-sub">3 por llegar</div></div>
+                <div class="kpi-card"><div class="kpi-label">Caja estimada</div><div class="kpi-val">$147.600</div><div class="kpi-sub">Antes de cierre</div></div>
+              </div>
+              <div class="mockup-panels">
+                <div class="panel-card">
+                  <div class="panel-head"><span>Ventas semanales</span><span class="panel-note">Últimos 7 días</span></div>
+                  <div class="curated-bars" aria-hidden="true">
+                    <div><span style="height:46%"></span><em>Lun</em></div>
+                    <div><span style="height:64%"></span><em>Mar</em></div>
+                    <div><span class="muted" style="height:38%"></span><em>Mié</em></div>
+                    <div><span style="height:78%"></span><em>Jue</em></div>
+                    <div><span style="height:58%"></span><em>Vie</em></div>
+                    <div><span class="dark" style="height:88%"></span><em>Sáb</em></div>
+                  </div>
+                </div>
+                <div class="panel-card">
+                  <div class="panel-head"><span>Actividad reciente</span><span class="panel-note">En vivo</span></div>
+                  <div class="orders-list">
+                    <div class="order-item"><div><div class="order-title">Mesa 4 · Latte + tostado</div><div class="order-meta">Pago mixto · hace 2 min</div></div><div class="order-price">$11.200</div></div>
+                    <div class="order-item"><div><div class="order-title">Take away · 2 cappuccinos</div><div class="order-meta">Mercado Pago · hace 8 min</div></div><div class="order-price">$8.600</div></div>
+                  </div>
                 </div>
               </div>
-              <div class="panel-card">
-                <div class="panel-head"><span>Top productos</span><span class="panel-note">Hoy</span></div>
-                <div class="sales-spark">
-                  <div class="spark-col"><div class="spark-bar" style="height:74%;animation-delay:.0s"></div><div class="spark-label">Flat</div></div>
-                  <div class="spark-col"><div class="spark-bar" style="height:92%;animation-delay:.15s"></div><div class="spark-label">Latte</div></div>
-                  <div class="spark-col"><div class="spark-bar muted" style="height:58%;animation-delay:.3s"></div><div class="spark-label">Tost.</div></div>
-                  <div class="spark-col"><div class="spark-bar" style="height:84%;animation-delay:.45s"></div><div class="spark-label">Brunch</div></div>
-                  <div class="spark-col"><div class="spark-bar dark" style="height:66%;animation-delay:.6s"></div><div class="spark-label">Cookie</div></div>
-                </div>
-              </div>
             </div>
-          </div>
 
-          <div class="dash-screen" data-screen="clientes">
-            <div class="dash-header-row">
-              <div>
-                <div class="dash-title">Clientes ordenados</div>
-                <div class="dash-subtitle">Historial, recurrencia y datos útiles para atender mejor sin depender de la memoria.</div>
+            <div class="dash-screen" data-screen="ventas">
+              <div class="dash-header-row">
+                <div>
+                  <div class="dash-title">Ventas y pagos</div>
+                  <div class="dash-subtitle">Facturación, productos, ticket promedio y medios de pago sin planillas.</div>
+                </div>
+                <div class="dash-date">Actualizado hace 14 seg</div>
               </div>
-              <div class="dash-date">128 clientes activos</div>
-            </div>
-            <div class="kpi-row">
-              <div class="kpi-card"><div class="kpi-label">Clientes nuevos</div><div class="kpi-val green">18</div><div class="kpi-sub">Esta semana</div></div>
-              <div class="kpi-card"><div class="kpi-label">Recurrentes</div><div class="kpi-val">64%</div><div class="kpi-sub">Compraron más de una vez</div></div>
-              <div class="kpi-card"><div class="kpi-label">Promedio visita</div><div class="kpi-val">9 días</div><div class="kpi-sub">Entre consumos</div></div>
-              <div class="kpi-card"><div class="kpi-label">Preferencias</div><div class="kpi-val">42</div><div class="kpi-sub">Guardadas por atención</div></div>
-            </div>
-            <div class="mockup-panels">
-              <div class="panel-card">
-                <div class="panel-head"><span>Clientes frecuentes</span><span class="panel-note">Último mes</span></div>
-                <div class="orders-list">
-                  <div class="order-item"><div><div class="order-title">Lucía R.</div><div class="order-meta">12 visitas · Latte sin azúcar</div></div><div class="status-pill">VIP</div></div>
-                  <div class="order-item"><div><div class="order-title">Martín P.</div><div class="order-meta">8 visitas · Mesa exterior</div></div><div class="status-pill neutral">Frecuente</div></div>
-                  <div class="order-item"><div><div class="order-title">Sofía G.</div><div class="order-meta">5 visitas · Brunch sábado</div></div><div class="status-pill neutral">Activa</div></div>
+              <div class="kpi-row">
+                <div class="kpi-card"><div class="kpi-label">Facturación</div><div class="kpi-val green">$512.300</div><div class="kpi-sub">79% del objetivo</div></div>
+                <div class="kpi-card"><div class="kpi-label">Productos</div><div class="kpi-val">138</div><div class="kpi-sub">Vendidos hoy</div></div>
+                <div class="kpi-card"><div class="kpi-label">Ticket promedio</div><div class="kpi-val">$3.712</div><div class="kpi-sub">+7% semanal</div></div>
+                <div class="kpi-card"><div class="kpi-label">Medios de pago</div><div class="kpi-val">3</div><div class="kpi-sub">Ef., MP y transf.</div></div>
+              </div>
+              <div class="mockup-panels">
+                <div class="panel-card">
+                  <div class="panel-head"><span>Canales de venta</span><span class="panel-note">Distribución</span></div>
+                  <div class="payment-list">
+                    <div class="payment-row"><span>Salón</span><div class="progress" style="--w:78%"><span></span></div><strong>78%</strong></div>
+                    <div class="payment-row"><span>Take away</span><div class="progress" style="--w:54%"><span></span></div><strong>54%</strong></div>
+                    <div class="payment-row"><span>Delivery</span><div class="progress" style="--w:31%"><span></span></div><strong>31%</strong></div>
+                  </div>
+                </div>
+                <div class="panel-card">
+                  <div class="panel-head"><span>Top productos</span><span class="panel-note">Hoy</span></div>
+                  <div class="curated-bars compact" aria-hidden="true">
+                    <div><span style="height:62%"></span><em>Latte</em></div>
+                    <div><span style="height:78%"></span><em>Tost.</em></div>
+                    <div><span class="muted" style="height:42%"></span><em>Budín</em></div>
+                    <div><span class="dark" style="height:58%"></span><em>Combo</em></div>
+                  </div>
                 </div>
               </div>
-              <div class="panel-card">
-                <div class="panel-head"><span>Segmentos</span><span class="panel-note">Accionables</span></div>
-                <div class="payment-list">
-                  <div class="payment-row"><span>VIP</span><div class="progress" style="--w:34%"><span></span></div><strong>21</strong></div>
-                  <div class="payment-row"><span>Frecuentes</span><div class="progress" style="--w:68%"><span></span></div><strong>58</strong></div>
-                  <div class="payment-row"><span>Nuevos</span><div class="progress" style="--w:48%"><span></span></div><strong>41</strong></div>
-                </div>
-              </div>
             </div>
-          </div>
 
-          <div class="dash-screen" data-screen="reservas">
-            <div class="dash-header-row">
-              <div>
-                <div class="dash-title">Reservas y turnos</div>
-                <div class="dash-subtitle">Quién viene, a qué hora y qué mesa está libre. Menos WhatsApp suelto, más operación.</div>
+            <div class="dash-screen" data-screen="clientes">
+              <div class="dash-header-row">
+                <div>
+                  <div class="dash-title">Clientes y seguimiento</div>
+                  <div class="dash-subtitle">Historial, preferencias y próximos contactos sin datos perdidos.</div>
+                </div>
+                <div class="dash-date">42 clientes activos</div>
               </div>
-              <div class="dash-date">5 reservas confirmadas</div>
-            </div>
-            <div class="kpi-row">
-              <div class="kpi-card"><div class="kpi-label">Reservas hoy</div><div class="kpi-val">11</div><div class="kpi-sub">7 confirmadas · 4 pendientes</div></div>
-              <div class="kpi-card"><div class="kpi-label">Ocupación estimada</div><div class="kpi-val green">82%</div><div class="kpi-sub">Pico: 17:30 a 19:00</div></div>
-              <div class="kpi-card"><div class="kpi-label">Próxima llegada</div><div class="kpi-val">15:30</div><div class="kpi-sub">Mesa 7 · 3 personas</div></div>
-              <div class="kpi-card"><div class="kpi-label">Tiempo promedio</div><div class="kpi-val">54 min</div><div class="kpi-sub">Rotación saludable</div></div>
-            </div>
-            <div class="mockup-panels">
-              <div class="panel-card">
-                <div class="panel-head"><span>Próximos turnos</span><span class="panel-note">Hoy</span></div>
-                <div class="schedule-list">
-                  <div class="schedule-item"><div class="schedule-time">15:30</div><div><strong>Florencia M.</strong><div class="order-meta">Mesa 7 · 3 personas</div></div><div class="status-pill">Confirmada</div></div>
-                  <div class="schedule-item"><div class="schedule-time">16:15</div><div><strong>Tomás R.</strong><div class="order-meta">Barra · 2 personas</div></div><div class="status-pill neutral">En camino</div></div>
-                  <div class="schedule-item"><div class="schedule-time">17:00</div><div><strong>Rodrigo B.</strong><div class="order-meta">Mesa 2 · 4 personas</div></div><div class="status-pill">Confirmada</div></div>
+              <div class="kpi-row">
+                <div class="kpi-card"><div class="kpi-label">Clientes activos</div><div class="kpi-val">42</div><div class="kpi-sub">Últimos 30 días</div></div>
+                <div class="kpi-card"><div class="kpi-label">Nuevos</div><div class="kpi-val green">9</div><div class="kpi-sub">Esta semana</div></div>
+                <div class="kpi-card"><div class="kpi-label">Frecuencia</div><div class="kpi-val">2,8</div><div class="kpi-sub">Visitas promedio</div></div>
+                <div class="kpi-card"><div class="kpi-label">Seguimientos</div><div class="kpi-val">8</div><div class="kpi-sub">Pendientes</div></div>
+              </div>
+              <div class="mockup-panels">
+                <div class="panel-card">
+                  <div class="panel-head"><span>Clientes frecuentes</span><span class="panel-note">Último mes</span></div>
+                  <div class="orders-list">
+                    <div class="order-item"><div><div class="order-title">Lucía R.</div><div class="order-meta">12 visitas · Latte sin azúcar</div></div><div class="status-pill">VIP</div></div>
+                    <div class="order-item"><div><div class="order-title">Martín P.</div><div class="order-meta">8 visitas · Mesa exterior</div></div><div class="status-pill neutral">Frecuente</div></div>
+                  </div>
+                </div>
+                <div class="panel-card">
+                  <div class="panel-head"><span>Segmentos</span><span class="panel-note">Accionables</span></div>
+                  <div class="payment-list">
+                    <div class="payment-row"><span>VIP</span><div class="progress" style="--w:34%"><span></span></div><strong>21</strong></div>
+                    <div class="payment-row"><span>Frecuentes</span><div class="progress" style="--w:68%"><span></span></div><strong>58</strong></div>
+                    <div class="payment-row"><span>Nuevos</span><div class="progress" style="--w:48%"><span></span></div><strong>41</strong></div>
+                  </div>
                 </div>
               </div>
-              <div class="panel-card">
-                <div class="panel-head"><span>Disponibilidad</span><span class="panel-note">Próximas 2 horas</span></div>
-                <div class="payment-list">
-                  <div class="payment-row"><span>Mesas 2</span><div class="progress" style="--w:88%"><span></span></div><strong>Libre</strong></div>
-                  <div class="payment-row"><span>Mesas 4</span><div class="progress" style="--w:42%"><span></span></div><strong>Parcial</strong></div>
-                  <div class="payment-row"><span>Barra</span><div class="progress" style="--w:64%"><span></span></div><strong>Activa</strong></div>
-                </div>
-              </div>
             </div>
-          </div>
 
-          <div class="dash-screen" data-screen="gastos">
-            <div class="dash-header-row">
-              <div>
-                <div class="dash-title">Gastos y caja</div>
-                <div class="dash-subtitle">Egresos, cierres y medios de pago visibles antes de que el margen se vuelva un misterio.</div>
+            <div class="dash-screen" data-screen="reservas">
+              <div class="dash-header-row">
+                <div>
+                  <div class="dash-title">Reservas y turnos</div>
+                  <div class="dash-subtitle">Quién viene, a qué hora y qué mesa o servicio está disponible.</div>
+                </div>
+                <div class="dash-date">5 confirmadas</div>
               </div>
-              <div class="dash-date">Cierre sugerido: 20:30</div>
-            </div>
-            <div class="kpi-row">
-              <div class="kpi-card"><div class="kpi-label">Ingresos</div><div class="kpi-val green">$184.500</div><div class="kpi-sub">Ventas confirmadas</div></div>
-              <div class="kpi-card"><div class="kpi-label">Egresos</div><div class="kpi-val">$36.900</div><div class="kpi-sub">Reposición + caja chica</div></div>
-              <div class="kpi-card"><div class="kpi-label">Saldo estimado</div><div class="kpi-val">$147.600</div><div class="kpi-sub">Antes de comisiones</div></div>
-              <div class="kpi-card"><div class="kpi-label">Pendientes</div><div class="kpi-val">3</div><div class="kpi-sub">Comprobantes por cargar</div></div>
-            </div>
-            <div class="mockup-panels">
-              <div class="panel-card">
-                <div class="panel-head"><span>Gastos recientes</span><span class="panel-note">Hoy</span></div>
-                <div class="orders-list">
-                  <div class="order-item"><div><div class="order-title">Proveedor café</div><div class="order-meta">Mercadería · Transferencia</div></div><div class="order-price">$18.000</div></div>
-                  <div class="order-item"><div><div class="order-title">Reposición leche</div><div class="order-meta">Insumos · Efectivo</div></div><div class="order-price">$9.400</div></div>
-                  <div class="order-item"><div><div class="order-title">Packaging take away</div><div class="order-meta">Operación · Mercado Pago</div></div><div class="order-price">$9.500</div></div>
+              <div class="kpi-row">
+                <div class="kpi-card"><div class="kpi-label">Reservas hoy</div><div class="kpi-val">11</div><div class="kpi-sub">7 confirmadas</div></div>
+                <div class="kpi-card"><div class="kpi-label">Ocupación</div><div class="kpi-val green">82%</div><div class="kpi-sub">Pico 17:30</div></div>
+                <div class="kpi-card"><div class="kpi-label">Próxima llegada</div><div class="kpi-val">15:30</div><div class="kpi-sub">Mesa 7</div></div>
+                <div class="kpi-card"><div class="kpi-label">Promedio</div><div class="kpi-val">54 min</div><div class="kpi-sub">Rotación</div></div>
+              </div>
+              <div class="mockup-panels">
+                <div class="panel-card">
+                  <div class="panel-head"><span>Próximos turnos</span><span class="panel-note">Hoy</span></div>
+                  <div class="schedule-list">
+                    <div class="schedule-item"><div class="schedule-time">15:30</div><div><strong>Florencia M.</strong><div class="order-meta">Mesa 7 · 3 personas</div></div><div class="status-pill">Confirmada</div></div>
+                    <div class="schedule-item"><div class="schedule-time">16:15</div><div><strong>Tomás R.</strong><div class="order-meta">Barra · 2 personas</div></div><div class="status-pill neutral">En camino</div></div>
+                  </div>
+                </div>
+                <div class="panel-card">
+                  <div class="panel-head"><span>Disponibilidad</span><span class="panel-note">Próximas 2 hs</span></div>
+                  <div class="payment-list">
+                    <div class="payment-row"><span>Mesas 2</span><div class="progress" style="--w:88%"><span></span></div><strong>Libre</strong></div>
+                    <div class="payment-row"><span>Mesas 4</span><div class="progress" style="--w:42%"><span></span></div><strong>Parcial</strong></div>
+                    <div class="payment-row"><span>Barra</span><div class="progress" style="--w:64%"><span></span></div><strong>Activa</strong></div>
+                  </div>
                 </div>
               </div>
-              <div class="panel-card">
-                <div class="panel-head"><span>Distribución</span><span class="panel-note">Egresos</span></div>
-                <div class="payment-list">
-                  <div class="payment-row"><span>Insumos</span><div class="progress" style="--w:72%"><span></span></div><strong>72%</strong></div>
-                  <div class="payment-row"><span>Operación</span><div class="progress" style="--w:42%"><span></span></div><strong>42%</strong></div>
-                  <div class="payment-row"><span>Caja chica</span><div class="progress" style="--w:22%"><span></span></div><strong>22%</strong></div>
-                </div>
-              </div>
             </div>
-          </div>
 
-          <div class="dash-screen" data-screen="ajustes">
-            <div class="dash-header-row">
-              <div>
-                <div class="dash-title">Ajustes simples</div>
-                <div class="dash-subtitle">Productos, operadores, categorías y configuración base sin pedirle favores eternos a sistemas.</div>
+            <div class="dash-screen" data-screen="caja">
+              <div class="dash-header-row">
+                <div>
+                  <div class="dash-title">Caja y gastos</div>
+                  <div class="dash-subtitle">Ingresos, egresos y saldo del día listos para el cierre.</div>
+                </div>
+                <div class="dash-date">Cierre sugerido: 20:30</div>
               </div>
-              <div class="dash-date">Sistema sincronizado</div>
-            </div>
-            <div class="kpi-row">
-              <div class="kpi-card"><div class="kpi-label">Productos activos</div><div class="kpi-val">86</div><div class="kpi-sub">12 categorías</div></div>
-              <div class="kpi-card"><div class="kpi-label">Operadores</div><div class="kpi-val">4</div><div class="kpi-sub">Roles configurados</div></div>
-              <div class="kpi-card"><div class="kpi-label">Backup</div><div class="kpi-val green">OK</div><div class="kpi-sub">Último: 09:00</div></div>
-              <div class="kpi-card"><div class="kpi-label">Dispositivos</div><div class="kpi-val">3</div><div class="kpi-sub">Celular, tablet, notebook</div></div>
-            </div>
-            <div class="mockup-panels">
-              <div class="panel-card">
-                <div class="panel-head"><span>Configuración rápida</span><span class="panel-note">Editable</span></div>
-                <div class="settings-grid">
-                  <div class="settings-card"><span>Menú</span><strong>86 productos</strong></div>
-                  <div class="settings-card"><span>Turnos</span><strong>2 franjas</strong></div>
-                  <div class="settings-card"><span>Medios de pago</span><strong>3 activos</strong></div>
-                  <div class="settings-card"><span>Reservas</span><strong>Activadas</strong></div>
+              <div class="kpi-row">
+                <div class="kpi-card"><div class="kpi-label">Ingresos</div><div class="kpi-val green">$184.500</div><div class="kpi-sub">Confirmados</div></div>
+                <div class="kpi-card"><div class="kpi-label">Egresos</div><div class="kpi-val">$36.900</div><div class="kpi-sub">Cargados</div></div>
+                <div class="kpi-card"><div class="kpi-label">Saldo</div><div class="kpi-val">$147.600</div><div class="kpi-sub">Estimado</div></div>
+                <div class="kpi-card"><div class="kpi-label">Pagos mixtos</div><div class="kpi-val">12</div><div class="kpi-sub">Hoy</div></div>
+              </div>
+              <div class="mockup-panels">
+                <div class="panel-card">
+                  <div class="panel-head"><span>Últimos movimientos</span><span class="panel-note">Hoy</span></div>
+                  <div class="orders-list">
+                    <div class="order-item"><div><div class="order-title">Proveedor café</div><div class="order-meta">Mercadería · Transferencia</div></div><div class="order-price">$18.000</div></div>
+                    <div class="order-item"><div><div class="order-title">Packaging take away</div><div class="order-meta">Operación · Mercado Pago</div></div><div class="order-price">$9.500</div></div>
+                  </div>
+                </div>
+                <div class="panel-card">
+                  <div class="panel-head"><span>Medios de cobro</span><span class="panel-note">Distribución</span></div>
+                  <div class="payment-list">
+                    <div class="payment-row"><span>MP</span><div class="progress" style="--w:63%"><span></span></div><strong>63%</strong></div>
+                    <div class="payment-row"><span>Efectivo</span><div class="progress" style="--w:28%"><span></span></div><strong>28%</strong></div>
+                    <div class="payment-row"><span>Transf.</span><div class="progress" style="--w:9%"><span></span></div><strong>9%</strong></div>
+                  </div>
                 </div>
               </div>
-              <div class="panel-card">
-                <div class="panel-head"><span>Estado</span><span class="panel-note">Control</span></div>
-                <div class="orders-list">
-                  <div class="order-item"><div><div class="order-title">Base conectada</div><div class="order-meta">Datos operativos protegidos</div></div><div class="status-pill">OK</div></div>
-                  <div class="order-item"><div><div class="order-title">Usuarios activos</div><div class="order-meta">Permisos por rol</div></div><div class="status-pill">OK</div></div>
-                  <div class="order-item"><div><div class="order-title">Reportes</div><div class="order-meta">Exportación disponible</div></div><div class="status-pill neutral">Listo</div></div>
-                </div>
-              </div>
             </div>
-          </div>
 
+            <div class="dash-screen" data-screen="reportes">
+              <div class="dash-header-row">
+                <div>
+                  <div class="dash-title">Reportes claros</div>
+                  <div class="dash-subtitle">Indicadores simples para decidir sin armar reportes a mano.</div>
+                </div>
+                <div class="dash-date">Semana en curso</div>
+              </div>
+              <div class="kpi-row">
+                <div class="kpi-card"><div class="kpi-label">Mejor día</div><div class="kpi-val">Sáb</div><div class="kpi-sub">$218.400</div></div>
+                <div class="kpi-card"><div class="kpi-label">Producto top</div><div class="kpi-val">Latte</div><div class="kpi-sub">32 vendidos</div></div>
+                <div class="kpi-card"><div class="kpi-label">Canal principal</div><div class="kpi-val green">Salón</div><div class="kpi-sub">78%</div></div>
+                <div class="kpi-card"><div class="kpi-label">Margen estimado</div><div class="kpi-val">41%</div><div class="kpi-sub">Últimos 7 días</div></div>
+              </div>
+              <div class="mockup-panels">
+                <div class="panel-card">
+                  <div class="panel-head"><span>Tendencia semanal</span><span class="panel-note">Ventas</span></div>
+                  <div class="curated-bars" aria-hidden="true">
+                    <div><span style="height:42%"></span><em>Lun</em></div>
+                    <div><span style="height:54%"></span><em>Mar</em></div>
+                    <div><span class="muted" style="height:46%"></span><em>Mié</em></div>
+                    <div><span style="height:68%"></span><em>Jue</em></div>
+                    <div><span style="height:74%"></span><em>Vie</em></div>
+                    <div><span class="dark" style="height:92%"></span><em>Sáb</em></div>
+                  </div>
+                </div>
+                <div class="panel-card">
+                  <div class="panel-head"><span>Lecturas rápidas</span><span class="panel-note">Insight</span></div>
+                  <div class="insight-list">
+                    <div><strong>Mayor venta:</strong><span> sábado</span></div>
+                    <div><strong>Pico horario:</strong><span> 17 a 19 hs</span></div>
+                    <div><strong>Producto destacado:</strong><span> Latte</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
@@ -704,10 +750,10 @@ section,header,footer,nav,.hero,.features,.how,.pricing,.usecases,.faq,.testimon
           <div class="mobile-card-top"><span>Clientes y reservas</span><em>Agenda</em></div>
           <div class="mobile-schedule-row"><b>15:30</b><span>Mesa 7 · Florencia M.</span><em>Confirmada</em></div>
           <div class="mobile-schedule-row"><b>16:15</b><span>Barra · Tomás R.</span><em class="neutral">En camino</em></div>
-          <div class="mobile-schedule-row"><b>17:00</b><span>Mesa 2 · Rodrigo B.</span><em>Confirmada</em></div>
+          <div class="mobile-schedule-row"><b>17:00</b><span>Mesa 2 · Agustina B.</span><em>Confirmada</em></div>
         </article>
         <article class="mobile-demo-card">
-          <div class="mobile-card-top"><span>Caja y gastos</span><em>Control</em></div>
+          <div class="mobile-card-top"><span>Caja y reportes</span><em>Control</em></div>
           <div class="mobile-card-main"><strong>$147.600</strong><small>Saldo estimado del día</small></div>
           <div class="mobile-mini-list">
             <div><span>Ingresos</span><b>$184.500</b></div>
@@ -831,6 +877,7 @@ section,header,footer,nav,.hero,.features,.how,.pricing,.usecases,.faq,.testimon
   <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">¿Dónde se guardan mis datos?<div class="faq-icon">+</div></div><div class="faq-a">Tus datos se guardan en una base segura en la nube, con acceso exclusivo para tu negocio. Growi no vende ni comparte información de clientes. Si cancelás, podés pedir una exportación de tus datos.</div></div>
   <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si quiero cancelar?<div class="faq-icon">+</div></div><div class="faq-a">El servicio es mensual sin permanencia mínima. Podés cancelar cuando quieras sin penalización. Antes de cancelar, te entregamos una exportación completa de tus datos en formato Excel.</div></div>
   <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">¿Sirve para mi rubro específico?<div class="faq-icon">+</div></div><div class="faq-a">Sí. Growi puede adaptarse a cafeterías, bares, salones de belleza, servicios con turnos, comercios minoristas, ferias y emprendimientos familiares. Durante la implementación ajustamos módulos, vocabulario y pantallas a tu operación.</div></div>
+  <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">¿También hacen sitios web o landing pages?<div class="faq-icon">+</div></div><div class="faq-a">Sí. Si tu negocio necesita una landing page, sitio web simple o alguna mejora digital complementaria, podemos presupuestarlo aparte. Growi se enfoca en ordenar la gestión, pero también podemos acompañarte con herramientas digitales que ayuden a vender y operar mejor.</div></div>
   <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">¿Cuánto tarda la implementación?<div class="faq-icon">+</div></div><div class="faq-a">La implementación estándar tarda entre 24 y 48 horas desde el setup inicial. En la mayoría de los casos, el negocio puede empezar a operar el mismo día de la capacitación.</div></div>
   <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">¿Hay garantía?<div class="faq-icon">+</div></div><div class="faq-a">Sí. Tenés 7 días de garantía. Si durante ese período el sistema no queda utilizable para tu operación, revisamos el caso y devolvemos el setup inicial.</div></div>
 </section>
