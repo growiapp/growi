@@ -13,7 +13,8 @@
 <meta property="og:title" content="GrowiWeb | Tu sitio web, listo. Precio fijo, sin sorpresas.">
 <meta property="og:description" content="Landing pages y sitios institucionales para comercios, profesionales y pequeñas empresas. Diseño, desarrollo y publicación incluidos.">
 <meta property="og:url" content="https://growi.ar/web">
-<meta property="og:image" content="/png/growi-og-1200x630.png">
+<meta property="og:image" content="https://growi.ar/png/growi-og-1200x630.png">
+<meta name="theme-color" content="#0C0C0C">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
@@ -68,10 +69,11 @@
 /* Bundle */
 .bundle-list{list-style:none;padding:0;margin:24px 0 0;display:flex;flex-direction:column;gap:10px}
 .bundle-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:rgba(255,255,255,.85);line-height:1.5}
-.bundle-list li::before{content:"•";color:rgba(255,255,255,.5);flex-shrink:0}
+.bundle-list li::before{content:"•";color:rgba(255,255,255,.75);flex-shrink:0}
 /* Responsive */
 @media(max-width:880px){.what-grid,.steps-row{grid-template-columns:1fr}}
 @media(max-width:640px){.addons-table{font-size:13px}.addons-table th,.addons-table td{padding:10px 12px}}
+@media(max-width:480px){.addons-table td:last-child{white-space:normal}}
 </style>
 </head>
 <body>
@@ -91,15 +93,14 @@
     </a>
     <button class="nav-hamburger" id="menuBtn" aria-label="Menú" aria-expanded="false">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="14" x2="17" y2="14"/></svg>
-      <span>Menú</span>
     </button>
   </div>
 </nav>
 
-<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación">
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación" aria-modal="true">
   <div class="mobile-menu-card">
     <a href="/app">GrowiApp</a>
-    <a href="/web">GrowiWeb</a>
+    <a href="/web" class="active">GrowiWeb</a>
     <a href="https://wa.me/5491170593877" target="_blank" rel="noopener" class="mobile-menu-cta">Hablar por WhatsApp</a>
   </div>
 </div>
@@ -315,11 +316,11 @@
     <p class="section-lead reveal" style="text-align:center">Para que no haya sorpresas.</p>
     <div class="transparency-block reveal">
       <ul class="no-list">
-        <li><span class="no-icon">—</span>Hosting y dominio propio (te recomendamos proveedores y te ayudamos a configurarlos, pero el costo va por tu cuenta)</li>
-        <li><span class="no-icon">—</span>Tienda online o e-commerce (si necesitás vender productos digitales o físicos con carrito de compras, cotizamos aparte)</li>
-        <li><span class="no-icon">—</span>Mantenimiento mensual (podés contratarlo como servicio adicional; sin eso, el sitio queda en tu mano)</li>
-        <li><span class="no-icon">—</span>Cambios de contenido posteriores a la entrega (más allá del período de soporte post-entrega incluido en cada plan)</li>
-        <li><span class="no-icon">—</span>Campañas de publicidad online (diseñamos el sitio, no administramos ads; podemos recomendarte quién lo hace)</li>
+        <li><span class="no-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>Hosting y dominio propio (te recomendamos proveedores y te ayudamos a configurarlos, pero el costo va por tu cuenta)</li>
+        <li><span class="no-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>Tienda online o e-commerce (si necesitás vender productos digitales o físicos con carrito de compras, cotizamos aparte)</li>
+        <li><span class="no-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>Mantenimiento mensual (podés contratarlo como servicio adicional; sin eso, el sitio queda en tu mano)</li>
+        <li><span class="no-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>Cambios de contenido posteriores a la entrega (más allá del período de soporte post-entrega incluido en cada plan)</li>
+        <li><span class="no-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>Campañas de publicidad online (diseñamos el sitio, no administramos ads; podemos recomendarte quién lo hace)</li>
       </ul>
     </div>
   </div>
@@ -413,7 +414,7 @@
   }
   const revealEls=document.querySelectorAll('.reveal');
   if('IntersectionObserver' in window){
-    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.12});
+    const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*55);obs.unobserve(e.target)}})},{threshold:.08});
     revealEls.forEach(el=>obs.observe(el));
   } else {revealEls.forEach(el=>el.classList.add('visible'))}
 })();

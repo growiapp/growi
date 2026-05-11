@@ -13,7 +13,8 @@
 <meta property="og:title" content="GrowiApp | Tu negocio, digitalizado en 48 horas">
 <meta property="og:description" content="Ventas, caja, stock, turnos y clientes en una sola herramienta. Sin sistemas difíciles. Implementado en 48 horas.">
 <meta property="og:url" content="https://growi.ar/app">
-<meta property="og:image" content="/png/growi-og-1200x630.png">
+<meta property="og:image" content="https://growi.ar/png/growi-og-1200x630.png">
+<meta name="theme-color" content="#0C0C0C">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
@@ -121,7 +122,7 @@
 .mockup-case-pill,.mockup-live-pill{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:650}
 .mockup-case-pill{background:#fff;color:var(--ink2)}
 .mockup-live-pill{background:rgba(26,107,71,.10);color:var(--accent2)}
-.mockup-mobile-tabs{display:none;padding:12px 12px 0;background:#fff;border-bottom:1px solid rgba(12,12,12,.06);overflow-x:auto;gap:8px;scrollbar-width:none;width:100%;max-width:100%;overflow-y:hidden}
+.mockup-mobile-tabs{display:none;padding:12px 12px 0;background:#fff;border-bottom:1px solid rgba(12,12,12,.06);overflow-x:auto;-webkit-overflow-scrolling:touch;gap:8px;scrollbar-width:none;width:100%;max-width:100%;overflow-y:hidden}
 .mockup-mobile-tabs::-webkit-scrollbar{display:none}
 .mobile-demo-tab{flex:0 0 auto;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink2);font:inherit;font-size:12px;font-weight:720;letter-spacing:-.02em;white-space:nowrap;cursor:pointer;transition:.18s}
 .mobile-demo-tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
@@ -176,14 +177,13 @@
     </a>
     <button class="nav-hamburger" id="menuBtn" aria-label="Menú" aria-expanded="false">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="14" x2="17" y2="14"/></svg>
-      <span>Menú</span>
     </button>
   </div>
 </nav>
 
-<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación">
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación" aria-modal="true">
   <div class="mobile-menu-card">
-    <a href="/app">GrowiApp</a>
+    <a href="/app" class="active">GrowiApp</a>
     <a href="/web">GrowiWeb</a>
     <a href="https://wa.me/5491170593877" target="_blank" rel="noopener" class="mobile-menu-cta">Hablar por WhatsApp</a>
   </div>
@@ -502,32 +502,32 @@
     <p class="section-lead reveal">Cada negocio tiene sus particularidades. GrowiApp se configura según cómo trabajás vos.</p>
     <div class="rubros-grid">
       <div class="rubro-card reveal">
-        <span class="rubro-emoji">☕</span>
+        <span class="rubro-emoji" aria-hidden="true">☕</span>
         <h3>Cafeterías y bares</h3>
         <p>"Al final del día no sé cuánto vendí en efectivo vs. Mercado Pago." GrowiApp cierra la caja y separa los medios de pago automáticamente.</p>
       </div>
       <div class="rubro-card reveal">
-        <span class="rubro-emoji">✂️</span>
+        <span class="rubro-emoji" aria-hidden="true">✂️</span>
         <h3>Peluquerías y estéticas</h3>
         <p>"Los turnos se me cruzan y pierdo clientes." Con GrowiApp tenés agenda digital, historial de servicios y recordatorios.</p>
       </div>
       <div class="rubro-card reveal">
-        <span class="rubro-emoji">🔧</span>
+        <span class="rubro-emoji" aria-hidden="true">🔧</span>
         <h3>Talleres y servicios</h3>
         <p>"No tengo registro de qué trabajos están pendientes." GrowiApp te permite seguir cada orden de trabajo y cobro.</p>
       </div>
       <div class="rubro-card reveal">
-        <span class="rubro-emoji">🏥</span>
+        <span class="rubro-emoji" aria-hidden="true">🏥</span>
         <h3>Consultorios y salud</h3>
         <p>"Necesito saber qué pacientes vienen mañana y qué debo cobrar." Agenda, ficha de paciente y caja integradas.</p>
       </div>
       <div class="rubro-card reveal">
-        <span class="rubro-emoji">👗</span>
+        <span class="rubro-emoji" aria-hidden="true">👗</span>
         <h3>Indumentaria</h3>
         <p>"El stock es un caos, no sé qué tengo." Control de inventario por talle y color, con alertas de reposición.</p>
       </div>
       <div class="rubro-card reveal">
-        <span class="rubro-emoji">🛒</span>
+        <span class="rubro-emoji" aria-hidden="true">🛒</span>
         <h3>Retail y almacenes</h3>
         <p>"Registro todo en un cuaderno que después no entiendo." Ventas rápidas, stock actualizado y reportes del día.</p>
       </div>
@@ -667,7 +667,7 @@
   }
   const revealEls=document.querySelectorAll('.reveal');
   if('IntersectionObserver' in window){
-    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.12});
+    const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*55);obs.unobserve(e.target)}})},{threshold:.08});
     revealEls.forEach(el=>obs.observe(el));
   } else {revealEls.forEach(el=>el.classList.add('visible'))}
 
