@@ -188,23 +188,23 @@
 .check-item{display:flex;align-items:flex-start;gap:12px;font-size:15px;line-height:1.5;color:var(--ink2)}
 .check-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accentL);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-top:2px}
 /* Steps */
-.steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
-.step-box{padding:32px 28px;border:1px solid var(--line);border-radius:24px;background:#fff}
+.steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;align-items:start}
+.step-box{padding:32px 28px;border:1px solid var(--line);border-radius:24px;background:#fff;height:100%;box-sizing:border-box}
 .step-number{font-family:var(--syne);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:16px}
 .step-box h3{font-size:18px;font-weight:740;letter-spacing:-.03em;margin-bottom:10px;color:var(--ink)}
 .step-box p{font-size:14px;color:var(--ink3);line-height:1.6}
 /* Rubros */
 .rubros-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
 .rubro-card{padding:28px;border:1px solid var(--line);border-radius:24px;background:#fff}
-.rubro-emoji{font-size:28px;margin-bottom:16px;display:block}
+.rubro-emoji{font-size:36px;margin-bottom:16px;display:block}
 .rubro-card h3{font-size:17px;font-weight:730;letter-spacing:-.03em;margin-bottom:10px;color:var(--ink)}
 .rubro-card p{font-size:13px;color:var(--ink3);line-height:1.6}
 /* Transparency block */
 .transparency-block{border-left:3px solid var(--line);padding:20px 24px;background:var(--off);border-radius:0 16px 16px 0;margin-top:32px}
 .transparency-block p{font-size:14px;color:var(--ink3);line-height:1.7;margin:0}
 /* Check two-level */
-.check-title{display:block;font-weight:700;color:var(--ink);margin-bottom:2px}
-.check-sub{display:block;font-size:13px;color:var(--ink3);line-height:1.45}
+.check-title{display:block;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.check-sub{display:block;font-size:13px;color:var(--ink3);line-height:1.5}
 /* Responsive */
 @media(max-width:1040px){.mockup-panels{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:880px){.mockup-mobile-tabs{display:flex}.dash-inner{grid-template-columns:1fr;display:block}.dash-sidebar{display:none}.dash-main{padding:18px;min-height:700px}.dash-stage{min-height:570px}.dash-screen{min-height:570px}.hero-mockup{border-radius:26px}.mockup-body{padding:10px}.mockup-url{display:none!important}.steps-row,.rubros-grid{grid-template-columns:1fr}}
@@ -536,35 +536,35 @@
     <h2 class="section-title reveal" style="text-align:center;max-width:600px;margin:12px auto 0">Todo lo que necesitás.<br>Nada que no uses.</h2>
     <div class="check-grid reveal">
       <div class="check-item">
-        <div class="check-icon">✓</div>
+        <div class="check-icon" aria-hidden="true">✓</div>
         <div><span class="check-title">Registro de ventas en tiempo real</span><span class="check-sub">para saber exactamente cuánto ganaste, por producto y por hora</span></div>
       </div>
       <div class="check-item">
-        <div class="check-icon">✓</div>
+        <div class="check-icon" aria-hidden="true">✓</div>
         <div><span class="check-title">Cierre de caja automático</span><span class="check-sub">sin hacer cuentas al final del día: el número está solo</span></div>
       </div>
       <div class="check-item">
-        <div class="check-icon">✓</div>
+        <div class="check-icon" aria-hidden="true">✓</div>
         <div><span class="check-title">Control de stock con alertas</span><span class="check-sub">te avisa cuando un producto está por agotarse, antes de quedarte sin nada</span></div>
       </div>
       <div class="check-item">
-        <div class="check-icon">✓</div>
+        <div class="check-icon" aria-hidden="true">✓</div>
         <div><span class="check-title">Agenda de turnos y reservas</span><span class="check-sub">reemplazás el cuaderno por una agenda digital que nunca se pierde</span></div>
       </div>
       <div class="check-item">
-        <div class="check-icon">✓</div>
+        <div class="check-icon" aria-hidden="true">✓</div>
         <div><span class="check-title">Ficha de clientes</span><span class="check-sub">historial, preferencias y frecuencia de visita de cada cliente</span></div>
       </div>
       <div class="check-item">
-        <div class="check-icon">✓</div>
+        <div class="check-icon" aria-hidden="true">✓</div>
         <div><span class="check-title">Reportes por día, producto y canal de pago</span><span class="check-sub">ves qué funciona y qué no, sin necesitar un contador</span></div>
       </div>
       <div class="check-item">
-        <div class="check-icon">✓</div>
+        <div class="check-icon" aria-hidden="true">✓</div>
         <div><span class="check-title">Multi-medio de pago</span><span class="check-sub">efectivo, Mercado Pago y transferencias en un mismo registro</span></div>
       </div>
       <div class="check-item">
-        <div class="check-icon">✓</div>
+        <div class="check-icon" aria-hidden="true">✓</div>
         <div><span class="check-title">Acceso desde cualquier dispositivo</span><span class="check-sub">celular, tablet o computadora, donde estés</span></div>
       </div>
     </div>
@@ -693,27 +693,27 @@
     <h2 class="section-title reveal" style="text-align:center;margin:12px auto 24px">Lo que todos preguntan antes de empezar.</h2>
     <div class="faq-list reveal">
       <details>
-        <summary>¿Necesito saber de tecnología para usarlo?</summary>
+        <summary>¿Necesito saber de tecnología para usarlo?<i class="faq-icon">+</i></summary>
         <div class="faq-body">No. Si sabés usar WhatsApp, podés usar GrowiApp. Lo configuramos nosotros y la capacitación inicial cubre todo lo que necesitás para operar desde el primer día.</div>
       </details>
       <details>
-        <summary>¿En cuánto tiempo está listo?</summary>
+        <summary>¿En cuánto tiempo está listo?<i class="faq-icon">+</i></summary>
         <div class="faq-body">En 48 horas hábiles desde que confirmás el plan. Te pedimos una lista de tus productos o servicios, y nos encargamos del resto. Sin que vos toques nada técnico.</div>
       </details>
       <details>
-        <summary>¿Puedo cancelar cuando quiero?</summary>
+        <summary>¿Puedo cancelar cuando quiero?<i class="faq-icon">+</i></summary>
         <div class="faq-body">Sí. No hay contrato de permanencia. Podés cancelar en cualquier momento. Si pagaste el mes, lo usás hasta que termine. Y los datos siempre son tuyos — podés exportarlos cuando quieras.</div>
       </details>
       <details>
-        <summary>¿Los datos son míos si cancelo?</summary>
+        <summary>¿Los datos son míos si cancelo?<i class="faq-icon">+</i></summary>
         <div class="faq-body">Sí. Podés exportar todo en Excel o CSV antes o después de cancelar. Nunca usamos tus datos para ningún otro propósito.</div>
       </details>
       <details>
-        <summary>¿Funciona sin internet?</summary>
+        <summary>¿Funciona sin internet?<i class="faq-icon">+</i></summary>
         <div class="faq-body">GrowiApp necesita conexión a internet para funcionar. En zonas con señal intermitente, los datos se sincronizan automáticamente cuando vuelve la conexión. Para la operación diaria, una conexión de celular básica alcanza.</div>
       </details>
       <details>
-        <summary>¿Qué pasa si tengo un problema a las 22 hs?</summary>
+        <summary>¿Qué pasa si tengo un problema a las 22 hs?<i class="faq-icon">+</i></summary>
         <div class="faq-body">El soporte por WhatsApp tiene respuesta garantizada dentro del horario de atención (lunes a sábado, 9 a 19 hs). Para urgencias fuera de horario, revisamos el canal periódicamente y respondemos a la brevedad.</div>
       </details>
     </div>

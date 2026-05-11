@@ -746,12 +746,15 @@ footer {
   font-size: 13px;
   color: var(--ink3);
   line-height: 1.4;
+  max-width: 160px;
+  margin: 0 auto;
 }
 
 /* ── Plan badge ── */
 .plan-badge {
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   height: 22px;
   padding: 0 10px;
   border-radius: 999px;
@@ -774,6 +777,7 @@ footer {
   position: fixed;
   bottom: 24px;
   right: 20px;
+  left: auto;
   z-index: 40;
   width: 56px;
   height: 56px;
@@ -804,4 +808,5 @@ section[id] { scroll-margin-top: 96px; }
   .stat-row { grid-template-columns: 1fr; gap: 12px; }
   .currency-toggle { width: 100%; justify-content: center; }
   .wa-float { display: flex; }
+  .section { padding: 56px 0; }
 }
