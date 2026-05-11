@@ -3,7 +3,7 @@
    Used by: index.html, app/index.html, web/index.html
    ===================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Syne:wght@700;800&display=swap');
 
 /* ── Design tokens ── */
 :root {
@@ -65,6 +65,12 @@ nav.scrolled {
   border-color: rgba(12,12,12,.14);
   box-shadow: 0 20px 60px rgba(12,12,12,.12);
   background: rgba(255,255,255,.88);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
 }
 .nav-brand {
   display: flex;
@@ -186,7 +192,8 @@ nav.scrolled {
 }
 .mobile-menu-card a:hover { background: var(--off); color: var(--ink); }
 .mobile-menu-card a.active { color: var(--accent2); background: var(--accentL); }
-.mobile-menu-card .mobile-wa {
+.mobile-menu-card .mobile-wa,
+.mobile-menu-card .mobile-menu-cta {
   background: var(--ink);
   color: #fff;
   justify-content: center;
@@ -194,7 +201,8 @@ nav.scrolled {
   font-weight: 720;
   margin-top: 4px;
 }
-.mobile-menu-card .mobile-wa:hover { background: var(--accent); }
+.mobile-menu-card .mobile-wa:hover,
+.mobile-menu-card .mobile-menu-cta:hover { background: var(--accent); }
 body.menu-open { overflow: hidden; }
 
 /* ── Buttons ── */
@@ -357,6 +365,7 @@ body.menu-open { overflow: hidden; }
 .price-anchor {
   margin-top: 18px;
   font-size: 13px;
+  font-weight: 500;
   color: var(--ink3);
   letter-spacing: -.01em;
 }
