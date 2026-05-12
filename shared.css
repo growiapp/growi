@@ -772,6 +772,87 @@ footer {
   color: var(--ink2);
   line-height: 1.55;
 }
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+.use-case-card h3,
+.example-card h3 {
+  font-family: var(--syne);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.035em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.use-case-card p,
+.example-card p {
+  font-size: 14.5px;
+  color: var(--ink2);
+  line-height: 1.65;
+}
+.section-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+.example-card {
+  display: flex;
+  flex-direction: column;
+}
+.example-objective {
+  margin-bottom: 18px;
+}
+.example-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.example-list li {
+  font-size: 14px;
+  color: var(--ink3);
+  line-height: 1.5;
+}
+.example-list li::before {
+  content: "•";
+  color: var(--accent);
+  font-weight: 800;
+  margin-right: 8px;
+}
+.example-card .btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+.trust-block {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 36px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: #fff;
+  text-align: center;
+}
+.trust-block h2 {
+  font-family: var(--syne);
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: -.045em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+.trust-block p {
+  max-width: 620px;
+  margin: 0 auto 28px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink2);
+}
 
 /* Legal pages */
 .legal-shell {
@@ -921,6 +1002,10 @@ section[id] { scroll-margin-top: 96px; }
 
 @media (max-width: 640px) {
   .stat-row { grid-template-columns: 1fr; gap: 12px; }
+  .use-cases-grid { grid-template-columns: 1fr; gap: 14px; }
+  .example-card .btn,
+  .section-cta .btn { width: 100%; justify-content: center; }
+  .trust-block { padding: 28px 20px; }
   .currency-toggle { width: 100%; justify-content: center; }
   .wa-float { display: flex; }
   .section { padding: 56px 0; }

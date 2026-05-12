@@ -148,8 +148,10 @@
 .bundle-list{list-style:none;padding:0;margin:24px 0 0;display:flex;flex-direction:column;gap:10px}
 .bundle-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:rgba(255,255,255,.85);line-height:1.5}
 .bundle-list li::before{content:"•";color:rgba(255,255,255,.75);flex-shrink:0}
+.institutional-plans-grid{grid-template-columns:repeat(2,1fr);max-width:760px;margin-left:auto;margin-right:auto}
 /* Responsive */
 @media(max-width:880px){.what-grid,.steps-row{grid-template-columns:1fr}}
+@media(max-width:880px){.institutional-plans-grid{grid-template-columns:1fr}}
 @media(max-width:640px){.addons-table{font-size:13px}.addons-table th,.addons-table td{padding:10px 12px}}
 @media(max-width:480px){.addons-table td:last-child{white-space:normal}}
 </style>
@@ -253,6 +255,52 @@
   </div>
 </section>
 
+<!-- Ejemplos -->
+<section class="section">
+  <div class="container">
+    <div class="section-header center">
+      <span class="eyebrow reveal">Ejemplos</span>
+      <h2 class="section-title reveal">Ejemplos de sitios que podemos armar</h2>
+      <p class="section-lead reveal">Si todavía no tenés claro qué necesitás, estos ejemplos te ayudan a elegir un punto de partida. Después lo adaptamos a tu negocio.</p>
+    </div>
+    <div class="use-cases-grid">
+      <div class="card example-card reveal">
+        <h3>Landing para cafetería</h3>
+        <p class="example-objective"><strong>Objetivo:</strong> Presentar el lugar, mostrar productos destacados y llevar consultas a WhatsApp.</p>
+        <ul class="example-list">
+          <li>Hero con propuesta clara</li>
+          <li>Menú o productos destacados</li>
+          <li>Ubicación y horarios</li>
+          <li>CTA a WhatsApp o reservas</li>
+        </ul>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+el+ejemplo+Landing+para+cafeter%C3%ADa." class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-track="web-example-cafe-whatsapp">Consultar este ejemplo</a>
+      </div>
+      <div class="card example-card reveal">
+        <h3>Sitio para profesional independiente</h3>
+        <p class="example-objective"><strong>Objetivo:</strong> Explicar servicios, generar confianza y facilitar consultas.</p>
+        <ul class="example-list">
+          <li>Presentación profesional</li>
+          <li>Servicios</li>
+          <li>Preguntas frecuentes</li>
+          <li>Formas de contacto</li>
+        </ul>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+el+ejemplo+Sitio+para+profesional+independiente." class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-track="web-example-professional-whatsapp">Consultar este ejemplo</a>
+      </div>
+      <div class="card example-card reveal">
+        <h3>Página para comercio local</h3>
+        <p class="example-objective"><strong>Objetivo:</strong> Mostrar qué vendés, dónde estás y cómo comprar o consultar.</p>
+        <ul class="example-list">
+          <li>Catálogo simple o destacados</li>
+          <li>Información del negocio</li>
+          <li>Mapa o ubicación</li>
+          <li>CTA a WhatsApp</li>
+        </ul>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+el+ejemplo+P%C3%A1gina+para+comercio+local." class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-track="web-example-commerce-whatsapp">Consultar este ejemplo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Landing Pages — Planes -->
 <section class="section" id="landing-planes">
   <div class="container">
@@ -326,7 +374,7 @@
   <div class="container">
     <p class="eyebrow reveal" style="text-align:center">Sitio institucional</p>
     <h2 class="section-title reveal" style="text-align:center;max-width:640px;margin:12px auto 0">Sitios institucionales</h2>
-    <div class="plans-grid reveal" style="grid-template-columns:repeat(2,1fr);max-width:760px;margin-left:auto;margin-right:auto">
+    <div class="plans-grid institutional-plans-grid reveal">
       <div class="plan-card">
         <div class="plan-name">Base</div>
         <div class="plan-price"><span data-ars="$801.540" data-usd="USD 549">$801.540</span></div>
