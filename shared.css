@@ -615,7 +615,9 @@ footer {
 @media (max-width: 880px) {
   nav { top: 12px; width: calc(100% - 24px); height: 64px; padding: 9px 9px 9px 18px; }
   .nav-links { display: none; }
-  .nav-hamburger { display: inline-flex; }
+  .nav-right { margin-left: auto; }
+  .nav-wa { display: none; }
+  .nav-hamburger { display: inline-flex; margin-left: auto; }
 }
 
 @media (max-width: 768px) {
@@ -1036,5 +1038,6 @@ section[id] { scroll-margin-top: 96px; }
   .trust-block { padding: 28px 20px; }
   .currency-toggle { width: 100%; justify-content: center; }
   .wa-float { display: flex; }
+  footer { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
   .section { padding: 56px 0; }
 }
