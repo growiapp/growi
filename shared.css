@@ -3,7 +3,7 @@
    Used by: index.html, app/index.html, web/index.html
    ===================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Syne:wght@700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700&family=Syne:wght@700;800&display=swap');
 
 /* ── Design tokens ── */
 :root {
@@ -21,7 +21,10 @@
   --epi:    'Epilogue', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --syne:   'Syne', var(--epi);
   --max:    1160px;
-  --shadow: 0 28px 80px rgba(12,12,12,.10);
+  --shadow-sm: 0 4px 12px rgba(12,12,12,.06);
+  --shadow-md: 0 18px 50px rgba(12,12,12,.08);
+  --shadow-lg: 0 28px 80px rgba(12,12,12,.10);
+  --shadow: var(--shadow-lg);
 }
 
 /* ── Reset ── */
@@ -58,12 +61,12 @@ nav {
   background: rgba(255,255,255,.72);
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
-  box-shadow: 0 18px 50px rgba(12,12,12,.08);
+  box-shadow: var(--shadow-md);
   transition: border-color .2s, box-shadow .2s, background .2s;
 }
 nav.scrolled {
   border-color: rgba(12,12,12,.14);
-  box-shadow: 0 20px 60px rgba(12,12,12,.12);
+  box-shadow: var(--shadow-lg);
   background: rgba(255,255,255,.88);
 }
 .nav-inner {
@@ -172,9 +175,9 @@ nav.scrolled {
   top: 88px; left: 12px; right: 12px;
   padding: 10px;
   border: 1px solid rgba(12,12,12,.10);
-  border-radius: 28px;
+  border-radius: 24px;
   background: rgba(255,255,255,.96);
-  box-shadow: 0 24px 70px rgba(12,12,12,.18);
+  box-shadow: var(--shadow-lg);
   display: grid;
   gap: 6px;
 }
@@ -308,16 +311,32 @@ body.menu-open { overflow: hidden; }
   padding: 36px;
   transition: box-shadow .2s, transform .2s;
 }
-.card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
 .card-icon {
   width: 48px; height: 48px;
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--accentL);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  color: var(--accent2);
   margin-bottom: 20px;
+}
+.icon-inline,
+.icon-card,
+.icon-pill {
+  display: block;
+  flex-shrink: 0;
+  color: var(--accent2);
+}
+.icon-card {
+  width: 24px;
+  height: 24px;
+}
+.icon-pill {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 16px;
 }
 
 /* ── Steps ── */
@@ -393,7 +412,7 @@ body.menu-open { overflow: hidden; }
   background: var(--ink);
   border-color: var(--ink);
   transform: translateY(-8px);
-  box-shadow: 0 34px 90px rgba(12,12,12,.22);
+  box-shadow: var(--shadow-lg);
 }
 .plan-badge {
   display: inline-flex;
@@ -615,6 +634,15 @@ footer {
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
 }
 
+@media (max-width: 420px) {
+  nav { width: calc(100% - 16px); padding: 8px; }
+  .nav-inner { gap: 6px; }
+  .nav-brand,
+  .nav-logo-text { font-size: 19px; }
+  .nav-hamburger,
+  .nav-wa { width: 44px; height: 44px; }
+}
+
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
   .btn { height: 48px; padding: 0 22px; font-size: 14px; }
@@ -634,7 +662,7 @@ footer {
 .plan-btn { width: 100%; height: 50px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 690; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .16s, color .16s, transform .1s; text-decoration: none; margin-top: auto; }
 .plan-btn-outline { border: 1.5px solid var(--line); background: transparent; color: var(--ink); }
 .plan-btn-outline:hover { background: var(--ink); color: #fff; transform: translateY(-1px); }
-.plan-btn-fill { border: 0; background: #fff; color: var(--ink); box-shadow: 0 12px 28px rgba(0,0,0,.14); }
+.plan-btn-fill { border: 0; background: #fff; color: var(--ink); box-shadow: var(--shadow-sm); }
 .plan-btn-fill:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
 .pfd { flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 6px; }
 .plan-card.featured .pfd { background: var(--accentM); }
@@ -667,7 +695,7 @@ footer {
   margin: 0 auto 40px;
 }
 .currency-btn {
-  height: 34px;
+  height: 40px;
   padding: 0 18px;
   border-radius: 999px;
   border: none;
@@ -696,7 +724,7 @@ footer {
   padding: 24px 28px;
   background: var(--accentL);
   border: 1px solid rgba(26,107,71,.15);
-  border-radius: 20px;
+  border-radius: 18px;
   margin-top: 40px;
 }
 .guarantee-icon {

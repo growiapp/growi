@@ -21,6 +21,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/png/appicon_180.png">
 <link rel="manifest" href="/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/shared.css">
 <script defer data-domain="growi.ar" src="https://plausible.io/js/script.js"></script>
 <script type="application/ld+json">
@@ -219,7 +221,7 @@
 /* Checklist */
 .check-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin-top:32px}
 .check-item{display:flex;align-items:flex-start;gap:12px;font-size:15px;line-height:1.5;color:var(--ink2)}
-.check-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accentL);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-top:2px}
+.check-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accentL);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-top:2px}
 /* Steps */
 .steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;align-items:start}
 .step-box{padding:32px 28px;border:1px solid var(--line);border-radius:24px;background:#fff;height:100%;box-sizing:border-box}
@@ -229,7 +231,7 @@
 /* Rubros */
 .rubros-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
 .rubro-card{padding:28px;border:1px solid var(--line);border-radius:24px;background:#fff}
-.rubro-emoji{font-size:36px;margin-bottom:16px;display:block}
+.rubro-emoji{display:block;color:var(--accent2)}
 .rubro-card h3{font-size:17px;font-weight:730;letter-spacing:-.03em;margin-bottom:10px;color:var(--ink)}
 .rubro-card p{font-size:13px;color:var(--ink3);line-height:1.6}
 /* Transparency block */
@@ -612,32 +614,32 @@
     <p class="section-lead reveal">Cada comercio tiene su lógica. GrowiApp se configura según cómo trabajás vos.</p>
     <div class="rubros-grid">
       <div class="rubro-card reveal">
-        <span class="rubro-emoji" aria-hidden="true">☕</span>
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 8h10v5.5A4.5 4.5 0 0 1 10.5 18h-1A4.5 4.5 0 0 1 5 13.5V8Z"/><path d="M15 10h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M4 20h14"/><path d="M8 4.5c.8.7.8 1.4 0 2.1M12 4.5c.8.7.8 1.4 0 2.1"/></svg></span>
         <h3>Cerrá el día sabiendo exactamente cuánto ganaste.</h3>
         <p>"No sé cuánto vendí en efectivo vs. Mercado Pago." GrowiApp separa los medios de pago y cierra la caja automáticamente.</p>
       </div>
       <div class="rubro-card reveal">
-        <span class="rubro-emoji" aria-hidden="true">✂️</span>
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><circle cx="6" cy="7" r="2.5"/><circle cx="6" cy="17" r="2.5"/><path d="M8.2 8.2 20 20M8.2 15.8 20 4"/></svg></span>
         <h3>Tu agenda siempre organizada, tus clientes siempre avisados.</h3>
         <p>"Los turnos se me cruzan y pierdo gente." Agenda digital, historial de servicios y recordatorios automáticos.</p>
       </div>
       <div class="rubro-card reveal">
-        <span class="rubro-emoji" aria-hidden="true">🔧</span>
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M14.7 6.3a4.6 4.6 0 0 0 5 5L10.8 20a2.4 2.4 0 0 1-3.4-3.4l8.8-8.8a4.6 4.6 0 0 1-1.5-1.5Z"/><path d="M8.2 17.2h.01"/></svg></span>
         <h3>Cada trabajo, documentado. Cada cobro, registrado.</h3>
         <p>"No tengo forma de ver qué órdenes están pendientes." Seguís cada trabajo desde que entra hasta que cobra.</p>
       </div>
       <div class="rubro-card reveal">
-        <span class="rubro-emoji" aria-hidden="true">🏥</span>
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 20V6.5A2.5 2.5 0 0 1 7 4h10a2.5 2.5 0 0 1 2.5 2.5V20"/><path d="M3 20h18"/><path d="M12 8v6M9 11h6"/><path d="M8 20v-3h8v3"/></svg></span>
         <h3>Pacientes organizados, turnos sin superposición.</h3>
         <p>"Necesito saber quién viene mañana y qué debo cobrar." Agenda, ficha de paciente y caja integradas desde el primer día.</p>
       </div>
       <div class="rubro-card reveal">
-        <span class="rubro-emoji" aria-hidden="true">👗</span>
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M9 3h6l1.5 4 3 13h-15l3-13L9 3Z"/><path d="M9 3c.4 2 1.4 3 3 3s2.6-1 3-3"/><path d="M7.5 7h9"/></svg></span>
         <h3>Tu stock siempre al día, sin contar a mano.</h3>
         <p>"No sé qué tengo, por talle y color." Inventario actualizado con cada venta y alertas de reposición.</p>
       </div>
       <div class="rubro-card reveal">
-        <span class="rubro-emoji" aria-hidden="true">🛒</span>
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4 5h2l2 10h9.5l2-7H7"/><path d="M9 19.5h.01M17 19.5h.01"/><path d="M9 19.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM18 19.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg></span>
         <h3>Todo lo que vendés, registrado y medible.</h3>
         <p>"Anoto en un cuaderno que después no entiendo." Ventas rápidas, stock actualizado y reporte del día en segundos.</p>
       </div>

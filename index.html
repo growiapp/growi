@@ -73,6 +73,8 @@
 <link rel="icon" type="image/png" sizes="512x512" href="/png/appicon_512.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/png/appicon_180.png">
 <link rel="manifest" href="/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/shared.css">
 <script defer data-domain="growi.ar" src="https://plausible.io/js/script.js"></script>
 <style>
@@ -162,12 +164,12 @@
 .why-item { display: flex; flex-direction: column; gap: 10px; }
 .why-icon {
   width: 48px; height: 48px;
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--accentL);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent);
+  color: var(--accent2);
   margin-bottom: 16px;
 }
 .why-title {
@@ -257,7 +259,9 @@
     <div class="grid-2">
 
       <div class="card product-card reveal">
-        <div class="card-icon" aria-hidden="true">⚙️</div>
+        <div class="card-icon" aria-hidden="true">
+          <svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.1M12 19.1v2.1M4.8 4.8l1.5 1.5M17.7 17.7l1.5 1.5M2.8 12h2.1M19.1 12h2.1M4.8 19.2l1.5-1.5M17.7 6.3l1.5-1.5"/><path d="M7.9 4.3l1.1 2.1M15 17.6l1.1 2.1M4.3 16.1l2.1-1.1M17.6 9l2.1-1.1"/></svg>
+        </div>
         <div class="product-tag">Sistema de gestión</div>
         <h3>GrowiApp — Gestioná desde adentro</h3>
         <div class="product-price">Desde $21.900 ARS/mes</div>
@@ -274,7 +278,9 @@
       </div>
 
       <div class="card product-card reveal">
-        <div class="card-icon" aria-hidden="true">🖥️</div>
+        <div class="card-icon" aria-hidden="true">
+          <svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="3.2" y="4.5" width="17.6" height="11.8" rx="2"/><path d="M8.5 20h7M12 16.3V20"/></svg>
+        </div>
         <div class="product-tag">Presencia digital</div>
         <h3>GrowiWeb — Aparecé cuando te buscan</h3>
         <div class="product-price">Desde $290.540 ARS</div>
