@@ -749,6 +749,12 @@ footer {
   max-width: 160px;
   margin: 0 auto;
 }
+.trust-label {
+  max-width: 220px;
+  font-size: 15px;
+  color: var(--ink2);
+  line-height: 1.55;
+}
 
 /* ── Plan badge ── */
 .plan-badge {
