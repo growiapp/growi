@@ -284,6 +284,14 @@ body.menu-open { overflow: hidden; }
   max-width: 640px;
   margin-top: 16px;
 }
+.hero-lead {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  line-height: 1.5;
+  text-wrap: balance;
+}
 .section-dark .section-lead   { color: rgba(255,255,255,.7); }
 .section-accent .section-lead { color: rgba(255,255,255,.85); }
 .section-header.center .section-lead { margin-left: auto; margin-right: auto; }
