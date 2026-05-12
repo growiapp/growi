@@ -158,11 +158,13 @@
 .dash-logo-frame{width:150px;height:42px;margin:0 0 22px 2px;display:flex;align-items:center;overflow:visible}
 .dash-logo-text{font-family:var(--syne);font-size:22px;font-weight:800;color:#fff;letter-spacing:-.04em}
 .dash-logo-text .dot{color:var(--accent)}
+.mockup-business{padding:0 10px 12px;margin-top:-18px;font-size:12px;font-weight:650;color:rgba(255,255,255,.56);line-height:1.3}
 .dash-nav-item{appearance:none;border:0;background:transparent;width:100%;text-align:left;font-family:inherit;border-radius:14px;padding:13px 14px;font-size:13px;font-weight:650;color:rgba(255,255,255,.50);cursor:pointer;transition:background .18s ease,color .18s ease}
 .dash-nav-item:hover{background:rgba(255,255,255,.075);color:rgba(255,255,255,.82)}
 .dash-nav-item.active{background:rgba(255,255,255,.14);color:#fff}
 .dash-nav-item:focus-visible{outline:1px dashed rgba(255,255,255,.65);outline-offset:3px}
 .dash-main{padding:26px;background:linear-gradient(180deg,#fff 0%,#fbfbfa 100%);position:relative;overflow:hidden;min-width:0;display:flex;flex-direction:column;min-height:454px}
+.mockup-mobile-business{display:none;padding:14px 14px 0;background:#fff;font-size:12px;font-weight:720;color:var(--accent2)}
 .dash-stage{position:relative;flex:1;min-height:356px;overflow:hidden}
 .dash-header-row{display:flex;justify-content:space-between;gap:20px;margin-bottom:13px}
 .dash-title{font-size:25px;font-weight:790;letter-spacing:-.05em;line-height:1.02}
@@ -212,6 +214,16 @@
 .mobile-demo-tab{flex:0 0 auto;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink2);font:inherit;font-size:12px;font-weight:720;letter-spacing:-.02em;white-space:nowrap;cursor:pointer;transition:.18s}
 .mobile-demo-tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
 .mobile-demo-tab:focus-visible{outline:3px solid rgba(26,107,71,.24);outline-offset:3px}
+.demo-industry-selector{max-width:760px;margin:28px auto 0;text-align:center}
+.demo-industry-title{font-family:var(--syne);font-size:22px;font-weight:800;letter-spacing:-.035em;color:var(--ink);margin:0 0 8px}
+.demo-industry-sub{font-size:14px;color:var(--ink3);line-height:1.55;margin:0 auto 18px;max-width:560px}
+.demo-industry-buttons{display:flex;align-items:center;justify-content:center;gap:8px;overflow-x:auto;padding:4px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.demo-industry-buttons::-webkit-scrollbar{display:none}
+.demo-industry-btn{flex:0 0 auto;min-height:42px;padding:0 16px;border:1px solid var(--line2);border-radius:999px;background:#fff;color:var(--ink2);font:inherit;font-size:13px;font-weight:720;cursor:pointer;transition:background .18s,border-color .18s,color .18s,transform .12s}
+.demo-industry-btn:hover{border-color:var(--accent);color:var(--accent2);transform:translateY(-1px)}
+.demo-industry-btn.active,.demo-industry-btn[aria-pressed="true"]{background:var(--accentL);border-color:rgba(26,107,71,.28);color:var(--accent2)}
+.demo-industry-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.demo-industry-note{font-size:12px;color:var(--ink3);line-height:1.5;margin:4px auto 0;max-width:520px}
 .dash-screen{display:block;position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px);transition:opacity .35s ease,transform .35s ease,visibility .35s ease;width:100%;overflow:hidden}
 .dash-screen.active{opacity:1;visibility:visible;pointer-events:auto;transform:none}
 .dynamic-mockup{width:100%;overflow:hidden}
@@ -242,8 +254,9 @@
 .check-sub{display:block;font-size:13px;color:var(--ink3);line-height:1.5}
 /* Responsive */
 @media(max-width:1040px){.mockup-panels{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:880px){.mockup-mobile-tabs{display:flex}.dash-inner{grid-template-columns:1fr;display:block}.dash-sidebar{display:none}.dash-main{padding:18px;min-height:700px}.dash-stage{min-height:570px}.dash-screen{min-height:570px}.hero-mockup{border-radius:26px}.mockup-body{padding:10px}.mockup-url{display:none!important}.steps-row,.rubros-grid{grid-template-columns:1fr}}
+@media(max-width:880px){.mockup-mobile-business{display:block}.mockup-mobile-tabs{display:flex}.dash-inner{grid-template-columns:1fr;display:block}.dash-sidebar{display:none}.dash-main{padding:18px;min-height:700px}.dash-stage{min-height:570px}.dash-screen{min-height:570px}.hero-mockup{border-radius:26px}.mockup-body{padding:10px}.mockup-url{display:none!important}.steps-row,.rubros-grid{grid-template-columns:1fr}}
 @media(max-width:640px){.hero-mockup{border-radius:22px}.mockup-body{padding:8px}.mockup-bar{height:48px;padding:0 14px}.dash-main{padding:16px;min-height:760px}.dash-stage{min-height:630px}.dash-header-row{flex-direction:column;gap:8px}.dash-date{width:max-content;white-space:normal;height:auto;min-height:32px;padding:8px 12px}.kpi-row{grid-template-columns:1fr}.kpi-card{padding:15px}.mockup-panels{gap:12px;grid-template-columns:1fr}.panel-card{padding:14px}.check-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.demo-industry-selector{text-align:left}.demo-industry-title,.demo-industry-sub,.demo-industry-note{text-align:center}.demo-industry-buttons{justify-content:flex-start;margin-left:-2px;margin-right:-2px}}
 @media(max-width:420px){.dash-main{padding:14px;min-height:820px}.dash-stage{min-height:690px}.dash-title{font-size:22px}.payment-row{grid-template-columns:1fr;gap:7px}.progress{width:100%}}
 @media(prefers-reduced-motion:reduce){.live-dot{animation:none!important}.dash-screen{transition:none!important}}
 </style>
@@ -297,6 +310,18 @@
     <h2 class="section-title reveal" style="text-align:center;max-width:600px;margin:12px auto 0">Así se ve GrowiApp por dentro.</h2>
     <p class="reveal" style="text-align:center;color:var(--ink3);margin-top:12px;font-size:15px">Navegá las pantallas y explorá cómo trabaja GrowiApp en el día a día de un comercio real.</p>
 
+    <div class="demo-industry-selector reveal" aria-label="Selector de rubro del demo">
+      <h3 class="demo-industry-title">Probalo según tu rubro</h3>
+      <p class="demo-industry-sub">Los datos cambian para que puedas imaginar cómo se vería GrowiApp aplicado a tu negocio.</p>
+      <div class="demo-industry-buttons" role="group" aria-label="Elegir rubro del demo">
+        <button type="button" class="demo-industry-btn active" data-rubro="cafeteria" aria-pressed="true">Cafetería</button>
+        <button type="button" class="demo-industry-btn" data-rubro="peluqueria" aria-pressed="false">Peluquería</button>
+        <button type="button" class="demo-industry-btn" data-rubro="taller" aria-pressed="false">Taller</button>
+        <button type="button" class="demo-industry-btn" data-rubro="consultorio" aria-pressed="false">Consultorio</button>
+      </div>
+      <p class="demo-industry-note">Los datos son ilustrativos. La configuración real se adapta a tu operación.</p>
+    </div>
+
     <div class="hero-mockup reveal">
       <div class="mockup-bar">
         <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div>
@@ -308,6 +333,7 @@
             <div class="dash-logo-frame">
               <span class="dash-logo-text">Growi<span class="dot">.</span></span>
             </div>
+            <div class="mockup-business" data-demo="business-name">Café Central</div>
             <button type="button" class="dash-nav-item active" data-target="resumen">Resumen</button>
             <button type="button" class="dash-nav-item" data-target="ventas">Ventas</button>
             <button type="button" class="dash-nav-item" data-target="clientes">Clientes</button>
@@ -316,6 +342,7 @@
             <button type="button" class="dash-nav-item" data-target="reportes">Reportes</button>
           </div>
           <div class="dash-main">
+            <div class="mockup-mobile-business" data-demo="business-name">Café Central</div>
             <div class="mockup-mobile-tabs" aria-label="Navegación demo Growi">
               <button type="button" class="mobile-demo-tab active" data-target="resumen">Resumen</button>
               <button type="button" class="mobile-demo-tab" data-target="ventas">Ventas</button>
@@ -334,9 +361,9 @@
                   <div class="dash-date">Turno abierto · hoy</div>
                 </div>
                 <div class="kpi-row">
-                  <div class="kpi-card"><div class="kpi-label">Ventas hoy</div><div class="kpi-val green">$184.500</div><div class="kpi-sub">+12% vs ayer</div></div>
-                  <div class="kpi-card"><div class="kpi-label">Transacciones</div><div class="kpi-val">47</div><div class="kpi-sub">Ticket $3.925</div></div>
-                  <div class="kpi-card"><div class="kpi-label">Reservas</div><div class="kpi-val">6</div><div class="kpi-sub">3 por llegar</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Ventas hoy</div><div class="kpi-val green" data-demo="sales-today">$184.500</div><div class="kpi-sub">+12% vs ayer</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Transacciones</div><div class="kpi-val">47</div><div class="kpi-sub">Ticket <span data-demo="avg-ticket">$7.690</span></div></div>
+                  <div class="kpi-card"><div class="kpi-label">Reservas</div><div class="kpi-val" data-demo="reservations-today">18</div><div class="kpi-sub">3 por llegar</div></div>
                   <div class="kpi-card"><div class="kpi-label">Caja estimada</div><div class="kpi-val">$147.600</div><div class="kpi-sub">Antes de cierre</div></div>
                 </div>
                 <div class="mockup-panels">
@@ -356,6 +383,7 @@
                     <div class="orders-list">
                       <div class="order-item"><div><div class="order-title">Mesa 4 · Latte + tostado</div><div class="order-meta">Pago mixto · hace 2 min</div></div><div class="order-price">$11.200</div></div>
                       <div class="order-item"><div><div class="order-title">Take away · 2 cappuccinos</div><div class="order-meta">Mercado Pago · hace 8 min</div></div><div class="order-price">$8.600</div></div>
+                      <div class="order-item"><div><div class="order-title">Stock bajo · <span data-demo="stock-alert">Leche entera</span></div><div class="order-meta">Revisar reposición</div></div><div class="status-pill neutral">Alerta</div></div>
                     </div>
                   </div>
                 </div>
@@ -372,14 +400,14 @@
                 <div class="kpi-row">
                   <div class="kpi-card"><div class="kpi-label">Facturación</div><div class="kpi-val green">$512.300</div><div class="kpi-sub">79% del objetivo</div></div>
                   <div class="kpi-card"><div class="kpi-label">Productos</div><div class="kpi-val">138</div><div class="kpi-sub">Vendidos hoy</div></div>
-                  <div class="kpi-card"><div class="kpi-label">Ticket promedio</div><div class="kpi-val">$3.712</div><div class="kpi-sub">+7% semanal</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Ticket promedio</div><div class="kpi-val" data-demo="avg-ticket">$7.690</div><div class="kpi-sub">+7% semanal</div></div>
                   <div class="kpi-card"><div class="kpi-label">Medios de pago</div><div class="kpi-val">3</div><div class="kpi-sub">Ef., MP y transf.</div></div>
                 </div>
                 <div class="mockup-panels">
                   <div class="panel-card">
                     <div class="panel-head"><span>Canales de venta</span><span class="panel-note">Distribución</span></div>
                     <div class="payment-list">
-                      <div class="payment-row"><span>Salón</span><div class="progress" style="--w:78%"><span></span></div><strong>78%</strong></div>
+                      <div class="payment-row"><span data-demo="main-channel">Mostrador</span><div class="progress" style="--w:78%"><span></span></div><strong>78%</strong></div>
                       <div class="payment-row"><span>Take away</span><div class="progress" style="--w:54%"><span></span></div><strong>54%</strong></div>
                       <div class="payment-row"><span>Delivery</span><div class="progress" style="--w:31%"><span></span></div><strong>31%</strong></div>
                     </div>
@@ -387,7 +415,7 @@
                   <div class="panel-card">
                     <div class="panel-head"><span>Top productos</span><span class="panel-note">Hoy</span></div>
                     <div class="curated-bars compact" aria-hidden="true">
-                      <div><span style="height:62%"></span><em>Latte</em></div>
+                      <div><span style="height:62%"></span><em data-demo="top-product">Flat white</em></div>
                       <div><span style="height:78%"></span><em>Tost.</em></div>
                       <div><span class="muted" style="height:42%"></span><em>Budín</em></div>
                       <div><span class="dark" style="height:58%"></span><em>Combo</em></div>
@@ -402,10 +430,10 @@
                     <div class="dash-title">Clientes y seguimiento</div>
                     <div class="dash-subtitle">Historial, preferencias y próximos contactos sin datos perdidos.</div>
                   </div>
-                  <div class="dash-date">42 clientes activos</div>
+                  <div class="dash-date"><span data-demo="active-clients">42</span> clientes activos</div>
                 </div>
                 <div class="kpi-row">
-                  <div class="kpi-card"><div class="kpi-label">Clientes activos</div><div class="kpi-val">42</div><div class="kpi-sub">Últimos 30 días</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Clientes activos</div><div class="kpi-val" data-demo="active-clients">42</div><div class="kpi-sub">Últimos 30 días</div></div>
                   <div class="kpi-card"><div class="kpi-label">Nuevos</div><div class="kpi-val green">9</div><div class="kpi-sub">Esta semana</div></div>
                   <div class="kpi-card"><div class="kpi-label">Frecuencia</div><div class="kpi-val">2,8</div><div class="kpi-sub">Visitas promedio</div></div>
                   <div class="kpi-card"><div class="kpi-label">Seguimientos</div><div class="kpi-val">8</div><div class="kpi-sub">Pendientes</div></div>
@@ -438,7 +466,7 @@
                   <div class="dash-date">5 confirmadas</div>
                 </div>
                 <div class="kpi-row">
-                  <div class="kpi-card"><div class="kpi-label">Reservas hoy</div><div class="kpi-val">11</div><div class="kpi-sub">7 confirmadas</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Reservas hoy</div><div class="kpi-val" data-demo="reservations-today">18</div><div class="kpi-sub">7 confirmadas</div></div>
                   <div class="kpi-card"><div class="kpi-label">Ocupación</div><div class="kpi-val green">82%</div><div class="kpi-sub">Pico 17:30</div></div>
                   <div class="kpi-card"><div class="kpi-label">Próxima llegada</div><div class="kpi-val">15:30</div><div class="kpi-sub">Mesa 7</div></div>
                   <div class="kpi-card"><div class="kpi-label">Promedio</div><div class="kpi-val">54 min</div><div class="kpi-sub">Rotación</div></div>
@@ -471,7 +499,7 @@
                   <div class="dash-date">Cierre sugerido: 20:30</div>
                 </div>
                 <div class="kpi-row">
-                  <div class="kpi-card"><div class="kpi-label">Ingresos</div><div class="kpi-val green">$184.500</div><div class="kpi-sub">Confirmados</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Ingresos</div><div class="kpi-val green" data-demo="sales-today">$184.500</div><div class="kpi-sub">Confirmados</div></div>
                   <div class="kpi-card"><div class="kpi-label">Egresos</div><div class="kpi-val">$36.900</div><div class="kpi-sub">Cargados</div></div>
                   <div class="kpi-card"><div class="kpi-label">Saldo</div><div class="kpi-val">$147.600</div><div class="kpi-sub">Estimado</div></div>
                   <div class="kpi-card"><div class="kpi-label">Pagos mixtos</div><div class="kpi-val">12</div><div class="kpi-sub">Hoy</div></div>
@@ -480,7 +508,7 @@
                   <div class="panel-card">
                     <div class="panel-head"><span>Últimos movimientos</span><span class="panel-note">Hoy</span></div>
                     <div class="orders-list">
-                      <div class="order-item"><div><div class="order-title">Proveedor café</div><div class="order-meta">Mercadería · Transferencia</div></div><div class="order-price">$18.000</div></div>
+                      <div class="order-item"><div><div class="order-title" data-demo="main-expense">Insumos</div><div class="order-meta">Mercadería · Transferencia</div></div><div class="order-price">$18.000</div></div>
                       <div class="order-item"><div><div class="order-title">Packaging take away</div><div class="order-meta">Operación · Mercado Pago</div></div><div class="order-price">$9.500</div></div>
                     </div>
                   </div>
@@ -505,9 +533,9 @@
                 </div>
                 <div class="kpi-row">
                   <div class="kpi-card"><div class="kpi-label">Mejor día</div><div class="kpi-val">Sáb</div><div class="kpi-sub">$218.400</div></div>
-                  <div class="kpi-card"><div class="kpi-label">Producto top</div><div class="kpi-val">Latte</div><div class="kpi-sub">32 vendidos</div></div>
-                  <div class="kpi-card"><div class="kpi-label">Canal principal</div><div class="kpi-val green">Salón</div><div class="kpi-sub">78%</div></div>
-                  <div class="kpi-card"><div class="kpi-label">Margen estimado</div><div class="kpi-val">41%</div><div class="kpi-sub">Últimos 7 días</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Producto top</div><div class="kpi-val" data-demo="top-product">Flat white</div><div class="kpi-sub">32 vendidos</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Canal principal</div><div class="kpi-val green" data-demo="main-channel">Mostrador</div><div class="kpi-sub">78%</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Margen estimado</div><div class="kpi-val" data-demo="margin">41%</div><div class="kpi-sub">Últimos 7 días</div></div>
                 </div>
                 <div class="mockup-panels">
                   <div class="panel-card">
@@ -847,6 +875,95 @@
     const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*55);obs.unobserve(e.target)}})},{threshold:.08});
     revealEls.forEach(el=>obs.observe(el));
   } else {revealEls.forEach(el=>el.classList.add('visible'))}
+
+  const demoRubros={
+    cafeteria:{
+      negocio:'Café Central',
+      ventasHoy:'$184.500',
+      ticketPromedio:'$7.690',
+      clientesActivos:'42',
+      reservasHoy:'18',
+      productoTop:'Flat white',
+      alertaStock:'Leche entera',
+      canalPrincipal:'Mostrador',
+      gastoPrincipal:'Insumos',
+      margen:'41%'
+    },
+    peluqueria:{
+      negocio:'Estudio Bruma',
+      ventasHoy:'$236.000',
+      ticketPromedio:'$18.150',
+      clientesActivos:'64',
+      reservasHoy:'22',
+      productoTop:'Corte + brushing',
+      alertaStock:'Tintura 7.1',
+      canalPrincipal:'Turnos',
+      gastoPrincipal:'Coloración',
+      margen:'48%'
+    },
+    taller:{
+      negocio:'Taller Norte',
+      ventasHoy:'$412.000',
+      ticketPromedio:'$51.500',
+      clientesActivos:'31',
+      reservasHoy:'9',
+      productoTop:'Cambio de aceite',
+      alertaStock:'Filtro Wega',
+      canalPrincipal:'WhatsApp',
+      gastoPrincipal:'Repuestos',
+      margen:'35%'
+    },
+    consultorio:{
+      negocio:'Consultorio Raíz',
+      ventasHoy:'$168.000',
+      ticketPromedio:'$21.000',
+      clientesActivos:'58',
+      reservasHoy:'16',
+      productoTop:'Consulta inicial',
+      alertaStock:'Bonos disponibles',
+      canalPrincipal:'Agenda',
+      gastoPrincipal:'Honorarios',
+      margen:'52%'
+    }
+  };
+
+  const demoMap={
+    'business-name':'negocio',
+    'sales-today':'ventasHoy',
+    'avg-ticket':'ticketPromedio',
+    'active-clients':'clientesActivos',
+    'reservations-today':'reservasHoy',
+    'top-product':'productoTop',
+    'stock-alert':'alertaStock',
+    'main-channel':'canalPrincipal',
+    'main-expense':'gastoPrincipal',
+    'margin':'margen'
+  };
+
+  const rubroButtons=[...document.querySelectorAll('.demo-industry-btn[data-rubro]')];
+  const applyDemoRubro=(key,track=false)=>{
+    const selected=demoRubros[key]?key:'cafeteria';
+    const data=demoRubros[selected];
+    Object.entries(demoMap).forEach(([demoKey,dataKey])=>{
+      document.querySelectorAll(`[data-demo="${demoKey}"]`).forEach(el=>{el.textContent=data[dataKey];});
+    });
+    rubroButtons.forEach(btn=>{
+      const active=btn.dataset.rubro===selected;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-pressed',String(active));
+    });
+    try{localStorage.setItem('growi-demo-rubro',selected);}catch(e){}
+    if(track&&typeof window.plausible==='function'){
+      window.plausible('demo_rubro_change',{props:{rubro:selected}});
+    }
+  };
+
+  if(rubroButtons.length){
+    let savedRubro='cafeteria';
+    try{savedRubro=localStorage.getItem('growi-demo-rubro')||'cafeteria';}catch(e){}
+    applyDemoRubro(savedRubro,false);
+    rubroButtons.forEach(btn=>btn.addEventListener('click',()=>applyDemoRubro(btn.dataset.rubro,true)));
+  }
 
   const growiMockup=document.getElementById('growiMockup');
   if(growiMockup){
