@@ -224,6 +224,30 @@
 .demo-industry-btn.active,.demo-industry-btn[aria-pressed="true"]{background:var(--accentL);border-color:rgba(26,107,71,.28);color:var(--accent2)}
 .demo-industry-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .demo-industry-note{font-size:12px;color:var(--ink3);line-height:1.5;margin:4px auto 0;max-width:520px}
+.pricing-controls{display:flex;align-items:flex-start;justify-content:center;gap:14px 18px;flex-wrap:wrap;margin-top:24px}
+.pricing-control-group{display:flex;flex-direction:column;align-items:center;gap:8px}
+.pricing-control-label{font-size:11px;font-weight:760;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.pricing-control-group .currency-toggle{margin:0}
+.billing-save-note{font-size:13px;font-weight:650;color:var(--accent2);line-height:1.45;text-align:center;margin:14px auto 0}
+.plan-billing-note{font-size:12px;line-height:1.45;color:var(--ink3);margin:8px 0 14px;min-height:17px}
+.plan-card.featured .plan-billing-note{color:rgba(255,255,255,.64)}
+.plan-annual-total{font-size:12px;font-weight:650;line-height:1.45;color:var(--accent2);margin:-4px 0 14px;min-height:17px}
+.plan-annual-total[hidden]{display:none}
+.plan-card.featured .plan-annual-total{color:var(--accentM)}
+.plans-compare{margin:28px auto 0;max-width:980px;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden}
+.plans-compare summary{min-height:54px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;cursor:pointer;font-family:var(--syne);font-size:20px;font-weight:800;letter-spacing:-.035em;color:var(--ink);list-style:none}
+.plans-compare summary::-webkit-details-marker{display:none}
+.plans-compare summary::after{content:"+";width:30px;height:30px;border-radius:999px;background:var(--accentL);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-family:var(--epi);font-size:18px;font-weight:760;flex-shrink:0}
+.plans-compare[open] summary::after{content:"−"}
+.plans-compare summary:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+.plans-compare-body{padding:0 22px 22px}
+.plans-compare-lead{font-size:14px;color:var(--ink3);line-height:1.6;margin:0 0 18px}
+.plans-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.plans-table{width:100%;min-width:680px;border-collapse:collapse;font-size:13px;color:var(--ink2)}
+.plans-table th,.plans-table td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.plans-table th{font-size:11px;font-weight:780;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);background:var(--off)}
+.plans-table td:first-child{font-weight:680;color:var(--ink)}
+.plans-table tr:last-child td{border-bottom:0}
 .dash-screen{display:block;position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px);transition:opacity .35s ease,transform .35s ease,visibility .35s ease;width:100%;overflow:hidden}
 .dash-screen.active{opacity:1;visibility:visible;pointer-events:auto;transform:none}
 .dynamic-mockup{width:100%;overflow:hidden}
@@ -256,7 +280,7 @@
 @media(max-width:1040px){.mockup-panels{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:880px){.mockup-mobile-business{display:block}.mockup-mobile-tabs{display:flex}.dash-inner{grid-template-columns:1fr;display:block}.dash-sidebar{display:none}.dash-main{padding:18px;min-height:700px}.dash-stage{min-height:570px}.dash-screen{min-height:570px}.hero-mockup{border-radius:26px}.mockup-body{padding:10px}.mockup-url{display:none!important}.steps-row,.rubros-grid{grid-template-columns:1fr}}
 @media(max-width:640px){.hero-mockup{border-radius:22px}.mockup-body{padding:8px}.mockup-bar{height:48px;padding:0 14px}.dash-main{padding:16px;min-height:760px}.dash-stage{min-height:630px}.dash-header-row{flex-direction:column;gap:8px}.dash-date{width:max-content;white-space:normal;height:auto;min-height:32px;padding:8px 12px}.kpi-row{grid-template-columns:1fr}.kpi-card{padding:15px}.mockup-panels{gap:12px;grid-template-columns:1fr}.panel-card{padding:14px}.check-grid{grid-template-columns:1fr}}
-@media(max-width:480px){.demo-industry-selector{text-align:left}.demo-industry-title,.demo-industry-sub,.demo-industry-note{text-align:center}.demo-industry-buttons{justify-content:flex-start;margin-left:-2px;margin-right:-2px}}
+@media(max-width:480px){.demo-industry-selector{text-align:left}.demo-industry-title,.demo-industry-sub,.demo-industry-note{text-align:center}.demo-industry-buttons{justify-content:flex-start;margin-left:-2px;margin-right:-2px}.pricing-controls{gap:12px}.pricing-control-group{width:100%}.pricing-control-group .currency-toggle{width:100%;justify-content:center}.plans-compare summary{font-size:18px;padding:16px 18px}.plans-compare-body{padding:0 16px 18px}}
 @media(max-width:420px){.dash-main{padding:14px;min-height:820px}.dash-stage{min-height:690px}.dash-title{font-size:22px}.payment-row{grid-template-columns:1fr;gap:7px}.progress{width:100%}}
 @media(prefers-reduced-motion:reduce){.live-dot{animation:none!important}.dash-screen{transition:none!important}}
 </style>
@@ -681,32 +705,46 @@
     <p class="eyebrow reveal" style="text-align:center">Precios</p>
     <h2 class="section-title reveal" style="text-align:center;max-width:560px;margin:12px auto 0">Simple, claro y sin letra chica.</h2>
     <p class="section-lead reveal">Un setup único + un abono mensual fijo. Lo que cotizamos es lo que cobramos.</p>
-    <div class="reveal" style="text-align:center">
-      <div class="currency-toggle" role="group" aria-label="Seleccionar moneda">
-        <button class="currency-btn active" id="btnARS" aria-pressed="true">ARS</button>
-        <button class="currency-btn" id="btnUSD" aria-pressed="false">USD</button>
+    <div class="pricing-controls reveal">
+      <div class="pricing-control-group">
+        <span class="pricing-control-label">Moneda</span>
+        <div class="currency-toggle" role="group" aria-label="Seleccionar moneda">
+          <button class="currency-btn active" id="btnARS" type="button" aria-pressed="true">ARS</button>
+          <button class="currency-btn" id="btnUSD" type="button" aria-pressed="false">USD</button>
+        </div>
+      </div>
+      <div class="pricing-control-group">
+        <span class="pricing-control-label">Período</span>
+        <div class="currency-toggle" role="group" aria-label="Seleccionar modalidad de pago">
+          <button class="currency-btn active" id="btnMonthly" type="button" aria-pressed="true" data-period="monthly">Mensual</button>
+          <button class="currency-btn" id="btnAnnual" type="button" aria-pressed="false" data-period="annual">Anual −15%</button>
+        </div>
       </div>
     </div>
+    <p class="billing-save-note reveal">Ahorrá 15% pagando anual.</p>
     <div class="plans-grid reveal">
       <div class="plan-card">
         <div class="plan-name">Start</div>
-        <div class="plan-price"><span data-ars="$21.900" data-usd="USD 15">$21.900</span><span class="plan-period">/mes</span></div>
+        <div class="plan-price"><span data-plan-price data-monthly-ars="$21.900" data-monthly-usd="USD 15" data-annual-monthly-ars="$18.615" data-annual-monthly-usd="USD 12.75">$21.900</span><span class="plan-period">/mes</span></div>
         <div class="plan-setup"><span data-ars="Setup único $144.540 ARS" data-usd="Setup único USD 99">Setup único $144.540 ARS</span></div>
+        <div class="plan-annual-total" data-annual-total data-annual-total-ars="Facturación anual: $223.380 ARS/año" data-annual-total-usd="Facturación anual: USD 153/año" hidden></div>
+        <div class="plan-billing-note" data-billing-copy>Pago mensual. Cancelás cuando quieras.</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li class="plan-feat"><span class="pfd"></span>1 usuario</li>
           <li class="plan-feat"><span class="pfd"></span>1 sucursal</li>
           <li class="plan-feat"><span class="pfd"></span>Ventas + caja + stock</li>
           <li class="plan-feat"><span class="pfd"></span>Soporte por WhatsApp</li>
-          <li class="plan-feat"><span class="pfd"></span>−15% con plan anual</li>
         </ul>
         <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+empezar+con+el+plan+Start+de+GrowiApp." class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="app-pricing-whatsapp">Empezar con Start</a>
       </div>
       <div class="plan-card featured">
         <div class="plan-badge">Más elegido</div>
         <div class="plan-name">Pro</div>
-        <div class="plan-price"><span data-ars="$42.340" data-usd="USD 29">$42.340</span><span class="plan-period">/mes</span></div>
+        <div class="plan-price"><span data-plan-price data-monthly-ars="$42.340" data-monthly-usd="USD 29" data-annual-monthly-ars="$35.989" data-annual-monthly-usd="USD 24.65">$42.340</span><span class="plan-period">/mes</span></div>
         <div class="plan-setup"><span data-ars="Setup único $217.540 ARS" data-usd="Setup único USD 149">Setup único $217.540 ARS</span></div>
+        <div class="plan-annual-total" data-annual-total data-annual-total-ars="Facturación anual: $431.868 ARS/año" data-annual-total-usd="Facturación anual: USD 295.80/año" hidden></div>
+        <div class="plan-billing-note" data-billing-copy>Pago mensual. Cancelás cuando quieras.</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li class="plan-feat"><span class="pfd"></span>Hasta 3 usuarios</li>
@@ -715,14 +753,15 @@
           <li class="plan-feat"><span class="pfd"></span>Gestión de turnos</li>
           <li class="plan-feat"><span class="pfd"></span>Ficha de clientes</li>
           <li class="plan-feat"><span class="pfd"></span>Reportes de ventas</li>
-          <li class="plan-feat"><span class="pfd"></span>−15% con plan anual</li>
         </ul>
         <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+empezar+con+el+plan+Pro+de+GrowiApp." class="plan-btn plan-btn-fill" target="_blank" rel="noopener noreferrer" data-track="app-pricing-whatsapp">Empezar con Pro</a>
       </div>
       <div class="plan-card">
         <div class="plan-name">Multi</div>
-        <div class="plan-price"><span data-ars="$71.540" data-usd="USD 49">$71.540</span><span class="plan-period">/mes</span></div>
+        <div class="plan-price"><span data-plan-price data-monthly-ars="$71.540" data-monthly-usd="USD 49" data-annual-monthly-ars="$60.809" data-annual-monthly-usd="USD 41.65">$71.540</span><span class="plan-period">/mes</span></div>
         <div class="plan-setup"><span data-ars="Setup único $363.540 ARS" data-usd="Setup único USD 249">Setup único $363.540 ARS</span></div>
+        <div class="plan-annual-total" data-annual-total data-annual-total-ars="Facturación anual: $729.708 ARS/año" data-annual-total-usd="Facturación anual: USD 499.80/año" hidden></div>
+        <div class="plan-billing-note" data-billing-copy>Pago mensual. Cancelás cuando quieras.</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li class="plan-feat"><span class="pfd"></span>Hasta 5 usuarios</li>
@@ -731,11 +770,41 @@
           <li class="plan-feat"><span class="pfd"></span>Multi-sucursal</li>
           <li class="plan-feat"><span class="pfd"></span>Reportes avanzados</li>
           <li class="plan-feat"><span class="pfd"></span>WhatsApp prioritario</li>
-          <li class="plan-feat"><span class="pfd"></span>−15% con plan anual</li>
         </ul>
         <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+empezar+con+el+plan+Multi+de+GrowiApp." class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="app-pricing-whatsapp">Empezar con Multi</a>
       </div>
     </div>
+    <details class="plans-compare reveal">
+      <summary>Compará los planes</summary>
+      <div class="plans-compare-body">
+        <p class="plans-compare-lead">Si no sabés cuál elegir, esta tabla te muestra las diferencias reales entre Starter, Pro y Multi.</p>
+        <div class="plans-table-wrap">
+          <table class="plans-table">
+            <thead>
+              <tr>
+                <th>Funcionalidad</th>
+                <th>Starter</th>
+                <th>Pro</th>
+                <th>Multi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Usuarios incluidos</td><td>1</td><td>Hasta 3</td><td>Hasta 5</td></tr>
+              <tr><td>Sucursales</td><td>1</td><td>1</td><td>Hasta 2</td></tr>
+              <tr><td>Ventas y caja</td><td>Incluido</td><td>Incluido</td><td>Incluido</td></tr>
+              <tr><td>Stock básico</td><td>Incluido</td><td>Incluido</td><td>Incluido</td></tr>
+              <tr><td>Turnos / reservas</td><td>—</td><td>Incluido</td><td>Incluido</td></tr>
+              <tr><td>Clientes / CRM simple</td><td>—</td><td>Incluido</td><td>Incluido</td></tr>
+              <tr><td>Reportes avanzados</td><td>—</td><td>Básicos</td><td>Avanzados</td></tr>
+              <tr><td>Multi-sucursal</td><td>—</td><td>—</td><td>Incluido</td></tr>
+              <tr><td>Capacitación inicial</td><td>1 hora</td><td>1 hora</td><td>1 hora</td></tr>
+              <tr><td>Soporte WhatsApp</td><td>Incluido</td><td>Incluido</td><td>Incluido</td></tr>
+              <tr><td>Setup humano</td><td>Incluido</td><td>Incluido</td><td>Incluido</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
     <p class="reveal" style="font-size:13px;color:var(--ink3);line-height:1.7;margin-top:28px;text-align:center;max-width:720px;margin-left:auto;margin-right:auto">Todos los planes incluyen setup humano, configuración inicial y 1 hora de capacitación en vivo. Precios en ARS sujetos a ajuste semestral informado con 30 días de anticipación. Garantía de devolución en los primeros 7 días.</p>
     <div class="guarantee-block reveal">
       <div class="guarantee-icon">
@@ -842,24 +911,70 @@
     if(a.getAttribute('href')===window.location.pathname||window.location.pathname.startsWith(a.getAttribute('href')+'/')){a.classList.add('active');}
   });
 
-  // Currency toggle
+  // Currency and billing toggles
   (function(){
-    const saved=localStorage.getItem('growi_currency')||'ARS';
+    const btnARS=document.getElementById('btnARS');
+    const btnUSD=document.getElementById('btnUSD');
+    const btnMonthly=document.getElementById('btnMonthly');
+    const btnAnnual=document.getElementById('btnAnnual');
+    let currentCurrency='ARS';
+    let currentPeriod='monthly';
+
+    try{
+      const savedCurrency=localStorage.getItem('growi_currency');
+      const savedPeriod=localStorage.getItem('growi_billing_period');
+      if(savedCurrency==='USD'||savedCurrency==='ARS')currentCurrency=savedCurrency;
+      if(savedPeriod==='annual'||savedPeriod==='monthly')currentPeriod=savedPeriod;
+    }catch(e){}
+
+    function updatePlanPrices(){
+      const periodKey=currentPeriod==='annual'?'annualMonthly':'monthly';
+      document.querySelectorAll('[data-plan-price]').forEach(el=>{
+        const key=periodKey+currentCurrency.charAt(0)+currentCurrency.slice(1).toLowerCase();
+        el.textContent=el.dataset[key]||el.textContent;
+      });
+      document.querySelectorAll('[data-annual-total]').forEach(el=>{
+        const key='annualTotal'+currentCurrency.charAt(0)+currentCurrency.slice(1).toLowerCase();
+        el.textContent=el.dataset[key]||'';
+        el.hidden=currentPeriod!=='annual';
+      });
+      document.querySelectorAll('[data-billing-copy]').forEach(el=>{
+        el.textContent=currentPeriod==='annual'?'Pagás 12 meses con 15% de ahorro.':'Pago mensual. Cancelás cuando quieras.';
+      });
+      document.querySelectorAll('[data-ars][data-usd]').forEach(el=>{el.textContent=currentCurrency==='ARS'?el.dataset.ars:el.dataset.usd;});
+    }
+
     function applyCurrency(c){
-      localStorage.setItem('growi_currency',c);
-      document.querySelectorAll('[data-ars][data-usd]').forEach(el=>{el.textContent=c==='ARS'?el.dataset.ars:el.dataset.usd;});
+      currentCurrency=c==='USD'?'USD':'ARS';
+      try{localStorage.setItem('growi_currency',currentCurrency);}catch(e){}
+      updatePlanPrices();
       const btnARS=document.getElementById('btnARS');
       const btnUSD=document.getElementById('btnUSD');
       if(btnARS&&btnUSD){
-        btnARS.classList.toggle('active',c==='ARS');btnUSD.classList.toggle('active',c==='USD');
-        btnARS.setAttribute('aria-pressed',c==='ARS');btnUSD.setAttribute('aria-pressed',c==='USD');
+        btnARS.classList.toggle('active',currentCurrency==='ARS');btnUSD.classList.toggle('active',currentCurrency==='USD');
+        btnARS.setAttribute('aria-pressed',currentCurrency==='ARS');btnUSD.setAttribute('aria-pressed',currentCurrency==='USD');
       }
     }
-    applyCurrency(saved);
-    const btnARS=document.getElementById('btnARS');
-    const btnUSD=document.getElementById('btnUSD');
+
+    function applyBillingPeriod(period,track=false){
+      currentPeriod=period==='annual'?'annual':'monthly';
+      try{localStorage.setItem('growi_billing_period',currentPeriod);}catch(e){}
+      updatePlanPrices();
+      if(btnMonthly&&btnAnnual){
+        btnMonthly.classList.toggle('active',currentPeriod==='monthly');btnAnnual.classList.toggle('active',currentPeriod==='annual');
+        btnMonthly.setAttribute('aria-pressed',currentPeriod==='monthly');btnAnnual.setAttribute('aria-pressed',currentPeriod==='annual');
+      }
+      if(track&&typeof window.plausible==='function'){
+        try{window.plausible('billing_period_change',{props:{period:currentPeriod}});}catch(e){}
+      }
+    }
+
+    applyCurrency(currentCurrency);
+    applyBillingPeriod(currentPeriod);
     if(btnARS)btnARS.addEventListener('click',()=>applyCurrency('ARS'));
     if(btnUSD)btnUSD.addEventListener('click',()=>applyCurrency('USD'));
+    if(btnMonthly)btnMonthly.addEventListener('click',()=>applyBillingPeriod('monthly',true));
+    if(btnAnnual)btnAnnual.addEventListener('click',()=>applyBillingPeriod('annual',true));
   })();
 
   if(menuBtn&&mobileMenu){
