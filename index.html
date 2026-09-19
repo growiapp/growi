@@ -45,7 +45,6 @@
     "availableLanguage": "Spanish"
   },
   "email": "hola@growi.ar",
-  "sameAs": [],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Productos Growi",
@@ -111,6 +110,7 @@
 .product-card { display: flex; flex-direction: column; }
 .product-tag {
   display: inline-flex;
+  align-self: flex-start; /* la tarjeta es flex-column: sin esto la pastilla se estira */
   align-items: center;
   height: 24px;
   padding: 0 10px;
@@ -403,7 +403,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div class="guarantee-text">
-          <h4 style="color:#fff">Garantía de 7 días</h4>
+          <h3 style="color:#fff">Garantía de 7 días</h3>
           <p style="color:rgba(255,255,255,.7)">Si en los primeros 7 días GrowiApp no funciona como prometimos, te devolvemos el 100% del setup. Sin preguntas.</p>
         </div>
       </div>
@@ -431,12 +431,12 @@
         <p class="footer-tagline">Crecé con tu negocio.</p>
       </div>
       <div class="footer-col">
-        <h4>Productos</h4>
+        <h3>Productos</h3>
         <a href="/app/">GrowiApp</a>
         <a href="/web/">GrowiWeb</a>
       </div>
       <div class="footer-col">
-        <h4>Contacto</h4>
+        <h3>Contacto</h3>
         <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+m%C3%A1s+sobre+sus+soluciones." target="_blank" rel="noopener noreferrer" data-track="home-footer-whatsapp">WhatsApp</a>
         <a href="mailto:hola@growi.ar">hola@growi.ar</a>
         <a href="/privacidad/">Privacidad</a>
