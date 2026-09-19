@@ -59,7 +59,8 @@
       const v = usd * venta, paso = v >= 100000 ? 1000 : 100;
       return '$' + (Math.round(v / paso) * paso).toLocaleString('es-AR') + (short ? '' : ' ARS');
     }
-    return 'USD ' + String(Math.round(usd * 100) / 100).replace('.', ',');
+    const r = Math.round(usd * 100) / 100;
+    return 'USD ' + (Number.isInteger(r) ? String(r) : r.toFixed(2).replace('.', ','));
   }
   window.growiPrice = formatPrice;
 
