@@ -810,6 +810,7 @@ footer {
   cursor: pointer;
   transition: background .18s var(--ease-out), color .18s var(--ease-out), transform .14s var(--ease-out);
 }
+@media (hover: hover) and (pointer: fine) { .currency-btn:not(.active):hover { color: var(--ink); background: rgba(12,12,12,.05); } }
 .currency-btn.active {
   background: var(--ink);
   color: #fff;

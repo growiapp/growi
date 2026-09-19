@@ -113,7 +113,7 @@
     const obs = new IntersectionObserver(entries => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 55);
+          setTimeout(() => e.target.classList.add('visible'), Math.min(i, 5) * 55); // tope: del sexto en adelante entran juntos
           obs.unobserve(e.target);
         }
       });
