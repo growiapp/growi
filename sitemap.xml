@@ -2,22 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://growi.ar/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
   </url>
   <url>
     <loc>https://growi.ar/app/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
   </url>
   <url>
     <loc>https://growi.ar/web/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
   </url>
   <url>
     <loc>https://growi.ar/privacidad/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
   </url>
   <url>
     <loc>https://growi.ar/terminos/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
+  </url>
+  <url>
+    <loc>https://growi.ar/app/cafeterias/</loc>
+    <lastmod>2026-09-19</lastmod>
+  </url>
+  <url>
+    <loc>https://growi.ar/app/peluquerias/</loc>
+    <lastmod>2026-09-19</lastmod>
+  </url>
+  <url>
+    <loc>https://growi.ar/app/talleres/</loc>
+    <lastmod>2026-09-19</lastmod>
+  </url>
+  <url>
+    <loc>https://growi.ar/app/retail/</loc>
+    <lastmod>2026-09-19</lastmod>
+  </url>
+  <url>
+    <loc>https://growi.ar/combo/</loc>
+    <lastmod>2026-09-19</lastmod>
   </url>
 </urlset>
