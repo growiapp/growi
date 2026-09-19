@@ -620,6 +620,9 @@ footer {
   .nav-right { margin-left: auto; }
   .nav-wa { display: none; }
   .nav-hamburger { display: inline-flex; margin-left: auto; }
+  /* el WhatsApp del nav se oculta acá: el flotante lo reemplaza desde el mismo ancho */
+  .wa-float { display: flex; }
+  footer { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
 }
 
 @media (max-width: 768px) {
@@ -999,7 +1002,7 @@ footer {
   color: #fff;
 }
 
-/* ── WhatsApp float button (mobile only) ── */
+/* ── WhatsApp float button (≤880px, cuando se oculta el del nav) ── */
 .wa-float {
   display: none;
   position: fixed;
@@ -1039,7 +1042,5 @@ section[id] { scroll-margin-top: 96px; }
   .section-cta .btn { width: 100%; justify-content: center; }
   .trust-block { padding: 28px 20px; }
   .currency-toggle { width: 100%; justify-content: center; }
-  .wa-float { display: flex; }
-  footer { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
   .section { padding: 56px 0; }
 }
