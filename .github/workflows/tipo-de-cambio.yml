@@ -15,6 +15,7 @@ on:
 permissions:
   contents: write
   actions: write
+  issues: write
 
 jobs:
   actualizar:
@@ -39,5 +40,16 @@ jobs:
       - name: Publicar el sitio
         if: steps.commit.outputs.changed == 'true'
         run: gh workflow run static.yml --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
+      # Si la API está caída o devuelve algo raro, el sitio sigue con el último valor guardado en shared.fx.js.
+      # Para que nadie se entere tarde, se abre un issue (uno solo, no uno por semana).
+      - name: Avisar si falló
+        if: failure()
+        run: |
+          titulo="No se pudo actualizar el tipo de cambio"
+          if [ -z "$(gh issue list --state open --search "$titulo in:title" --json number --jq '.[0].number')" ]; then
+            gh issue create --title "$titulo" --body "El workflow semanal falló: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}. El sitio sigue mostrando precios con el último valor conocido (ver shared.fx.js). Se puede reintentar desde Actions → Actualizar tipo de cambio → Run workflow."
+          fi
         env:
           GH_TOKEN: ${{ github.token }}
