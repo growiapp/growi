@@ -222,7 +222,6 @@
 .insight-list{display:grid;gap:9px}
 .insight-list div{padding:10px 11px;border-radius:13px;background:var(--off);border:1px solid rgba(12,12,12,.06);font-size:12px;line-height:1.25;color:var(--ink2)}
 .insight-list strong{color:var(--ink)}
-.live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:livePulse 1.8s infinite}
 .dash-topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .mockup-case-pill,.mockup-live-pill{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:650}
 .mockup-case-pill{background:#fff;color:var(--ink2)}
@@ -270,7 +269,6 @@
 .dash-screen.active{opacity:1;visibility:visible;pointer-events:auto;transform:none}
 .dynamic-mockup{width:100%;overflow:hidden}
 .dynamic-mockup .dash-main{width:100%;overflow:hidden}
-@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(26,107,71,.35)}70%{box-shadow:0 0 0 8px rgba(26,107,71,0)}100%{box-shadow:0 0 0 0 rgba(26,107,71,0)}}
 @keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 /* Checklist */
 .check-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin-top:32px}
@@ -299,7 +297,7 @@
 @media(max-width:640px){.hero-mockup{border-radius:22px}.mockup-body{padding:8px}.mockup-bar{height:48px;padding:0 14px}.dash-main{padding:16px}.dash-header-row{flex-direction:column;gap:8px}.dash-date{width:max-content;white-space:normal;height:auto;min-height:32px;padding:8px 12px}.kpi-row{grid-template-columns:1fr}.kpi-card{padding:15px}.mockup-panels{gap:12px;grid-template-columns:1fr}.panel-card{padding:14px}.check-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.demo-industry-selector{text-align:left}.demo-industry-title,.demo-industry-sub,.demo-industry-note{text-align:center}.demo-industry-buttons{justify-content:flex-start;margin-left:-2px;margin-right:-2px}.pricing-controls{gap:12px}.pricing-control-group{width:100%}.pricing-control-group .currency-toggle{width:100%;justify-content:center}.plans-compare summary{font-size:18px;padding:16px 18px}.plans-compare-body{padding:0 16px 18px}}
 @media(max-width:420px){.dash-main{padding:14px}.dash-title{font-size:22px}.payment-row{grid-template-columns:1fr;gap:7px}.progress{width:100%}}
-@media(prefers-reduced-motion:reduce){.live-dot{animation:none!important}.dash-screen{transition:none!important;animation:none!important}}
+@media(prefers-reduced-motion:reduce){.dash-screen{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
