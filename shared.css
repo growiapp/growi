@@ -318,7 +318,7 @@ body.menu-open { overflow: hidden; }
   padding: 36px;
   transition: box-shadow .2s, transform .2s;
 }
-.card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.card:has(a):hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
 .card-icon {
   width: 48px; height: 48px;
   border-radius: 12px;
