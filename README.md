@@ -9,7 +9,8 @@ index.html          Home
 app/index.html      GrowiApp (sistema de gestión)
 app/<rubro>/        Landings por rubro: cafeterias, peluquerias, talleres, retail
 combo/              Combo sitio web + sistema
-web/index.html      GrowiWeb (desarrollo web)
+web/index.html      GrowiWeb (desarrollo web)
+flow/index.html     GrowiFlow (automatizaciones e IA)
 privacidad/         Política de privacidad
 terminos/           Términos
 shared.css          Estilos compartidos por todas las páginas
