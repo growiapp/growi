@@ -258,8 +258,10 @@ body.menu-open { overflow: hidden; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  height: 26px;
-  padding: 0 12px;
+  min-height: 26px;
+  padding: 5px 12px;
+  line-height: 1.35;
+  text-align: center;
   background: var(--accentL);
   color: var(--accent2);
   font-size: 11px;
@@ -269,6 +271,9 @@ body.menu-open { overflow: hidden; }
   border-radius: 999px;
   margin-bottom: 16px;
 }
+/* la pastilla es inline: para centrarla sola hay que volverla bloque con márgenes auto */
+.eyebrow-center { display: flex; width: fit-content; margin-left: auto; margin-right: auto; }
+.lead-center { margin-left: auto; margin-right: auto; text-align: center; }
 .section-dark .eyebrow { background: rgba(255,255,255,.12); color: rgba(255,255,255,.8); }
 .section-accent .eyebrow { background: rgba(255,255,255,.2); color: rgba(255,255,255,.9); }
 .section-title {
