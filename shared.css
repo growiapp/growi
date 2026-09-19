@@ -536,6 +536,11 @@ body.menu-open { overflow: hidden; }
   line-height: 1.7;
 }
 
+/* Salida a WhatsApp para quien no encontró su pregunta */
+.faq-more { margin-top: 28px; text-align: center; font-size: 15px; color: var(--ink2); }
+.faq-more a { color: var(--accent); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.faq-more a:hover { color: var(--accent2); }
+
 /* ── Footer ── */
 footer {
   border-top: 1px solid var(--line);
