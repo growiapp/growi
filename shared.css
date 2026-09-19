@@ -726,7 +726,16 @@ footer {
 .addons-table td:last-child { font-weight: 680; color: var(--ink); white-space: nowrap; }
 .addons-table tr:last-child td { border-bottom: none; }
 .addons-table tr:hover td { background: var(--off); }
-.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+/* Sombras de desplazamiento solo con CSS: aparecen del lado donde queda tabla por ver */
+.table-scroll {
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  background:
+    linear-gradient(to right, #fff 30%, rgba(255,255,255,0)) left / 40px 100% no-repeat local,
+    linear-gradient(to left, #fff 30%, rgba(255,255,255,0)) right / 40px 100% no-repeat local,
+    linear-gradient(to right, rgba(12,12,12,.14), rgba(12,12,12,0)) left / 14px 100% no-repeat scroll,
+    linear-gradient(to left, rgba(12,12,12,.14), rgba(12,12,12,0)) right / 14px 100% no-repeat scroll;
+}
+.table-scroll:focus-visible { border-radius: 8px; }
 .table-scroll .addons-table { min-width: 620px; }
 .table-scroll .addons-table td:not(:first-child) { white-space: nowrap; font-weight: 600; color: var(--ink); }
 @media (max-width: 640px) { .addons-table { font-size: 13px; } .addons-table th, .addons-table td { padding: 10px 12px; } }
@@ -737,6 +746,12 @@ footer {
 .plan-alt strong { color: var(--accent2); font-weight: 700; }
 .plan-card.featured .plan-alt { color: rgba(255,255,255,.72); }
 .plan-card.featured .plan-alt strong { color: var(--accentM); }
+/* Casos 'si ya usás / si no usás' de un plan: bloque propio bajo la lista, separado por un filete */
+.plan-cases { display: grid; gap: 12px; margin: 0 0 24px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; line-height: 1.55; color: var(--ink2); }
+.plan-cases strong { display: block; margin-bottom: 2px; font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.plan-card.featured .plan-cases { border-color: rgba(255,255,255,.12); color: rgba(255,255,255,.75); }
+.plan-card.featured .plan-cases strong { color: #fff; }
+.plan-card:has(.plan-cases) .plan-features { flex: 0 1 auto; margin-bottom: 18px; }
 .plan-card.soon { background: var(--off); border-style: dashed; border-color: var(--line2); }
 .plan-card.soon .plan-badge { background: var(--ink3); }
 /* Botón realmente desactivado (<button disabled>): no responde al hover ni al toque */
@@ -1165,7 +1180,7 @@ section[id] { scroll-margin-top: 96px; }
   outline-offset: 3px;
 }
 a:not([class]):focus-visible, .text-link:focus-visible, .footer-col a:focus-visible, .faq-list summary:focus-visible { border-radius: 4px; }
-.section-dark :focus-visible, .section-accent :focus-visible, .bridge :focus-visible { outline-color: #fff; }
+.section-dark :focus-visible, .section-accent :focus-visible, .bridge :focus-visible, .plan-card.featured :focus-visible { outline-color: #fff; }
 
 /* Respuesta al presionar: en el momento del toque, no al soltar */
 .btn:active, .plan-btn:active, .nav-wa:active, .nav-hamburger:active, .currency-btn:active,
