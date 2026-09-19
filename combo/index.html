@@ -2,424 +2,397 @@
 <html lang="es-AR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Combo Growi | Web + Sistema de gestión para tu negocio, en un solo equipo</title>
-<meta name="description" content="Tu web y tu sistema de gestión, coordinados por el mismo equipo, con un descuento por hacerlo junto. Desde $255.680 + $21.900/mes.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --color-bg: #F6F6F4; --color-surface: #FFFFFF; --color-ink: #0C0C0C; --color-ink-soft: #4A4A47;
-    --color-green: #1A6B47; --color-green-dark: #124F34; --color-green-tint: #E7F0EB; --color-cream-line: #E4E3DD;
-    --font-display: 'Syne', sans-serif; --font-body: 'Epilogue', sans-serif;
-    --radius: 18px; --shadow-card: 0 8px 24px rgba(12,12,12,0.06);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --color-bg: #F6F6F4; --color-surface: #FFFFFF; --color-ink: #0C0C0C; --color-ink-soft: #4A4A47; --color-green: #1A6B47; --color-green-dark: #124F34; --color-green-tint: #E7F0EB; --color-cream-line: #E4E3DD; }
-  }
-  :root[data-theme="dark"] { --color-bg: #F6F6F4; --color-surface: #FFFFFF; --color-ink: #0C0C0C; --color-ink-soft: #4A4A47; --color-green: #1A6B47; --color-green-dark: #124F34; --color-green-tint: #E7F0EB; --color-cream-line: #E4E3DD; }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
-  body { background: var(--color-bg); color: var(--color-ink); font-family: var(--font-body); line-height: 1.5; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); -webkit-font-smoothing: antialiased; }
-  img { max-width: 100%; display: block; }
-  h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.01em; color: var(--color-ink); }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-  a { color: inherit; text-decoration: none; }
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 16px 28px; border-radius: 999px; font-family: var(--font-body); font-weight: 700; font-size: 1rem; cursor: pointer; border: none; transition: transform .15s ease, box-shadow .15s ease; }
-  .btn:active { transform: scale(0.98); }
-  .btn-primary { background: var(--color-green); color: #fff; box-shadow: 0 6px 18px rgba(26,107,71,0.30); }
-  .btn-primary:hover { background: var(--color-green-dark); }
-  .btn-ghost { background: transparent; color: var(--color-ink); border: 1.5px solid var(--color-ink); }
-  .btn-sm { padding: 10px 18px; font-size: 0.9rem; }
-
-  header.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: rgba(246,246,244,0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--color-cream-line); }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1080px; margin: 0 auto; }
-  .logo { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; }
-
-  .hero { padding: 64px 0 48px; }
-  .eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--color-green-tint); color: var(--color-green-dark); font-weight: 700; font-size: 0.8rem; padding: 6px 14px; border-radius: 999px; margin-bottom: 20px; }
-  .hero h1 { font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.05; max-width: 17ch; }
-  .hero .accent { color: var(--color-green); }
-  .hero p.sub { font-size: clamp(1.05rem, 2.4vw, 1.25rem); color: var(--color-ink-soft); max-width: 48ch; margin: 20px 0 32px; }
-  .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
-  .hero-price { margin-top: 18px; font-size: 0.95rem; color: var(--color-ink-soft); }
-  .hero-price strong { color: var(--color-ink); }
-
-  .combo-visual {
-    margin-top: 44px;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 18px;
-    align-items: center;
-  }
-  .combo-piece {
-    background: var(--color-surface);
-    border: 1px solid var(--color-cream-line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-card);
-    padding: 22px;
-    text-align: center;
-  }
-  .combo-piece .icon { font-size: 1.8rem; margin-bottom: 8px; }
-  .combo-piece strong { display: block; font-family: var(--font-display); font-size: 1.05rem; }
-  .combo-piece span { color: var(--color-ink-soft); font-size: 0.88rem; }
-  .combo-plus { font-family: var(--font-display); font-size: 1.8rem; color: var(--color-green); text-align: center; }
-
-  section { padding: 56px 0; }
-  .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); max-width: 22ch; margin-bottom: 14px; }
-  .section-sub { color: var(--color-ink-soft); max-width: 58ch; font-size: 1.05rem; margin-bottom: 36px; }
-
-  .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
-  .pain-card { background: var(--color-surface); border: 1px solid var(--color-cream-line); border-radius: var(--radius); padding: 22px; }
-  .pain-card .mark { font-size: 1.6rem; margin-bottom: 10px; display: block; }
-  .pain-card p { color: var(--color-ink-soft); font-size: 0.98rem; }
-  .pain-card strong { display: block; margin-bottom: 8px; font-size: 1.05rem; }
-
-  .bridge { background: var(--color-ink); color: #fff; border-radius: 24px; padding: 44px 32px; text-align: center; }
-  .bridge h2 { color: #fff; }
-  .bridge .flow { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 26px; font-family: var(--font-display); font-weight: 700; }
-  .bridge .flow span.state { background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 999px; font-size: 0.9rem; }
-  .bridge .flow span.arrow { color: var(--color-green); font-size: 1.4rem; }
-  .bridge .before { opacity: 0.6; }
-  .bridge .after { background: var(--color-green) !important; }
-
-  .feature-list { display: grid; gap: 16px; }
-  .feature-row { display: grid; grid-template-columns: 56px 1fr; gap: 18px; align-items: flex-start; background: var(--color-surface); border: 1px solid var(--color-cream-line); border-radius: var(--radius); padding: 20px; }
-  .feature-icon { width: 48px; height: 48px; border-radius: 14px; background: var(--color-green-tint); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
-  .feature-row h3 { font-size: 1.1rem; margin-bottom: 4px; }
-  .feature-row p { color: var(--color-ink-soft); font-size: 0.98rem; }
-  .feature-row .why { color: var(--color-green-dark); font-weight: 600; font-size: 0.92rem; margin-top: 6px; display: block; }
-
-  /* PRICING TABLE */
-  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .price-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-cream-line);
-    border-radius: var(--radius);
-    padding: 28px;
-    position: relative;
-  }
-  .price-card.featured { border: 2px solid var(--color-green); }
-  .price-card .tag {
-    position: absolute; top: -12px; left: 24px;
-    background: var(--color-green); color: #fff;
-    font-size: 0.75rem; font-weight: 700;
-    padding: 4px 12px; border-radius: 999px;
-  }
-  .price-card h3 { font-size: 1.2rem; margin-bottom: 4px; }
-  .price-card .old-price { color: var(--color-ink-soft); text-decoration: line-through; font-size: 0.95rem; }
-  .price-card .new-price { font-family: var(--font-display); font-size: 1.9rem; color: var(--color-green); margin: 4px 0; }
-  .price-card .monthly { color: var(--color-ink-soft); font-size: 0.95rem; margin-bottom: 18px; }
-  .price-card ul { list-style: none; margin-bottom: 20px; }
-  .price-card li { padding: 6px 0; font-size: 0.95rem; display: flex; gap: 8px; }
-  .price-card li::before { content: '✓'; color: var(--color-green); font-weight: 700; }
-
-  .rubros { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
-  .rubro-chip { background: var(--color-surface); border: 1px solid var(--color-cream-line); border-radius: 999px; padding: 8px 16px; font-size: 0.9rem; font-weight: 600; }
-
-  .trust-band { background: var(--color-green); color: #fff; border-radius: 24px; padding: 44px 32px; }
-  .trust-band h2 { color: #fff; max-width: 26ch; }
-  .trust-band p.lead { opacity: 0.9; margin-top: 10px; max-width: 52ch; }
-  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 40px; text-align: center; }
-  .stats-row div strong { display: block; font-family: var(--font-display); font-size: 1.8rem; }
-  .stats-row div span { opacity: 0.85; font-size: 0.85rem; }
-
-  .faq-item { border-bottom: 1px solid var(--color-cream-line); padding: 18px 0; }
-  .faq-item summary { cursor: pointer; font-weight: 700; font-size: 1.02rem; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-  .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-item summary::after { content: '+'; font-size: 1.4rem; color: var(--color-green); transition: transform .2s; }
-  .faq-item[open] summary::after { transform: rotate(45deg); }
-  .faq-item p { color: var(--color-ink-soft); margin-top: 10px; font-size: 0.98rem; }
-
-  .guarantee { display: flex; gap: 20px; align-items: center; background: var(--color-surface); border: 1.5px dashed var(--color-green); border-radius: var(--radius); padding: 24px; }
-  .guarantee .badge { font-size: 2.2rem; }
-  .guarantee h3 { font-size: 1.1rem; margin-bottom: 6px; }
-  .guarantee p { color: var(--color-ink-soft); font-size: 0.95rem; }
-
-  .final-cta { text-align: center; background: var(--color-green-tint); border-radius: 24px; padding: 56px 24px; }
-  .final-cta h2 { max-width: 20ch; margin: 0 auto 14px; }
-  .final-cta p { color: var(--color-ink-soft); max-width: 46ch; margin: 0 auto 28px; }
-
-  footer { padding: 40px 0 calc(40px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--color-cream-line); color: var(--color-ink-soft); font-size: 0.88rem; }
-  footer .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center; }
-
-  .sticky-cta { position: fixed; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); left: 16px; right: 16px; z-index: 50; display: none; }
-  .sticky-cta .btn { width: 100%; box-shadow: 0 10px 30px rgba(12,12,12,0.25); }
-
-  @media (max-width: 720px) {
-    .combo-visual { grid-template-columns: 1fr; }
-    .combo-plus { transform: rotate(90deg); }
-    .bridge .flow { flex-direction: column; }
-    .bridge .flow span.arrow { transform: rotate(90deg); }
-    .sticky-cta { display: block; }
-    section { padding: 44px 0; }
-    footer .foot-row { flex-direction: column; align-items: flex-start; }
-  }
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Combo sitio web + sistema de gestión para tu negocio | Growi</title>
+<meta name="description" content="Sitio web y sistema de gestión armados por un solo equipo: 10% de descuento en el sitio y puesta en marcha sin cargo. Desde USD 180 + USD 15 por mes.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://growi.ar/combo/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta property="og:site_name" content="Growi">
+<meta property="og:title" content="Combo Growi | Tu negocio en internet y ordenado, con un solo equipo">
+<meta property="og:description" content="Sitio web + sistema de gestión coordinados: un solo arranque, un precio claro y 10% de descuento en el sitio.">
+<meta property="og:url" content="https://growi.ar/combo/">
+<meta property="og:image" content="https://growi.ar/png/growi-og-1200x630.png">
+<meta property="og:image:secure_url" content="https://growi.ar/png/growi-og-1200x630.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Growi - Soluciones digitales para tu negocio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Combo Growi | Tu negocio en internet y ordenado, con un solo equipo">
+<meta name="twitter:description" content="Sitio web + sistema de gestión coordinados: un solo arranque, un precio claro y 10% de descuento en el sitio.">
+<meta name="twitter:image" content="https://growi.ar/png/growi-twitter-card-1200x600.png">
+<meta name="theme-color" content="#0C0C0C">
+<link rel="icon" type="image/png" sizes="32x32" href="/png/appicon_32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/png/appicon_192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/png/appicon_512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/png/appicon_180.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="preload" href="/fonts/syne-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/epilogue-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/shared.css">
+<script>document.documentElement.classList.add('js')</script>
+<script defer data-domain="growi.ar" src="https://plausible.io/js/script.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Growi",
+      "item": "https://growi.ar/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Combo sitio web + sistema",
+      "item": "https://growi.ar/combo/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Puedo combinar cualquier tipo de sitio con GrowiApp?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Tanto la landing (sitio de una sola página) como el sitio institucional se pueden combinar con GrowiApp Start. El 10% de descuento se aplica al precio del sitio en los dos casos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto tarda en estar todo funcionando?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GrowiApp, en 48 horas. El sitio web, de 3 a 10 días hábiles. Coordinamos las dos cosas desde la misma charla inicial."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto pago en total para arrancar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El precio del sitio con el 10% de descuento (pago único) y el primer mes de GrowiApp Start. La puesta en marcha del sistema, que sola tiene costo, en el combo va sin cargo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo empezar con uno solo y sumar el otro después?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, pero el descuento y la puesta en marcha sin cargo valen cuando se contratan juntos desde el inicio. Si ya tenés uno de los dos con nosotros, contanos y vemos qué tiene sentido en tu caso."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿El abono mensual también tiene descuento?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. El 10% se aplica al precio del sitio web, que es un pago único. El abono mensual de GrowiApp Start es el mismo que si lo contratás solo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Tengo que firmar un contrato largo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. El sitio es un pago único, y GrowiApp es un abono mensual sin permanencia obligatoria: lo cancelás cuando quieras y te llevás tus datos."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
+<a href="#contenido" class="skip-link">Saltar al contenido</a>
 
-<header class="nav">
+<nav id="mainNav">
   <div class="nav-inner">
-    <span class="logo">Growi<span style="color:var(--color-green)">.</span></span>
-    <a class="btn btn-primary btn-sm" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20conocer%20el%20combo%20de%20web%20%2B%20sistema%20de%20gesti%C3%B3n." target="_blank" rel="noopener">WhatsApp</a>
+    <a href="/" class="nav-brand" aria-label="Growi — Inicio">Growi<span class="dot">.</span></a>
+    <ul class="nav-links" role="list">
+      <li><a href="/app/">GrowiApp</a></li>
+      <li><a href="/web/">GrowiWeb</a></li>
+    </ul>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+el+combo+de+sitio+web+%2B+sistema+de+gesti%C3%B3n." class="nav-wa" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-track="combo-nav-whatsapp">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span class="wa-label">WhatsApp</span>
+    </a>
+    <button class="nav-hamburger" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
   </div>
-</header>
+</nav>
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación" aria-modal="true" aria-hidden="true">
+  <div class="mobile-menu-card">
+    <a href="/app/">GrowiApp</a>
+    <a href="/web/">GrowiWeb</a>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+el+combo+de+sitio+web+%2B+sistema+de+gesti%C3%B3n." class="mobile-menu-cta" target="_blank" rel="noopener noreferrer" data-track="combo-mobile-menu-whatsapp">Hablar por WhatsApp</a>
+  </div>
+</div>
 
 <main id="contenido">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap">
-      <span class="eyebrow">🚀 Combo Presencia Digital Completa</span>
-      <h1>Tu negocio, <span class="accent">online y ordenado</span>, desde el mismo equipo</h1>
-      <p class="sub">Sitio web y sistema de gestión coordinados por nosotros, en un solo setup. Un proveedor, un precio claro, y un descuento por hacerlo junto en vez de por separado.</p>
-      <div class="hero-ctas">
-        <a class="btn btn-primary" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20conocer%20el%20combo%20de%20web%20%2B%20sistema%20de%20gesti%C3%B3n." target="_blank" rel="noopener">Quiero el combo →</a>
-        <a class="btn btn-ghost" href="#precios">Ver precios</a>
-      </div>
-      <p class="hero-price">Desde <strong>$255.680</strong> (web) + <strong>$21.900/mes</strong> (sistema) · 12% off por combo</p>
+<!-- Hero -->
+<section class="hero-landing" data-sticky-hide>
+  <div class="container">
+    <p class="eyebrow reveal">Combo: sitio web + sistema de gestión</p>
+    <h1 class="section-title">Tu negocio, <span class="accent">en internet y ordenado</span>, con un solo equipo.</h1>
+    <p class="section-lead hero-lead reveal" style="margin-top:20px">Te armamos el sitio web y el sistema para llevar ventas, caja, stock y turnos, todo junto. Un solo equipo, un precio claro y un descuento por hacerlo de una vez en lugar de por separado.</p>
+    <div class="hero-actions reveal">
+      <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+el+combo+de+sitio+web+%2B+sistema+de+gesti%C3%B3n." class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer" data-track="combo-hero-whatsapp">Quiero el combo</a>
+      <a href="#precios" class="btn btn-outline btn-lg">Ver precios ↓</a>
+    </div>
+    <p class="price-anchor reveal">Sitio web desde <span data-price="180">$276.000 ARS</span>, pago único + <span data-price="15">$23.000 ARS</span> por mes del sistema<br>10% de descuento en el sitio · Puesta en marcha del sistema sin cargo</p>
+  </div>
+</section>
 
-      <div class="combo-visual">
-        <div class="combo-piece">
-          <div class="icon">🌐</div>
-          <strong>GrowiWeb</strong>
-          <span>Tu presencia online</span>
-        </div>
-        <div class="combo-plus">+</div>
-        <div class="combo-piece">
-          <div class="icon">📊</div>
-          <strong>GrowiApp</strong>
-          <span>Tu gestión diaria</span>
-        </div>
+<!-- Dolores -->
+<section class="section section-off">
+  <div class="container">
+    <div class="section-header center" style="margin-bottom:0">
+      <h2 class="section-title reveal">Armar todo de a partes sale más caro y más lento.</h2>
+      <p class="section-lead reveal">No es que no sepas lo que necesitás. Es que conseguirlo con un proveedor por vez suma tiempo, plata y dolores de cabeza que no se ven hasta que ya pasaron.</p>
+    </div>
+    <div class="pain-list">
+      <div class="pain-item reveal">
+        <h3>Dos esperas en vez de una</h3>
+        <p>Contratás el sitio en un lado y el sistema en otro, y terminás esperando el doble para tener todo funcionando.</p>
+      </div>
+      <div class="pain-item reveal">
+        <h3>Nada coincide con nada</h3>
+        <p>El sitio dice una cosa de tu negocio y el sistema otra, porque los armó gente distinta sin hablarse.</p>
+      </div>
+      <div class="pain-item reveal">
+        <h3>Pagás dos arranques</h3>
+        <p>Cada proveedor te cobra su propia puesta en marcha y te hace las mismas preguntas, cuando podría ser una sola conversación.</p>
+      </div>
+      <div class="pain-item reveal">
+        <h3>Dos lugares para reclamar</h3>
+        <p>Si algo falla, no sabés si es el sitio o el sistema, y cada proveedor te manda con el otro.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PAIN AGITATION -->
-  <section id="dolor">
-    <div class="wrap">
-      <h2 class="section-title">Arrancar un negocio de a partes sale más caro y más lento</h2>
-      <p class="section-sub">No es que no sepas lo que necesitás. Es que conseguirlo de a un proveedor por vez suma tiempo, plata y dolores de cabeza que no se ven hasta que ya pasaron.</p>
-      <div class="pain-grid">
-        <div class="pain-card">
-          <span class="mark">🕐</span>
-          <strong>Dos esperas en vez de una</strong>
-          <p>Contratás la web en un lado y el sistema en otro, y terminás esperando el doble de tiempo para tener todo funcionando.</p>
-        </div>
-        <div class="pain-card">
-          <span class="mark">🧩</span>
-          <strong>Nada habla entre sí</strong>
-          <p>La web dice una cosa de tu negocio y el sistema interno otra, porque los armó gente distinta sin coordinarse.</p>
-        </div>
-        <div class="pain-card">
-          <span class="mark">💸</span>
-          <strong>Pagás dos veces el mismo setup</strong>
-          <p>Cada proveedor te cobra su propia reunión de relevamiento, cuando podría ser una sola conversación.</p>
-        </div>
-        <div class="pain-card">
-          <span class="mark">📞</span>
-          <strong>Dos soportes para reclamar</strong>
-          <p>Si algo falla, no sabés si es un problema de la web o del sistema, y cada proveedor te manda al otro.</p>
-        </div>
+<!-- Puente + qué incluye -->
+<section class="section" id="como-funciona">
+  <div class="container">
+    <div class="bridge reveal">
+      <h2 class="section-title">De dos proveedores separados a un solo equipo que arma todo junto.</h2>
+      <div class="bridge-flow">
+        <span class="bridge-state">Sitio por un lado + sistema por otro</span>
+        <svg class="bridge-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="bridge-state after">Un solo arranque, un precio, un WhatsApp</span>
       </div>
     </div>
-  </section>
 
-  <!-- SOLUTION BRIDGE -->
-  <section id="como-funciona">
-    <div class="wrap">
-      <div class="bridge">
-        <h2>De dos proveedores separados a un solo equipo que arma todo junto</h2>
-        <div class="flow">
-          <span class="state before">Web por un lado + sistema por otro</span>
-          <span class="arrow">→</span>
-          <span class="state after">Un setup coordinado, un precio, un soporte</span>
-        </div>
-      </div>
+    <div class="section-header center" style="margin:72px 0 0">
+      <h2 class="section-title reveal">Qué incluye el combo.</h2>
+      <p class="section-lead reveal">No es sumar dos productos sueltos. Es una sola charla inicial para dejar tu negocio visible en internet y ordenado puertas adentro.</p>
     </div>
-  </section>
-
-  <!-- FEATURES AS BENEFITS -->
-  <section id="funciones">
-    <div class="wrap">
-      <h2 class="section-title">Qué incluye el combo</h2>
-      <p class="section-sub">No es "sumar" dos productos separados. Es un solo relevamiento inicial que arma tu presencia digital de punta a punta.</p>
-      <div class="feature-list">
-        <div class="feature-row">
-          <div class="feature-icon">🌐</div>
-          <div>
-            <h3>Tu sitio web (landing o institucional)</h3>
-            <p>Precio fijo y plazo definido — de 3 a 10 días hábiles según el tipo de sitio.</p>
-            <span class="why">→ Aparecés cuando te buscan en Google o te comparten por WhatsApp.</span>
-          </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">📊</div>
-          <div>
-            <h3>Tu sistema de gestión (GrowiApp Start)</h3>
-            <p>Ventas, caja, stock, turnos y clientes en una sola herramienta. Setup en 48 horas.</p>
-            <span class="why">→ Ordenás la operación diaria desde el primer día.</span>
-          </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">🗓️</div>
-          <div>
-            <h3>Un solo relevamiento inicial</h3>
-            <p>Una conversación con nuestro equipo cubre lo que necesitamos para armar la web y el sistema juntos.</p>
-            <span class="why">→ No repetís la misma explicación dos veces a dos proveedores distintos.</span>
-          </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">🎨</div>
-          <div>
-            <h3>Coherencia entre web y sistema</h3>
-            <p>Los mismos datos de tu negocio (productos, servicios, precios) quedan alineados en ambos lados.</p>
-            <span class="why">→ Tu web y tu operación cuentan la misma historia.</span>
-          </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">💬</div>
-          <div>
-            <h3>Un solo soporte por WhatsApp</h3>
-            <p>Si algo falla, hablás con el mismo equipo que armó todo, sin que te deriven de un lado a otro.</p>
-            <span class="why">→ Un solo lugar para resolver cualquier problema.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section id="precios">
-    <div class="wrap">
-      <h2 class="section-title">Los dos combos disponibles</h2>
-      <p class="section-sub">Elegís el tipo de sitio según lo que necesita tu negocio. El sistema de gestión es el mismo en ambos casos.</p>
-      <div class="pricing-grid">
-        <div class="price-card">
-          <h3>Combo Landing</h3>
-          <p class="old-price">Web sola: $290.540</p>
-          <p class="new-price">$255.680</p>
-          <p class="monthly">+ $21.900/mes (GrowiApp Start)</p>
-          <ul>
-            <li>Landing page de una página</li>
-            <li>Formulario de contacto</li>
-            <li>Ventas, caja, stock, turnos y clientes</li>
-            <li>Setup coordinado, un solo relevamiento</li>
-          </ul>
-          <a class="btn btn-ghost" style="width:100%" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20el%20Combo%20Landing%20(web%20%2B%20GrowiApp)." target="_blank" rel="noopener">Quiero este combo</a>
-        </div>
-        <div class="price-card featured">
-          <span class="tag">Más elegido</span>
-          <h3>Combo Institucional</h3>
-          <p class="old-price">Web sola: $790.000</p>
-          <p class="new-price">$695.200</p>
-          <p class="monthly">+ $21.900/mes (GrowiApp Start)</p>
-          <ul>
-            <li>Sitio institucional multi-sección</li>
-            <li>SEO básico incluido</li>
-            <li>Ventas, caja, stock, turnos y clientes</li>
-            <li>Setup coordinado, un solo relevamiento</li>
-          </ul>
-          <a class="btn btn-primary" style="width:100%" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20el%20Combo%20Institucional%20(web%20%2B%20GrowiApp)." target="_blank" rel="noopener">Quiero este combo</a>
-        </div>
-      </div>
-      <p style="margin-top:20px; color:var(--color-ink-soft); font-size:0.9rem;">12% de descuento sobre el precio de la web al combinarla con GrowiApp. El abono mensual de GrowiApp es el mismo que si lo contratás solo.</p>
-    </div>
-  </section>
-
-  <!-- TRUST / RUBROS -->
-  <section id="confianza">
-    <div class="wrap">
-      <div class="trust-band">
-        <h2>Funciona para cualquier tipo de negocio de barrio</h2>
-        <p class="lead">El combo se arma igual sea cual sea tu rubro. GrowiApp se ajusta a cómo trabajás vos, no al revés.</p>
-        <div class="rubros" style="margin-top:24px;">
-          <span class="rubro-chip">☕ Cafeterías</span>
-          <span class="rubro-chip">💇 Peluquerías/Estética</span>
-          <span class="rubro-chip">🔧 Talleres/Servicios</span>
-          <span class="rubro-chip">🏪 Retail/Kiosco</span>
-        </div>
-        <div class="stats-row">
-          <div><strong>1</strong><span>Equipo, dos productos</span></div>
-          <div><strong>12%</strong><span>Off en la web del combo</span></div>
-          <div><strong>7 días</strong><span>Garantía de devolución</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="preguntas">
-    <div class="wrap">
-      <h2 class="section-title">Antes de que preguntes</h2>
-      <div>
-        <details class="faq-item" open>
-          <summary>¿Puedo combinar cualquier tipo de web con GrowiApp?</summary>
-          <p>Sí, tanto la Landing como el sitio Institucional se pueden combinar con GrowiApp Start. El descuento del 12% se aplica sobre el precio de la web en ambos casos.</p>
-        </details>
-        <details class="faq-item">
-          <summary>¿Cuánto tarda en estar todo funcionando?</summary>
-          <p>GrowiApp en 48 horas. La web, de 3 a 10 días hábiles según el tipo de sitio. Coordinamos ambos procesos desde el mismo relevamiento inicial.</p>
-        </details>
-        <details class="faq-item">
-          <summary>¿Puedo empezar solo con uno y sumar el otro después?</summary>
-          <p>Sí, pero el 12% de descuento aplica cuando se contratan juntos desde el inicio. Si ya tenés uno de los dos con nosotros, contanos y vemos qué tiene sentido para tu caso.</p>
-        </details>
-        <details class="faq-item">
-          <summary>¿El abono mensual también tiene descuento?</summary>
-          <p>El descuento del 12% aplica sobre el precio de la web (pago único). El abono mensual de GrowiApp Start queda en $21.900, igual que si lo contratás solo.</p>
-        </details>
-        <details class="faq-item">
-          <summary>¿Qué pasa si no me convence?</summary>
-          <p>Tenés 7 días de garantía sobre el setup de GrowiApp: si no funciona como prometimos, te devolvemos el 100%. Sin preguntas.</p>
-        </details>
-        <details class="faq-item">
-          <summary>¿Tengo que firmar un contrato largo?</summary>
-          <p>No. La web es un pago único, y GrowiApp es un abono mensual sin permanencia obligatoria.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- GUARANTEE -->
-  <section id="garantia">
-    <div class="wrap">
-      <div class="guarantee">
-        <span class="badge">🛡️</span>
+    <div class="benefit-list">
+      <div class="benefit reveal">
+        <div class="card-icon" aria-hidden="true"><svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="3.2" y="4.5" width="17.6" height="11.8" rx="2"/><path d="M8.5 20h7M12 16.3V20"/></svg></div>
         <div>
-          <h3>Garantía de 7 días, sin preguntas</h3>
-          <p>Si en los primeros 7 días GrowiApp no funciona como te prometimos, te devolvemos el 100% del setup.</p>
+          <h3>Tu sitio web</h3>
+          <p>Una página para un objetivo puntual o un sitio completo con varias secciones. Precio fijo y entrega en 3 a 10 días hábiles.</p>
+          <p class="benefit-why">Aparecés cuando te buscan en Google o te comparten por WhatsApp.</p>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="card-icon" aria-hidden="true"><svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+        <div>
+          <h3>Tu sistema de gestión (GrowiApp Start)</h3>
+          <p>Ventas, caja, stock, turnos y clientes en una sola herramienta. Andando en 48 horas.</p>
+          <p class="benefit-why">Ordenás el día a día desde el primer día.</p>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="card-icon" aria-hidden="true"><svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
+        <div>
+          <h3>Una sola charla inicial</h3>
+          <p>Con una conversación nos alcanza para armar el sitio y el sistema juntos.</p>
+          <p class="benefit-why">No le explicás lo mismo dos veces a dos proveedores distintos.</p>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="card-icon" aria-hidden="true"><svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <h3>El sitio y el sistema dicen lo mismo</h3>
+          <p>Tus productos, servicios y precios quedan iguales en los dos lados.</p>
+          <p class="benefit-why">Lo que el cliente ve en internet es lo que encuentra en el local.</p>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="card-icon" aria-hidden="true"><svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/></svg></div>
+        <div>
+          <h3>Un solo WhatsApp para todo</h3>
+          <p>Si algo falla, hablás con el mismo equipo que armó todo, sin que te deriven de un lado a otro.</p>
+          <p class="benefit-why">Un solo lugar para resolver cualquier problema.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FINAL CTA -->
-  <section id="empezar">
-    <div class="wrap">
-      <div class="final-cta">
-        <h2>Arrancá con todo resuelto desde el día uno</h2>
-        <p>Contanos qué negocio tenés y armamos juntos la web y el sistema, coordinados desde el principio. Sin vueltas, sin letra chica.</p>
-        <a class="btn btn-primary" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20conocer%20el%20combo%20de%20web%20%2B%20sistema%20de%20gesti%C3%B3n." target="_blank" rel="noopener">Quiero el combo →</a>
+<!-- Precios -->
+<section class="section section-off" id="precios">
+  <div class="container">
+    <div class="section-header center" style="margin-bottom:0">
+      <h2 class="section-title reveal">Los dos combos.</h2>
+      <p class="section-lead reveal">Elegís el tipo de sitio según lo que necesita tu negocio. El sistema de gestión es el mismo en los dos casos.</p>
+    </div>
+    <div class="reveal" style="text-align:center;margin-top:28px">
+      <div class="currency-toggle" role="group" aria-label="Ver precios en pesos o en dólares" style="margin-bottom:0">
+        <button class="currency-btn active" id="btnARS" type="button" aria-pressed="true">ARS</button>
+        <button class="currency-btn" id="btnUSD" type="button" aria-pressed="false">USD</button>
       </div>
     </div>
-  </section>
+    <div class="plans-grid institutional-plans-grid reveal">
+      <div class="plan-card">
+        <div class="plan-name">Combo Landing</div>
+        <div class="plan-price"><span data-price="180" data-price-short>$276.000</span></div>
+        <div class="plan-period" style="margin-bottom:4px">pago único por el sitio · antes <s><span data-price="200" data-price-short>$307.000</span></s></div>
+        <div class="plan-setup">+ <span data-price="15">$23.000 ARS</span> por mes del sistema</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feat"><span class="pfd"></span>Sitio de una sola página, con botón a WhatsApp o formulario</li>
+          <li class="plan-feat"><span class="pfd"></span>GrowiApp Start: ventas, caja, stock, turnos y clientes</li>
+          <li class="plan-feat"><span class="pfd"></span>Puesta en marcha del sistema sin cargo (sola sale <span data-price="49">$75.200 ARS</span>)</li>
+          <li class="plan-feat"><span class="pfd"></span>Una sola charla inicial para las dos cosas</li>
+        </ul>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+el+Combo+Landing+%28sitio+web+%2B+GrowiApp%29." class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="combo-pricing-whatsapp">Quiero el Combo Landing</a>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-name">Combo Institucional</div>
+        <div class="plan-price"><span data-price="495" data-price-short>$760.000</span></div>
+        <div class="plan-period" style="margin-bottom:4px">pago único por el sitio · antes <s><span data-price="550" data-price-short>$844.000</span></s></div>
+        <div class="plan-setup">+ <span data-price="15">$23.000 ARS</span> por mes del sistema</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feat"><span class="pfd"></span>Sitio completo con varias secciones: quiénes son, servicios, contacto y mapa</li>
+          <li class="plan-feat"><span class="pfd"></span>GrowiApp Start: ventas, caja, stock, turnos y clientes</li>
+          <li class="plan-feat"><span class="pfd"></span>Puesta en marcha del sistema sin cargo (sola sale <span data-price="49">$75.200 ARS</span>)</li>
+          <li class="plan-feat"><span class="pfd"></span>Una sola charla inicial para las dos cosas</li>
+        </ul>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+el+Combo+Institucional+%28sitio+web+%2B+GrowiApp%29." class="plan-btn plan-btn-fill" target="_blank" rel="noopener noreferrer" data-track="combo-pricing-whatsapp">Quiero el Combo Institucional</a>
+      </div>
+    </div>
+    <p class="plan-note reveal">El 10% de descuento se aplica al precio del sitio web. El abono mensual de GrowiApp es el mismo que si lo contratás solo, sin permanencia. Entrega del sitio en 3 a 10 días hábiles; el sistema, en 48 horas. <a href="/web/" class="text-link" style="min-height:0;font-size:inherit">Ver qué trae cada sitio</a> · <a href="/app/" class="text-link" style="min-height:0;font-size:inherit">Ver qué hace GrowiApp</a></p>
+  </div>
+</section>
+
+<!-- Rubros -->
+<section class="section">
+  <div class="container">
+    <div class="trust-block reveal">
+      <h2>Sirve para cualquier negocio de barrio.</h2>
+      <p style="margin-bottom:0">El combo se arma igual sea cual sea tu rubro. GrowiApp se ajusta a cómo trabajás vos, no al revés. Mirá cómo queda en el tuyo:</p>
+      <div class="rubro-links">
+        <a href="/app/cafeterias/">Cafeterías y bares</a>
+        <a href="/app/peluquerias/">Peluquerías y estética</a>
+        <a href="/app/talleres/">Talleres y servicios</a>
+        <a href="/app/retail/">Kioscos y comercios</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Preguntas -->
+<section class="section section-off" id="preguntas">
+  <div class="container" style="max-width:760px">
+    <h2 class="section-title reveal" style="text-align:center;margin:0 auto 24px">Antes de que preguntes.</h2>
+    <div class="faq-list reveal">
+      <details>
+        <summary>¿Puedo combinar cualquier tipo de sitio con GrowiApp?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Sí. Tanto la landing (sitio de una sola página) como el sitio institucional se pueden combinar con GrowiApp Start. El 10% de descuento se aplica al precio del sitio en los dos casos.</div>
+      </details>
+      <details>
+        <summary>¿Cuánto tarda en estar todo funcionando?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">GrowiApp, en 48 horas. El sitio web, de 3 a 10 días hábiles. Coordinamos las dos cosas desde la misma charla inicial.</div>
+      </details>
+      <details>
+        <summary>¿Cuánto pago en total para arrancar?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">El precio del sitio con el 10% de descuento (pago único) y el primer mes de GrowiApp Start. La puesta en marcha del sistema, que sola tiene costo, en el combo va sin cargo.</div>
+      </details>
+      <details>
+        <summary>¿Puedo empezar con uno solo y sumar el otro después?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Sí, pero el descuento y la puesta en marcha sin cargo valen cuando se contratan juntos desde el inicio. Si ya tenés uno de los dos con nosotros, contanos y vemos qué tiene sentido en tu caso.</div>
+      </details>
+      <details>
+        <summary>¿El abono mensual también tiene descuento?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">No. El 10% se aplica al precio del sitio web, que es un pago único. El abono mensual de GrowiApp Start es el mismo que si lo contratás solo.</div>
+      </details>
+      <details>
+        <summary>¿Tengo que firmar un contrato largo?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">No. El sitio es un pago único, y GrowiApp es un abono mensual sin permanencia obligatoria: lo cancelás cuando quieras y te llevás tus datos.</div>
+      </details>
+    </div>
+    <p class="faq-more reveal">¿Te quedó alguna duda? <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+duda+sobre+el+combo+de+sitio+web+%2B+sistema." target="_blank" rel="noopener noreferrer" data-track="combo-faq-whatsapp">Preguntanos por WhatsApp</a> y te respondemos en el día.</p>
+  </div>
+</section>
+
+<!-- Cierre -->
+<section class="section section-dark" data-sticky-hide>
+  <div class="container" style="text-align:center">
+    <h2 class="cta-title reveal">Arrancá con todo resuelto desde el día uno.</h2>
+    <p class="cta-lead reveal">Contanos qué negocio tenés y armamos juntos el sitio y el sistema, coordinados desde el principio. Sin vueltas, sin letra chica.</p>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+el+combo+de+sitio+web+%2B+sistema+de+gesti%C3%B3n." class="btn btn-accent btn-lg reveal" target="_blank" rel="noopener noreferrer" data-track="combo-final-whatsapp">Quiero el combo</a>
+    <p class="cta-note reveal">Sin compromiso. Te respondemos por WhatsApp en el día.</p>
+  </div>
+</section>
 
 </main>
 
+
 <footer>
-  <div class="wrap foot-row">
-    <span>© 2026 Growi — Crecé con tu negocio.</span>
-    <span><a href="https://growi.ar/app/">GrowiApp</a> · <a href="https://growi.ar/web/">GrowiWeb</a> · <a href="mailto:hola@growi.ar">hola@growi.ar</a></span>
+  <div class="container">
+    <div class="footer-grid footer-grid-4">
+      <div>
+        <a href="/" class="footer-brand" aria-label="Growi — Inicio">Growi<span class="dot">.</span></a>
+        <p class="footer-tagline">Crecé con tu negocio.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Productos</h3>
+        <a href="/app/">GrowiApp</a>
+        <a href="/web/">GrowiWeb</a>
+        <a href="/combo/">Combo sistema + web</a>
+      </div>
+      <div class="footer-col">
+        <h3>Por rubro</h3>
+        <a href="/app/cafeterias/">Cafeterías</a>
+        <a href="/app/peluquerias/">Peluquerías y estética</a>
+        <a href="/app/talleres/">Talleres y servicios</a>
+        <a href="/app/retail/">Kioscos y comercios</a>
+      </div>
+      <div class="footer-col">
+        <h3>Contacto</h3>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+el+combo+de+sitio+web+%2B+sistema+de+gesti%C3%B3n." target="_blank" rel="noopener noreferrer" data-track="combo-footer-whatsapp">WhatsApp</a>
+        <a href="mailto:hola@growi.ar">hola@growi.ar</a>
+        <a href="/privacidad/">Privacidad</a>
+        <a href="/terminos/">Términos</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Growi</span>
+      <span>Crecé con tu negocio.</span>
+    </div>
   </div>
 </footer>
 
 <div class="sticky-cta">
-  <a class="btn btn-primary" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20conocer%20el%20combo%20de%20web%20%2B%20sistema%20de%20gesti%C3%B3n." target="_blank" rel="noopener">Quiero el combo →</a>
+  <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+el+combo+de+sitio+web+%2B+sistema+de+gesti%C3%B3n." class="btn btn-accent" target="_blank" rel="noopener noreferrer" data-track="combo-sticky-whatsapp">Quiero el combo</a>
 </div>
 
+<script src="/shared.fx.js"></script>
+<script src="/shared.js" onerror="document.documentElement.classList.remove('js')"></script>
 </body>
 </html>
