@@ -90,7 +90,7 @@
   text-wrap: balance;
   font-family: var(--title);
   font-size: clamp(34px, 9.2vw, 82px);
-  font-weight: 800;
+  font-weight: var(--fw-title);
   letter-spacing: -.035em;
   line-height: 1; /* Epilogue es más alta que Syne: los acentos de 'Crecé' necesitan aire */
   color: var(--ink);
@@ -119,9 +119,9 @@
   align-items: center;
   height: 24px;
   padding: 0 10px;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   font-size: 10px;
-  font-weight: 720;
+  font-weight: var(--fw-bold);
   letter-spacing: .08em;
   text-transform: uppercase;
   background: var(--accentL);
@@ -130,8 +130,8 @@
 }
 .product-card h3 {
   font-family: var(--title);
-  font-size: 24px;
-  font-weight: 800;
+  font-size: var(--h3-lg);
+  font-weight: var(--fw-title);
   letter-spacing: -.02em;
   line-height: 1.1;
   margin-bottom: 12px;
@@ -145,7 +145,7 @@
 }
 .product-price {
   font-size: 14px;
-  font-weight: 760;
+  font-weight: var(--fw-bold);
   color: var(--accent2);
   margin: -6px 0 18px;
 }
@@ -160,13 +160,13 @@
   align-items: center;
   height: 34px;
   padding: 0 14px;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   border: 1px solid var(--line2);
   font-size: 12px;
   color: var(--ink3);
   background: var(--off);
 }
-a.rubro-chip { position: relative; color: var(--ink2); font-weight: 600; transition: border-color .16s var(--ease-out), color .16s var(--ease-out), background .16s var(--ease-out), transform .14s var(--ease-out); }
+a.rubro-chip { position: relative; color: var(--ink2); font-weight: var(--fw-semi); transition: border-color .16s var(--ease-out), color .16s var(--ease-out), background .16s var(--ease-out), transform .14s var(--ease-out); }
 a.rubro-chip::after { content: ""; position: absolute; inset: -5px 0; } /* área táctil de 44px */
 a.rubro-chip:active { transform: scale(.97); }
 a.rubro-chip:hover { border-color: var(--accent); color: var(--accent2); background: var(--accentL); }
@@ -177,7 +177,7 @@ a.rubro-chip:hover { border-color: var(--accent); color: var(--accent2); backgro
 .why-item { display: flex; flex-direction: column; gap: 10px; }
 .why-icon {
   width: 48px; height: 48px;
-  border-radius: 12px;
+  border-radius: var(--r-sm);
   background: var(--accentL);
   display: flex;
   align-items: center;
@@ -187,12 +187,12 @@ a.rubro-chip:hover { border-color: var(--accent); color: var(--accent2); backgro
 }
 .why-title {
   font-family: var(--title);
-  font-size: 18px;
-  font-weight: 800;
+  font-size: var(--h3);
+  font-weight: var(--fw-title);
   letter-spacing: -.02em;
   color: var(--ink);
 }
-.why-desc { font-size: 14.5px; color: var(--ink2); line-height: 1.65; }
+.why-desc { font-size: 15px; color: var(--ink2); line-height: 1.65; }
 @media (max-width: 768px) {
   .hero { padding: 110px 0 60px; }
   .hero-actions { flex-direction: column; align-items: stretch; }
@@ -280,10 +280,10 @@ a.rubro-chip:hover { border-color: var(--accent); color: var(--accent2); backgro
         <div class="product-tag">Presencia digital</div>
         <h3>GrowiWeb: aparecé cuando te buscan</h3>
         <div class="product-price">Desde <span data-price="200">$307.000 ARS</span>, pago único</div>
-        <p>Landing pages y sitios institucionales con precio fijo y plazo definido. Sin sorpresas. Sin reuniones interminables.</p>
+        <p>Sitios de una página y sitios completos, con precio fijo y plazo definido. Sin sorpresas. Sin reuniones interminables.</p>
         <div class="product-rubros">
-          <span class="rubro-chip">landing page</span>
-          <span class="rubro-chip">sitio institucional</span>
+          <span class="rubro-chip">sitio de una página</span>
+          <span class="rubro-chip">sitio completo</span>
           <a class="rubro-chip" href="/combo/">combo sistema + web</a>
         </div>
         <a href="/web/" class="btn btn-outline">Ver GrowiWeb →</a>
