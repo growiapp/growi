@@ -102,6 +102,7 @@ html { caret-color: var(--accent); scrollbar-color: rgba(12,12,12,.28) transpare
 .nav-brand {
   display: flex;
   align-items: center;
+  min-height: 44px; /* área táctil */
   font-family: var(--syne);
   font-weight: 800;
   font-size: 21px;
@@ -304,6 +305,7 @@ body.menu-open { overflow: hidden; }
 .eyebrow-center { display: flex; width: fit-content; margin-left: auto; margin-right: auto; }
 .lead-center { margin-left: auto; margin-right: auto; text-align: center; }
 /* utilidades que reemplazan estilos en línea repetidos entre páginas */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .text-center { text-align: center; }
 .toggle-row { text-align: center; margin-top: 28px; }
 .container-narrow { max-width: 760px; }

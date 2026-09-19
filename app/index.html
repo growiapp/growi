@@ -306,7 +306,7 @@
 <body>
 <a href="#contenido" class="skip-link">Saltar al contenido</a>
 
-<nav id="mainNav">
+<nav id="mainNav" aria-label="Principal">
   <div class="nav-inner">
     <a href="/" class="nav-brand" aria-label="Growi inicio">
       <span class="nav-logo-text">Growi<span class="dot">.</span></span>
@@ -377,7 +377,7 @@
     <div class="hero-mockup reveal">
       <div class="mockup-bar">
         <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div>
-        <div class="mockup-url">growi.ar/dashboard</div>
+        <div class="mockup-url" aria-hidden="true">growi.ar/dashboard</div>
         <button type="button" class="mockup-pause" id="demoPause" aria-pressed="false" hidden>Pausar</button>
       </div>
       <div class="mockup-body">
@@ -758,7 +758,7 @@
         </div>
       </div>
     </div>
-    <p class="billing-save-note">Ahorrá 15% pagando anual.</p>
+    <p class="billing-save-note" aria-live="polite">Ahorrá 15% pagando anual.</p>
     <div class="plans-grid reveal">
       <div class="plan-card">
         <div class="plan-name">Start</div>
@@ -816,14 +816,15 @@
       <summary>Compará los planes<i class="faq-icon" aria-hidden="true">+</i></summary>
       <div class="plans-compare-body">
         <p class="plans-compare-lead">Si no sabés cuál elegir, esta tabla te muestra las diferencias reales entre Start, Pro y Multi.</p>
-        <div class="plans-table-wrap">
+        <div class="plans-table-wrap" tabindex="0" role="region" aria-label="Tabla comparativa de planes. En pantallas chicas se desplaza hacia los costados.">
           <table class="plans-table">
+            <caption class="sr-only">Comparación de los planes Start, Pro y Multi de GrowiApp</caption>
             <thead>
               <tr>
-                <th>Funcionalidad</th>
-                <th>Start</th>
-                <th>Pro</th>
-                <th>Multi</th>
+                <th scope="col">Funcionalidad</th>
+                <th scope="col">Start</th>
+                <th scope="col">Pro</th>
+                <th scope="col">Multi</th>
               </tr>
             </thead>
             <tbody>
@@ -995,6 +996,9 @@
           total.hidden=!anual;
         }
       });
+      const aviso=document.querySelector('.billing-save-note');
+      const avisoTxt=anual?'Estás viendo los precios con pago anual: 15% menos.':'Ahorrá 15% pagando anual.';
+      if(aviso&&aviso.textContent!==avisoTxt)aviso.textContent=avisoTxt; // aria-live lo anuncia
       document.querySelectorAll('[data-billing-copy]').forEach(el=>{
         el.textContent=anual?'Pagás 12 meses juntos, con 15% de ahorro.':'Pago mensual. Cancelás cuando quieras.';
       });

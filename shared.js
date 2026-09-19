@@ -26,6 +26,11 @@
     }
   });
 
+  // Aviso para lectores de pantalla en los links que abren otra pestaña
+  document.querySelectorAll('a[target="_blank"]').forEach(a => {
+    a.insertAdjacentHTML('beforeend', '<span class="sr-only"> (abre en una pestaña nueva)</span>');
+  });
+
   // ── Menú mobile ──
   const menuBtn = document.getElementById('menuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
