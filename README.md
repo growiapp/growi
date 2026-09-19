@@ -17,11 +17,8 @@ shared.js           Comportamiento compartido (nav, menú, toggle de moneda, rev
 shared.fx.js        Tipo de cambio (dólar oficial venta). Lo actualiza un GitHub Action; no editar a mano
 manifest.json       PWA manifest
 CNAME               Dominio personalizado (growi.ar)
-favicon/ png/ svg/  Íconos, logos e imágenes OG
+favicon/ png/        Íconos (generados desde png/isotipo_growi_320.png) e imágenes OG
 ```
-
-> Nota: los archivos `wordmark_*`, `isotipo_*`, `email_signature*` y `og_image*` de `png/` y `svg/`
-> son de la marca anterior (Gestiq) y el sitio no los usa. Pendiente reemplazarlos por los de Growi.
 
 ## Precios
 
