@@ -30,20 +30,23 @@
   const menuBtn = document.getElementById('menuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   if (menuBtn && mobileMenu) {
-    const setMenu = open => {
+    const setMenu = (open, moveFocus) => {
       mobileMenu.classList.toggle('open', open);
+      // modal real: el fondo queda fuera del teclado y del lector de pantalla, y el foco entra y vuelve
+      document.querySelectorAll('main, footer, .sticky-cta, .wa-float').forEach(el => { el.inert = open; });
+      if (moveFocus) requestAnimationFrame(() => (open ? mobileMenu.querySelector('a') : menuBtn).focus());
       mobileMenu.setAttribute('aria-hidden', String(!open));
       menuBtn.setAttribute('aria-expanded', String(open));
       menuBtn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
       document.body.classList.toggle('menu-open', open);
     };
     setMenu(false);
-    menuBtn.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+    menuBtn.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open'), true));
     mobileMenu.addEventListener('click', e => {
       if (e.target === mobileMenu || e.target.closest('a')) setMenu(false);
     });
     window.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) { setMenu(false); menuBtn.focus(); }
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) setMenu(false, true);
     });
     window.addEventListener('resize', () => {
       if (window.matchMedia('(min-width: 881px)').matches) setMenu(false);

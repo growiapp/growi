@@ -166,7 +166,7 @@
 .step-box h3{font-family:var(--title);font-size:19px;font-weight:800;letter-spacing: -.02em;line-height:1.2;margin-bottom:10px;color:var(--ink)}
 .step-box p{font-size:14px;color:var(--ink3);line-height:1.6}
 /* Transparency */
-.transparency-block{border:1px solid var(--line);padding:24px 28px;background:var(--off);border-radius:20px;margin-top:0}
+.transparency-block{border:1px solid var(--line);padding:24px 28px;background:var(--off);border-radius:20px;margin-top:40px}
 .transparency-block p{font-size:14px;color:var(--ink3);line-height:1.7;margin:0}
 .no-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
 .no-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--ink3);line-height:1.55}
@@ -213,12 +213,12 @@
 
 <main id="contenido">
 <!-- Hero -->
-<section class="section" style="padding-top:140px;padding-bottom:80px;text-align:center">
+<section class="hero-landing">
   <div class="container">
     <p class="eyebrow">Sitios web para tu negocio</p>
-    <h1 class="section-title" style="max-width:840px;margin:16px auto 0">Tu sitio web, listo.<br><span class="accent">Precio fijo.</span> Sin sorpresas.</h1>
-    <p class="section-lead hero-lead" style="margin-top:20px">Te armamos el sitio completo y lo dejamos publicado: vos no tocás nada técnico. Y sabés cuánto sale antes de empezar.</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px">
+    <h1 class="section-title" style="max-width:840px">Tu sitio web, listo.<br><span class="accent">Precio fijo.</span> Sin sorpresas.</h1>
+    <p class="section-lead hero-lead">Te armamos el sitio completo y lo dejamos publicado: vos no tocás nada técnico. Y sabés cuánto sale antes de empezar.</p>
+    <div class="hero-actions">
       <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+m%C3%A1s+sobre+sus+servicios." class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track="web-hero-whatsapp">Hablar por WhatsApp</a>
       <a href="#landing-planes" class="btn btn-outline">Ver planes y precios ↓</a>
     </div>
@@ -229,7 +229,7 @@
 <!-- Qué hacemos -->
 <section class="section section-off">
   <div class="container">
-    <h2 class="section-title reveal" style="text-align:center;max-width:600px;margin:0 auto">Dos tipos de proyecto.<br>Uno para cada momento de tu negocio.</h2>
+    <h2 class="section-title title-center reveal">Dos tipos de proyecto.<br>Uno para cada momento de tu negocio.</h2>
     <div class="what-grid">
       <div class="what-col reveal">
         <h3>Landing page <span style="font-weight:500;color:var(--ink3)">(sitio de una sola página)</span></h3>
@@ -260,7 +260,7 @@
 <!-- Cómo trabajamos -->
 <section class="section">
   <div class="container">
-    <h2 class="section-title reveal" style="text-align:center;max-width:560px;margin:0 auto">Cómo trabajamos</h2>
+    <h2 class="section-title title-center reveal">Cómo trabajamos</h2>
     <div class="steps-row">
       <div class="step-box reveal">
         <div class="step-number">Paso 01</div>
@@ -329,8 +329,8 @@
 <!-- Landing pages: planes -->
 <section class="section" id="landing-planes">
   <div class="container">
-    <h2 class="section-title reveal" style="text-align:center;max-width:600px;margin:0 auto">Landing pages: elegí el plan que va con tu proyecto.</h2>
-    <div style="text-align:center">
+    <h2 class="section-title title-center reveal">Landing pages: elegí el plan que va con tu proyecto.</h2>
+    <div class="toggle-row">
       <div class="currency-toggle" role="group" aria-label="Seleccionar moneda">
         <button class="currency-btn active" id="btnARS" aria-pressed="true">ARS</button>
         <button class="currency-btn" id="btnUSD" aria-pressed="false">USD</button>
@@ -340,7 +340,7 @@
       <div class="plan-card">
         <div class="plan-name">Express</div>
         <div class="plan-price"><span data-price="200" data-price-short>$307.000</span></div>
-        <div class="plan-period" style="margin-bottom:4px">pago único</div>
+        <div class="plan-period">pago único</div>
         <div class="plan-setup">Entrega: 3 a 10 días hábiles</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
@@ -358,7 +358,7 @@
         <div class="plan-badge">El más completo para empezar</div>
         <div class="plan-name">Pro</div>
         <div class="plan-price"><span data-price="299" data-price-short>$459.000</span></div>
-        <div class="plan-period" style="margin-bottom:4px">pago único</div>
+        <div class="plan-period">pago único</div>
         <div class="plan-setup">Entrega: 3 a 10 días hábiles</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
@@ -375,7 +375,7 @@
       <div class="plan-card">
         <div class="plan-name">Performance</div>
         <div class="plan-price"><span data-price="449" data-price-short>$689.000</span></div>
-        <div class="plan-period" style="margin-bottom:4px">pago único</div>
+        <div class="plan-period">pago único</div>
         <div class="plan-setup">Entrega: 3 a 10 días hábiles</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
@@ -397,12 +397,12 @@
 <!-- Sitios institucionales: planes -->
 <section class="section section-off" id="institucional-planes">
   <div class="container">
-    <h2 class="section-title reveal" style="text-align:center;max-width:640px;margin:0 auto">Sitios institucionales: un sitio completo para presentar tu negocio.</h2>
+    <h2 class="section-title title-center reveal">Sitios institucionales: un sitio completo para presentar tu negocio.</h2>
     <div class="plans-grid institutional-plans-grid reveal">
       <div class="plan-card">
         <div class="plan-name">Base</div>
         <div class="plan-price"><span data-price="550" data-price-short>$844.000</span></div>
-        <div class="plan-period" style="margin-bottom:4px">pago único</div>
+        <div class="plan-period">pago único</div>
         <div class="plan-setup">Entrega: 3 a 10 días hábiles</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
@@ -419,7 +419,7 @@
         <div class="plan-badge">Recomendado para consultorios</div>
         <div class="plan-name">Con turnos</div>
         <div class="plan-price"><span data-price="729" data-price-short>$1.119.000</span></div>
-        <div class="plan-period" style="margin-bottom:4px">pago único</div>
+        <div class="plan-period">pago único</div>
         <div class="plan-setup">Entrega: 12 a 18 días hábiles</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
@@ -433,14 +433,14 @@
         <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+un+sitio+institucional+con+turnos." class="plan-btn plan-btn-fill" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Pedir sitio con turnos</a>
       </div>
     </div>
-    <p class="plan-note">El dominio y el alojamiento del sitio no están incluidos: los contratás y pagás vos, aparte. Te recomendamos cuáles y lo dejamos publicado ahí. Los precios están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta). Los sitios se entregan en 3 a 10 días hábiles; el plan Con turnos lleva de 12 a 18 porque incluye una conexión a medida con tu sistema de turnos. Si además necesitás ordenar ventas, caja y turnos, <a href="/combo/" class="text-link" style="min-height:0;font-size:inherit">con el combo cualquiera de estos planes sale 10% menos</a>.</p>
+    <p class="plan-note">El dominio y el alojamiento del sitio no están incluidos: los contratás y pagás vos, aparte. Te recomendamos cuáles y lo dejamos publicado ahí. Los precios están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta). Los sitios se entregan en 3 a 10 días hábiles; el plan Con turnos lleva de 12 a 18 porque incluye una conexión a medida con tu sistema de turnos. Si además necesitás ordenar ventas, caja y turnos, <a href="/combo/" class="text-link">con el combo cualquiera de estos planes sale 10% menos</a>.</p>
   </div>
 </section>
 
 <!-- Extras -->
 <section class="section">
   <div class="container">
-    <h2 class="section-title reveal" style="text-align:center;max-width:600px;margin:0 auto">Sumá lo que tu proyecto necesita.</h2>
+    <h2 class="section-title title-center reveal">Sumá lo que tu proyecto necesita.</h2>
     <div>
       <table class="addons-table">
         <thead>
@@ -459,13 +459,13 @@
         </tbody>
       </table>
     </div>
-    <p class="plan-note">¿Querés que además tu negocio trabaje solo? Con GrowiFlow sumás reportes automáticos, recordatorios a tus clientes, pedidos y consultas en orden y, próximamente, un bot de WhatsApp para las preguntas de siempre. Se contrata aparte, y por ser cliente de GrowiWeb la puesta en marcha tiene 10% de descuento. <a href="/flow/" class="text-link" style="min-height:0;font-size:inherit">Ver GrowiFlow</a></p>
+    <p class="plan-note">¿Querés que además tu negocio trabaje solo? Con GrowiFlow sumás reportes automáticos, recordatorios a tus clientes, pedidos y consultas en orden y, próximamente, un bot de WhatsApp para las preguntas de siempre. Se contrata aparte, y por ser cliente de GrowiWeb la puesta en marcha tiene 10% de descuento. <a href="/flow/" class="text-link">Ver GrowiFlow</a></p>
   </div>
 </section>
 
 <!-- Bundle -->
 <section class="section section-accent">
-  <div class="container" style="text-align:center">
+  <div class="container text-center">
     <h2 class="section-title reveal" style="color:#fff;max-width:720px;margin:0 auto">Tu negocio gestionado<br>y visible en internet.</h2>
     <p style="color:rgba(255,255,255,.92);font-size:16px;max-width:580px;margin:16px auto 0;line-height:1.6">Si necesitás las dos cosas, las hacemos juntas con un precio especial. Un solo equipo, un solo arranque, todo coordinado.</p>
     <ul class="bundle-list reveal" style="text-align:left;max-width:620px;margin-left:auto;margin-right:auto">
@@ -482,8 +482,8 @@
 
 <!-- Sin sorpresas -->
 <section class="section">
-  <div class="container" style="max-width:760px">
-    <h2 class="section-title reveal" style="text-align:center;margin:0 auto 24px">Qué está incluido y qué no.</h2>
+  <div class="container container-narrow">
+    <h2 class="section-title faq-title reveal">Qué está incluido y qué no.</h2>
     <p class="section-lead lead-center">Trabajamos con alcance cerrado para que sepas exactamente qué pagás. Esto es lo que va por cuenta del cliente:</p>
     <div class="transparency-block reveal">
       <ul class="no-list">
@@ -500,8 +500,8 @@
 
 <!-- FAQ -->
 <section class="section section-off" id="faq">
-  <div class="container" style="max-width:760px">
-    <h2 class="section-title reveal" style="text-align:center;margin:0 auto 24px">Lo que necesitás saber antes de arrancar.</h2>
+  <div class="container container-narrow">
+    <h2 class="section-title faq-title reveal">Lo que necesitás saber antes de arrancar.</h2>
     <div class="faq-list reveal">
       <details>
         <summary>¿Quién pone los textos y las imágenes?<i class="faq-icon" aria-hidden="true">+</i></summary>
@@ -534,7 +534,7 @@
 
 <!-- CTA final -->
 <section class="section section-dark">
-  <div class="container" style="text-align:center">
+  <div class="container text-center">
     <h2 class="cta-title reveal">¿Sabés qué necesitás?<br>Escribinos y te pasamos un precio.</h2>
     <p class="cta-lead">Sin formularios largos. Sin reuniones previas obligatorias. Contanos qué tenés en mente y te respondemos con una propuesta concreta.</p>
     <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+m%C3%A1s+sobre+sus+servicios." class="btn btn-accent btn-lg" target="_blank" rel="noopener noreferrer" data-track="web-final-whatsapp">Hablar por WhatsApp →</a>
