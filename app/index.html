@@ -1058,6 +1058,8 @@
   if(rubroButtons.length){
     let savedRubro='cafeteria';
     try{savedRubro=localStorage.getItem('growi-demo-rubro')||'cafeteria';}catch(e){}
+    // las landings por rubro enlazan al demo con ?rubro=
+    savedRubro=new URLSearchParams(location.search).get('rubro')||savedRubro;
     applyDemoRubro(savedRubro,false);
     rubroButtons.forEach(btn=>btn.addEventListener('click',()=>applyDemoRubro(btn.dataset.rubro,true)));
   }

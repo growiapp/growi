@@ -16,10 +16,11 @@
   if (nav) {
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
   }
-  const norm = p => p.replace(/\/+$/, '') || '/';
+  // Activo también en subpáginas: /app/cafeterias/ marca "GrowiApp"
+  const here = window.location.pathname.replace(/\/*$/, '/');
   document.querySelectorAll('.nav-links a, .mobile-menu-card a').forEach(a => {
     const href = a.getAttribute('href');
-    if (href.startsWith('/') && norm(href) === norm(window.location.pathname)) {
+    if (href.startsWith('/') && href !== '/' && here.startsWith(href.replace(/\/*$/, '/'))) {
       a.classList.add('active');
       a.setAttribute('aria-current', 'page');
     }
@@ -49,12 +50,29 @@
     });
   }
 
+  // ── Precios ──
+  // La fuente de verdad es USD (data-price="15"). El ARS se deriva del tipo de cambio de shared.fx.js,
+  // redondeado al millar desde $100.000 y a la centena por debajo (mismo criterio que actualizar-cambio.mjs).
+  const venta = (window.GROWI_FX && window.GROWI_FX.venta) || 0;
+  function formatPrice(usd, cur, short) {
+    if (cur === 'ARS' && venta) {
+      const v = usd * venta, paso = v >= 100000 ? 1000 : 100;
+      return '$' + (Math.round(v / paso) * paso).toLocaleString('es-AR') + (short ? '' : ' ARS');
+    }
+    return 'USD ' + String(Math.round(usd * 100) / 100).replace('.', ',');
+  }
+  window.growiPrice = formatPrice;
+
   // ── Toggle de moneda ──
   // Las páginas con lógica extra (planes de /app) escuchan el evento 'growi:currency'.
   function applyCurrency(c) {
     c = c === 'USD' ? 'USD' : 'ARS';
     store.set('growi_currency', c);
     document.documentElement.dataset.currency = c;
+    document.querySelectorAll('[data-price]').forEach(el => {
+      el.textContent = formatPrice(Number(el.dataset.price), c, el.hasAttribute('data-price-short'));
+    });
+    // ponytail: formato viejo con los dos textos escritos a mano; se borra cuando todas las páginas usen data-price
     document.querySelectorAll('[data-ars][data-usd]').forEach(el => {
       el.textContent = c === 'ARS' ? el.dataset.ars : el.dataset.usd;
     });
@@ -71,6 +89,18 @@
     const btn = document.getElementById(id);
     if (btn) btn.addEventListener('click', () => applyCurrency(cur));
   });
+
+  // ── Botón fijo mobile de las landings ──
+  // Aparece cuando ya no hay otro CTA a la vista: se esconde mientras se ve el hero, el cierre o el footer.
+  const sticky = document.querySelector('.sticky-cta');
+  if (sticky && 'IntersectionObserver' in window) {
+    const visibles = new Set();
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target));
+      sticky.classList.toggle('show', visibles.size === 0);
+    });
+    document.querySelectorAll('[data-sticky-hide], footer').forEach(el => io.observe(el));
+  }
 
   // ── Reveal ──
   const revealEls = document.querySelectorAll('.reveal');
