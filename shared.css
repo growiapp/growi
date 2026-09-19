@@ -3,8 +3,22 @@
    Used by: index.html, app/index.html, web/index.html
    ===================================================== */
 
-/* Las fuentes (Epilogue variable 400–900 + Syne 800) se cargan con <link> en cada página:
-   un @import acá obliga al navegador a esperar este archivo antes de pedirlas. */
+/* Fuentes alojadas en el propio sitio (subset latin, licencia OFL) y precargadas en cada página:
+   sin pedidos a terceros y sin salto de contenido cuando cargan. */
+@font-face {
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/epilogue-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/syne-800-latin.woff2') format('woff2');
+}
 
 /* ── Design tokens ── */
 :root {
