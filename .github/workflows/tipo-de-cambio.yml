@@ -1,0 +1,43 @@
+# Actualiza el tipo de cambio que usa el sitio para mostrar precios en ARS.
+# Corre los lunes; solo commitea si el dólar oficial (venta) se movió más de 3%.
+name: Actualizar tipo de cambio
+
+on:
+  schedule:
+    - cron: "0 12 * * 1" # lunes 09:00 de Argentina
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Actualizar aunque la variación sea menor al umbral"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Consultar dolarapi.com y recalcular precios
+        run: node .github/scripts/actualizar-cambio.mjs ${{ inputs.force && '--force' || '' }}
+      - name: Commitear si hubo cambios
+        id: commit
+        run: |
+          if git diff --quiet; then echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Actualizar tipo de cambio (dólar oficial venta)"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      # Un push hecho con GITHUB_TOKEN no dispara otros workflows: hay que pedir el deploy a mano.
+      - name: Publicar el sitio
+        if: steps.commit.outputs.changed == 'true'
+        run: gh workflow run static.yml --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
