@@ -79,9 +79,17 @@ if (!force && variacion <= UMBRAL) {
   writeFileSync(FX_FILE, readFileSync(FX_FILE, 'utf8').replace(/window\.GROWI_FX = .*/, `window.GROWI_FX = { venta: ${venta}, fecha: "${fecha}" };`));
 
   const RE = /(<span\b[^>]*\bdata-price="([\d.]+)"[^>]*>)[^<]*(<\/span>)/g;
+  const tocadas = [];
   for (const f of htmlFiles('.')) {
     const html = readFileSync(f, 'utf8');
     const out = html.replace(RE, (m, open, usd, close) => open + ars(Number(usd), venta) + (/\bdata-price-short\b/.test(open) ? '' : ' ARS') + close);
-    if (out !== html) { writeFileSync(f, out); console.log('actualizado', f); }
+    if (out !== html) { writeFileSync(f, out); console.log('actualizado', f); tocadas.push(f); }
   }
+  // lastmod del sitemap para las páginas cuyos precios cambiaron
+  let mapa = readFileSync('sitemap.xml', 'utf8');
+  for (const f of tocadas) {
+    const url = 'https://growi.ar/' + f.replace(/\\/g, '/').replace(/^\.\//, '').replace(/index\.html$/, '');
+    mapa = mapa.replace(new RegExp('(<loc>' + url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '</loc>\\s*<lastmod>)[^<]*'), '$1' + fecha);
+  }
+  writeFileSync('sitemap.xml', mapa);
 }
