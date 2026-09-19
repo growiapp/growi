@@ -73,10 +73,6 @@
     document.querySelectorAll('[data-price]').forEach(el => {
       el.textContent = formatPrice(Number(el.dataset.price), c, el.hasAttribute('data-price-short'));
     });
-    // ponytail: formato viejo con los dos textos escritos a mano; se borra cuando todas las páginas usen data-price
-    document.querySelectorAll('[data-ars][data-usd]').forEach(el => {
-      el.textContent = c === 'ARS' ? el.dataset.ars : el.dataset.usd;
-    });
     [['btnARS', 'ARS'], ['btnUSD', 'USD']].forEach(([id, cur]) => {
       const btn = document.getElementById(id);
       if (!btn) return;
