@@ -739,7 +739,8 @@ footer {
 .plan-card.featured .plan-alt strong { color: var(--accentM); }
 .plan-card.soon { background: var(--off); border-style: dashed; border-color: var(--line2); }
 .plan-card.soon .plan-badge { background: var(--ink3); }
-.plan-btn-disabled { border: 1.5px dashed var(--line2); background: transparent; color: var(--ink3); cursor: default; }
+/* Botón realmente desactivado (<button disabled>): no responde al hover ni al toque */
+.plan-btn-disabled, .plan-btn-disabled:hover, .plan-btn-disabled:active { border: 1.5px dashed var(--line2); background: transparent; color: var(--ink3); cursor: not-allowed; transform: none !important; opacity: 1; }
 .plan-soon-link { margin-top: 10px; text-align: center; font-size: 13px; }
 .plan-soon-link .text-link { min-height: 44px; font-size: 13px; }
 .grid-products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
