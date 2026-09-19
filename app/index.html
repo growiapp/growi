@@ -222,7 +222,7 @@
 .mockup-live-pill{background:rgba(26,107,71,.10);color:var(--accent2)}
 .mockup-mobile-tabs{display:none;padding:12px 12px 0;background:#fff;border-bottom:1px solid rgba(12,12,12,.06);overflow-x:auto;-webkit-overflow-scrolling:touch;gap:8px;scrollbar-width:none;width:100%;max-width:100%;overflow-y:hidden}
 .mockup-mobile-tabs::-webkit-scrollbar{display:none}
-.mobile-demo-tab{flex:0 0 auto;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink2);font:inherit;font-size:12px;font-weight:720;letter-spacing:-.02em;white-space:nowrap;cursor:pointer;transition:.18s}
+.mobile-demo-tab{flex:0 0 auto;height:44px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink2);font:inherit;font-size:12px;font-weight:720;letter-spacing:-.02em;white-space:nowrap;cursor:pointer;transition:.18s}
 .mobile-demo-tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
 .mobile-demo-tab:focus-visible{outline:3px solid rgba(26,107,71,.24);outline-offset:3px}
 .demo-industry-selector{max-width:760px;margin:28px auto 0;text-align:center}
@@ -297,6 +297,7 @@
 </style>
 </head>
 <body>
+<a href="#contenido" class="skip-link">Saltar al contenido</a>
 
 <nav id="mainNav">
   <div class="nav-inner">
@@ -325,6 +326,7 @@
   </div>
 </div>
 
+<main id="contenido">
 <!-- Hero -->
 <section class="section" style="padding-top:140px;padding-bottom:80px;text-align:center">
   <div class="container">
@@ -836,39 +838,39 @@
     <h2 class="section-title reveal" style="text-align:center;margin:12px auto 24px">Lo que todos preguntan antes de empezar.</h2>
     <div class="faq-list reveal">
       <details>
-        <summary>¿Necesito saber de tecnología para usarlo?<i class="faq-icon">+</i></summary>
+        <summary>¿Necesito saber de tecnología para usarlo?<i class="faq-icon" aria-hidden="true">+</i></summary>
         <div class="faq-body">No. Si sabés usar WhatsApp, podés usar GrowiApp. Lo configuramos nosotros y la capacitación inicial cubre todo lo que necesitás para operar desde el primer día.</div>
       </details>
       <details>
-        <summary>¿Necesito hardware especial?<i class="faq-icon">+</i></summary>
+        <summary>¿Necesito hardware especial?<i class="faq-icon" aria-hidden="true">+</i></summary>
         <div class="faq-body">No. Podés usar GrowiApp desde una computadora, tablet o celular con navegador. Si ya tenés una notebook o un teléfono con internet, alcanza para empezar.</div>
       </details>
       <details>
-        <summary>¿En cuánto tiempo está listo?<i class="faq-icon">+</i></summary>
+        <summary>¿En cuánto tiempo está listo?<i class="faq-icon" aria-hidden="true">+</i></summary>
         <div class="faq-body">En 48 horas hábiles desde que confirmás el plan. Te pedimos una lista de tus productos o servicios, y nos encargamos del resto. Sin que vos toques nada técnico.</div>
       </details>
       <details>
-        <summary>¿Puedo cancelar cuando quiero?<i class="faq-icon">+</i></summary>
+        <summary>¿Puedo cancelar cuando quiero?<i class="faq-icon" aria-hidden="true">+</i></summary>
         <div class="faq-body">Sí. No hay contrato de permanencia. Podés cancelar en cualquier momento. Si pagaste el mes, lo usás hasta que termine. Y los datos siempre son tuyos — podés exportarlos cuando quieras.</div>
       </details>
       <details>
-        <summary>¿Qué pasa con mis datos si cancelo?<i class="faq-icon">+</i></summary>
+        <summary>¿Qué pasa con mis datos si cancelo?<i class="faq-icon" aria-hidden="true">+</i></summary>
         <div class="faq-body">Podés exportar todo en Excel o CSV antes o después de cancelar. Los datos son tuyos y no los usamos para ningún otro propósito.</div>
       </details>
       <details>
-        <summary>¿Pueden migrar mi Excel actual?<i class="faq-icon">+</i></summary>
+        <summary>¿Pueden migrar mi Excel actual?<i class="faq-icon" aria-hidden="true">+</i></summary>
         <div class="faq-body">Sí. Si tenés productos, clientes o precios en Excel, lo revisamos y lo usamos como base para la configuración inicial. Antes de migrar, te avisamos si el archivo necesita limpieza.</div>
       </details>
       <details>
-        <summary>¿Funciona sin internet?<i class="faq-icon">+</i></summary>
+        <summary>¿Funciona sin internet?<i class="faq-icon" aria-hidden="true">+</i></summary>
         <div class="faq-body">GrowiApp necesita conexión a internet para funcionar. En zonas con señal intermitente, los datos se sincronizan automáticamente cuando vuelve la conexión. Para la operación diaria, una conexión de celular básica alcanza.</div>
       </details>
       <details>
-        <summary>¿Se integra con Mercado Pago?<i class="faq-icon">+</i></summary>
+        <summary>¿Se integra con Mercado Pago?<i class="faq-icon" aria-hidden="true">+</i></summary>
         <div class="faq-body">Podés registrar ventas cobradas por Mercado Pago y separar ese medio en caja. Si necesitás una integración automática o más específica, la revisamos según tu operación.</div>
       </details>
       <details>
-        <summary>¿Qué pasa si tengo un problema a las 22 hs?<i class="faq-icon">+</i></summary>
+        <summary>¿Qué pasa si tengo un problema a las 22 hs?<i class="faq-icon" aria-hidden="true">+</i></summary>
         <div class="faq-body">El soporte por WhatsApp tiene respuesta garantizada dentro del horario de atención (lunes a sábado, 9 a 19 hs). Para urgencias fuera de horario, revisamos el canal periódicamente y respondemos a la brevedad.</div>
       </details>
     </div>
@@ -882,9 +884,11 @@
     <h2 class="reveal" style="font-size:clamp(32px,5vw,56px);font-weight:860;letter-spacing:-.055em;color:#fff;margin:16px 0">¿Querés ver cómo quedaría<br>para tu negocio?</h2>
     <p class="reveal" style="color:rgba(255,255,255,.60);font-size:17px;max-width:500px;margin:0 auto 36px;line-height:1.6">Escribinos por WhatsApp. En menos de 24 horas te mostramos una demo armada con tu rubro.</p>
     <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+ver+una+demo+de+GrowiApp." class="btn btn-accent btn-lg reveal" target="_blank" rel="noopener noreferrer" data-track="app-final-whatsapp">Hablar por WhatsApp →</a>
-    <p class="reveal" style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.35)">Sin compromiso. Sin tarjeta de crédito.</p>
+    <p class="reveal" style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.6)">Sin compromiso. Sin tarjeta de crédito.</p>
   </div>
 </section>
+
+</main>
 
 <footer>
   <div class="footer-inner">
