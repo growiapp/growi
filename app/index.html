@@ -236,8 +236,10 @@
 .demo-industry-sub{font-size:14px;color:var(--ink3);line-height:1.55;margin:0 auto 18px;max-width:560px}
 .demo-industry-buttons{display:flex;align-items:center;justify-content:center;gap:8px;overflow-x:auto;padding:4px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .demo-industry-buttons::-webkit-scrollbar{display:none}
-.demo-industry-btn{flex:0 0 auto;min-height:42px;padding:0 16px;border:1px solid var(--line2);border-radius:999px;background:#fff;color:var(--ink2);font:inherit;font-size:13px;font-weight:720;cursor:pointer;transition:background .18s,border-color .18s,color .18s,transform .12s}
-.demo-industry-btn:hover{border-color:var(--accent);color:var(--accent2);transform:translateY(-1px)}
+.demo-industry-btn{flex:0 0 auto;min-height:44px;padding:0 16px;border:1px solid var(--line2);border-radius:999px;background:#fff;color:var(--ink2);font:inherit;font-size:13px;font-weight:720;cursor:pointer;transition:background .18s var(--ease-out),border-color .18s var(--ease-out),color .18s var(--ease-out),transform .14s var(--ease-out)}
+.demo-industry-btn:hover{border-color:var(--accent);color:var(--accent2)}
+@media(hover:hover) and (pointer:fine){.demo-industry-btn:hover{transform:translateY(-1px)}}
+.demo-industry-btn:active,.mobile-demo-tab:active,.dash-nav-item:active{transform:scale(.97)}
 .demo-industry-btn.active,.demo-industry-btn[aria-pressed="true"]{background:var(--accentL);border-color:rgba(26,107,71,.28);color:var(--accent2)}
 .demo-industry-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .demo-industry-note{font-size:12px;color:var(--ink3);line-height:1.5;margin:4px auto 0;max-width:520px}

@@ -160,7 +160,9 @@
   color: var(--ink3);
   background: var(--off);
 }
-a.rubro-chip { color: var(--ink2); font-weight: 600; transition: border-color .16s var(--ease-out), color .16s var(--ease-out), background .16s var(--ease-out); }
+a.rubro-chip { position: relative; color: var(--ink2); font-weight: 600; transition: border-color .16s var(--ease-out), color .16s var(--ease-out), background .16s var(--ease-out); }
+a.rubro-chip::after { content: ""; position: absolute; inset: -5px 0; } /* área táctil de 44px */
+a.rubro-chip:active { transform: scale(.97); }
 a.rubro-chip:hover { border-color: var(--accent); color: var(--accent2); background: var(--accentL); }
 .product-card .btn { align-self: flex-start; }
 .use-case-card { display: flex; flex-direction: column; }

@@ -59,7 +59,9 @@ html { caret-color: var(--accent); scrollbar-color: rgba(12,12,12,.28) transpare
   /* menos movimiento, no cero feedback: se conservan los fundidos y se saca el desplazamiento */
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; }
-  .js .reveal, .sticky-cta, .btn, .card, .nav-wa, .plan-btn, .wa-float { transform: none !important; }
+  .js .reveal, .sticky-cta, .mobile-menu-card { transform: none !important; }
+  /* sin desplazamiento al pasar el mouse, pero la respuesta al presionar se conserva */
+  .btn:hover:not(:active), .card:hover, .nav-wa:hover:not(:active), .plan-btn:hover:not(:active), .wa-float:hover:not(:active) { transform: none !important; }
 }
 
 /* ── Layout ── */
@@ -83,7 +85,7 @@ html { caret-color: var(--accent); scrollbar-color: rgba(12,12,12,.28) transpare
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
   box-shadow: var(--shadow-md);
-  transition: border-color .2s, box-shadow .2s, background .2s;
+  transition: border-color .2s var(--ease-out), box-shadow .2s var(--ease-out), background .2s var(--ease-out);
 }
 #mainNav.scrolled {
   border-color: rgba(12,12,12,.14);
@@ -124,7 +126,7 @@ html { caret-color: var(--accent); scrollbar-color: rgba(12,12,12,.28) transpare
   font-size: 14px;
   font-weight: 620;
   color: var(--ink2);
-  transition: background .15s, color .15s;
+  transition: background .15s var(--ease-out), color .15s var(--ease-out);
 }
 .nav-links a:hover { background: rgba(12,12,12,.06); color: var(--ink); }
 .nav-links a.active {
@@ -149,7 +151,7 @@ html { caret-color: var(--accent); scrollbar-color: rgba(12,12,12,.28) transpare
   border-radius: 999px;
   font-size: 13px;
   font-weight: 720;
-  transition: background .15s, transform .1s;
+  transition: background .15s var(--ease-out), transform .14s var(--ease-out);
   white-space: nowrap;
   text-decoration: none;
 }
@@ -172,7 +174,7 @@ html { caret-color: var(--accent); scrollbar-color: rgba(12,12,12,.28) transpare
   font-size: 13px;
   font-weight: 720;
   cursor: pointer;
-  transition: background .15s;
+  transition: background .15s var(--ease-out), transform .14s var(--ease-out);
   flex-shrink: 0;
 }
 .nav-hamburger svg { width: 19px; height: 19px; }
@@ -190,7 +192,7 @@ html { caret-color: var(--accent); scrollbar-color: rgba(12,12,12,.28) transpare
   -webkit-backdrop-filter: blur(8px);
   opacity: 0;
   visibility: hidden; /* saca los links del orden de Tab mientras está cerrado */
-  transition: opacity .18s ease, visibility 0s .18s;
+  transition: opacity .18s var(--ease-out), visibility 0s .18s;
 }
 .mobile-menu.open { pointer-events: auto; opacity: 1; visibility: visible; transition-delay: 0s; }
 .mobile-menu-card {
@@ -203,7 +205,11 @@ html { caret-color: var(--accent); scrollbar-color: rgba(12,12,12,.28) transpare
   box-shadow: var(--shadow-lg);
   display: grid;
   gap: 6px;
+  transform: scale(.97);
+  transform-origin: top right; /* donde está el botón del menú */
+  transition: transform .2s var(--ease-out);
 }
+.mobile-menu.open .mobile-menu-card { transform: none; }
 .mobile-menu-card a {
   display: flex;
   align-items: center;
@@ -214,7 +220,7 @@ html { caret-color: var(--accent); scrollbar-color: rgba(12,12,12,.28) transpare
   color: var(--ink2);
   font-size: 15px;
   font-weight: 620;
-  transition: background .15s, color .15s;
+  transition: background .15s var(--ease-out), color .15s var(--ease-out);
 }
 .mobile-menu-card a:hover { background: var(--off); color: var(--ink); }
 .mobile-menu-card a.active { color: var(--accent2); background: var(--accentL); }
@@ -248,10 +254,9 @@ body.menu-open { overflow: hidden; }
   text-decoration: none;
   white-space: nowrap;
   line-height: 1;
-  transition: background .16s, color .16s, transform .1s, box-shadow .16s;
+  transition: background .16s var(--ease-out), color .16s var(--ease-out), transform .14s var(--ease-out), box-shadow .16s var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) { .btn:hover { transform: translateY(-1px); } }
-.btn:active { transform: scale(.97); }
 .btn-primary { background: var(--ink); color: #fff; }
 .btn-primary:hover { background: var(--accent); }
 .btn-accent { background: var(--accent); color: #fff; }
@@ -337,7 +342,7 @@ body.menu-open { overflow: hidden; }
   border: 1px solid var(--line);
   border-radius: 24px;
   padding: 36px;
-  transition: box-shadow .2s, transform .2s;
+  transition: box-shadow .2s var(--ease-out), transform .2s var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) { .card:has(a):hover { box-shadow: var(--shadow-md); transform: translateY(-3px); } }
 .card-icon {
@@ -542,7 +547,7 @@ body.menu-open { overflow: hidden; }
   flex-shrink: 0;
   font-style: normal;
   line-height: 1;
-  transition: background .2s, border-color .2s, color .2s, transform .2s;
+  transition: background .2s var(--ease-out), border-color .2s var(--ease-out), color .2s var(--ease-out), transform .2s var(--ease-out);
 }
 .faq-list details[open] .faq-icon {
   transform: rotate(45deg);
@@ -603,7 +608,7 @@ footer {
   font-size: 14px;
   color: var(--ink2);
   margin-bottom: 10px;
-  transition: color .15s;
+  transition: color .15s var(--ease-out);
 }
 .footer-col a:hover { color: var(--accent); }
 .footer-bottom {
@@ -682,11 +687,12 @@ footer {
 .plan-card.featured .plan-setup { color: var(--accentM); }
 .plan-divider { height: 1px; background: var(--line); margin: 0 0 20px; }
 .plan-card.featured .plan-divider { background: rgba(255,255,255,.12); }
-.plan-btn { width: 100%; height: 50px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 690; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .16s, color .16s, transform .1s; text-decoration: none; margin-top: auto; }
+.plan-btn { width: 100%; height: 50px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 690; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .16s var(--ease-out), color .16s var(--ease-out), transform .14s var(--ease-out); text-decoration: none; margin-top: auto; }
 .plan-btn-outline { border: 1.5px solid var(--line); background: transparent; color: var(--ink); }
-.plan-btn-outline:hover { background: var(--ink); color: #fff; transform: translateY(-1px); }
+.plan-btn-outline:hover { background: var(--ink); color: #fff; }
 .plan-btn-fill { border: 0; background: #fff; color: var(--ink); box-shadow: var(--shadow-sm); }
-.plan-btn-fill:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+.plan-btn-fill:hover { background: var(--accent); color: #fff; }
+@media (hover: hover) and (pointer: fine) { .plan-btn:hover { transform: translateY(-1px); } }
 .pfd { flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 6px; }
 .plan-card.featured .pfd { background: var(--accentM); }
 /* Footer aliases */
@@ -721,7 +727,7 @@ footer {
   margin: 0 auto 40px;
 }
 .currency-btn {
-  height: 40px;
+  height: 44px;
   padding: 0 18px;
   border-radius: 999px;
   border: none;
@@ -731,7 +737,7 @@ footer {
   font-weight: 680;
   color: var(--ink3);
   cursor: pointer;
-  transition: background .18s, color .18s;
+  transition: background .18s var(--ease-out), color .18s var(--ease-out), transform .14s var(--ease-out);
 }
 .currency-btn.active {
   background: var(--ink);
@@ -931,7 +937,7 @@ footer {
 
 /* Enlaces a otros rubros */
 .rubro-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 28px; }
-.rubro-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line2); background: #fff; font-size: 14px; font-weight: 650; color: var(--ink2); transition: border-color .16s var(--ease-out), color .16s var(--ease-out), background .16s var(--ease-out); }
+.rubro-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line2); background: #fff; font-size: 14px; font-weight: 650; color: var(--ink2); transition: border-color .16s var(--ease-out), color .16s var(--ease-out), background .16s var(--ease-out), transform .14s var(--ease-out); }
 .rubro-links a:hover { border-color: var(--accent); color: var(--accent2); background: var(--accentL); }
 
 /* Botón fijo mobile de las landings (van sin el flotante de WhatsApp) */
@@ -1090,11 +1096,10 @@ footer {
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-md);
-  transition: transform .15s, box-shadow .15s;
+  transition: transform .15s var(--ease-out), box-shadow .15s var(--ease-out);
 }
-.wa-float:hover {
-  transform: scale(1.07);
-  box-shadow: var(--shadow-lg);
+@media (hover: hover) and (pointer: fine) {
+  .wa-float:hover { transform: scale(1.07); box-shadow: var(--shadow-lg); }
 }
 @media (max-width: 880px) {
   /* el WhatsApp del nav se oculta acá: el flotante lo reemplaza desde el mismo ancho */
@@ -1121,11 +1126,17 @@ section[id] { scroll-margin-top: 96px; }
 .skip-link:focus { transform: none; }
 
 /* ── Focus visible global ── */
+/* El contorno sigue el radio propio de cada elemento (píldora, tarjeta); solo los links de texto reciben uno chico */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
 }
+a:not([class]):focus-visible, .text-link:focus-visible, .footer-col a:focus-visible, .faq-list summary:focus-visible { border-radius: 4px; }
+.section-dark :focus-visible, .section-accent :focus-visible, .bridge :focus-visible { outline-color: #fff; }
+
+/* Respuesta al presionar: en el momento del toque, no al soltar */
+.btn:active, .plan-btn:active, .nav-wa:active, .nav-hamburger:active, .currency-btn:active,
+.rubro-links a:active, .wa-float:active, .sticky-cta .btn:active { transform: scale(.97); }
 
 @media (max-width: 640px) {
   .use-cases-grid { grid-template-columns: 1fr; gap: 14px; }
@@ -1134,4 +1145,16 @@ section[id] { scroll-margin-top: 96px; }
   .trust-block { padding: 28px 20px; }
   .currency-toggle { width: 100%; justify-content: center; }
   .section { padding: 56px 0; }
+}
+
+/* ── Preferencias de accesibilidad del sistema ── */
+@media (prefers-reduced-transparency: reduce) {
+  #mainNav, #mainNav.scrolled, .legal-nav { background: #fff; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .mobile-menu { background: rgba(12,12,12,.5); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .mobile-menu-card { background: #fff; }
+}
+@media (prefers-contrast: more) {
+  #mainNav, .legal-nav { background: #fff; border-color: var(--ink); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .card, .plan-card, .rubro-links a, .btn-outline, .plan-btn-outline, .currency-toggle, .faq-icon { border-color: var(--ink); }
+  .price-anchor, .plan-period, .plan-name, .footer-tagline, .footer-bottom { color: var(--ink2); }
 }
