@@ -312,6 +312,8 @@ body.menu-open { overflow: hidden; }
   line-height: 1.05;
   color: var(--ink);
 }
+/* El H1 de cada página va un escalón por encima de los H2 (comparten .section-title) */
+h1.section-title { font-size: clamp(32px, 5vw, 60px); line-height: 1.04; }
 .section-dark .section-title,
 .section-accent .section-title { color: #fff; }
 .section-lead {
