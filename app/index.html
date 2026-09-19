@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/shared.css">
+<script>document.documentElement.classList.add('js')</script>
 <script defer data-domain="growi.ar" src="https://plausible.io/js/script.js"></script>
 <script type="application/ld+json">
 {
@@ -899,33 +900,15 @@
   <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<script src="/shared.js" onerror="document.documentElement.classList.remove('js')"></script>
 <script>
 (function(){
-  const nav=document.getElementById('mainNav');
-  const menuBtn=document.getElementById('menuBtn');
-  const mobileMenu=document.getElementById('mobileMenu');
-  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>10),{passive:true});
-
-  // Nav active state
-  document.querySelectorAll('.nav-links a').forEach(a=>{
-    if(a.getAttribute('href')===window.location.pathname||window.location.pathname.startsWith(a.getAttribute('href')+'/')){a.classList.add('active');}
-  });
-
   // Currency and billing toggles
   (function(){
-    const btnARS=document.getElementById('btnARS');
-    const btnUSD=document.getElementById('btnUSD');
     const btnMonthly=document.getElementById('btnMonthly');
     const btnAnnual=document.getElementById('btnAnnual');
-    let currentCurrency='ARS';
-    let currentPeriod='monthly';
-
-    try{
-      const savedCurrency=localStorage.getItem('growi_currency');
-      const savedPeriod=localStorage.getItem('growi_billing_period');
-      if(savedCurrency==='USD'||savedCurrency==='ARS')currentCurrency=savedCurrency;
-      if(savedPeriod==='annual'||savedPeriod==='monthly')currentPeriod=savedPeriod;
-    }catch(e){}
+    let currentCurrency=document.documentElement.dataset.currency||'ARS';
+    let currentPeriod=window.growiStore.get('growi_billing_period')==='annual'?'annual':'monthly';
 
     function updatePlanPrices(){
       const periodKey=currentPeriod==='annual'?'annualMonthly':'monthly';
@@ -941,24 +924,11 @@
       document.querySelectorAll('[data-billing-copy]').forEach(el=>{
         el.textContent=currentPeriod==='annual'?'Pagás 12 meses con 15% de ahorro.':'Pago mensual. Cancelás cuando quieras.';
       });
-      document.querySelectorAll('[data-ars][data-usd]').forEach(el=>{el.textContent=currentCurrency==='ARS'?el.dataset.ars:el.dataset.usd;});
-    }
-
-    function applyCurrency(c){
-      currentCurrency=c==='USD'?'USD':'ARS';
-      try{localStorage.setItem('growi_currency',currentCurrency);}catch(e){}
-      updatePlanPrices();
-      const btnARS=document.getElementById('btnARS');
-      const btnUSD=document.getElementById('btnUSD');
-      if(btnARS&&btnUSD){
-        btnARS.classList.toggle('active',currentCurrency==='ARS');btnUSD.classList.toggle('active',currentCurrency==='USD');
-        btnARS.setAttribute('aria-pressed',currentCurrency==='ARS');btnUSD.setAttribute('aria-pressed',currentCurrency==='USD');
-      }
     }
 
     function applyBillingPeriod(period,track=false){
       currentPeriod=period==='annual'?'annual':'monthly';
-      try{localStorage.setItem('growi_billing_period',currentPeriod);}catch(e){}
+      window.growiStore.set('growi_billing_period',currentPeriod);
       updatePlanPrices();
       if(btnMonthly&&btnAnnual){
         btnMonthly.classList.toggle('active',currentPeriod==='monthly');btnAnnual.classList.toggle('active',currentPeriod==='annual');
@@ -969,27 +939,11 @@
       }
     }
 
-    applyCurrency(currentCurrency);
     applyBillingPeriod(currentPeriod);
-    if(btnARS)btnARS.addEventListener('click',()=>applyCurrency('ARS'));
-    if(btnUSD)btnUSD.addEventListener('click',()=>applyCurrency('USD'));
+    document.addEventListener('growi:currency',e=>{currentCurrency=e.detail;updatePlanPrices();});
     if(btnMonthly)btnMonthly.addEventListener('click',()=>applyBillingPeriod('monthly',true));
     if(btnAnnual)btnAnnual.addEventListener('click',()=>applyBillingPeriod('annual',true));
   })();
-
-  if(menuBtn&&mobileMenu){
-    menuBtn.addEventListener('click',()=>{
-      const open=mobileMenu.classList.toggle('open');
-      menuBtn.setAttribute('aria-expanded',open);
-      document.body.style.overflow=open?'hidden':'';
-    });
-    mobileMenu.addEventListener('click',e=>{if(e.target===mobileMenu){mobileMenu.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow=''}});
-  }
-  const revealEls=document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*55);obs.unobserve(e.target)}})},{threshold:.08});
-    revealEls.forEach(el=>obs.observe(el));
-  } else {revealEls.forEach(el=>el.classList.add('visible'))}
 
   const demoRubros={
     cafeteria:{
@@ -1115,20 +1069,6 @@
       item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate();}});
     });
   }
-})();
-</script>
-<script>
-(function() {
-  document.addEventListener('click', function(event) {
-    const target = event.target;
-    const link = target && target.closest ? target.closest('a[href*="wa.me/"]') : null;
-    if (!link) return;
-    if (typeof window.plausible === 'function') {
-      window.plausible('cta_whatsapp', {
-        props: { location: link.getAttribute('data-track') || 'whatsapp' }
-      });
-    }
-  });
 })();
 </script>
 </body>
