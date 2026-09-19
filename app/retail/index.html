@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GrowiApp para Kioscos y Retail | Sabé qué se vende y qué falta</title>
+<meta name="description" content="El sistema de gestión para kioscos y comercios minoristas. Ventas, stock y caja en una sola pantalla. Setup en 48hs, desde $21.900/mes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg: #F6F6F4; --color-surface: #FFFFFF; --color-ink: #0C0C0C; --color-ink-soft: #4A4A47;
+    --color-green: #1A6B47; --color-green-dark: #124F34; --color-green-tint: #E7F0EB; --color-cream-line: #E4E3DD;
+    --font-display: 'Syne', sans-serif; --font-body: 'Epilogue', sans-serif;
+    --radius: 18px; --shadow-card: 0 8px 24px rgba(12,12,12,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --color-bg: #F6F6F4; --color-surface: #FFFFFF; --color-ink: #0C0C0C; --color-ink-soft: #4A4A47; --color-green: #1A6B47; --color-green-dark: #124F34; --color-green-tint: #E7F0EB; --color-cream-line: #E4E3DD; }
+  }
+  :root[data-theme="dark"] { --color-bg: #F6F6F4; --color-surface: #FFFFFF; --color-ink: #0C0C0C; --color-ink-soft: #4A4A47; --color-green: #1A6B47; --color-green-dark: #124F34; --color-green-tint: #E7F0EB; --color-cream-line: #E4E3DD; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body { background: var(--color-bg); color: var(--color-ink); font-family: var(--font-body); line-height: 1.5; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.01em; color: var(--color-ink); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 16px 28px; border-radius: 999px; font-family: var(--font-body); font-weight: 700; font-size: 1rem; cursor: pointer; border: none; transition: transform .15s ease, box-shadow .15s ease; }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--color-green); color: #fff; box-shadow: 0 6px 18px rgba(26,107,71,0.30); }
+  .btn-primary:hover { background: var(--color-green-dark); }
+  .btn-ghost { background: transparent; color: var(--color-ink); border: 1.5px solid var(--color-ink); }
+
+  header.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: rgba(246,246,244,0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--color-cream-line); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1080px; margin: 0 auto; }
+  .logo { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; }
+  .nav-cta { padding: 10px 18px; font-size: 0.9rem; }
+
+  .hero { padding: 64px 0 48px; position: relative; overflow: hidden; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--color-green-tint); color: var(--color-green-dark); font-weight: 700; font-size: 0.8rem; padding: 6px 14px; border-radius: 999px; margin-bottom: 20px; }
+  .hero h1 { font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.05; max-width: 16ch; }
+  .hero .accent { color: var(--color-green); }
+  .hero p.sub { font-size: clamp(1.05rem, 2.4vw, 1.25rem); color: var(--color-ink-soft); max-width: 46ch; margin: 20px 0 32px; }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .hero-price { margin-top: 18px; font-size: 0.95rem; color: var(--color-ink-soft); }
+  .hero-price strong { color: var(--color-ink); }
+  .hero-card { margin-top: 44px; background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow-card); border: 1px solid var(--color-cream-line); padding: 22px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; text-align: center; }
+  .hero-card div strong { display: block; font-family: var(--font-display); font-size: 1.6rem; color: var(--color-green); }
+  .hero-card div span { font-size: 0.85rem; color: var(--color-ink-soft); }
+
+  section { padding: 56px 0; }
+  .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); max-width: 20ch; margin-bottom: 14px; }
+  .section-sub { color: var(--color-ink-soft); max-width: 56ch; font-size: 1.05rem; margin-bottom: 36px; }
+  .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .pain-card { background: var(--color-surface); border: 1px solid var(--color-cream-line); border-radius: var(--radius); padding: 22px; }
+  .pain-card .mark { font-size: 1.6rem; margin-bottom: 10px; display: block; }
+  .pain-card p { color: var(--color-ink-soft); font-size: 0.98rem; }
+  .pain-card strong { display: block; margin-bottom: 8px; font-size: 1.05rem; }
+
+  .bridge { background: var(--color-ink); color: #fff; border-radius: 24px; padding: 44px 32px; text-align: center; }
+  .bridge h2 { color: #fff; }
+  .bridge .flow { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 26px; font-family: var(--font-display); font-weight: 700; }
+  .bridge .flow span.state { background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 999px; font-size: 0.95rem; }
+  .bridge .flow span.arrow { color: var(--color-green); font-size: 1.4rem; }
+  .bridge .before { opacity: 0.6; }
+  .bridge .after { background: var(--color-green) !important; }
+
+  .feature-list { display: grid; gap: 16px; }
+  .feature-row { display: grid; grid-template-columns: 56px 1fr; gap: 18px; align-items: flex-start; background: var(--color-surface); border: 1px solid var(--color-cream-line); border-radius: var(--radius); padding: 20px; }
+  .feature-icon { width: 48px; height: 48px; border-radius: 14px; background: var(--color-green-tint); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+  .feature-row h3 { font-size: 1.1rem; margin-bottom: 4px; }
+  .feature-row p { color: var(--color-ink-soft); font-size: 0.98rem; }
+  .feature-row .why { color: var(--color-green-dark); font-weight: 600; font-size: 0.92rem; margin-top: 6px; display: block; }
+
+  .trust-band { background: var(--color-green); color: #fff; border-radius: 24px; padding: 44px 32px; }
+  .trust-band h2 { color: #fff; max-width: 26ch; }
+  .trust-band p.lead { opacity: 0.9; margin-top: 10px; max-width: 52ch; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 40px; text-align: center; }
+  .stats-row div strong { display: block; font-family: var(--font-display); font-size: 1.8rem; }
+  .stats-row div span { opacity: 0.85; font-size: 0.85rem; }
+
+  .faq-item { border-bottom: 1px solid var(--color-cream-line); padding: 18px 0; }
+  .faq-item summary { cursor: pointer; font-weight: 700; font-size: 1.02rem; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; font-size: 1.4rem; color: var(--color-green); transition: transform .2s; }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item p { color: var(--color-ink-soft); margin-top: 10px; font-size: 0.98rem; }
+
+  .guarantee { display: flex; gap: 20px; align-items: center; background: var(--color-surface); border: 1.5px dashed var(--color-green); border-radius: var(--radius); padding: 24px; }
+  .guarantee .badge { font-size: 2.2rem; }
+  .guarantee h3 { font-size: 1.1rem; margin-bottom: 6px; }
+  .guarantee p { color: var(--color-ink-soft); font-size: 0.95rem; }
+
+  .final-cta { text-align: center; background: var(--color-green-tint); border-radius: 24px; padding: 56px 24px; }
+  .final-cta h2 { max-width: 18ch; margin: 0 auto 14px; }
+  .final-cta p { color: var(--color-ink-soft); max-width: 44ch; margin: 0 auto 28px; }
+
+  footer { padding: 40px 0 calc(40px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--color-cream-line); color: var(--color-ink-soft); font-size: 0.88rem; }
+  footer .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+  .sticky-cta { position: fixed; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); left: 16px; right: 16px; z-index: 50; display: none; }
+  .sticky-cta .btn { width: 100%; box-shadow: 0 10px 30px rgba(12,12,12,0.25); }
+
+  @media (max-width: 720px) {
+    .hero-card { grid-template-columns: 1fr; text-align: left; }
+    .bridge .flow { flex-direction: column; }
+    .bridge .flow span.arrow { transform: rotate(90deg); }
+    .sticky-cta { display: block; }
+    section { padding: 44px 0; }
+    footer .foot-row { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <span class="logo">Growi<span style="color:var(--color-green)">.</span></span>
+    <a class="btn btn-primary nav-cta" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20tengo%20un%20kiosco%2Fcomercio%20minorista%20y%20quiero%20conocer%20GrowiApp." target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</header>
+
+<main id="contenido">
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">🏪 GrowiApp para kioscos y comercios minoristas</span>
+      <h1>Sabé qué se vende, qué falta <span class="accent">y dónde ajustar</span></h1>
+      <p class="sub">Ventas, stock y caja en una sola pantalla. Dejá de enterarte que falta mercadería cuando el cliente ya la pidió, o de cerrar caja a ojo. Setup en 48 horas, con nuestro equipo armándotelo.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20tengo%20un%20kiosco%2Fcomercio%20minorista%20y%20quiero%20conocer%20GrowiApp." target="_blank" rel="noopener">Quiero ordenar mi negocio →</a>
+        <a class="btn btn-ghost" href="#como-funciona">Ver cómo funciona</a>
+      </div>
+      <p class="hero-price">Desde <strong>$21.900 ARS/mes</strong> · Garantía de 7 días · Sin permanencia obligatoria</p>
+      <div class="hero-card">
+        <div><strong>48hs</strong><span>Setup guiado</span></div>
+        <div><strong>1</strong><span>Pantalla para todo</span></div>
+        <div><strong>0</strong><span>Sorpresas de stock</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dolor">
+    <div class="wrap">
+      <h2 class="section-title">¿Te suena alguna de estas?</h2>
+      <p class="section-sub">No es que no controles tu negocio. Es que el control vive repartido entre la caja, tu cabeza y a veces una planilla que nadie actualiza.</p>
+      <div class="pain-grid">
+        <div class="pain-card">
+          <span class="mark">📦</span>
+          <strong>El producto que "se sabe que hay"</strong>
+          <p>Te enterás que no queda stock cuando el cliente ya lo pidió en el mostrador.</p>
+        </div>
+        <div class="pain-card">
+          <span class="mark">🧮</span>
+          <strong>La caja que no cierra</strong>
+          <p>A fin de día contás la plata y no coincide con lo que "debería haber entrado".</p>
+        </div>
+        <div class="pain-card">
+          <span class="mark">📈</span>
+          <strong>No sabés qué se vende más</strong>
+          <p>Comprás mercadería a ojo, sin saber realmente qué rota rápido y qué se queda pegado en la góndola.</p>
+        </div>
+        <div class="pain-card">
+          <span class="mark">👥</span>
+          <strong>El empleado que atiende "a su manera"</strong>
+          <p>Cada uno anota las ventas distinto, y armar un número real del día es un trabajo aparte.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona">
+    <div class="wrap">
+      <div class="bridge">
+        <h2>De "más o menos sé lo que tengo" a saberlo con certeza</h2>
+        <div class="flow">
+          <span class="state before">Caja + memoria + planilla suelta</span>
+          <span class="arrow">→</span>
+          <span class="state after">Una pantalla: ventas, stock y caja</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="funciones">
+    <div class="wrap">
+      <h2 class="section-title">Lo que GrowiApp hace por tu comercio</h2>
+      <p class="section-sub">Pensado para el kiosco o comercio minorista de barrio, no para una cadena con múltiples depósitos.</p>
+      <div class="feature-list">
+        <div class="feature-row">
+          <div class="feature-icon">🧾</div>
+          <div>
+            <h3>Ventas y caja en un toque</h3>
+            <p>Cargás cada venta desde el mostrador, en el momento en que pasa.</p>
+            <span class="why">→ Sabés cuánto vendiste hoy, sin esperar al cierre.</span>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">📦</div>
+          <div>
+            <h3>Stock que te avisa antes de que falte</h3>
+            <p>Cargás lo que tenés y el sistema te muestra qué se está por terminar.</p>
+            <span class="why">→ Nunca más un "no hay" en pleno mostrador.</span>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">👥</div>
+          <div>
+            <h3>Fichas de clientes frecuentes</h3>
+            <p>Guardás datos de los clientes que vuelven, para cuenta corriente o promociones.</p>
+            <span class="why">→ Atendés mejor sin depender de la memoria.</span>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">📊</div>
+          <div>
+            <h3>Reportes simples de qué se mueve</h3>
+            <p>Un vistazo rápido a qué productos rotan más y cuáles conviene dejar de reponer.</p>
+            <span class="why">→ Comprás con datos, no a ojo.</span>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">🧑‍💼</div>
+          <div>
+            <h3>Setup asistido, no un manual de 40 páginas</h3>
+            <p>Nuestro equipo te lo deja andando en 48 horas, con tu catálogo y precios ya cargados.</p>
+            <span class="why">→ No dependés de "el que sabía usarlo".</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="confianza">
+    <div class="wrap">
+      <div class="trust-band">
+        <h2>Pensado para comercios minoristas reales, no para empresas enormes</h2>
+        <p class="lead">Growi está armado para negocios que necesitan ordenar productos, ventas y reportes simples para saber qué se mueve, qué falta y dónde ajustar — sin sumar complejidad.</p>
+        <div class="stats-row">
+          <div><strong>48hs</strong><span>Setup promedio</span></div>
+          <div><strong>7 días</strong><span>Garantía de devolución</span></div>
+          <div><strong>100%</strong><span>Soporte por WhatsApp</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="preguntas">
+    <div class="wrap">
+      <h2 class="section-title">Antes de que preguntes</h2>
+      <div>
+        <details class="faq-item" open>
+          <summary>¿Tengo que saber de sistemas para usarlo?</summary>
+          <p>No. Está pensado para que lo use quien atiende el mostrador. El setup inicial lo hacemos nosotros con vos.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuánto tarda en estar funcionando?</summary>
+          <p>48 horas desde que arrancamos, con tu catálogo y precios ya cargados para que empieces a usarlo desde el primer día.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Sirve si tengo pocos productos o si tengo un catálogo grande?</summary>
+          <p>Funciona para ambos casos — desde un kiosco de barrio hasta un comercio con varios cientos de productos.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué pasa si no me convence?</summary>
+          <p>Tenés 7 días de garantía: si no funciona como prometimos, te devolvemos el 100% del setup. Sin preguntas.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Factura electrónica ARCA?</summary>
+          <p>Está en desarrollo para el plan Pro. Si te interesa, contanos y te avisamos apenas esté disponible.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Tengo que firmar un contrato largo?</summary>
+          <p>No. Un pago inicial de setup y un abono mensual fijo, sin permanencia obligatoria.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="garantia">
+    <div class="wrap">
+      <div class="guarantee">
+        <span class="badge">🛡️</span>
+        <div>
+          <h3>Garantía de 7 días, sin preguntas</h3>
+          <p>Si en los primeros 7 días GrowiApp no funciona como te prometimos, te devolvemos el 100% del setup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="empezar">
+    <div class="wrap">
+      <div class="final-cta">
+        <h2>Tu negocio, ordenado desde el lunes</h2>
+        <p>Contanos cómo trabajás hoy y armamos el setup con tu catálogo, tus precios y tu stock. Sin vueltas, sin letra chica.</p>
+        <a class="btn btn-primary" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20tengo%20un%20kiosco%2Fcomercio%20minorista%20y%20quiero%20conocer%20GrowiApp." target="_blank" rel="noopener">Quiero ordenar mi negocio →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 Growi — Crecé con tu negocio.</span>
+    <span><a href="https://growi.ar/app/">Ver todo GrowiApp</a> · <a href="mailto:hola@growi.ar">hola@growi.ar</a></span>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <a class="btn btn-primary" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20tengo%20un%20kiosco%2Fcomercio%20minorista%20y%20quiero%20conocer%20GrowiApp." target="_blank" rel="noopener">Quiero ordenar mi negocio →</a>
+</div>
+
+</body>
+</html>
