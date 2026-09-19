@@ -1,36 +1,35 @@
-# Gestiq — gestiq.ar
+# Growi — growi.ar
 
-Landing page y assets de marca de Gestiq.
+Sitio web y assets de marca de Growi.
 
 ## Estructura del repositorio
 
 ```
-gestiq/
-├── index.html          Landing page principal
-├── manifest.json       PWA manifest
-├── CNAME               Dominio personalizado (gestiq.ar)
-├── favicon/
-│   ├── favicon.svg     Favicon SVG (Chrome/Edge)
-│   ├── favicon.ico     Favicon universal
-│   ├── favicon-16x16.png
-│   ├── favicon-32x32.png
-│   └── apple-touch-icon.png
-├── svg/                Logos vectoriales
-├── png/                Logos PNG alta resolución
-└── README.md
+index.html          Home
+app/index.html      GrowiApp (sistema de gestión)
+web/index.html      GrowiWeb (desarrollo web)
+privacidad/         Política de privacidad
+terminos/           Términos
+shared.css          Estilos compartidos por todas las páginas
+shared.js           Comportamiento compartido (nav, menú, toggle de moneda, reveal, tracking)
+manifest.json       PWA manifest
+CNAME               Dominio personalizado (growi.ar)
+favicon/ png/ svg/  Íconos, logos e imágenes OG
 ```
+
+> Nota: los archivos `wordmark_*`, `isotipo_*`, `email_signature*` y `og_image*` de `png/` y `svg/`
+> son de la marca anterior (Gestiq) y el sitio no los usa. Pendiente reemplazarlos por los de Growi.
 
 ## Deploy
 
-GitHub Pages activo en `gestiq.ar` via Cloudflare DNS.
+GitHub Pages en `growi.ar`. Cada push a `main` publica automáticamente.
 
 ## Marca
 
-- Color Ink: `#0C0C0C`
-- Color Accent: `#1A6B47`
-- Fuente logo: Syne 800
-- Fuente web: Satoshi (300/400/500/700/900)
+- Negro: `#0C0C0C` · Verde: `#1A6B47` · Off-white: `#F6F6F4`
+- Logo / wordmark: Syne 800 (ExtraBold)
+- UI y textos: Epilogue
 
 ## Contacto
 
-hola@gestiq.ar
+hola@growi.ar

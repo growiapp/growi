@@ -3,7 +3,8 @@
    Used by: index.html, app/index.html, web/index.html
    ===================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700&family=Syne:wght@700;800&display=swap');
+/* Las fuentes (Epilogue variable 400–900 + Syne 800) se cargan con <link> en cada página:
+   un @import acá obliga al navegador a esperar este archivo antes de pedirlas. */
 
 /* ── Design tokens ── */
 :root {
@@ -897,13 +898,13 @@ footer {
 /* Legal pages */
 .legal-shell {
   min-height: 100vh;
-  background: var(--bg);
+  background: #fff;
 }
 .legal-nav {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(250,249,246,.88);
+  background: rgba(246,246,244,.88);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(18px);
 }
