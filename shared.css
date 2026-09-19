@@ -613,9 +613,6 @@ footer {
   .nav-right { margin-left: auto; }
   .nav-wa { display: none; }
   .nav-hamburger { display: inline-flex; margin-left: auto; }
-  /* el WhatsApp del nav se oculta acá: el flotante lo reemplaza desde el mismo ancho */
-  .wa-float { display: flex; }
-  footer { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
 }
 
 @media (max-width: 768px) {
@@ -1014,6 +1011,11 @@ footer {
 .wa-float:hover {
   transform: scale(1.07);
   box-shadow: 0 12px 32px rgba(37,211,102,.5);
+}
+@media (max-width: 880px) {
+  /* el WhatsApp del nav se oculta acá: el flotante lo reemplaza desde el mismo ancho */
+  .wa-float { display: flex; }
+  footer { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
 }
 
 /* ── Scroll margin for fixed nav ── */
