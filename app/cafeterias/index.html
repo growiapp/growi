@@ -2,539 +2,353 @@
 <html lang="es-AR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>GrowiApp para Cafeterías | Ordená ventas, caja y stock desde el celular</title>
-<meta name="description" content="El sistema de gestión para cafeterías y bares chicos. Ventas, caja, stock y reservas en una sola pantalla. Setup en 48hs, desde $21.900/mes.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --color-bg: #F6F6F4;
-    --color-surface: #FFFFFF;
-    --color-ink: #0C0C0C;
-    --color-ink-soft: #4A4A47;
-    --color-green: #1A6B47;
-    --color-green-dark: #124F34;
-    --color-green-tint: #E7F0EB;
-    --color-cream-line: #E4E3DD;
-    --font-display: 'Syne', sans-serif;
-    --font-body: 'Epilogue', sans-serif;
-    --radius: 18px;
-    --shadow-card: 0 8px 24px rgba(12,12,12,0.06);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --color-bg: #F6F6F4;
-      --color-surface: #FFFFFF;
-      --color-ink: #0C0C0C;
-      --color-ink-soft: #4A4A47;
-      --color-green: #1A6B47;
-      --color-green-dark: #124F34;
-      --color-green-tint: #E7F0EB;
-      --color-cream-line: #E4E3DD;
-    }
-  }
-
-  :root[data-theme="dark"] {
-    --color-bg: #F6F6F4;
-    --color-surface: #FFFFFF;
-    --color-ink: #0C0C0C;
-    --color-ink-soft: #4A4A47;
-    --color-green: #1A6B47;
-    --color-green-dark: #124F34;
-    --color-green-tint: #E7F0EB;
-    --color-cream-line: #E4E3DD;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: env(safe-area-inset-top, 0px);
-  }
-
-  body {
-    background: var(--color-bg);
-    color: var(--color-ink);
-    font-family: var(--font-body);
-    line-height: 1.5;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  img { max-width: 100%; display: block; }
-
-  h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.01em; color: var(--color-ink); }
-
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-
-  a { color: inherit; text-decoration: none; }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 16px 28px;
-    border-radius: 999px;
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    border: none;
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .btn:active { transform: scale(0.98); }
-  .btn-primary { background: var(--color-green); color: #fff; box-shadow: 0 6px 18px rgba(26,107,71,0.30); }
-  .btn-primary:hover { background: var(--color-green-dark); }
-  .btn-ghost { background: transparent; color: var(--color-ink); border: 1.5px solid var(--color-ink); }
-  .btn-block { width: 100%; }
-
-  /* NAV */
-  header.nav {
-    position: sticky;
-    top: env(safe-area-inset-top, 0px);
-    z-index: 40;
-    background: rgba(246,246,244,0.9);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--color-cream-line);
-  }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1080px; margin: 0 auto; }
-  .logo { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; }
-  .nav-cta { padding: 10px 18px; font-size: 0.9rem; }
-
-  /* HERO */
-  .hero {
-    padding: 64px 0 48px;
-    position: relative;
-    overflow: hidden;
-  }
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--color-green-tint);
-    color: var(--color-green-dark);
-    font-weight: 700;
-    font-size: 0.8rem;
-    padding: 6px 14px;
-    border-radius: 999px;
-    margin-bottom: 20px;
-  }
-  .hero h1 {
-    font-size: clamp(2rem, 6vw, 3.4rem);
-    line-height: 1.05;
-    max-width: 15ch;
-  }
-  .hero .accent { color: var(--color-green); }
-  .hero p.sub {
-    font-size: clamp(1.05rem, 2.4vw, 1.25rem);
-    color: var(--color-ink-soft);
-    max-width: 46ch;
-    margin: 20px 0 32px;
-  }
-  .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
-  .hero-price {
-    margin-top: 18px;
-    font-size: 0.95rem;
-    color: var(--color-ink-soft);
-  }
-  .hero-price strong { color: var(--color-ink); }
-
-  .hero-card {
-    margin-top: 44px;
-    background: var(--color-surface);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-card);
-    border: 1px solid var(--color-cream-line);
-    padding: 22px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    text-align: center;
-  }
-  .hero-card div strong { display: block; font-family: var(--font-display); font-size: 1.6rem; color: var(--color-green); }
-  .hero-card div span { font-size: 0.85rem; color: var(--color-ink-soft); }
-
-  /* PAIN */
-  section { padding: 56px 0; }
-  .section-title {
-    font-size: clamp(1.6rem, 4vw, 2.2rem);
-    max-width: 20ch;
-    margin-bottom: 14px;
-  }
-  .section-sub { color: var(--color-ink-soft); max-width: 56ch; font-size: 1.05rem; margin-bottom: 36px; }
-
-  .pain-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 18px;
-  }
-  .pain-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-cream-line);
-    border-radius: var(--radius);
-    padding: 22px;
-  }
-  .pain-card .mark { font-size: 1.6rem; margin-bottom: 10px; display: block; }
-  .pain-card p { color: var(--color-ink-soft); font-size: 0.98rem; }
-  .pain-card strong { display: block; margin-bottom: 8px; font-size: 1.05rem; }
-
-  /* BRIDGE */
-  .bridge {
-    background: var(--color-ink);
-    color: #fff;
-    border-radius: 24px;
-    padding: 44px 32px;
-    text-align: center;
-  }
-  .bridge h2 { color: #fff; }
-  .bridge .flow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    flex-wrap: wrap;
-    margin-top: 26px;
-    font-family: var(--font-display);
-    font-weight: 700;
-  }
-  .bridge .flow span.state {
-    background: rgba(255,255,255,0.08);
-    padding: 10px 20px;
-    border-radius: 999px;
-    font-size: 0.95rem;
-  }
-  .bridge .flow span.arrow { color: var(--color-green); font-size: 1.4rem; }
-  .bridge .before { opacity: 0.6; }
-  .bridge .after { background: var(--color-green) !important; }
-
-  /* FEATURES */
-  .feature-list { display: grid; gap: 16px; }
-  .feature-row {
-    display: grid;
-    grid-template-columns: 56px 1fr;
-    gap: 18px;
-    align-items: flex-start;
-    background: var(--color-surface);
-    border: 1px solid var(--color-cream-line);
-    border-radius: var(--radius);
-    padding: 20px;
-  }
-  .feature-icon {
-    width: 48px; height: 48px;
-    border-radius: 14px;
-    background: var(--color-green-tint);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem;
-  }
-  .feature-row h3 { font-size: 1.1rem; margin-bottom: 4px; }
-  .feature-row p { color: var(--color-ink-soft); font-size: 0.98rem; }
-  .feature-row .why { color: var(--color-green-dark); font-weight: 600; font-size: 0.92rem; margin-top: 6px; display: block; }
-
-  /* SOCIAL PROOF */
-  .testimonial {
-    background: var(--color-green);
-    color: #fff;
-    border-radius: 24px;
-    padding: 44px 32px;
-  }
-  .testimonial blockquote { font-family: var(--font-display); font-size: clamp(1.2rem, 3vw, 1.6rem); line-height: 1.35; font-weight: 700; margin-bottom: 20px; }
-  .testimonial cite { font-style: normal; opacity: 0.85; font-size: 0.95rem; }
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 16px;
-    margin-top: 40px;
-    text-align: center;
-  }
-  .stats-row div strong { display: block; font-family: var(--font-display); font-size: 1.8rem; color: var(--color-green); }
-  .stats-row div span { color: var(--color-ink-soft); font-size: 0.85rem; }
-
-  /* FAQ */
-  .faq-item {
-    border-bottom: 1px solid var(--color-cream-line);
-    padding: 18px 0;
-  }
-  .faq-item summary {
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 1.02rem;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-item summary::after { content: '+'; font-size: 1.4rem; color: var(--color-green); transition: transform .2s; }
-  .faq-item[open] summary::after { transform: rotate(45deg); }
-  .faq-item p { color: var(--color-ink-soft); margin-top: 10px; font-size: 0.98rem; }
-
-  /* GUARANTEE */
-  .guarantee {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    background: var(--color-surface);
-    border: 1.5px dashed var(--color-green);
-    border-radius: var(--radius);
-    padding: 24px;
-  }
-  .guarantee .badge { font-size: 2.2rem; }
-  .guarantee h3 { font-size: 1.1rem; margin-bottom: 6px; }
-  .guarantee p { color: var(--color-ink-soft); font-size: 0.95rem; }
-
-  /* FINAL CTA */
-  .final-cta {
-    text-align: center;
-    background: var(--color-green-tint);
-    border-radius: 24px;
-    padding: 56px 24px;
-  }
-  .final-cta h2 { max-width: 18ch; margin: 0 auto 14px; }
-  .final-cta p { color: var(--color-ink-soft); max-width: 44ch; margin: 0 auto 28px; }
-
-  footer {
-    padding: 40px 0 calc(40px + env(safe-area-inset-bottom, 0px));
-    border-top: 1px solid var(--color-cream-line);
-    color: var(--color-ink-soft);
-    font-size: 0.88rem;
-  }
-  footer .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center; }
-
-  /* Sticky mobile CTA */
-  .sticky-cta {
-    position: fixed;
-    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-    left: 16px;
-    right: 16px;
-    z-index: 50;
-    display: none;
-  }
-  .sticky-cta .btn { width: 100%; box-shadow: 0 10px 30px rgba(12,12,12,0.25); }
-
-  @media (max-width: 720px) {
-    .hero-card { grid-template-columns: 1fr; text-align: left; }
-    .bridge .flow { flex-direction: column; }
-    .bridge .flow span.arrow { transform: rotate(90deg); }
-    .sticky-cta { display: block; }
-    section { padding: 44px 0; }
-    footer .foot-row { flex-direction: column; align-items: flex-start; }
-  }
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sistema para cafeterías: ventas, caja y stock | GrowiApp</title>
+<meta name="description" content="Ordená las ventas, la caja, el stock y las reservas de tu cafetería desde el celular. Te lo dejamos andando en 48 horas. Desde USD 15 por mes, sin permanencia.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://growi.ar/app/cafeterias/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta property="og:site_name" content="Growi">
+<meta property="og:title" content="GrowiApp para cafeterías | Ventas, caja, stock y reservas en una sola pantalla">
+<meta property="og:description" content="Sin planillas ni papelitos sueltos. Te lo dejamos andando en 48 horas, con tu carta y tus precios ya cargados.">
+<meta property="og:url" content="https://growi.ar/app/cafeterias/">
+<meta property="og:image" content="https://growi.ar/png/growi-og-1200x630.png">
+<meta property="og:image:secure_url" content="https://growi.ar/png/growi-og-1200x630.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Growi - Soluciones digitales para tu negocio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GrowiApp para cafeterías | Ventas, caja, stock y reservas en una sola pantalla">
+<meta name="twitter:description" content="Sin planillas ni papelitos sueltos. Te lo dejamos andando en 48 horas, con tu carta y tus precios ya cargados.">
+<meta name="twitter:image" content="https://growi.ar/png/growi-twitter-card-1200x600.png">
+<meta name="theme-color" content="#0C0C0C">
+<link rel="icon" type="image/png" sizes="32x32" href="/png/appicon_32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/png/appicon_192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/png/appicon_512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/png/appicon_180.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="preload" href="/fonts/syne-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/epilogue-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/shared.css">
+<script>document.documentElement.classList.add('js')</script>
+<script defer data-domain="growi.ar" src="https://plausible.io/js/script.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Growi", "item": "https://growi.ar/" },
+    { "@type": "ListItem", "position": 2, "name": "GrowiApp", "item": "https://growi.ar/app/" },
+    { "@type": "ListItem", "position": 3, "name": "Cafeterías", "item": "https://growi.ar/app/cafeterias/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "¿Tengo que saber de computación para usarlo?", "acceptedAnswer": { "@type": "Answer", "text": "No. Está pensado para que lo use quien atiende el mostrador. Si sabés usar WhatsApp, podés usar GrowiApp. Y la puesta en marcha la hacemos nosotros con vos." } },
+    { "@type": "Question", "name": "¿Cuánto tarda en estar funcionando?", "acceptedAnswer": { "@type": "Answer", "text": "48 horas desde que arrancamos, con tu carta y tus precios ya cargados para que lo uses desde el primer día." } },
+    { "@type": "Question", "name": "¿Qué pasa si no me convence?", "acceptedAnswer": { "@type": "Answer", "text": "Tenés 7 días de garantía: si no funciona como prometimos, te devolvemos el 100% de la puesta en marcha. Sin preguntas." } },
+    { "@type": "Question", "name": "¿Sirve si tengo un solo local chico, no una cadena?", "acceptedAnswer": { "@type": "Answer", "text": "Es exactamente para eso. GrowiApp no está pensado para una cadena de restaurantes con mozos y comandas: es para el café o bar de barrio que necesita ordenar caja, stock y reservas sin complicarse." } },
+    { "@type": "Question", "name": "¿Emite factura electrónica (ARCA, ex AFIP)?", "acceptedAnswer": { "@type": "Answer", "text": "Todavía no. Está en desarrollo y va a ser parte del plan Pro. No prometemos fecha: si te interesa, escribinos y te avisamos apenas esté disponible." } },
+    { "@type": "Question", "name": "¿Tengo que firmar un contrato largo?", "acceptedAnswer": { "@type": "Answer", "text": "No. Hay un pago único de puesta en marcha y un abono mensual fijo, sin permanencia obligatoria. Y si algún día decidís seguir por otro lado, te llevás tus datos." } }
+  ]
+}
+</script>
 </head>
 <body>
+<a href="#contenido" class="skip-link">Saltar al contenido</a>
 
-<header class="nav">
+<nav id="mainNav">
   <div class="nav-inner">
-    <span class="logo">Growi<span style="color:var(--color-green)">.</span></span>
-    <a class="btn btn-primary nav-cta" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20tengo%20una%20cafeter%C3%ADa%2Fbar%20y%20quiero%20conocer%20GrowiApp." target="_blank" rel="noopener">WhatsApp</a>
+    <a href="/" class="nav-brand" aria-label="Growi — Inicio">Growi<span class="dot">.</span></a>
+    <ul class="nav-links" role="list">
+      <li><a href="/app/">GrowiApp</a></li>
+      <li><a href="/web/">GrowiWeb</a></li>
+    </ul>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+cafeter%C3%ADa+y+quiero+conocer+GrowiApp." class="nav-wa" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-track="cafeterias-nav-whatsapp">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span class="wa-label">WhatsApp</span>
+    </a>
+    <button class="nav-hamburger" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
   </div>
-</header>
+</nav>
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación" aria-modal="true" aria-hidden="true">
+  <div class="mobile-menu-card">
+    <a href="/app/">GrowiApp</a>
+    <a href="/web/">GrowiWeb</a>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+cafeter%C3%ADa+y+quiero+conocer+GrowiApp." class="mobile-menu-cta" target="_blank" rel="noopener noreferrer" data-track="cafeterias-mobile-menu-whatsapp">Hablar por WhatsApp</a>
+  </div>
+</div>
 
 <main id="contenido">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap">
-      <span class="eyebrow">☕ GrowiApp para cafeterías y bares chicos</span>
-      <h1>Manejá tu cafetería <span class="accent">sin perder ni una venta</span> en una libreta</h1>
-      <p class="sub">Ventas, caja, stock y reservas en una sola pantalla. Sin planillas, sin papelitos sueltos, sin depender de la memoria a fin de mes. Setup en 48 horas, con nuestro equipo armándotelo.</p>
-      <div class="hero-ctas">
-        <a class="btn btn-primary" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20tengo%20una%20cafeter%C3%ADa%2Fbar%20y%20quiero%20conocer%20GrowiApp." target="_blank" rel="noopener">Quiero ordenar mi cafetería →</a>
-        <a class="btn btn-ghost" href="#como-funciona">Ver cómo funciona</a>
-      </div>
-      <p class="hero-price">Desde <strong>$21.900 ARS/mes</strong> · Garantía de 7 días · Sin permanencia obligatoria</p>
+<!-- Hero -->
+<section class="hero-landing" data-sticky-hide>
+  <div class="container">
+    <p class="eyebrow reveal">GrowiApp para cafeterías y bares chicos</p>
+    <h1 class="section-title">Manejá tu cafetería <span class="accent">sin perder ni una venta</span> en una libreta.</h1>
+    <p class="section-lead hero-lead reveal" style="margin-top:20px">Ventas, caja, stock y reservas en una sola pantalla. Sin planillas, sin papelitos sueltos, sin depender de la memoria a fin de mes. Te lo dejamos andando en 48 horas, con tu carta y tus precios ya cargados.</p>
+    <div class="hero-actions reveal">
+      <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+cafeter%C3%ADa+y+quiero+conocer+GrowiApp." class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer" data-track="cafeterias-hero-whatsapp">Quiero ordenar mi cafetería</a>
+      <a href="#como-funciona" class="btn btn-outline btn-lg">Ver cómo funciona ↓</a>
+    </div>
+    <p class="price-anchor reveal">Desde <span data-price="15">$23.000 ARS</span> por mes · Garantía de 7 días · Sin permanencia</p>
+  </div>
+</section>
 
-      <div class="hero-card">
-        <div><strong>48hs</strong><span>Setup guiado</span></div>
-        <div><strong>1</strong><span>Pantalla para todo</span></div>
-        <div><strong>0</strong><span>Planillas sueltas</span></div>
+<!-- Dolores -->
+<section class="section section-off">
+  <div class="container">
+    <div class="section-header center" style="margin-bottom:0">
+      <h2 class="section-title reveal">¿Te suena alguna de estas?</h2>
+      <p class="section-lead reveal">No es que no sepas llevar tu negocio. Es que tu cafetería creció más rápido que tus herramientas.</p>
+    </div>
+    <div class="pain-list">
+      <div class="pain-item reveal">
+        <h3>El cuaderno de reservas</h3>
+        <p>Alguien anota una mesa a mano, otro no se entera, y terminás con dos reservas pisadas el sábado a la noche.</p>
+      </div>
+      <div class="pain-item reveal">
+        <h3>El stock que «se sabe de memoria»</h3>
+        <p>Te enterás de que faltan medialunas cuando el cliente ya las pidió, no antes de abrir.</p>
+      </div>
+      <div class="pain-item reveal">
+        <h3>La caja del fin de mes</h3>
+        <p>Cerrás caja a ojo y a fin de mes nadie sabe bien cuánto se vendió de qué.</p>
+      </div>
+      <div class="pain-item reveal">
+        <h3>El empleado que se va</h3>
+        <p>Y se lleva puesto el único método que funcionaba, porque estaba todo en su cabeza.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PAIN AGITATION -->
-  <section id="dolor">
-    <div class="wrap">
-      <h2 class="section-title">¿Te suena alguna de estas?</h2>
-      <p class="section-sub">No es que no sepas llevar tu negocio. Es que tu cafetería creció más rápido que tus herramientas.</p>
-      <div class="pain-grid">
-        <div class="pain-card">
-          <span class="mark">📒</span>
-          <strong>El cuaderno de reservas</strong>
-          <p>Alguien anota una mesa a mano, otro no se entera, y terminás con dos reservas pisadas el sábado a la noche.</p>
-        </div>
-        <div class="pain-card">
-          <span class="mark">📦</span>
-          <strong>El stock que "se sabe de memoria"</strong>
-          <p>Te enterás que faltan medialunas cuando el cliente ya las pidió, no antes de abrir.</p>
-        </div>
-        <div class="pain-card">
-          <span class="mark">🧮</span>
-          <strong>La caja del fin de mes</strong>
-          <p>Cerrás caja a ojo y a fin de mes nadie sabe bien cuánto se vendió de qué.</p>
-        </div>
-        <div class="pain-card">
-          <span class="mark">👥</span>
-          <strong>El empleado que se va</strong>
-          <p>Y se lleva puesto el único método que funcionaba, porque estaba todo en su cabeza.</p>
-        </div>
+<!-- Puente -->
+<section class="section" id="como-funciona">
+  <div class="container">
+    <div class="bridge reveal">
+      <h2 class="section-title">De la libreta al control real, sin cambiar cómo atendés.</h2>
+      <div class="bridge-flow">
+        <span class="bridge-state">Cuaderno + memoria + WhatsApp</span>
+        <svg class="bridge-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="bridge-state after">Una pantalla: ventas, caja, stock y reservas</span>
       </div>
     </div>
-  </section>
 
-  <!-- SOLUTION BRIDGE -->
-  <section id="como-funciona">
-    <div class="wrap">
-      <div class="bridge">
-        <h2>De la libreta al control real, sin cambiar cómo atendés</h2>
-        <div class="flow">
-          <span class="state before">Cuaderno + memoria + WhatsApp</span>
-          <span class="arrow">→</span>
-          <span class="state after">Una pantalla: ventas, caja, stock y reservas</span>
-        </div>
-      </div>
+    <div class="section-header center" style="margin:72px 0 0">
+      <h2 class="section-title reveal">Lo que GrowiApp hace por tu cafetería.</h2>
+      <p class="section-lead reveal">Nada que no vayas a usar. Lo justo para un negocio de mostrador y mesas, no un sistema pensado para una cadena de 40 locales.</p>
     </div>
-  </section>
-
-  <!-- FEATURES AS BENEFITS -->
-  <section id="funciones">
-    <div class="wrap">
-      <h2 class="section-title">Lo que GrowiApp hace por tu cafetería</h2>
-      <p class="section-sub">Nada que no vayas a usar. Lo justo para un negocio de mostrador y mesas, no un sistema pensado para una cadena de 40 locales.</p>
-      <div class="feature-list">
-        <div class="feature-row">
-          <div class="feature-icon">🧾</div>
-          <div>
-            <h3>Caja y ventas en un toque</h3>
-            <p>Cargás la venta desde el celular o la tablet del mostrador, en el momento.</p>
-            <span class="why">→ Sabés cuánto vendiste hoy sin esperar al cierre.</span>
-          </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">📦</div>
-          <div>
-            <h3>Stock que te avisa antes de que falte</h3>
-            <p>Cargás lo que tenés y el sistema te muestra qué se está por terminar.</p>
-            <span class="why">→ Nunca más "hoy no hay" a media mañana.</span>
-          </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">📅</div>
-          <div>
-            <h3>Reservas de mesa ordenadas</h3>
-            <p>Cada reserva queda anotada en un solo lugar, visible para todo el equipo.</p>
-            <span class="why">→ Se terminan las mesas pisadas un sábado a la noche.</span>
-          </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">📊</div>
-          <div>
-            <h3>Reportes simples de qué se mueve</h3>
-            <p>Un vistazo rápido a qué se vendió más y en qué horario.</p>
-            <span class="why">→ Decidís con datos, no a ojo.</span>
-          </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">🧑‍💼</div>
-          <div>
-            <h3>Setup asistido, no un manual de 40 páginas</h3>
-            <p>Nuestro equipo te lo deja andando en 48 horas, con tus productos y precios ya cargados.</p>
-            <span class="why">→ No dependés de "el que sabía usarlo".</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOCIAL PROOF -->
-  <section id="casos">
-    <div class="wrap">
-      <div class="testimonial">
-        <blockquote>"Necesitábamos ordenar ventas, reservas y caja sin depender de planillas. Growi nos ayudó a tener una operación más clara y fácil de seguir."</blockquote>
-        <cite>— Colo Café, cafetería · operación diaria, ventas y reservas</cite>
-      </div>
-      <div class="stats-row">
-        <div><strong>48hs</strong><span>Setup promedio</span></div>
-        <div><strong>7 días</strong><span>Garantía de devolución</span></div>
-        <div><strong>100%</strong><span>Soporte por WhatsApp</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- OBJECTIONS / FAQ -->
-  <section id="preguntas">
-    <div class="wrap">
-      <h2 class="section-title">Antes de que preguntes</h2>
-      <div>
-        <details class="faq-item" open>
-          <summary>¿Tengo que saber de sistemas para usarlo?</summary>
-          <p>No. Está pensado para que lo use quien atiende el mostrador, no un administrador de sistemas. Y el setup inicial lo hacemos nosotros con vos.</p>
-        </details>
-        <details class="faq-item">
-          <summary>¿Cuánto tarda en estar funcionando?</summary>
-          <p>48 horas desde que arrancamos, con tu carta y precios ya cargados para que empieces a usarlo desde el primer día.</p>
-        </details>
-        <details class="faq-item">
-          <summary>¿Qué pasa si no me convence?</summary>
-          <p>Tenés 7 días de garantía: si no funciona como prometimos, te devolvemos el 100% del setup. Sin preguntas.</p>
-        </details>
-        <details class="faq-item">
-          <summary>¿Sirve si tengo un solo local chico, no una cadena?</summary>
-          <p>Es exactamente para eso. GrowiApp no es un sistema pensado para una cadena de restaurantes con mozos y comandas — es para el café o bar de barrio que necesita ordenar caja, stock y reservas sin complicarse.</p>
-        </details>
-        <details class="faq-item">
-          <summary>¿Factura electrónica ARCA?</summary>
-          <p>Está en desarrollo para el plan Pro. Si te interesa, contanos y te avisamos apenas esté disponible.</p>
-        </details>
-        <details class="faq-item">
-          <summary>¿Tengo que firmar un contrato largo?</summary>
-          <p>No. Un pago inicial de setup y un abono mensual fijo, sin permanencia obligatoria. Tus datos son exportables si en algún momento decidís seguir por otro lado.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- GUARANTEE -->
-  <section id="garantia">
-    <div class="wrap">
-      <div class="guarantee">
-        <span class="badge">🛡️</span>
+    <div class="benefit-list">
+      <div class="benefit reveal">
+        <div class="card-icon" aria-hidden="true"><svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6"/></svg></div>
         <div>
-          <h3>Garantía de 7 días, sin preguntas</h3>
-          <p>Si en los primeros 7 días GrowiApp no funciona como te prometimos, te devolvemos el 100% del setup.</p>
+          <h3>Caja y ventas en un toque</h3>
+          <p>Cargás la venta desde el celular o la tablet del mostrador, en el momento.</p>
+          <p class="benefit-why">Sabés cuánto vendiste hoy sin esperar al cierre.</p>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="card-icon" aria-hidden="true"><svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3.5 8 12 3.5 20.5 8v8L12 20.5 3.5 16V8Z"/><path d="M3.5 8 12 12.5 20.5 8M12 12.5v8"/></svg></div>
+        <div>
+          <h3>Stock que te avisa antes de que falte</h3>
+          <p>Cargás lo que tenés y GrowiApp te muestra qué se está por terminar.</p>
+          <p class="benefit-why">Nunca más «hoy no hay» a media mañana.</p>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="card-icon" aria-hidden="true"><svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></div>
+        <div>
+          <h3>Reservas de mesa ordenadas</h3>
+          <p>Cada reserva queda anotada en un solo lugar, a la vista de todo el equipo.</p>
+          <p class="benefit-why">Se terminan las mesas pisadas un sábado a la noche.</p>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="card-icon" aria-hidden="true"><svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+        <div>
+          <h3>Reportes simples de qué se mueve</h3>
+          <p>Un vistazo rápido a qué se vendió más y en qué horario.</p>
+          <p class="benefit-why">Decidís con datos, no a ojo.</p>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="card-icon" aria-hidden="true"><svg class="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/></svg></div>
+        <div>
+          <h3>Te lo dejamos andando, no te mandamos un manual</h3>
+          <p>Nuestro equipo lo arma en 48 horas, con tus productos y precios ya cargados, y te enseña a usarlo.</p>
+          <p class="benefit-why">No dependés de «el que sabía usarlo».</p>
         </div>
       </div>
     </div>
-  </section>
+    <div class="section-cta reveal">
+      <a href="/app/?rubro=cafeteria#demo" class="btn btn-outline">Probar el demo con datos de una cafetería</a>
+    </div>
+  </div>
+</section>
 
-  <!-- FINAL CTA -->
-  <section id="empezar">
-    <div class="wrap">
-      <div class="final-cta">
-        <h2>Tu cafetería, ordenada desde el lunes</h2>
-        <p>Contanos cómo trabajás hoy y armamos el setup con tu carta, tus mesas y tu stock. Sin vueltas, sin letra chica.</p>
-        <a class="btn btn-primary" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20tengo%20una%20cafeter%C3%ADa%2Fbar%20y%20quiero%20conocer%20GrowiApp." target="_blank" rel="noopener">Quiero ordenar mi cafetería →</a>
+<!-- Caso real -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="testimonial-block">
+      <span class="eyebrow reveal">Caso real</span>
+      <h2 class="testimonial-title reveal">Colo Café</h2>
+      <blockquote class="testimonial-quote reveal">
+        "Necesitábamos ordenar ventas, reservas y caja sin depender de planillas. Growi nos ayudó a tener una operación más clara y fácil de seguir."
+      </blockquote>
+      <p class="testimonial-attr reveal">Rodrigo — Dueño de Colo Café</p>
+    </div>
+  </div>
+</section>
+
+<!-- Precio -->
+<section class="section section-off" id="precio">
+  <div class="container">
+    <div class="section-header center" style="margin-bottom:0">
+      <h2 class="section-title reveal">Cuánto sale.</h2>
+      <p class="section-lead reveal">Un pago único de puesta en marcha y un abono mensual fijo. Lo que te decimos es lo que pagás.</p>
+    </div>
+    <div class="price-summary reveal">
+      <div>
+        <div class="plan-name">Plan Start</div>
+        <div class="plan-price"><span data-price="15" data-price-short>$23.000</span><span class="plan-period">/mes</span></div>
+        <p class="price-summary-note">+ <span data-price="49">$75.200 ARS</span> de puesta en marcha, una sola vez: lo armamos, cargamos tu carta y te enseñamos a usarlo.</p>
+        <div class="currency-toggle" role="group" aria-label="Ver precios en pesos o en dólares">
+          <button class="currency-btn active" id="btnARS" type="button" aria-pressed="true">ARS</button>
+          <button class="currency-btn" id="btnUSD" type="button" aria-pressed="false">USD</button>
+        </div>
+      </div>
+      <ul class="plan-features">
+        <li class="plan-feat"><span class="pfd"></span>Ventas, caja y stock</li>
+        <li class="plan-feat"><span class="pfd"></span>Reservas de mesa</li>
+        <li class="plan-feat"><span class="pfd"></span>Ficha de clientes</li>
+        <li class="plan-feat"><span class="pfd"></span>Soporte por WhatsApp</li>
+        <li class="plan-feat"><span class="pfd"></span>Sin permanencia: cancelás cuando quieras</li>
+      </ul>
+      <div class="price-summary-actions">
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+cafeter%C3%ADa+y+quiero+empezar+con+GrowiApp." class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track="cafeterias-precio-whatsapp">Quiero empezar</a>
+        <a href="/app/#pricing" class="text-link">Ver todos los planes</a>
       </div>
     </div>
-  </section>
+    <div class="guarantee-block reveal" style="max-width:820px;margin-left:auto;margin-right:auto">
+      <div class="guarantee-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="guarantee-text">
+        <h3>Garantía de 7 días, sin preguntas</h3>
+        <p>Si en los primeros 7 días GrowiApp no funciona como te prometimos, te devolvemos el 100% de la puesta en marcha.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Preguntas -->
+<section class="section" id="preguntas">
+  <div class="container" style="max-width:760px">
+    <h2 class="section-title reveal" style="text-align:center;margin:0 auto 24px">Antes de que preguntes.</h2>
+    <div class="faq-list reveal">
+      <details>
+        <summary>¿Tengo que saber de computación para usarlo?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">No. Está pensado para que lo use quien atiende el mostrador. Si sabés usar WhatsApp, podés usar GrowiApp. Y la puesta en marcha la hacemos nosotros con vos.</div>
+      </details>
+      <details>
+        <summary>¿Cuánto tarda en estar funcionando?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">48 horas desde que arrancamos, con tu carta y tus precios ya cargados para que lo uses desde el primer día.</div>
+      </details>
+      <details>
+        <summary>¿Qué pasa si no me convence?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Tenés 7 días de garantía: si no funciona como prometimos, te devolvemos el 100% de la puesta en marcha. Sin preguntas.</div>
+      </details>
+      <details>
+        <summary>¿Sirve si tengo un solo local chico, no una cadena?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Es exactamente para eso. GrowiApp no está pensado para una cadena de restaurantes con mozos y comandas: es para el café o bar de barrio que necesita ordenar caja, stock y reservas sin complicarse.</div>
+      </details>
+      <details>
+        <summary>¿Emite factura electrónica (ARCA, ex AFIP)?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Todavía no. Está en desarrollo y va a ser parte del plan Pro. No prometemos fecha: si te interesa, escribinos y te avisamos apenas esté disponible.</div>
+      </details>
+      <details>
+        <summary>¿Tengo que firmar un contrato largo?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">No. Hay un pago único de puesta en marcha y un abono mensual fijo, sin permanencia obligatoria. Y si algún día decidís seguir por otro lado, te llevás tus datos.</div>
+      </details>
+    </div>
+    <p class="faq-more reveal">¿Te quedó alguna duda? <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+cafeter%C3%ADa+y+una+duda+sobre+GrowiApp." target="_blank" rel="noopener noreferrer" data-track="cafeterias-faq-whatsapp">Preguntanos por WhatsApp</a> y te respondemos en el día.</p>
+  </div>
+</section>
+
+<!-- Cierre -->
+<section class="section section-dark" data-sticky-hide>
+  <div class="container" style="text-align:center">
+    <h2 class="cta-title reveal">Tu cafetería, ordenada desde el lunes.</h2>
+    <p class="cta-lead reveal">Contanos cómo trabajás hoy y lo armamos con tu carta, tus mesas y tu stock. Sin vueltas, sin letra chica.</p>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+cafeter%C3%ADa+y+quiero+conocer+GrowiApp." class="btn btn-accent btn-lg reveal" target="_blank" rel="noopener noreferrer" data-track="cafeterias-final-whatsapp">Quiero ordenar mi cafetería</a>
+    <p class="cta-note reveal">Sin compromiso. Te respondemos por WhatsApp en el día.</p>
+  </div>
+</section>
+
+<!-- Otros rubros -->
+<section class="section-sm">
+  <div class="container" style="text-align:center">
+    <p class="section-lead lead-center" style="margin-top:0">¿Tenés otro tipo de negocio? GrowiApp también se arma para:</p>
+    <div class="rubro-links">
+      <a href="/app/peluquerias/">Peluquerías y estética</a>
+      <a href="/app/talleres/">Talleres y servicios</a>
+      <a href="/app/retail/">Kioscos y comercios</a>
+      <a href="/combo/">Sistema + sitio web</a>
+    </div>
+  </div>
+</section>
 
 </main>
 
 <footer>
-  <div class="wrap foot-row">
-    <span>© 2026 Growi — Crecé con tu negocio.</span>
-    <span><a href="https://growi.ar/app/">Ver todo GrowiApp</a> · <a href="mailto:hola@growi.ar">hola@growi.ar</a></span>
+  <div class="container">
+    <div class="footer-grid footer-grid-4">
+      <div>
+        <a href="/" class="footer-brand" aria-label="Growi — Inicio">Growi<span class="dot">.</span></a>
+        <p class="footer-tagline">Crecé con tu negocio.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Productos</h3>
+        <a href="/app/">GrowiApp</a>
+        <a href="/web/">GrowiWeb</a>
+        <a href="/combo/">Combo sistema + web</a>
+      </div>
+      <div class="footer-col">
+        <h3>Por rubro</h3>
+        <a href="/app/cafeterias/">Cafeterías</a>
+        <a href="/app/peluquerias/">Peluquerías y estética</a>
+        <a href="/app/talleres/">Talleres y servicios</a>
+        <a href="/app/retail/">Kioscos y comercios</a>
+      </div>
+      <div class="footer-col">
+        <h3>Contacto</h3>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+cafeter%C3%ADa+y+quiero+conocer+GrowiApp." target="_blank" rel="noopener noreferrer" data-track="cafeterias-footer-whatsapp">WhatsApp</a>
+        <a href="mailto:hola@growi.ar">hola@growi.ar</a>
+        <a href="/privacidad/">Privacidad</a>
+        <a href="/terminos/">Términos</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Growi</span>
+      <span>Crecé con tu negocio.</span>
+    </div>
   </div>
 </footer>
 
 <div class="sticky-cta">
-  <a class="btn btn-primary" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20tengo%20una%20cafeter%C3%ADa%2Fbar%20y%20quiero%20conocer%20GrowiApp." target="_blank" rel="noopener">Quiero ordenar mi cafetería →</a>
+  <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+cafeter%C3%ADa+y+quiero+conocer+GrowiApp." class="btn btn-accent" target="_blank" rel="noopener noreferrer" data-track="cafeterias-sticky-whatsapp">Quiero ordenar mi cafetería</a>
 </div>
 
+<script src="/shared.fx.js"></script>
+<script src="/shared.js" onerror="document.documentElement.classList.remove('js')"></script>
 </body>
 </html>
