@@ -52,7 +52,7 @@ a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 img { display: block; max-width: 100%; }
 ::selection { background: var(--accent); color: #fff; }
-h1, h2, h3 { text-wrap: balance; }
+h1, h2, h3 { text-wrap: balance; overflow-wrap: break-word; }
 [data-price], [data-plan-price], .plan-price, .kpi-val { font-variant-numeric: tabular-nums; }
 html { caret-color: var(--accent); scrollbar-color: rgba(12,12,12,.28) transparent; }
 @media (prefers-reduced-motion: reduce) {
@@ -300,7 +300,7 @@ body.menu-open { overflow: hidden; }
 .section-accent .eyebrow { background: rgba(12,12,12,.28); color: #fff; }
 .section-title {
   font-family: var(--syne);
-  font-size: clamp(30px, 4.5vw, 52px);
+  font-size: clamp(27px, 4.5vw, 52px);
   font-weight: 800;
   letter-spacing: -.04em;
   line-height: 1.05;
@@ -667,13 +667,14 @@ footer {
 
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
-  .btn { height: 48px; padding: 0 22px; font-size: 14px; }
-  .btn-lg { height: 52px; padding: 0 26px; font-size: 15px; }
+  /* en pantallas chicas un botón con texto largo corta línea en vez de salirse */
+  .btn { height: auto; min-height: 48px; padding: 10px 22px; font-size: 14px; white-space: normal; text-align: center; line-height: 1.25; }
+  .btn-lg { height: auto; min-height: 52px; padding: 12px 26px; font-size: 15px; }
 }
 
 /* ── Aliases for /app and /web pages ── */
 .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; margin-top: 40px; }
-.plan-price { font-family: var(--syne); font-size: 40px; font-weight: 800; letter-spacing: -.055em; line-height: .95; color: var(--ink); margin-bottom: 4px; }
+.plan-price { font-family: var(--syne); font-size: clamp(26px, 7.6vw, 40px); font-weight: 800; letter-spacing: -.055em; line-height: .95; color: var(--ink); margin-bottom: 4px; }
 .plan-card.featured .plan-price { color: #fff; }
 .plan-period { font-size: 13px; color: var(--ink3); margin-bottom: 8px; }
 .plan-card.featured .plan-period { color: rgba(255,255,255,.5); }
@@ -700,8 +701,8 @@ footer {
 /* Grilla de 2 planes (sitios institucionales, combos) */
 .institutional-plans-grid { grid-template-columns: repeat(2, 1fr); max-width: 820px; margin-left: auto; margin-right: auto; }
 @media (max-width: 880px) {
-  .plans-grid { grid-template-columns: 1fr; }
-  .institutional-plans-grid { grid-template-columns: 1fr; }
+  /* minmax(0,…): sin esto un precio largo ensancha la tarjeta más que la pantalla (celulares de 360px) */
+  .plans-grid, .institutional-plans-grid { grid-template-columns: minmax(0, 1fr); }
   .plan-card.featured { transform: none; }
 }
 @media (max-width: 640px) {
