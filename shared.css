@@ -324,6 +324,9 @@ div.plan-period { margin-bottom: 4px; }
 }
 /* El H1 de cada página va un escalón por encima de los H2 (comparten .section-title) */
 h1.section-title { font-size: clamp(32px, 5vw, 60px); line-height: 1.04; }
+/* H1 que incluye la pastilla: para Google y lectores de pantalla el título trae la palabra clave; a la vista no cambia nada */
+.h1-stack { font: inherit; letter-spacing: inherit; color: inherit; margin: 0; max-width: none; text-wrap: inherit; }
+.h1-stack .section-title { display: block; font-size: clamp(32px, 5vw, 60px); line-height: 1.04; text-wrap: balance; }
 .section-dark .section-title,
 .section-accent .section-title { color: #fff; }
 .section-lead {
@@ -962,7 +965,7 @@ footer {
 /* ═════════ Landings por rubro y combo ═════════ */
 .accent { color: var(--accent); }
 .hero-landing { padding: 140px 0 72px; text-align: center; }
-.hero-landing h1 { max-width: 1020px; margin: 16px auto 0; } /* a 60 px los H1 largos siguen en 2 líneas */
+.hero-landing h1:not(.h1-stack), .hero-landing .h1-stack .section-title { max-width: 1020px; margin: 16px auto 0; } /* a 60 px los H1 largos siguen en 2 líneas */
 .hero-landing .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
 
 /* Dolores: lista a dos columnas con filete, sin tarjetas */

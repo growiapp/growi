@@ -87,7 +87,9 @@
   padding: 120px 0 72px;
   text-align: center;
 }
-.hero h1 {
+.hero .h1-title {
+  display: block;
+  text-wrap: balance;
   font-family: var(--title);
   font-size: clamp(34px, 9.2vw, 82px);
   font-weight: 800;
@@ -233,8 +235,7 @@ a.rubro-chip:hover { border-color: var(--accent); color: var(--accent2); backgro
 <main id="contenido">
 <section class="hero" id="top">
   <div class="container">
-    <span class="eyebrow">Para comercios y negocios de Argentina</span>
-    <h1>Crecé con tu negocio.<br><span class="accent">Sin sumar empleados.</span></h1>
+    <h1 class="h1-stack"><span class="eyebrow">Para comercios y negocios de Argentina</span> <span class="h1-title">Crecé con tu negocio.<br><span class="accent">Sin sumar empleados.</span></span></h1>
     <p class="hero-sub">Un sistema para ordenar ventas, caja y turnos, un sitio web para que te encuentren y automatizaciones para lo que hoy hacés a mano. Andando en días, con precio claro y soporte por WhatsApp.</p>
     <div class="hero-actions">
       <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+m%C3%A1s+sobre+sus+soluciones." class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer" data-track="home-hero-whatsapp">Hablar por WhatsApp</a>
