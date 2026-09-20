@@ -1140,7 +1140,7 @@ footer {
 }
 
 /* ── Scroll margin for fixed nav ── */
-section[id], .plan-card[id] { scroll-margin-top: 96px; }
+section[id], .plan-card[id], details[id] { scroll-margin-top: 96px; }
 
 /* ── Skip link (visible solo al navegar con teclado) ── */
 .skip-link {
