@@ -448,6 +448,7 @@ h1.section-title { font-size: clamp(32px, 5vw, 60px); line-height: 1.04; }
   flex-direction: column;
   gap: 0;
 }
+.plan-card .plan-btn { margin-top: auto; } /* el botón siempre al pie, aunque la tarjeta crezca */
 .plan-card.featured {
   background: var(--ink);
   border-color: var(--ink);
@@ -641,7 +642,7 @@ footer {
 }
 
 /* ── Aliases for /app and /web pages ── */
-.plans-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; margin-top: 40px; }
+.plans-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; margin-top: 40px; } /* stretch: misma altura por fila, tenga el texto que tenga */
 .plan-price { font-family: var(--title); font-size: clamp(26px, 7.6vw, 40px); font-weight: var(--fw-title); letter-spacing: -.035em; line-height: .95; color: var(--ink); margin-bottom: 4px; }
 .plan-card.featured .plan-price { color: #fff; }
 .plan-period { font-size: 13px; color: var(--ink3); margin-bottom: 8px; }
@@ -948,6 +949,7 @@ footer {
 
 /* Enlaces a otros rubros */
 .rubro-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 28px; }
+.hero-landing .rubro-links { margin-top: 32px; }
 .rubro-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: var(--r-pill); border: 1px solid var(--line2); background: #fff; font-size: 14px; font-weight: var(--fw-semi); color: var(--ink2); transition: border-color .16s var(--ease-out), color .16s var(--ease-out), background .16s var(--ease-out), transform .14s var(--ease-out); }
 .rubro-links a:hover { border-color: var(--accent); color: var(--accent2); background: var(--accentL); }
 
@@ -1109,7 +1111,7 @@ footer {
 }
 
 /* ── Scroll margin for fixed nav ── */
-section[id] { scroll-margin-top: 96px; }
+section[id], .plan-card[id] { scroll-margin-top: 96px; }
 
 /* ── Skip link (visible solo al navegar con teclado) ── */
 .skip-link {
