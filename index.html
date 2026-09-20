@@ -149,28 +149,7 @@
   color: var(--accent2);
   margin: -6px 0 18px;
 }
-.product-rubros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 28px;
-}
-.rubro-chip {
-  display: inline-flex;
-  align-items: center;
-  height: 34px;
-  padding: 0 14px;
-  border-radius: var(--r-pill);
-  border: 1px solid var(--line2);
-  font-size: 12px;
-  color: var(--ink3);
-  background: var(--off);
-}
-a.rubro-chip { position: relative; color: var(--ink2); font-weight: var(--fw-semi); transition: border-color .16s var(--ease-out), color .16s var(--ease-out), background .16s var(--ease-out), transform .14s var(--ease-out); }
-a.rubro-chip::after { content: ""; position: absolute; inset: -5px 0; } /* área táctil de 44px */
-a.rubro-chip:active { transform: scale(.97); }
-a.rubro-chip:hover { border-color: var(--accent); color: var(--accent2); background: var(--accentL); }
-.product-card .btn { align-self: flex-start; }
+.product-card .btn { align-self: flex-start; margin-top: auto; } /* las tres son pares: mismo botón, a la misma altura */
 .use-case-card { display: flex; flex-direction: column; }
 .use-case-card .text-link { align-self: flex-start; }
 .use-case-card p { margin-bottom: 10px; }
@@ -262,14 +241,6 @@ a.rubro-chip:hover { border-color: var(--accent); color: var(--accent2); backgro
         <h3>GrowiApp: gestioná desde adentro</h3>
         <div class="product-price">Desde <span data-price="15">$23.000 ARS</span> por mes + <span data-price="49">$75.200 ARS</span> de puesta en marcha</div>
         <p>Ventas, caja, stock, turnos y clientes en una sola herramienta. Sin planillas, sin papel. Te lo dejamos andando en 48 horas.</p>
-        <div class="product-rubros">
-          <a class="rubro-chip" href="/app/cafeterias/">cafetería</a>
-          <a class="rubro-chip" href="/app/peluquerias/">peluquería</a>
-          <a class="rubro-chip" href="/app/peluquerias/">estética</a>
-          <a class="rubro-chip" href="/app/talleres/">taller</a>
-          <a class="rubro-chip" href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+un+consultorio+y+quiero+conocer+GrowiApp." target="_blank" rel="noopener noreferrer" data-track="home-chip-consultorio">consultorio</a>
-          <a class="rubro-chip" href="/app/retail/">kiosco y comercio</a>
-        </div>
         <a href="/app/" class="btn btn-primary">Ver GrowiApp →</a>
       </div>
 
@@ -281,12 +252,7 @@ a.rubro-chip:hover { border-color: var(--accent); color: var(--accent2); backgro
         <h3>GrowiWeb: aparecé cuando te buscan</h3>
         <div class="product-price">Desde <span data-price="200">$307.000 ARS</span>, pago único</div>
         <p>Sitios de una página y sitios completos, con precio fijo y plazo definido. Sin sorpresas. Sin reuniones interminables.</p>
-        <div class="product-rubros">
-          <a class="rubro-chip" href="/web/#landing-planes">sitio de una página</a>
-          <a class="rubro-chip" href="/web/#institucional-planes">sitio completo</a>
-          <a class="rubro-chip" href="/combo/">combo sistema + web</a>
-        </div>
-        <a href="/web/" class="btn btn-outline">Ver GrowiWeb →</a>
+        <a href="/web/" class="btn btn-primary">Ver GrowiWeb →</a>
       </div>
 
       <div class="card product-card reveal">
@@ -297,12 +263,7 @@ a.rubro-chip:hover { border-color: var(--accent); color: var(--accent2); backgro
         <h3>GrowiFlow: que lo repetitivo se haga solo</h3>
         <div class="product-price">Desde <span data-price="12">$18.400 ARS</span> por mes + <span data-price="39">$59.900 ARS</span> de puesta en marcha</div>
         <p>Recordatorios que salen sin que te acuerdes, reportes que te llegan armados y pedidos que se ordenan solos. Se contrata solo, sin necesidad de tener lo demás.</p>
-        <div class="product-rubros">
-          <a class="rubro-chip" href="/flow/#reportes">reportes automáticos</a>
-          <a class="rubro-chip" href="/flow/#recordatorios">recordatorios</a>
-          <a class="rubro-chip" href="/flow/#pedidos">pedidos en orden</a>
-        </div>
-        <a href="/flow/" class="btn btn-outline">Ver GrowiFlow →</a>
+        <a href="/flow/" class="btn btn-primary">Ver GrowiFlow →</a>
       </div>
 
     </div>
