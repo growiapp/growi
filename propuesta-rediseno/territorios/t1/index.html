@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Growi · Territorio 1, Mostrador (prototipo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="t1.css">
+</head>
+<body>
+<a href="#contenido" class="sr">Saltar al contenido</a>
+<header class="top"><div class="w">
+  <a class="brand" href="./" aria-label="Growi: inicio">Growi<i>.</i></a>
+  <nav aria-label="Principal" class="mainnav" data-nav>
+    <a href="#modulos" data-m="app">GrowiApp</a><a href="#modulos" data-m="web">GrowiWeb</a><a href="#modulos" data-m="flow">GrowiFlow</a><a href="#modulos" data-m="combo">Combo</a><a href="#modulos" data-m="inv">Invitaciones</a>
+  </nav>
+  <a class="btn p" href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+m%C3%A1s.%0A%0A(ref%3A+territorio-1-nav)" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  <button class="menu" data-menu aria-expanded="false" aria-label="Abrir menú">Menú</button>
+</div></header>
+
+<main id="contenido">
+<section class="hero"><div class="w">
+  <h1>Un sistema para vender, un sitio para que te encuentren, avisos que salen solos.</h1>
+  <div class="hero-side">
+    <p>Growi arma y deja andando las tres cosas para comercios y servicios de Argentina. Precio por escrito antes de empezar y soporte por WhatsApp.</p>
+    <p class="hp">GrowiApp desde <b data-usd="15"></b> por mes · GrowiWeb desde <b data-usd="200"></b> · GrowiFlow desde <b data-usd="79"></b>. Precios de referencia: todavía no se aceptan contrataciones ni pagos.</p>
+    <p class="acts"><a class="btn p" href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+que+me+recomienden+qu%C3%A9+me+conviene.%0A%0AMi+rubro%3A%0AQu%C3%A9+quiero+resolver%3A%0A%0A(ref%3A+territorio-1-hero)" target="_blank" rel="noopener noreferrer">Contanos tu negocio</a><a class="btn" href="#sistema">Probar el sistema ↓</a></p>
+  </div>
+</div></section>
+
+<section class="sistema" id="sistema"><div class="w">
+  <div class="cap"><b>GrowiApp, funcionando.</b> Vendé algo: tocá productos, elegí cómo paga y mirá cómo cambian las ventas del día y el stock. Esta muestra tiene caja, reservas y stock; el sistema suma clientes y reportes. <span class="mono">Datos de ejemplo, no es un cliente.</span></div>
+  <div class="ws" data-ws>
+    <div class="ws-bar"><span class="ws-title"><b>Café de ejemplo</b> · Sucursal Centro</span><span class="ws-date mono" data-fecha></span><button class="lnk" data-reset type="button">Reiniciar demo</button></div>
+    <div class="ws-body">
+      <div class="ws-tabs" role="tablist" aria-label="Módulos de GrowiApp">
+        <button role="tab" aria-selected="true" aria-controls="v-caja" data-view="caja" id="tb-caja"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.2 9H6.2L5 7Zm0 0L4.3 4H2M9 20.5h.01M16 20.5h.01"/></svg><span>Caja</span></button>
+        <button role="tab" aria-selected="false" aria-controls="v-reservas" data-view="reservas" id="tb-reservas" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4V6Zm0 5h16M8 3v4M16 3v4"/></svg><span>Reservas</span></button>
+        <button role="tab" aria-selected="false" aria-controls="v-stock" data-view="stock" id="tb-stock" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8 12 4l8.5 4v8L12 20l-8.5-4V8Zm0 0L12 12m8.5-4L12 12m0 8v-8"/></svg><span>Stock</span><i class="dot" data-lowdot hidden></i></button>
+      </div>
+
+      <section class="view" id="v-caja" role="tabpanel" aria-labelledby="tb-caja">
+        <div class="pos">
+          <div class="catalog">
+            <div class="chips" role="group" aria-label="Categoría" data-cats></div>
+            <div class="grid" data-grid></div>
+          </div>
+          <div class="side">
+            <div class="ticket" aria-live="polite">
+              <div class="th"><b>Venta actual</b><button class="lnk" data-clear type="button">Vaciar</button></div>
+              <ul class="lines" data-lines><li class="empty">Tocá un producto para empezar.</li></ul>
+              <div class="tot"><span>Total</span><b data-total>$0</b></div>
+              <div class="pay" role="group" aria-label="Medio de pago"><button type="button" aria-pressed="true" data-pay="Efectivo">Efectivo</button><button type="button" aria-pressed="false" data-pay="Mercado Pago">Mercado Pago</button><button type="button" aria-pressed="false" data-pay="Tarjeta">Tarjeta</button></div>
+              <button class="btn p wide" data-cobrar type="button" disabled>Cobrar</button>
+            </div>
+            <div class="day">
+              <div class="th"><b>Ventas del día</b><span class="mono" data-nventas>0 ventas</span></div>
+              <p class="big" data-caja>$0</p><p class="sub" data-efe>Efectivo en caja: $20.000 (apertura)</p>
+              <ul class="meth" data-meth></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="v-reservas" role="tabpanel" aria-labelledby="tb-reservas" hidden>
+        <div class="res">
+          <div class="rh"><b>Reservas de hoy</b><span class="mono" data-nres>0 reservas</span></div>
+          <p class="hint">Tocá un horario libre para anotar una reserva.</p>
+          <ul class="slots" data-slots></ul>
+        </div>
+      </section>
+
+      <section class="view" id="v-stock" role="tabpanel" aria-labelledby="tb-stock" hidden>
+        <div class="stk"><div class="rh"><b>Stock</b><span class="mono">Alerta cuando quedan menos de 8</span></div><ul class="rows" data-stock></ul></div>
+      </section>
+    </div>
+    <div class="toast" data-toast role="status" aria-live="polite"></div>
+  </div>
+</div></section>
+
+<section class="modulos" id="modulos"><div class="w">
+  <h2>Cinco líneas, una forma de trabajar.</h2>
+  <p class="lead">Se contratan por separado o juntas. Elegí una para ver qué hace y cuánto cuesta.</p>
+  <div class="mod">
+    <div class="mlist" role="tablist" aria-label="Líneas de Growi" data-mlist>
+      <button role="tab" aria-selected="true" data-m="app"><span class="n">GrowiApp</span><span class="d">Sistema de gestión</span></button>
+      <button role="tab" aria-selected="false" data-m="web"><span class="n">GrowiWeb</span><span class="d">Sitios web</span></button>
+      <button role="tab" aria-selected="false" data-m="flow"><span class="n">GrowiFlow</span><span class="d">Automatizaciones</span></button>
+      <button role="tab" aria-selected="false" data-m="combo"><span class="n">Combo</span><span class="d">Sitio + sistema</span></button>
+      <button role="tab" aria-selected="false" data-m="inv"><span class="n">Invitaciones</span><span class="d">Eventos</span></button>
+    </div>
+    <div class="mpanel" role="tabpanel" data-mpanel aria-live="polite"></div>
+  </div>
+  <div class="cur" role="group" aria-label="Moneda"><button type="button" data-cur="ARS" aria-pressed="true">ARS</button><button type="button" data-cur="USD" aria-pressed="false">USD</button></div>
+  <p class="note">Precios de referencia: todavía no se aceptan contrataciones ni pagos. Los «desde» y lo a medida se confirman por escrito antes de empezar. Fijados en dólares; el valor en pesos se actualiza con el dólar oficial (venta). No incluyen dominio, alojamiento ni costos de terceros.</p>
+</div></section>
+
+<section class="planes" id="planes"><div class="w">
+  <h2>GrowiApp: cuánto pagás para empezar.</h2>
+  <p class="lead">Una puesta en marcha, una sola vez (cargamos tus datos y te enseñamos a usarlo), y un abono mensual sin permanencia.</p>
+  <div class="pl" data-calc>
+    <div class="plist" role="radiogroup" aria-label="Plan">
+      <label class="plan"><input type="radio" name="plan" value="Start" checked><span class="pn">Start<small>1 usuario · 1 sucursal</small></span><span class="pf">Ventas, caja y stock · turnos y reservas · ficha de clientes · reportes simples</span><span class="pp"><b data-usd="15"></b><small>por mes</small></span></label>
+      <label class="plan"><input type="radio" name="plan" value="Pro"><span class="pn">Pro<small>hasta 3 usuarios · 1 sucursal</small></span><span class="pf">Todo lo de Start · para equipos que cargan a la vez · factura electrónica ARCA: próximamente</span><span class="pp"><b data-usd="29"></b><small>por mes</small></span></label>
+      <label class="plan"><input type="radio" name="plan" value="Multi"><span class="pn">Multi<small>hasta 5 usuarios · 2 sucursales</small></span><span class="pf">Todo lo de Pro · reportes avanzados por sucursal · WhatsApp prioritario</span><span class="pp"><b data-usd="49"></b><small>por mes</small></span></label>
+    </div>
+    <div class="sum">
+      <div class="per" role="group" aria-label="Período"><button type="button" data-per="m" aria-pressed="true">Mensual</button><button type="button" data-per="a" aria-pressed="false">Anual −15%</button></div>
+      <dl>
+        <div><dt data-l1>Para empezar</dt><dd data-v1></dd><dd class="d" data-d1></dd></div>
+        <div><dt data-l2>Después</dt><dd data-v2></dd><dd class="d" data-d2></dd></div>
+        <div><dt data-l3>Primer año</dt><dd data-v3></dd><dd class="d" data-d3></dd></div>
+      </dl>
+      <a class="btn p wide" data-wa href="#" target="_blank" rel="noopener noreferrer">Consultar este plan</a>
+    </div>
+  </div>
+  <p class="note">Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. Están fijados en dólares; el valor en pesos es una referencia que se actualiza con el dólar oficial (venta). No incluyen dominio, alojamiento ni costos de terceros. Los totales suman los importes redondeados que se muestran.</p>
+</div></section>
+</main>
+
+<footer><div class="w">
+  <div><a class="brand" href="./">Growi<i>.</i></a><p>Crecé con tu negocio.</p></div>
+  <div class="fl"><a href="/app/">GrowiApp (sitio actual)</a><a href="/web/">GrowiWeb (sitio actual)</a><a href="/flow/">GrowiFlow (sitio actual)</a></div>
+  <div class="fl"><a href="https://wa.me/5491170593877" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:hola@growi.ar">hola@growi.ar</a><a href="/privacidad/">Privacidad</a><a href="/terminos/">Términos</a></div>
+  <p class="aviso">Growi se encuentra en etapa de lanzamiento y actualmente recibe consultas sobre sus servicios, sin aceptar contrataciones ni pagos. Los planes y precios publicados describen las propuestas previstas. Para conocer disponibilidad, alcance y condiciones, contactanos por WhatsApp o correo.</p>
+</div></footer>
+<a class="wa-float" href="https://wa.me/5491170593877?text=Hola+Growi.%0A%0A(ref%3A+territorio-1-flotante)" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">WA</a>
+<div class="proto" aria-hidden="true">Territorio 1 · prototipo local</div>
+<script src="/shared.fx.js"></script><script src="../precios.js"></script><script src="t1.js"></script>
+</body></html>
