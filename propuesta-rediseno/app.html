@@ -92,21 +92,22 @@
 <section class="sec" id="precios">
   <div class="wrap">
     <div class="sec-head"><p class="eyebrow">Precios</p><h2>Una puesta en marcha única y un abono mensual fijo.</h2><p>Elegí un plan para ver cuánto pagás el primer mes, desde el segundo y en el primer año.</p></div>
-    <div class="cur" role="group" aria-label="Moneda"><button type="button" data-c="USD" aria-pressed="true">USD</button><button type="button" data-c="ARS" aria-pressed="false">ARS (referencia)</button></div>
+    <div class="cur" role="group" aria-label="Moneda"><button type="button" data-c="ARS" aria-pressed="true">ARS</button><button type="button" data-c="USD" aria-pressed="false">USD (precio fijo)</button></div>
+    <div class="cur" role="group" aria-label="Período de pago" style="margin-left:10px"><button type="button" data-p="m" aria-pressed="true">Mensual</button><button type="button" data-p="a" aria-pressed="false">Anual −15%</button></div>
     <div class="tariff" role="radiogroup" aria-label="Planes de GrowiApp">
-      <div class="tariff-head" aria-hidden="true"><span>Plan</span><span>Para</span><span>Usuarios</span><span>Sucursales</span><span>Abono mensual</span><span>Puesta en marcha</span></div>
-      <label class="tariff-row"><input type="radio" name="plan" value="Start" checked><span class="pn">Start</span><span class="for">Una persona atendiendo: ventas, caja, stock, turnos y ficha de clientes.</span><span><span class="lbl">Usuarios</span>1</span><span><span class="lbl">Sucursales</span>1</span><span class="m" data-usd="15"><span>USD 15</span><small></small></span><span class="s" data-usd="49"><span>USD 49</span><small></small></span></label>
-      <label class="tariff-row"><input type="radio" name="plan" value="Pro"><span class="pn">Pro</span><span class="for">Equipo chico: todo lo de Start para hasta 3 personas.</span><span><span class="lbl">Usuarios</span>hasta 3</span><span><span class="lbl">Sucursales</span>1</span><span class="m" data-usd="29"><span>USD 29</span><small></small></span><span class="s" data-usd="149"><span>USD 149</span><small></small></span></label>
-      <label class="tariff-row"><input type="radio" name="plan" value="Multi"><span class="pn">Multi</span><span class="for">Más de un lugar: reportes avanzados y hasta 2 sucursales.</span><span><span class="lbl">Usuarios</span>hasta 5</span><span><span class="lbl">Sucursales</span>2</span><span class="m" data-usd="49"><span>USD 49</span><small></small></span><span class="s" data-usd="249"><span>USD 249</span><small></small></span></label>
+      <div class="tariff-head" aria-hidden="true"><span>Plan</span><span>Para</span><span>Usuarios</span><span>Sucursales</span><span id="h-abono">Abono mensual</span><span>Puesta en marcha</span></div>
+      <label class="tariff-row"><input type="radio" name="plan" value="Start" checked><span class="pn">Start</span><span class="for">Una persona atendiendo.<small class="feats">Ventas, caja y stock · turnos y reservas · ficha de clientes · reportes simples · soporte por WhatsApp</small></span><span><span class="lbl">Usuarios</span>1</span><span><span class="lbl">Sucursales</span>1</span><span class="m" data-usd="15"><span>USD 15</span><small></small></span><span class="s" data-usd="49"><span>USD 49</span><small></small></span></label>
+      <label class="tariff-row"><input type="radio" name="plan" value="Pro"><span class="pn">Pro</span><span class="for">Equipo chico, cada uno con su acceso. <span class="tag">Recomendado si son varios</span><small class="feats">Todo lo de Start · para equipos que cargan ventas o turnos a la vez · factura electrónica ARCA: próximamente</small></span><span><span class="lbl">Usuarios</span>hasta 3</span><span><span class="lbl">Sucursales</span>1</span><span class="m" data-usd="29"><span>USD 29</span><small></small></span><span class="s" data-usd="149"><span>USD 149</span><small></small></span></label>
+      <label class="tariff-row"><input type="radio" name="plan" value="Multi"><span class="pn">Multi</span><span class="for">Más de un lugar.<small class="feats">Todo lo de Pro · hasta 2 sucursales · reportes avanzados por sucursal · WhatsApp prioritario</small></span><span><span class="lbl">Usuarios</span>hasta 5</span><span><span class="lbl">Sucursales</span>2</span><span class="m" data-usd="49"><span>USD 49</span><small></small></span><span class="s" data-usd="249"><span>USD 249</span><small></small></span></label>
     </div>
     <div class="calc" aria-live="polite">
-      <div id="c1"><small>Primer mes</small><b></b><em></em></div>
-      <div id="c2"><small>Desde el segundo mes</small><b></b><em></em></div>
-      <div id="c3"><small>Primer año</small><b></b><em></em></div>
+      <div id="c1"><small id="l1">Primer mes</small><b></b><em></em></div>
+      <div id="c2"><small id="l2">Desde el segundo mes</small><b></b><em></em></div>
+      <div id="c3"><small id="l3">Primer año</small><b></b><em></em></div>
     </div>
     <div style="margin-top:24px;display:flex;gap:14px;flex-wrap:wrap;align-items:center">
       <a class="btn" id="plan-wa" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20consultar%20por%20GrowiApp." data-track="app-precio-whatsapp">Consultar por el plan <span id="plan-name">Start</span></a>
-      <span class="muted" style="font-size:14px">Sin permanencia · 7 días de garantía desde que queda andando</span>
+      <span class="muted" style="font-size:14px"><b>Garantía de 7 días</b> desde que queda andando: si no funciona como prometimos, te devolvemos el 100% de la puesta en marcha. Sin permanencia (el plan anual no tiene devolución).</span>
     </div>
     <ul class="notes">
       <li>La puesta en marcha incluye la configuración inicial hecha por nosotros y 1 hora de capacitación en vivo.</li>

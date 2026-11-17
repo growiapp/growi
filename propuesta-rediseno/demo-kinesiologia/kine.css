@@ -1,5 +1,5 @@
 /* Demo GrowiWeb · Alameda Kinesiología (ficticia). Identidad propia: no comparte tokens con Growi. */
-:root { --ink: #151a22; --paper: #f1eee7; --cool: #dde6ea; --cool2: #c3d1d7; --sig: #cc4620; --sig-d: #a73818; --line: #cfc9bb; --f: 'Archivo', system-ui, 'Segoe UI', Roboto, sans-serif; }
+:root { --ink: #151a22; --paper: #f1eee7; --cool: #dde6ea; --cool2: #c3d1d7; --sig: #0b6e6e; --sig-d: #085757; --line: #cfc9bb; --f: 'Archivo', system-ui, 'Segoe UI', Roboto, sans-serif; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.55 var(--f); -webkit-font-smoothing: antialiased; }
@@ -38,7 +38,7 @@ h1 span { color: var(--sig); }
 .fig-tools button { border: 1.5px solid var(--ink); background: var(--paper); font: 700 12px var(--f); padding: 6px 10px; cursor: pointer; min-height: 32px; }
 .fig-tools button + button { border-left: 0; }
 .fig-tools button[aria-pressed="true"] { background: var(--ink); color: #fff; }
-.hot { position: absolute; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; border: 2px solid var(--sig); background: rgba(228,87,46,.18); cursor: pointer; padding: 0; transition: transform .15s, background .15s; }
+.hot { position: absolute; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; border: 2px solid var(--sig); background: rgba(11,110,110,.16); cursor: pointer; padding: 0; transition: transform .15s, background .15s; }
 .hot::after { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: var(--sig); }
 .hot:hover { transform: scale(1.12); }
 .hot[aria-pressed="true"] { background: var(--sig); }
@@ -110,3 +110,7 @@ dialog .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 
 [id] { scroll-margin-top: 84px; }
+
+.top .btn { white-space: nowrap; padding: 0 16px; min-height: 44px; }
+.top .w { gap: 14px; }
+@media (max-width: 420px) { .brand { font-size: 17px; } }
