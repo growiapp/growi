@@ -1,0 +1,105 @@
+/* Demo: Alameda Kinesiología (sitio institucional de ejemplo). Identidad propia: serif sereno y verde salvia. */
+:root { --k-ink: #1c2a3a; --k-ink2: #4a5a6a; --k-green: #2b7565; --k-green-d: #1f5a4d; --k-mint: #dcebe6; --k-bg: #f7f9fb; --k-line: #e1e8ee; --k-serif: Georgia, "Iowan Old Style", "Palatino Linotype", serif; --k-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+body { background: var(--k-bg); color: var(--k-ink); font-family: var(--k-sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+.k-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.k-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border-radius: 999px; background: var(--k-green); color: #fff; font: 700 15px var(--k-sans); text-decoration: none; transition: background .15s, transform .15s; }
+.k-btn:hover { background: var(--k-green-d); }
+.k-btn:active { transform: scale(.98); }
+.k-btn.o { background: none; color: var(--k-ink); border: 1.5px solid var(--k-ink); }
+.k-btn.o:hover { background: var(--k-ink); color: #fff; }
+a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px solid #1c2a3a; outline-offset: 3px; border-radius: 6px; }
+
+/* Cabecera */
+.k-head { position: sticky; top: var(--demo-h, 0px); background: rgba(247,249,251,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--k-line); z-index: 50; }
+.k-head .k-wrap { display: flex; align-items: center; gap: 22px; min-height: 72px; }
+.k-brand { font: 700 20px/1.05 var(--k-serif); letter-spacing: -.01em; text-decoration: none; margin-right: auto; }
+.k-nav { display: flex; gap: 24px; font: 600 14px var(--k-sans); }
+.k-nav a { text-decoration: none; color: var(--k-ink2); padding: 6px 0; border-bottom: 2px solid transparent; }
+.k-nav a:hover { color: var(--k-ink); border-color: var(--k-green); }
+.k-menu { display: none; }
+@media (max-width: 860px) {
+  .k-nav, .k-head .k-btn { display: none; }
+  .k-menu { display: block; position: relative; }
+  .k-menu summary { list-style: none; cursor: pointer; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--k-line); background: #fff; font: 700 20px var(--k-sans); }
+  .k-menu summary::-webkit-details-marker { display: none; }
+  .k-menu nav { position: absolute; right: 0; top: 56px; width: 240px; background: #fff; border: 1px solid var(--k-line); border-radius: 14px; box-shadow: 0 16px 40px rgba(28,42,58,.14); padding: 8px; display: grid; }
+  .k-menu nav a { padding: 13px 14px; border-radius: 8px; text-decoration: none; font: 600 15px var(--k-sans); }
+  .k-menu nav a:hover { background: var(--k-mint); }
+}
+
+/* Hero */
+.k-hero { padding: 64px 0 72px; }
+.k-hero .k-wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
+.k-eye { font: 700 12px var(--k-sans); letter-spacing: .14em; text-transform: uppercase; color: var(--k-green-d); }
+.k-hero h1 { margin: 14px 0 18px; font: 400 clamp(40px, 5.6vw, 66px)/1.04 var(--k-serif); letter-spacing: -.025em; }
+.k-hero h1 em { color: var(--k-green); }
+.k-hero p.lead { margin: 0; max-width: 520px; font-size: 19px; line-height: 1.6; color: var(--k-ink2); }
+.k-acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.k-meta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 8px 24px; font: 600 14px var(--k-sans); color: var(--k-ink2); }
+.k-meta span::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--k-green); }
+.k-art { width: 100%; max-width: 420px; justify-self: end; }
+.k-art svg { display: block; width: 100%; height: auto; }
+
+/* Secciones */
+.k-sec { padding: 76px 0; border-top: 1px solid var(--k-line); }
+.k-sec.w { background: #fff; }
+.k-sec h2 { margin: 0 0 12px; font: 400 clamp(30px, 3.6vw, 44px)/1.1 var(--k-serif); letter-spacing: -.02em; }
+.k-sec .intro { margin: 0 0 36px; max-width: 620px; color: var(--k-ink2); font-size: 18px; }
+.k-grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.k-card { background: #fff; border: 1px solid var(--k-line); border-radius: 18px; padding: 28px; }
+.k-sec.w .k-card { background: var(--k-bg); }
+.k-card .ic { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; background: var(--k-mint); color: var(--k-green-d); margin-bottom: 16px; }
+.k-card h3 { margin: 0 0 8px; font: 700 20px/1.25 var(--k-sans); letter-spacing: -.01em; }
+.k-card p { margin: 0; color: var(--k-ink2); font-size: 16px; }
+.k-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; counter-reset: p; }
+.k-steps li { list-style: none; position: relative; padding: 26px 26px 26px 26px; border-radius: 18px; background: #fff; border: 1px solid var(--k-line); counter-increment: p; }
+.k-steps li::before { content: "0" counter(p); display: block; margin-bottom: 10px; font: 400 34px var(--k-serif); color: var(--k-green); }
+.k-steps b { display: block; font: 700 18px var(--k-sans); margin-bottom: 6px; }
+.k-steps span { color: var(--k-ink2); font-size: 16px; }
+.k-steps { padding: 0; margin: 0; }
+
+/* Equipo */
+.k-team { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.k-pro { text-align: center; padding: 28px 18px; background: var(--k-bg); border: 1px solid var(--k-line); border-radius: 18px; }
+.k-pro i { display: grid; place-items: center; width: 76px; height: 76px; margin: 0 auto 14px; border-radius: 50%; background: var(--k-mint); color: var(--k-green-d); font: 400 26px var(--k-serif); font-style: normal; }
+.k-pro b { display: block; font: 700 17px var(--k-sans); }
+.k-pro span { color: var(--k-ink2); font-size: 15px; }
+.k-note-s { margin: 18px 0 0; font-size: 14px; color: var(--k-ink2); }
+
+/* Horarios y cómo llegar */
+.k-loc { display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: stretch; }
+.k-hours { width: 100%; border-collapse: collapse; font-size: 17px; }
+.k-hours th, .k-hours td { text-align: left; padding: 16px 0; border-bottom: 1px solid var(--k-line); font-weight: 400; }
+.k-hours th { color: var(--k-ink2); }
+.k-hours td { font-weight: 700; text-align: right; }
+.k-addr { margin: 20px 0 0; font-size: 17px; }
+.k-addr small { display: block; color: var(--k-ink2); font-size: 14px; margin-top: 4px; }
+.k-map { border-radius: 18px; overflow: hidden; border: 1px solid var(--k-line); min-height: 280px; background: #e4ece9; position: relative; }
+.k-map svg { display: block; width: 100%; height: 100%; min-height: 280px; }
+.k-map figcaption { position: absolute; left: 12px; bottom: 12px; padding: 5px 11px; border-radius: 999px; background: rgba(255,255,255,.92); font: 600 12px var(--k-sans); color: var(--k-ink2); }
+
+/* Cierre */
+.k-cta { padding: 76px 0; background: var(--k-green-d); color: #fff; text-align: center; }
+.k-cta h2 { margin: 0 0 12px; font: 400 clamp(30px, 4vw, 46px)/1.1 var(--k-serif); }
+.k-cta p { margin: 0 auto 24px; max-width: 520px; font-size: 18px; color: rgba(255,255,255,.86); }
+.k-cta .k-btn { background: #fff; color: var(--k-green-d); }
+.k-cta .k-btn:hover { background: var(--k-mint); }
+.k-foot { padding: 28px 0 40px; font-size: 14px; color: var(--k-ink2); }
+.k-foot .k-wrap { display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: space-between; }
+
+/* Botón fijo en celular */
+.k-fab { display: none; }
+@media (max-width: 860px) {
+  .k-hero { padding: 36px 0 52px; }
+  .k-hero .k-wrap { grid-template-columns: 1fr; gap: 32px; }
+  .k-art { max-width: 300px; justify-self: center; }
+  .k-sec { padding: 52px 0; }
+  .k-grid3, .k-steps { grid-template-columns: 1fr; }
+  .k-team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .k-loc { grid-template-columns: 1fr; }
+  .k-fab { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 55; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.96); border-top: 1px solid var(--k-line); }
+  .k-fab .k-btn { width: 100%; }
+  .k-foot { padding-bottom: 90px; }
+}
+@media (max-width: 480px) { .k-wrap { padding: 0 18px; } .k-team { gap: 12px; } .k-pro { padding: 22px 10px; } .k-acts .k-btn { width: 100%; } }

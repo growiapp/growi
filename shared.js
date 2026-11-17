@@ -126,8 +126,22 @@
   // ── Tracking de clics a WhatsApp (Plausible) ──
   document.addEventListener('click', e => {
     const link = e.target.closest ? e.target.closest('a[href*="wa.me/"]') : null;
+    // Origen de la consulta: se agrega al final del mensaje un «(ref: página-sección)» sin datos personales, para saber de qué botón vino cada chat.
+    if (link) {
+      try {
+        const ref = (link.getAttribute('data-track') || '').replace(/-whatsapp$/, '');
+        const u = new URL(link.href);
+        const texto = u.searchParams.get('text');
+        if (ref && texto !== null && texto.indexOf('(ref: ') === -1) { u.searchParams.set('text', texto + '\n\n(ref: ' + ref + ')'); link.href = u.toString(); }
+      } catch (err) { /* si falla, el enlace original funciona igual */ }
+    }
     if (link && typeof window.plausible === 'function') {
       window.plausible('cta_whatsapp', { props: { location: link.getAttribute('data-track') || 'whatsapp' } });
+    }
+    // Enlaces internos marcados con data-track (home → producto, combo, demos): permiten medir el recorrido antes de la consulta
+    const interno = e.target.closest ? e.target.closest('a[data-track]:not([href*="wa.me/"])') : null;
+    if (interno && typeof window.plausible === 'function') {
+      window.plausible('cta_interno', { props: { location: interno.getAttribute('data-track') } });
     }
   });
 })();
