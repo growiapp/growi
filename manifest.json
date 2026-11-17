@@ -1,7 +1,7 @@
 {
   "name": "Growi",
   "short_name": "Growi",
-  "description": "Sistema de gestión para PyMEs",
+  "description": "Sistema de gestión, sitio web y automatizaciones para negocios",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0C0C0C",

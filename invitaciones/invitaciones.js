@@ -1,136 +1,182 @@
-/* Invitaciones digitales: demo interactiva y pestañas por grupo. Sin dependencias.
-   La demo no envía nada a ningún lado: todo ocurre en la página. */
+/* Invitaciones digitales: explorador de tres experiencias y demo de personalización por perfiles.
+   Sin dependencias. Todo es contenido ficticio y nada se envía: la «confirmación» de las demos solo muestra un aviso.
+   Las interacciones de cada experiencia (capítulos, tarjetas, filtro de agenda) son parte de la demostración, no funciones de un plan. */
 (function () {
   'use strict';
 
-  // ── Tipos de evento (datos ficticios). Cambian portada, mensaje, agenda e información útil ──
-  var EVENTS = {
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+  function reduced() { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  function behavior() { return reduced() ? 'auto' : 'smooth'; }
+  function btn(text, cls, disabled) { var b = el('button', cls || 'inv-btn', text); b.type = 'button'; if (disabled) b.disabled = true; return b; }
+
+  // ── Experiencias (datos ficticios) ──
+  var EXP = {
     casamiento: {
-      label: 'Casamiento', hint: 'Incluye la agenda del día, el dress code y datos de regalo opcionales.',
-      kicker: 'Nos casamos', n: ['Camila', 'y', 'Tomás'], date: 'Sábado 20 de marzo de 2027', to: 'Para: Familia de ejemplo',
-      intro: ['Sábado 20 de marzo de 2027', 'El día', 'Con mucho cariño, te esperamos para celebrar con nosotros.'],
-      times: [['12:00', 'Recepción', 'Lugar de ejemplo'], ['12:30', 'Ceremonia civil', 'En el jardín'], ['13:30', 'Almuerzo', 'Salón principal'], ['16:00', 'Fiesta', '¡A bailar!']],
-      map: 'Cómo llegar',
-      extra: [['Dress code', 'Elegante relajado', 'Arreglados y cómodos para disfrutar y bailar. A la noche refresca: traé un abrigo.']],
-      gift: 'Acá van los datos que los novios elijan mostrar. Solo los ve este grupo.',
-      rsvp: ['¿Nos acompañás?', 'Contanos si venís.', 'Sí, ahí estaré', 'No puedo']
+      evento: 'Casamiento de Camila y Tomás', label: 'casamiento', live: 'Casamiento: recorrido por capítulos.',
+      kicker: 'Nos casamos', n: ['Camila', 'y', 'Tomás'], date: 'Sábado 20 de marzo de 2027', to: 'Para: Familia de ejemplo'
     },
     cumple: {
-      label: 'Cumpleaños', hint: 'Incluye el plan de la noche y el tema del festejo, con un tono más informal.',
-      kicker: 'Estás invitado', n: ['Martina', 'cumple', '40'], date: 'Viernes 9 de abril de 2027', to: 'Para: Amigos de Martina',
-      intro: ['La fiesta', 'Cuarenta vueltas al sol', 'Vení a celebrarlas con música, buena comida y mucho baile.'],
-      times: [['21:00', 'Llegada', 'Terraza de ejemplo'], ['21:30', 'Brindis', 'Con todos'], ['22:00', 'Cena', 'Mesa larga'], ['23:30', 'Baile', 'Hasta que aguantemos']],
-      map: 'Cómo llegar',
-      extra: [['Tema de la noche', 'Naranja y verde', 'Sumate al color del festejo si querés. Es opcional.']],
-      gift: null,
-      rsvp: ['¿Venís a brindar?', 'Avisanos así preparamos todo.', 'Voy', 'No llego']
-    },
-    quince: {
-      label: 'Quinceañera', hint: 'Incluye el vals, la cena y el baile, con una portada más ornamental.',
-      kicker: 'Mis quince', n: ['Lucía', 'XV', ''], date: 'Sábado 13 de marzo de 2027', to: 'Para: Amigos del colegio',
-      intro: ['Sábado 13 de marzo de 2027', 'Mi fiesta', 'Una noche para bailar, reírnos y recordar para siempre.'],
-      times: [['20:30', 'Recepción', 'Salón de ejemplo'], ['21:00', 'Vals de honor', 'Pista principal'], ['22:00', 'Cena', 'Mesas del salón'], ['23:30', 'Baile', 'Hasta la madrugada']],
-      map: 'Cómo llegar',
-      extra: [['Dress code', 'De fiesta', 'Una noche para vestirse lindo. Los zapatos cómodos se agradecen en la pista.']],
-      gift: null,
-      rsvp: ['¿Me acompañás?', 'Confirmá para que no falte tu lugar.', 'Sí, voy', 'No puedo']
-    },
-    aniversario: {
-      label: 'Aniversario', hint: 'Incluye un recorrido de la tarde y un tono más íntimo.',
-      kicker: 'Celebramos', n: ['Marta', 'y', 'Raúl'], date: '6 de junio de 2027', to: 'Para: Familia de ejemplo',
-      intro: ['30 años juntos', 'Una tarde para brindar', 'Queremos compartir este día con quienes nos acompañaron en el camino.'],
-      times: [['13:00', 'Recibimiento', 'Quinta de ejemplo'], ['14:00', 'Almuerzo', 'Galería'], ['16:00', 'Brindis', 'Con todos'], ['16:30', 'Torta y sobremesa', 'En el jardín']],
-      map: 'Cómo llegar',
-      extra: [['Dress code', 'Elegante, sin corbata', 'Una tarde de familia y amigos. Venite como te guste.']],
-      gift: null,
-      rsvp: ['¿Brindás con nosotros?', 'Contanos si venís.', 'Sí, voy', 'No puedo']
-    },
-    bautismo: {
-      label: 'Bautismo', hint: 'Incluye la ceremonia y el festejo en familia, con información para los más chicos.',
-      kicker: 'Bautismo', n: ['Benjamín', '', ''], date: 'Sábado 24 de abril de 2027', to: 'Para: Familia de ejemplo',
-      intro: ['Sábado 24 de abril de 2027', 'Un día en familia', 'Queremos compartir con vos este momento tan especial.'],
-      times: [['11:00', 'Ceremonia', 'Parroquia de ejemplo'], ['12:30', 'Almuerzo en familia', 'Casa de ejemplo'], ['15:00', 'Torta', 'En el jardín']],
-      map: 'Cómo llegar',
-      extra: [['Para tener en cuenta', 'Ropa cómoda', 'Es una celebración en familia. Pensá en los más chicos y en el jardín.']],
-      gift: null,
-      rsvp: ['¿Nos acompañás?', 'Avisanos cuántos van a venir.', 'Sí, vamos', 'No podemos']
+      evento: 'Cumpleaños de Martina', label: 'cumpleaños', live: 'Cumpleaños: tarjetas que se deslizan.',
+      kicker: 'Estás invitado', n: ['Martina', 'cumple', '40'], date: 'Viernes 9 de abril de 2027', to: 'Para: Amigos de Martina'
     },
     empresa: {
-      label: 'Evento de empresa', hint: 'Incluye una agenda por bloques, la sede y la información práctica del día.',
-      kicker: 'Evento corporativo', n: ['Encuentro', 'anual', '2027'], date: 'Jueves 18 de marzo de 2027', to: 'Para: Equipo comercial',
-      intro: ['Agenda', 'Un día para alinear el año', 'Jornada de trabajo con presentaciones, talleres por equipos y un cierre para compartir.'],
-      times: [['09:00', 'Acreditación', 'Sede de ejemplo'], ['09:30', 'Apertura', 'Auditorio'], ['11:00', 'Talleres por equipos', 'Salas A y B'], ['12:30', 'Almuerzo', 'Patio'], ['15:00', 'Cierre y brindis', 'Terraza']],
-      map: 'Cómo llegar a la sede',
-      extra: [['Información útil', 'Casual de oficina', 'Traé algo de abrigo para la sala y tu credencial.']],
-      gift: null,
-      rsvp: ['Confirmá tu asistencia', 'Así organizamos acreditaciones y catering.', 'Confirmo', 'No puedo asistir']
+      evento: 'Encuentro anual 2027', label: 'evento de empresa', live: 'Evento de empresa: agenda por bloques.',
+      kicker: 'Evento corporativo', n: ['Encuentro', 'anual', '2027'], date: 'Jueves 18 de marzo de 2027', to: 'Para: Equipo comercial'
     }
   };
 
-  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
-
-  // Arma el contenido que se recorre dentro del celular
-  function buildScroll(e) {
-    var f = document.createDocumentFragment(), sec;
-    sec = el('section', 'inv-sec');
-    sec.appendChild(el('div', 'inv-to', e.to));
-    sec.appendChild(el('div', 'inv-eyebrow', e.intro[0]));
-    var h = el('h2', 'inv-h is-lg', e.intro[1]); h.setAttribute('data-inv-first', ''); sec.appendChild(h);
-    sec.appendChild(el('p', 'inv-p', e.intro[2]));
-    var ul = el('ul', 'inv-time'); ul.style.marginTop = '4cqw';
-    e.times.forEach(function (t) {
+  // ── Piezas compartidas ──
+  function agenda(rows) {
+    var ul = el('ul', 'inv-time');
+    rows.forEach(function (t) {
       var li = el('li'), d = el('div');
-      li.appendChild(el('time', '', t[0])); d.appendChild(el('b', '', t[1])); d.appendChild(el('span', '', t[2])); li.appendChild(d); ul.appendChild(li);
+      li.appendChild(el('time', '', t[0])); d.appendChild(el('b', '', t[1])); d.appendChild(el('span', '', t[2])); li.appendChild(d);
+      if (t[3]) li.setAttribute('data-part', t[3]);
+      ul.appendChild(li);
     });
-    sec.appendChild(ul); f.appendChild(sec);
-
-    sec = el('section', 'inv-sec');
-    sec.appendChild(el('div', 'inv-eyebrow', 'El lugar'));
-    var map = el('div', 'inv-map'); map.setAttribute('aria-hidden', 'true'); sec.appendChild(map);
-    var go = el('button', 'inv-btn', e.map + ' (demo)'); go.type = 'button'; go.disabled = true; sec.appendChild(go); f.appendChild(sec);
-
-    e.extra.forEach(function (x) {
-      sec = el('section', 'inv-sec');
-      sec.appendChild(el('div', 'inv-eyebrow', x[0])); sec.appendChild(el('h2', 'inv-h', x[1])); sec.appendChild(el('p', 'inv-p', x[2])); f.appendChild(sec);
-    });
-    if (e.gift) {
-      sec = el('section', 'inv-sec'); var g = el('div', 'inv-gift'); g.appendChild(el('b', '', 'Regalos')); g.appendChild(document.createTextNode(e.gift)); sec.appendChild(g); f.appendChild(sec);
-    }
-    sec = el('section', 'inv-sec');
-    sec.appendChild(el('div', 'inv-eyebrow', 'Confirmación'));
-    sec.appendChild(el('h2', 'inv-h', e.rsvp[0])); sec.appendChild(el('p', 'inv-p', e.rsvp[1]));
-    var pills = el('div', 'inv-pills'); pills.setAttribute('role', 'group'); pills.setAttribute('aria-label', 'Tu respuesta');
-    [e.rsvp[2], e.rsvp[3]].forEach(function (t) { var b = el('button', 'inv-pill', t); b.type = 'button'; b.setAttribute('aria-pressed', 'false'); pills.appendChild(b); });
-    sec.appendChild(pills);
-    var send = el('button', 'inv-btn is-fill', 'Enviar confirmación'); send.type = 'button'; send.setAttribute('data-inv-send', ''); sec.appendChild(send);
-    var st = el('p', 'inv-status'); st.setAttribute('role', 'status'); st.setAttribute('aria-live', 'polite'); st.setAttribute('data-inv-status', ''); sec.appendChild(st);
-    f.appendChild(sec);
-    f.appendChild(el('p', 'inv-note', 'Invitación de ejemplo. Datos ficticios.'));
+    return ul;
+  }
+  function mapBlock(go) {
+    var f = document.createDocumentFragment();
+    var m = el('div', 'inv-map'); m.setAttribute('aria-hidden', 'true'); f.appendChild(m);
+    f.appendChild(btn(go + ' (demo)', 'inv-btn', true));
     return f;
   }
+  // Confirmación simple: un botón que, en una invitación real, abre WhatsApp con quien organiza el evento y un mensaje
+  // listo para revisar y enviar. En esta demo solo se muestra el mensaje: no se abre ningún chat ni se envía nada.
+  function rsvp(title, text, e) {
+    var f = document.createDocumentFragment();
+    f.appendChild(el('h2', 'inv-h', title)); f.appendChild(el('p', 'inv-p', text));
+    if (!window.GrowiEnlaces) return f;
+    var b = btn('Confirmar asistencia', 'inv-btn is-fill'); b.setAttribute('data-inv-confirm', ''); b.setAttribute('aria-expanded', 'false'); f.appendChild(b);
+    var w = el('div', 'inv-wa'); w.hidden = true; w.setAttribute('data-inv-wa', ''); w.setAttribute('role', 'status'); w.setAttribute('aria-live', 'polite');
+    w.appendChild(el('p', 'inv-wa-title', 'Así se abre WhatsApp'));
+    w.appendChild(el('p', 'inv-wa-bubble', window.GrowiEnlaces.mensajeConfirmacion({ evento: e.evento, fecha: e.date })));
+    w.appendChild(el('p', 'inv-wa-note', 'Va dirigido a quien organiza el evento. Lo revisás, lo completás y lo enviás vos. Esta demo no envía nada.'));
+    f.appendChild(w);
+    return f;
+  }
+  function section(eyebrow, titleEl) { var s = el('section', 'inv-sec'); if (eyebrow) s.appendChild(el('div', 'inv-eyebrow', eyebrow)); if (titleEl) s.appendChild(titleEl); return s; }
+  function first(h) { h.setAttribute('data-inv-first', ''); return h; }
 
-  function applyEvent(inv, key) {
-    var e = EVENTS[key]; if (!e) return;
+  // ── Casamiento: recorrido editorial por capítulos ──
+  function renderCasamiento(inv, scroll, e) {
+    var chapters = ['El día', 'El lugar', 'Cómo venir', 'Tu respuesta'];
+    var nav = el('nav', 'inv-chapters'); nav.setAttribute('aria-label', 'Capítulos de la invitación');
+    var secs = [];
+    chapters.forEach(function (c, i) { var b = el('button', '', c); b.type = 'button'; b.addEventListener('click', function () { scroll.scrollTo({ top: Math.max(0, secs[i].offsetTop - nav.offsetHeight), behavior: behavior() }); }); nav.appendChild(b); });
+    scroll.appendChild(nav);
+
+    var s1 = section('Capítulo 1 · ' + e.date, first(el('h2', 'inv-h is-lg', 'El día')));
+    s1.insertBefore(el('div', 'inv-to', e.to), s1.firstChild);
+    s1.appendChild(el('p', 'inv-p', 'Con mucho cariño, te esperamos para celebrar con nosotros.'));
+    var ul = agenda([['17:00', 'Ceremonia', 'Capilla de ejemplo'], ['20:00', 'Cena', 'Salón de ejemplo'], ['22:30', 'Fiesta', '¡A bailar!']]); ul.style.marginTop = '4cqw'; s1.appendChild(ul);
+
+    var s2 = section('Capítulo 2 · El lugar', el('h2', 'inv-h', 'Dos lugares, un mismo día'));
+    s2.appendChild(el('p', 'inv-p', 'La ceremonia es en la capilla y la celebración sigue en el salón.'));
+    s2.appendChild(mapBlock('Cómo llegar'));
+
+    var s3 = section('Capítulo 3 · Cómo venir', el('h2', 'inv-h', 'Elegante relajado'));
+    s3.appendChild(el('p', 'inv-p', 'Arreglados y cómodos para disfrutar y bailar. A la noche refresca: traé un abrigo.'));
+
+    var s4 = section('Capítulo 4 · Tu respuesta'); s4.appendChild(rsvp('¿Nos acompañás?', 'Avisanos por WhatsApp si venís.', e));
+    secs = [s1, s2, s3, s4]; secs.forEach(function (s) { scroll.appendChild(s); });
+    scroll.appendChild(el('p', 'inv-note', 'Invitación de ejemplo. Datos ficticios.'));
+
+    var btns = nav.querySelectorAll('button'), ticking = false;
+    function mark() {
+      var y = scroll.scrollTop + nav.offsetHeight + 12, cur = 0;
+      secs.forEach(function (s, i) { if (s.offsetTop <= y) cur = i; });
+      if (scroll.scrollTop + scroll.clientHeight >= scroll.scrollHeight - 4) cur = secs.length - 1;
+      btns.forEach(function (b, i) { if (i === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+      ticking = false;
+    }
+    scroll.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(mark); } });
+    mark();
+  }
+
+  // ── Cumpleaños: tarjetas, una idea por pantalla ──
+  function renderCumple(inv, scroll, e) {
+    scroll.classList.add('is-deck');
+    var cards = [];
+    function card(label, build) { var c = el('section', 'inv-card'); c.setAttribute('role', 'group'); c.setAttribute('aria-roledescription', 'tarjeta'); c.setAttribute('aria-label', label); build(c); cards.push(c); scroll.appendChild(c); }
+    card('Cuándo', function (c) {
+      c.appendChild(el('div', 'inv-to', e.to)); c.appendChild(el('div', 'inv-eyebrow', 'La fiesta'));
+      c.appendChild(first(el('h2', 'inv-h is-lg inv-big', 'Viernes 9 de abril'))); c.appendChild(el('p', 'inv-p inv-time-big', 'a las 21:00'));
+      c.appendChild(el('p', 'inv-p', 'Cuarenta vueltas al sol. Vení a celebrarlas con música, buena comida y mucho baile.'));
+    });
+    card('Dónde', function (c) { c.appendChild(el('div', 'inv-eyebrow', 'El lugar')); c.appendChild(el('h2', 'inv-h', 'Terraza de ejemplo')); c.appendChild(el('p', 'inv-p', 'Calle de Ejemplo 800, Ciudad de Ejemplo')); c.appendChild(mapBlock('Cómo llegar')); });
+    card('El plan', function (c) { c.appendChild(el('div', 'inv-eyebrow', 'El plan')); c.appendChild(el('h2', 'inv-h', 'La noche')); c.appendChild(agenda([['21:00', 'Llegada', 'Terraza'], ['21:30', 'Brindis', 'Con todos'], ['22:00', 'Cena', 'Mesa larga'], ['23:30', 'Baile', 'Hasta que aguantemos']])); });
+    card('El tema', function (c) { c.appendChild(el('div', 'inv-eyebrow', 'Tema de la noche')); c.appendChild(el('h2', 'inv-h', 'Naranja y verde')); c.appendChild(el('p', 'inv-p', 'Sumate al color del festejo si querés. Es opcional.')); });
+    card('Tu respuesta', function (c) { c.appendChild(el('div', 'inv-eyebrow', 'Respuesta')); c.appendChild(rsvp('¿Venís a brindar?', 'Avisanos por WhatsApp así preparamos todo.', e)); });
+
+    var ctr = el('div', 'inv-controls');
+    var prev = el('button', 'inv-nav', '‹'); prev.type = 'button'; prev.setAttribute('aria-label', 'Tarjeta anterior');
+    var next = el('button', 'inv-nav', '›'); next.type = 'button'; next.setAttribute('aria-label', 'Tarjeta siguiente');
+    var count = el('span', 'inv-count'); count.setAttribute('role', 'status'); count.setAttribute('aria-live', 'polite');
+    ctr.appendChild(prev); ctr.appendChild(count); ctr.appendChild(next); inv.appendChild(ctr);
+    function idx() { return Math.round(scroll.scrollLeft / Math.max(1, scroll.clientWidth)); }
+    function upd() { var i = idx(); count.textContent = (i + 1) + ' de ' + cards.length; prev.disabled = i === 0; next.disabled = i === cards.length - 1; }
+    function go(d) { scroll.scrollTo({ left: (idx() + d) * scroll.clientWidth, behavior: behavior() }); }
+    prev.addEventListener('click', function () { go(-1); }); next.addEventListener('click', function () { go(1); });
+    var t; scroll.addEventListener('scroll', function () { clearTimeout(t); t = setTimeout(upd, 60); });
+    upd();
+  }
+
+  // ── Evento de empresa: agenda por bloques, con filtro por franja ──
+  function renderEmpresa(inv, scroll, e) {
+    var s1 = section('Agenda', first(el('h2', 'inv-h is-lg', 'Un día para alinear el año')));
+    s1.insertBefore(el('div', 'inv-to', e.to), s1.firstChild);
+    s1.appendChild(el('p', 'inv-p', 'Jornada de trabajo con presentaciones, talleres por equipos y un cierre para compartir.'));
+    var f = el('div', 'inv-filter'); f.setAttribute('role', 'group'); f.setAttribute('aria-label', 'Filtrar la agenda');
+    var ul = agenda([['09:00', 'Acreditación', 'Hall de entrada', 'm'], ['09:30', 'Apertura', 'Auditorio', 'm'], ['11:00', 'Talleres por equipos', 'Salas A y B', 'm'], ['12:30', 'Almuerzo', 'Patio', 'm'], ['14:30', 'Mesa de trabajo', 'Salas A y B', 't'], ['16:30', 'Cierre y brindis', 'Terraza', 't']]);
+    [['Todo el día', ''], ['Mañana', 'm'], ['Tarde', 't']].forEach(function (o, i) {
+      var b = el('button', '', o[0]); b.type = 'button'; b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        f.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        ul.querySelectorAll('li').forEach(function (li) { li.hidden = !!o[1] && li.getAttribute('data-part') !== o[1]; });
+      });
+      f.appendChild(b);
+    });
+    s1.appendChild(f); s1.appendChild(ul); scroll.appendChild(s1);
+
+    var s2 = section('La sede', el('h2', 'inv-h', 'Centro de eventos de ejemplo'));
+    s2.appendChild(el('p', 'inv-p', 'Av. de Ejemplo 1500, Ciudad de Ejemplo')); s2.appendChild(mapBlock('Cómo llegar a la sede')); scroll.appendChild(s2);
+
+    var s3 = section('Antes de venir', el('h2', 'inv-h', 'Información práctica'));
+    s3.appendChild(el('p', 'inv-p', 'Llevá tu credencial y algo de abrigo para la sala. Hay estacionamiento en la sede.')); scroll.appendChild(s3);
+
+    var s4 = section('Confirmación'); s4.appendChild(rsvp('Confirmá tu asistencia', 'Así organizamos acreditaciones y catering.', e)); scroll.appendChild(s4);
+    scroll.appendChild(el('p', 'inv-note', 'Invitación de ejemplo. Datos ficticios.'));
+  }
+
+  var RENDER = { casamiento: renderCasamiento, cumple: renderCumple, empresa: renderEmpresa };
+
+  function applyExperience(inv, key) {
+    var e = EXP[key]; if (!e) return;
+    var scroll = inv.querySelector('[data-inv-scroll]');
     inv.setAttribute('data-ev', key);
     function set(k, v) { var x = inv.querySelector('[data-slot="' + k + '"]'); if (x) x.textContent = v; }
     set('kicker', e.kicker); set('n1', e.n[0]); set('n2', e.n[1]); set('n3', e.n[2]); set('date', e.date);
     inv.querySelectorAll('[data-slot="n2"], [data-slot="n3"]').forEach(function (x) { x.hidden = !x.textContent; });
-    var sc = inv.querySelector('[data-inv-scroll]');
-    sc.textContent = ''; sc.appendChild(buildScroll(e));
+    var old = inv.querySelector('.inv-controls'); if (old) old.parentNode.removeChild(old);
+    scroll.className = 'inv-scroll'; scroll.scrollLeft = 0; scroll.scrollTop = 0; scroll.textContent = '';
+    RENDER[key](inv, scroll, e);
   }
 
-  // ── Demo de invitación ──
+  // ── Explorador ──
   document.querySelectorAll('[data-inv-demo]').forEach(function (inv) {
     var open = inv.querySelector('[data-inv-open]');
     var scroll = inv.querySelector('[data-inv-scroll]');
     var cover = inv.querySelector('.inv-cover');
     var current = inv.getAttribute('data-ev') || 'casamiento';
-    applyEvent(inv, current);
+    applyExperience(inv, current);
 
     function setOpen(on) {
       inv.classList.toggle('is-open', on);
       if (on) { scroll.removeAttribute('inert'); scroll.removeAttribute('aria-hidden'); cover.setAttribute('inert', ''); }
-      else { scroll.setAttribute('inert', ''); scroll.setAttribute('aria-hidden', 'true'); cover.removeAttribute('inert'); scroll.scrollTop = 0; }
+      else { scroll.setAttribute('inert', ''); scroll.setAttribute('aria-hidden', 'true'); cover.removeAttribute('inert'); scroll.scrollTop = 0; scroll.scrollLeft = 0; }
+      var c = inv.querySelector('.inv-controls'); if (c) { if (on) c.removeAttribute('inert'); else c.setAttribute('inert', ''); c.hidden = !on; }
     }
     setOpen(false);
 
@@ -140,63 +186,90 @@
       if (heading) { heading.setAttribute('tabindex', '-1'); setTimeout(function () { heading.focus({ preventScroll: true }); }, 700); }
     });
 
-    // Los botones de la confirmación se crean con cada evento: se delega el clic
-    scroll.addEventListener('click', function (ev) {
-      var p = ev.target.closest('.inv-pill');
-      if (p) { p.parentElement.querySelectorAll('.inv-pill').forEach(function (o) { o.setAttribute('aria-pressed', o === p ? 'true' : 'false'); }); return; }
-      if (ev.target.closest('[data-inv-send]')) { var s = scroll.querySelector('[data-inv-status]'); if (s) s.textContent = 'Esto es una demo: no se envió nada.'; }
+    // El botón de confirmación se crea con cada experiencia: se delega el clic. Muestra u oculta la vista previa del mensaje.
+    inv.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-inv-confirm]'); if (!b) return;
+      var w = b.parentElement.querySelector('[data-inv-wa]'); if (!w) return;
+      w.hidden = !w.hidden; b.setAttribute('aria-expanded', w.hidden ? 'false' : 'true');
+      if (!w.hidden) setTimeout(function () { w.scrollIntoView({ block: 'nearest', behavior: behavior() }); }, 50);
     });
 
     var reset = document.querySelector('[data-inv-reset]');
-    if (reset) reset.addEventListener('click', function () { applyEvent(inv, current); setOpen(false); open.focus(); });
+    if (reset) reset.addEventListener('click', function () { applyExperience(inv, current); setOpen(false); open.focus(); });
 
     var picker = document.querySelector('[data-event-picker]');
-    var hint = document.querySelector('[data-event-hint]');
     var live = document.querySelector('[data-event-live]');
-    function choose(key, anim) {
+    function choose(key) {
       current = key;
       if (picker) picker.querySelectorAll('[data-event]').forEach(function (o) { o.setAttribute('aria-pressed', o.getAttribute('data-event') === key ? 'true' : 'false'); });
-      applyEvent(inv, key); setOpen(false);
-      if (hint) hint.textContent = EVENTS[key].hint;
-      if (live) live.textContent = 'Ejemplo de invitación: ' + EVENTS[key].label + '.';
+      applyExperience(inv, key); setOpen(false);
+      if (live) live.textContent = EXP[key].live;
+      // El enlace de presupuesto de la demo lleva el contexto de lo que se vio, en palabras naturales
       var wa = document.querySelector('[data-demo-wa]');
-      if (wa) wa.href = 'https://wa.me/5491170593877?text=' + encodeURIComponent('Hola Growi, quiero una invitación digital para mi evento.\nTipo de evento: ' + EVENTS[key].label + '\nFecha del evento:\nCiudad:\nCantidad aproximada de invitados:\n\nRef: inv-demo\nProducto: invitaciones');
-      if (anim) { var scr = inv.parentElement; scr.classList.remove('is-swap'); void scr.offsetWidth; scr.classList.add('is-swap'); }
+      if (wa) wa.href = 'https://wa.me/5491170593877?text=' + encodeURIComponent('Hola Growi, vi la demo de invitación de ' + EXP[key].label + ' y quiero consultar por una para mi evento.\n\nFecha del evento:\nCiudad:');
+      var scr = inv.parentElement; scr.classList.remove('is-swap'); void scr.offsetWidth; scr.classList.add('is-swap');
     }
-    if (picker) picker.querySelectorAll('[data-event]').forEach(function (b) { b.addEventListener('click', function () { choose(b.getAttribute('data-event'), true); }); });
-    // Los accesos del hero eligen el evento y llevan a la demo
-    document.querySelectorAll('[data-goto-event]').forEach(function (a) {
-      a.addEventListener('click', function (ev) {
-        choose(a.getAttribute('data-goto-event'), false);
-        // En pantallas chicas el celular queda debajo de los botones: se lleva la vista directo a él
-        if (window.matchMedia('(max-width: 960px)').matches) {
-          ev.preventDefault();
-          var st = document.querySelector('.demo-stage');
-          if (st) st.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
-        }
-      });
-    });
+    if (picker) picker.querySelectorAll('[data-event]').forEach(function (b) { b.addEventListener('click', function () { choose(b.getAttribute('data-event')); }); });
   });
 
-  // ── Pestañas con flechas, Inicio y Fin (grupos de invitados) ──
-  document.querySelectorAll('[data-tabs]').forEach(function (root) {
-    var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
-    var panels = Array.prototype.slice.call(root.querySelectorAll('[role="tabpanel"]'));
-    function select(i, focus) {
-      tabs.forEach(function (t, j) { t.setAttribute('aria-selected', j === i ? 'true' : 'false'); t.tabIndex = j === i ? 0 : -1; });
-      panels.forEach(function (p, j) { p.hidden = j !== i; });
-      if (focus) tabs[i].focus();
+  // ── Personalización: una invitación, tres perfiles ficticios ──
+  var PROFILES = {
+    cercana: {
+      label: 'Familia cercana', title: 'Ceremonia, cena y fiesta',
+      intro: 'Los esperamos desde la ceremonia hasta el último baile.',
+      agenda: [['17:00', 'Ceremonia', 'Capilla de ejemplo'], ['20:00', 'Cena', 'Salón de ejemplo'], ['22:30', 'Fiesta', 'Salón de ejemplo']],
+      places: [['Capilla de ejemplo', 'Calle de Ejemplo 100'], ['Salón de ejemplo', 'Av. de Ejemplo 500']],
+      info: 'Dress code elegante. Si querés hacernos un regalo, acá van los datos.',
+      how: 'Llegá 20 minutos antes de la ceremonia. Hay lugar para estacionar sobre Calle de Ejemplo.'
+    },
+    amigos: {
+      label: 'Amigos de la pareja', title: 'Cena y fiesta',
+      intro: 'Nos encantaría compartir la noche con ustedes.',
+      agenda: [['20:00', 'Cena', 'Salón de ejemplo'], ['22:30', 'Fiesta', 'Salón de ejemplo']],
+      places: [['Salón de ejemplo', 'Av. de Ejemplo 500']],
+      info: 'Dress code elegante relajado. Hay un micro que sale del centro a las 19:15, desde un punto de encuentro de ejemplo.',
+      how: 'El salón tiene estacionamiento propio, con acceso por la avenida.'
+    },
+    fiesta: {
+      label: 'Invitados solo a la fiesta', title: 'La fiesta',
+      intro: 'Vení a bailar con nosotros.',
+      agenda: [['22:30', 'Fiesta', 'Salón de ejemplo']],
+      places: [['Salón de ejemplo, entrada lateral', 'Av. de Ejemplo 500']],
+      info: 'Ropa cómoda para bailar. El brindis es a las 23:00.',
+      how: 'Ingresás por el portón lateral, sobre Calle Muestra. No hace falta pasar por el salón principal.'
     }
-    tabs.forEach(function (t, i) {
-      t.addEventListener('click', function () { select(i, false); });
-      t.addEventListener('keydown', function (e) {
-        var n = tabs.length, k = e.key;
-        if (k === 'ArrowDown' || k === 'ArrowRight') { e.preventDefault(); select((i + 1) % n, true); }
-        else if (k === 'ArrowUp' || k === 'ArrowLeft') { e.preventDefault(); select((i - 1 + n) % n, true); }
-        else if (k === 'Home') { e.preventDefault(); select(0, true); }
-        else if (k === 'End') { e.preventDefault(); select(n - 1, true); }
+  };
+  document.querySelectorAll('[data-profiles]').forEach(function (root) {
+    var scroll = root.querySelector('[data-profile-scroll]');
+    var live = root.querySelector('[data-profile-live]');
+    var last = null;
+    function block(k, label) { var d = el('div', 'inv-block'); d.setAttribute('data-k', k); d.appendChild(el('h3', 'inv-mini', label)); return d; }
+    function render(key, announce) {
+      var pr = PROFILES[key], cur = {}, f = document.createDocumentFragment();
+      var head = el('section', 'inv-sec');
+      head.appendChild(el('div', 'inv-to', 'Vista de: ' + pr.label)); head.appendChild(el('h2', 'inv-h', pr.title)); head.appendChild(el('p', 'inv-p', pr.intro));
+      var a = block('agenda', 'Agenda'); a.appendChild(agenda(pr.agenda)); cur.agenda = a;
+      var pl = block('lugares', pr.places.length > 1 ? 'Lugares' : 'Lugar');
+      pr.places.forEach(function (p) { var d = el('div', 'inv-place'); d.appendChild(el('b', '', p[0])); d.appendChild(el('span', '', p[1])); pl.appendChild(d); });
+      var m = el('div', 'inv-map'); m.setAttribute('aria-hidden', 'true'); pl.appendChild(m); cur.lugares = pl;
+      var inf = block('info', 'Para tener en cuenta'); inf.appendChild(el('p', 'inv-p', pr.info)); cur.info = inf;
+      var how = block('como', 'Cómo llegar'); how.appendChild(el('p', 'inv-p', pr.how)); cur.como = how;
+      var names = { agenda: 'la agenda', lugares: 'los lugares', info: 'la información', como: 'cómo llegar' }, changed = [];
+      ['agenda', 'lugares', 'info', 'como'].forEach(function (k) {
+        if (last && last[k] !== cur[k].textContent) { cur[k].classList.add('is-changed'); changed.push(names[k]); }
+        head.appendChild(cur[k]);
+      });
+      f.appendChild(head); f.appendChild(el('p', 'inv-note', 'Perfil ficticio de ejemplo.'));
+      scroll.textContent = ''; scroll.appendChild(f); scroll.scrollTop = 0;
+      last = {}; Object.keys(cur).forEach(function (k) { last[k] = cur[k].textContent; });
+      if (announce && live) live.textContent = 'Vista de: ' + pr.label + (changed.length ? '. Cambió ' + changed.join(', ') + '.' : '.');
+    }
+    render('cercana', false);
+    root.querySelectorAll('[data-profile]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        root.querySelectorAll('[data-profile]').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+        render(b.getAttribute('data-profile'), true);
       });
     });
-    select(0, false);
   });
 })();

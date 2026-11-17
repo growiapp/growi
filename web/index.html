@@ -61,7 +61,7 @@
   "@type": "Service",
   "name": "GrowiWeb",
   "serviceType": "Desarrollo Web",
-  "description": "Sitios de una página y sitios completos para comercios y profesionales argentinos. Precio fijo, plazo definido, sin sorpresas.",
+  "description": "Sitios de una página y sitios completos para comercios y profesionales argentinos. Precio fijo, fecha estimada de entrega en el presupuesto, sin sorpresas.",
   "url": "https://growi.ar/web/",
   "areaServed": {
     "@type": "Country",
@@ -76,35 +76,60 @@
         "name": "Landing Express",
         "price": "200",
         "priceCurrency": "USD",
-        "description": "Sitio de una sola página, hasta 4 secciones, plantilla adaptada a tu rubro, 1 ronda de revisiones. Entrega en 3 a 10 días hábiles."
+        "description": "Sitio de una sola página, hasta 4 secciones, plantilla adaptada a tu rubro, 1 ronda de revisiones. Fecha estimada de entrega en el presupuesto.",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "price": "200",
+          "priceCurrency": "USD"
+        }
       },
       {
         "@type": "Offer",
         "name": "Landing Pro",
         "price": "299",
         "priceCurrency": "USD",
-        "description": "Sitio de una sola página, hasta 6 secciones, diseño adaptado a tu marca, redacción básica incluida, 2 rondas de revisiones. Entrega en 3 a 10 días hábiles."
+        "description": "Sitio de una sola página, hasta 6 secciones, diseño adaptado a tu marca, redacción básica incluida, 2 rondas de revisiones. Fecha estimada de entrega en el presupuesto.",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "price": "299",
+          "priceCurrency": "USD"
+        }
       },
       {
         "@type": "Offer",
         "name": "Landing Performance",
         "price": "449",
         "priceCurrency": "USD",
-        "description": "Sitio de una sola página, hasta 8 secciones, diseño 100% a medida, textos pensados para vender, medición de visitas y anuncios. Entrega en 3 a 10 días hábiles."
+        "description": "Sitio de una sola página, hasta 8 secciones, diseño 100% a medida, textos pensados para vender, medición de visitas y anuncios. Fecha estimada de entrega en el presupuesto.",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "price": "449",
+          "priceCurrency": "USD"
+        }
       },
       {
         "@type": "Offer",
         "name": "Sitio institucional Base",
         "price": "550",
         "priceCurrency": "USD",
-        "description": "Sitio con varias secciones: home, servicios, contacto y mapa. Diseño a medida y WhatsApp integrado. Entrega en 3 a 10 días hábiles."
+        "description": "Sitio con varias secciones: home, servicios, contacto y mapa. Diseño a medida y WhatsApp integrado. Fecha estimada de entrega en el presupuesto.",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "price": "550",
+          "priceCurrency": "USD"
+        }
       },
       {
         "@type": "Offer",
         "name": "Sitio institucional Con turnos",
         "price": "729",
         "priceCurrency": "USD",
-        "description": "Todo lo del plan Base más formulario de solicitud de turno y conexión con tu sistema de turnos. Entrega en 12 a 18 días hábiles."
+        "description": "Todo lo del plan Base más formulario de solicitud de turno y conexión con tu sistema de turnos. Fecha estimada de entrega en el presupuesto.",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "price": "729",
+          "priceCurrency": "USD"
+        }
       }
     ]
   },
@@ -223,30 +248,28 @@
 
 <nav id="mainNav" aria-label="Principal">
   <div class="nav-inner">
-    <a href="/" class="nav-brand" aria-label="Growi inicio">
-      <span class="nav-logo-text">Growi<span class="dot">.</span></span>
-    </a>
+    <a href="/" class="nav-brand" aria-label="Growi: inicio">Growi<span class="dot">.</span></a>
     <ul class="nav-links" role="list">
       <li><a href="/app/">GrowiApp</a></li>
-      <li><a href="/web/" class="active" aria-current="page">GrowiWeb</a></li>
+      <li><a href="/web/">GrowiWeb</a></li>
       <li><a href="/flow/">GrowiFlow</a></li>
     </ul>
-    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiWeb.%0A%0ARef%3A%20web-nav%0AProducto%3A%20web" class="nav-wa" target="_blank" rel="noopener" aria-label="WhatsApp" data-track="web-nav-whatsapp">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      <span>WhatsApp</span>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiWeb." class="nav-wa" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-track="web-nav-whatsapp">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span class="wa-label">WhatsApp</span>
     </a>
-    <button class="nav-hamburger" id="menuBtn" aria-label="Menú" aria-expanded="false">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="14" x2="17" y2="14"/></svg>
+    <button class="nav-hamburger" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
     </button>
   </div>
 </nav>
 
-<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación" aria-modal="true">
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación" aria-modal="true" aria-hidden="true">
   <div class="mobile-menu-card">
     <a href="/app/">GrowiApp</a>
     <a href="/web/">GrowiWeb</a>
     <a href="/flow/">GrowiFlow</a>
-    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiWeb.%0A%0ARef%3A%20web-mobile-menu%0AProducto%3A%20web" target="_blank" rel="noopener" class="mobile-menu-cta" data-track="web-mobile-menu-whatsapp">Hablar por WhatsApp</a>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiWeb." class="mobile-wa mobile-menu-cta" target="_blank" rel="noopener noreferrer" data-track="web-mobile-menu-whatsapp">Hablar por WhatsApp</a>
   </div>
 </div>
 
@@ -256,34 +279,21 @@
   <div class="container wh-grid">
     <div>
       <span class="eyebrow">Diseño y desarrollo web</span>
-      <h1>Sitios web que presentan tu negocio y <span class="accent">generan consultas.</span></h1>
+      <h1>Sitios web que presentan tu negocio y <span class="accent">facilitan las consultas.</span></h1>
       <p class="lead">Diseñamos y desarrollamos landing pages y sitios institucionales. Los dejamos publicados: vos no tocás nada técnico, y sabés cuánto sale antes de empezar.</p>
       <div class="actions">
-        <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20un%20presupuesto%20para%20un%20sitio%20web.%0AMi%20rubro%3A%0AQu%C3%A9%20quer%C3%A9s%20que%20haga%20quien%20entra%20%28llamar%2C%20reservar%2C%20comprar%29%3A%0ATengo%20dominio%3A%20s%C3%AD%20%2F%20no%0ATengo%20logo%20y%20fotos%3A%20s%C3%AD%20%2F%20no%0A%0ARef%3A%20web-hero%0AProducto%3A%20web" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer" data-track="web-hero-whatsapp">Pedir presupuesto</a>
-        <a href="#trabajos" class="btn btn-outline btn-lg">Ver trabajos</a>
+        <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20un%20presupuesto%20para%20un%20sitio%20web.%0A%0AMi%20rubro%3A%0AQu%C3%A9%20quiero%20que%20haga%20quien%20entra%20%28llamar%2C%20reservar%2C%20comprar%29%3A" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer" data-track="web-hero-whatsapp">Pedir presupuesto</a>
+        <a href="#trabajos" class="btn btn-outline btn-lg">Ver ejemplos</a>
       </div>
       <p class="hero-note">Precio y alcance por escrito antes de empezar. Dominio y alojamiento los pagás vos aparte.</p>
       <p class="hero-also">¿Buscás algo para un evento? <a href="#invitaciones" class="text-link">Diseñamos invitaciones digitales</a></p>
     </div>
     <div class="wh-visual" aria-hidden="true">
-      <div class="mock-browser" aria-hidden="true">
-          <div class="mb-bar"><i></i><i></i><i></i><span class="mb-url">centro-ejemplo.com.ar</span></div>
-          <div class="mb-page">
-            <div class="mb-head"><span class="mb-logo">Centro Médico Ejemplo</span><span class="mb-nav"><span></span><span></span><span></span></span></div>
-            <div class="mb-hero">
-              <div><h4>Cuidamos tu salud, <em>cerca tuyo.</em></h4><p>Especialidades para toda la familia, con turnos por WhatsApp.</p><span class="mb-btn">Pedir turno por WhatsApp</span></div>
-              <div class="mb-photo"></div>
-            </div>
-            <div class="mb-chips"><span>Clínica médica</span><span>Pediatría</span><span>Dermatología</span></div>
-            <div class="mb-pros"><div class="mb-pro"><b></b><span></span><span></span></div><div class="mb-pro"><b></b><span></span><span></span></div><div class="mb-pro"><b></b><span></span><span></span></div><div class="mb-pro"><b></b><span></span><span></span></div></div>
-          </div>
-        </div>
-      <div class="phone" aria-hidden="true"><div class="phone-screen"><div class="ms">
-        <div class="ms-bar"><b>Centro Médico Ejemplo</b><span></span></div>
-        <div class="ms-hero"><h5>Cuidamos tu salud, <em>cerca tuyo.</em></h5><span class="ms-btn">Pedir turno</span></div>
-        <div class="ms-photo"></div>
-        <div class="ms-list"><i></i><i></i><i></i></div>
-      </div></div></div>
+      <div class="shot">
+        <div class="shot-bar"><i></i><i></i><i></i><span>Demo de Growi · sitio institucional</span></div>
+        <img src="/web/demos/kinesiologia/captura-escritorio.webp" width="1100" height="602" alt="" decoding="async">
+      </div>
+      <div class="phone"><div class="phone-screen"><img src="/web/demos/kinesiologia/captura-movil.webp" width="560" height="1212" alt="" decoding="async"></div></div>
     </div>
   </div>
 </section>
@@ -326,7 +336,7 @@
         <div class="sol-actions"><a href="/invitaciones/" class="btn btn-primary" data-track="web-soluciones-invitaciones">Conocer invitaciones</a></div>
       </div>
     </article>
-    <p class="sol-help">¿No sabés cuál necesitás? <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20no%20s%C3%A9%20qu%C3%A9%20necesito%20y%20quiero%20que%20me%20recomienden.%0AMi%20rubro%20o%20evento%3A%0AQu%C3%A9%20quiero%20lograr%3A%0A%0ARef%3A%20web-soluciones%0AProducto%3A%20web" class="text-link" target="_blank" rel="noopener noreferrer" data-track="web-soluciones-whatsapp">Contanos tu proyecto por WhatsApp</a> y te recomendamos.</p>
+    <p class="sol-help">¿No sabés cuál necesitás? <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20no%20s%C3%A9%20qu%C3%A9%20necesito%20y%20quiero%20que%20me%20recomienden.%0AMi%20rubro%20o%20evento%3A%0AQu%C3%A9%20quiero%20lograr%3A" class="text-link" target="_blank" rel="noopener noreferrer" data-track="web-soluciones-whatsapp">Contanos tu proyecto por WhatsApp</a> y te recomendamos.</p>
   </div>
 </section>
 
@@ -334,64 +344,49 @@
 <section class="section" id="trabajos">
   <div class="container">
     <div class="section-header center">
-      <h2 class="section-title reveal">Trabajos.</h2>
-      <p class="section-lead">Ejemplos para ver cómo queda un proyecto.</p>
+      <h2 class="section-title reveal">Ejemplos de sitios.</h2>
+      <p class="section-lead">Demos y conceptos para ver cómo queda un proyecto.</p>
     </div>
     <ul class="kind-line" aria-label="Cómo leer las etiquetas">
-      <li><span class="kind-badge is-demo">Demostración</span> Ejemplo completo con datos ficticios.</li>
-      <li><span class="kind-badge is-concept">Concepto</span> Propuesta visual, no publicada.</li>
+      <li><span class="kind-badge is-demo">Demo funcional</span> Un sitio de ejemplo que podés recorrer, con datos ficticios.</li>
+      <li><span class="kind-badge is-concept">Concepto</span> Propuesta visual, sin sitio publicado.</li>
     </ul>
     <div class="work-grid">
 
       <article class="work-card is-half reveal">
-        <div class="work-visual is-tall">
-          <div class="mock-browser" aria-hidden="true">
-          <div class="mb-bar"><i></i><i></i><i></i><span class="mb-url">centro-ejemplo.com.ar</span></div>
-          <div class="mb-page">
-            <div class="mb-head"><span class="mb-logo">Centro Médico Ejemplo</span><span class="mb-nav"><span></span><span></span><span></span></span></div>
-            <div class="mb-hero">
-              <div><h4>Cuidamos tu salud, <em>cerca tuyo.</em></h4><p>Especialidades para toda la familia, con turnos por WhatsApp.</p><span class="mb-btn">Pedir turno por WhatsApp</span></div>
-              <div class="mb-photo"></div>
-            </div>
-            <div class="mb-chips"><span>Clínica médica</span><span>Pediatría</span><span>Dermatología</span></div>
-            <div class="mb-pros"><div class="mb-pro"><b></b><span></span><span></span></div><div class="mb-pro"><b></b><span></span><span></span></div><div class="mb-pro"><b></b><span></span><span></span></div><div class="mb-pro"><b></b><span></span><span></span></div></div>
-          </div>
-        </div>
-        </div>
+        <a class="work-shot" href="/web/demos/kinesiologia/" data-track="web-trabajo-institucional-demo" aria-label="Abrir la demo del consultorio de kinesiología">
+          <span class="shot-bar"><i></i><i></i><i></i><span>Demo de Growi · alameda-kinesiologia (ejemplo)</span></span>
+          <img src="/web/demos/kinesiologia/captura-escritorio.webp" width="1100" height="602" loading="lazy" decoding="async" alt="Inicio del sitio de ejemplo de un consultorio de kinesiología: titular, botón para pedir turno por WhatsApp y horarios de atención.">
+        </a>
         <div class="work-body">
-          <div class="work-tags"><span class="work-kind">Sitio institucional</span><span class="kind-badge is-demo">Demostración</span></div>
-          <h3>Un centro de salud con turnos por WhatsApp.</h3>
-          <p class="demuestra"><b>Qué demuestra:</b> cómo presentar especialidades, profesionales y horarios en un sitio completo.</p>
+          <div class="work-tags"><span class="work-kind">Sitio institucional</span><span class="kind-badge is-demo">Demo funcional</span></div>
+          <h3>Un consultorio de kinesiología.</h3>
+          <p class="demuestra"><b>Qué mirar:</b> el pedido de turno a la vista en cada pantalla, los horarios y el equipo, y cómo se recorre en el celular.</p>
           <div class="work-actions">
-            <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20vi%20el%20ejemplo%20de%20sitio%20institucional%20y%20quiero%20algo%20as%C3%AD%20para%20mi%20negocio.%0AMi%20rubro%3A%0AQu%C3%A9%20quer%C3%A9s%20que%20haga%20quien%20entra%20%28llamar%2C%20reservar%2C%20comprar%29%3A%0ATengo%20dominio%3A%20s%C3%AD%20%2F%20no%0ATengo%20logo%20y%20fotos%3A%20s%C3%AD%20%2F%20no%0A%0ARef%3A%20web-trabajo-institucional%0AProducto%3A%20web" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track="web-trabajo-institucional-whatsapp">Quiero algo así</a>
-            <a href="#institucional-planes" class="text-link">Ver planes</a>
+            <a href="/web/demos/kinesiologia/" class="btn btn-primary" data-track="web-trabajo-institucional-abrir">Abrir la demo</a>
+            <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20vi%20la%20demo%20del%20consultorio%20de%20kinesiolog%C3%ADa%20y%20quiero%20consultar%20por%20un%20sitio%20as%C3%AD%20para%20mi%20negocio.%0A%0AMi%20rubro%3A%0AQu%C3%A9%20quiero%20que%20haga%20quien%20entra%20%28llamar%2C%20reservar%2C%20comprar%29%3A" class="text-link" target="_blank" rel="noopener noreferrer" data-track="web-trabajo-institucional-whatsapp">Consultar por algo así</a>
           </div>
         </div>
       </article>
 
       <article class="work-card is-half reveal">
-        <div class="work-visual is-tall is-warm">
-          <div class="mock-browser" aria-hidden="true">
-          <div class="mb-bar"><i></i><i></i><i></i><span class="mb-url">taller-ejemplo.com.ar</span></div>
-          <div class="mb-land">
-            <div class="mb-head"><span class="mb-logo">Taller Ejemplo</span><span class="mb-nav"><span></span><span></span><span></span></span></div>
-            <div class="ml-hero"><h4>Aprendé cerámica <em>con las manos.</em></h4><p>Clases para principiantes, en grupos chicos. Cupos limitados por mes.</p><span class="mb-btn">Inscribirme por WhatsApp</span></div>
-            <div class="ml-cols"><div></div><div></div><div></div></div>
-          </div>
-        </div>
-        </div>
+        <a class="work-shot" href="/web/demos/ceramica/" data-track="web-trabajo-landing-concepto" aria-label="Ver el concepto de landing page de un taller de cerámica">
+          <span class="shot-bar"><i></i><i></i><i></i><span>Concepto de Growi · barro-y-fuego (ejemplo)</span></span>
+          <img src="/web/demos/ceramica/captura-escritorio.webp" width="1100" height="602" loading="lazy" decoding="async" alt="Concepto de landing page para un taller de cerámica: titular «Tu primera pieza, en cuatro clases», botón de reserva por WhatsApp e ilustración de una vasija.">
+        </a>
         <div class="work-body">
           <div class="work-tags"><span class="work-kind">Landing page</span><span class="kind-badge is-concept">Concepto</span></div>
-          <h3>Una página para llenar un taller.</h3>
-          <p class="demuestra"><b>Qué demuestra:</b> cómo un mensaje claro y un solo botón llevan a la consulta.</p>
+          <h3>Una landing para un taller de cerámica.</h3>
+          <p class="demuestra"><b>Qué mirar:</b> un mensaje claro, los datos que alguien necesita para decidir y un solo botón para reservar.</p>
           <div class="work-actions">
-            <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20vi%20el%20concepto%20de%20landing%20page%20y%20quiero%20algo%20as%C3%AD%20para%20mi%20proyecto.%0AMi%20rubro%3A%0AQu%C3%A9%20quer%C3%A9s%20que%20haga%20quien%20entra%20%28llamar%2C%20reservar%2C%20comprar%29%3A%0ATengo%20dominio%3A%20s%C3%AD%20%2F%20no%0ATengo%20logo%20y%20fotos%3A%20s%C3%AD%20%2F%20no%0A%0ARef%3A%20web-trabajo-landing%0AProducto%3A%20web" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track="web-trabajo-landing-whatsapp">Quiero algo así</a>
-            <a href="#landing-planes" class="text-link">Ver planes</a>
+            <a href="/web/demos/ceramica/" class="btn btn-primary" data-track="web-trabajo-landing-abrir">Ver el concepto</a>
+            <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20vi%20el%20concepto%20de%20landing%20page%20del%20taller%20de%20cer%C3%A1mica%20y%20quiero%20consultar%20por%20algo%20as%C3%AD%20para%20mi%20proyecto.%0A%0AMi%20rubro%3A%0AQu%C3%A9%20quiero%20que%20haga%20quien%20entra%20%28llamar%2C%20reservar%2C%20comprar%29%3A" class="text-link" target="_blank" rel="noopener noreferrer" data-track="web-trabajo-landing-whatsapp">Consultar por algo así</a>
           </div>
         </div>
       </article>
 
-      </div>
+      <!-- Un caso real autorizado se suma como otra tarjeta .work-card.is-half con la etiqueta .kind-badge.is-real. -->
+    </div>
   </div>
 </section>
 
@@ -423,7 +418,7 @@
         <div class="plan-name">Express</div>
         <div class="plan-price"><span data-price="200" data-price-short>$307.000</span></div>
         <div class="plan-period">pago único</div>
-        <div class="plan-setup">Entrega: 3 a 10 días hábiles</div>
+        <div class="plan-setup">Entrega: fecha estimada en el presupuesto</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li class="plan-feat"><span class="pfd"></span>Hasta 4 secciones</li>
@@ -434,14 +429,14 @@
           <li class="plan-feat"><span class="pfd"></span>1 ronda de revisiones</li>
           <li class="plan-feat"><span class="pfd"></span>7 días de soporte después de la entrega</li>
         </ul>
-        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+una+landing+page+Express.%0A%0ARef%3A%20web-pricing%0AProducto%3A%20web" class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Pedir Express</a>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+una+landing+page+Express." class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Consultar por Express</a>
       </div>
       <div class="plan-card featured">
         <div class="plan-badge">El más completo para empezar</div>
         <div class="plan-name">Pro</div>
         <div class="plan-price"><span data-price="299" data-price-short>$459.000</span></div>
         <div class="plan-period">pago único</div>
-        <div class="plan-setup">Entrega: 3 a 10 días hábiles</div>
+        <div class="plan-setup">Entrega: fecha estimada en el presupuesto</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li class="plan-feat"><span class="pfd"></span>Hasta 6 secciones</li>
@@ -452,13 +447,13 @@
           <li class="plan-feat"><span class="pfd"></span>2 rondas de revisiones</li>
           <li class="plan-feat"><span class="pfd"></span>7 días de soporte después de la entrega</li>
         </ul>
-        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+una+landing+page+Pro.%0A%0ARef%3A%20web-pricing%0AProducto%3A%20web" class="plan-btn plan-btn-fill" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Pedir Pro</a>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+una+landing+page+Pro." class="plan-btn plan-btn-fill" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Consultar por Pro</a>
       </div>
       <div class="plan-card">
         <div class="plan-name">Performance · el más completo</div>
         <div class="plan-price"><span data-price="449" data-price-short>$689.000</span></div>
         <div class="plan-period">pago único</div>
-        <div class="plan-setup">Entrega: 3 a 10 días hábiles</div>
+        <div class="plan-setup">Entrega: fecha estimada en el presupuesto</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li class="plan-feat"><span class="pfd"></span>Hasta 8 secciones</li>
@@ -469,7 +464,7 @@
           <li class="plan-feat"><span class="pfd"></span>3 rondas + una revisión final antes de publicar</li>
           <li class="plan-feat"><span class="pfd"></span>30 días de soporte después de la entrega</li>
         </ul>
-        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+una+landing+page+Performance.%0A%0ARef%3A%20web-pricing%0AProducto%3A%20web" class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Pedir Performance</a>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+una+landing+page+Performance." class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Consultar por Performance</a>
       </div>
     </div>
     <details class="plan-compare">
@@ -479,7 +474,7 @@
         <thead><tr><th scope="col">Qué incluye</th><th scope="col">Express</th><th scope="col">Pro</th><th scope="col">Performance</th></tr></thead>
         <tbody>
 <tr><th scope="row">Precio (pago único)</th><td><span data-price="200" data-price-short>$307.000</span></td><td><span data-price="299" data-price-short>$459.000</span></td><td><span data-price="449" data-price-short>$689.000</span></td></tr>
-<tr><th scope="row">Entrega</th><td>3 a 10 días hábiles</td><td>3 a 10 días hábiles</td><td>3 a 10 días hábiles</td></tr>
+<tr><th scope="row">Entrega</th><td>Fecha estimada en el presupuesto</td><td>Fecha estimada en el presupuesto</td><td>Fecha estimada en el presupuesto</td></tr>
 <tr><th scope="row">Secciones</th><td>Hasta 4</td><td>Hasta 6</td><td>Hasta 8</td></tr>
 <tr><th scope="row">Diseño</th><td>Plantilla adaptada a tu rubro</td><td>Adaptado a tu marca</td><td>100% a medida</td></tr>
 <tr><th scope="row">Textos</th><td>Los escribís vos, nosotros armamos el sitio</td><td>Redacción básica incluida</td><td>Pensados para vender</td></tr>
@@ -490,7 +485,7 @@
         </tbody>
       </table></div>
     </details>
-    <p class="plan-note">El dominio y el alojamiento del sitio no están incluidos: los contratás y pagás vos, aparte. Te recomendamos cuáles y lo dejamos publicado ahí. Todos los planes tienen 7 días de ajustes sin cargo desde la entrega si algo no quedó como esperabas.</p>
+    <p class="plan-note"><strong>Tu web, con tiempos claros desde el inicio.</strong> El plazo de entrega se define según el plan, el alcance y los materiales necesarios. Te confirmamos una fecha estimada en el presupuesto, antes de iniciar el proyecto.<br>El dominio y el alojamiento del sitio no están incluidos: los contratás y pagás vos, aparte. Te recomendamos cuáles y lo dejamos publicado ahí. El precio de cada plan es el informado y no incluye dominio ni alojamiento. Todos los planes tienen 7 días de ajustes sin cargo desde la entrega si algo no quedó como esperabas.</p>
   </div>
 </section>
 
@@ -504,7 +499,7 @@
         <div class="plan-name">Base</div>
         <div class="plan-price"><span data-price="550" data-price-short>$844.000</span></div>
         <div class="plan-period">pago único</div>
-        <div class="plan-setup">Entrega: 3 a 10 días hábiles</div>
+        <div class="plan-setup">Entrega: fecha estimada en el presupuesto</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li class="plan-feat"><span class="pfd"></span>Home · servicios · contacto · mapa</li>
@@ -514,14 +509,14 @@
           <li class="plan-feat"><span class="pfd"></span>1 ronda de revisiones</li>
           <li class="plan-feat"><span class="pfd"></span>30 días de soporte después de la entrega</li>
         </ul>
-        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+un+sitio+institucional+Base.%0A%0ARef%3A%20web-pricing%0AProducto%3A%20web" class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Pedir sitio Base</a>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+un+sitio+institucional+Base." class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Consultar por el sitio Base</a>
       </div>
       <div class="plan-card featured">
         <div class="plan-badge">Recomendado para consultorios</div>
         <div class="plan-name">Con turnos</div>
         <div class="plan-price"><span data-price="729" data-price-short>$1.119.000</span></div>
         <div class="plan-period">pago único</div>
-        <div class="plan-setup">Entrega: 12 a 18 días hábiles</div>
+        <div class="plan-setup">Entrega: fecha estimada en el presupuesto</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li class="plan-feat"><span class="pfd"></span>Todo lo del plan Base</li>
@@ -531,10 +526,10 @@
           <li class="plan-feat"><span class="pfd"></span>3 rondas + una revisión final antes de publicar</li>
           <li class="plan-feat"><span class="pfd"></span>30 días de soporte prioritario</li>
         </ul>
-        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+un+sitio+institucional+con+turnos.%0A%0ARef%3A%20web-pricing%0AProducto%3A%20web" class="plan-btn plan-btn-fill" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Pedir sitio con turnos</a>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+un+sitio+institucional+con+turnos." class="plan-btn plan-btn-fill" target="_blank" rel="noopener noreferrer" data-track="web-pricing-whatsapp">Consultar por el sitio con turnos</a>
       </div>
     </div>
-    <p class="plan-note">El dominio y el alojamiento del sitio no están incluidos: los contratás y pagás vos, aparte. Te recomendamos cuáles y lo dejamos publicado ahí. Los precios están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta). Los sitios se entregan en 3 a 10 días hábiles; el plan Con turnos lleva de 12 a 18 porque incluye una conexión a medida con tu sistema de turnos. Si además necesitás ordenar ventas, caja y turnos, <a href="/combo/" class="text-link">con el combo cualquiera de estos planes sale 10% menos</a>.</p>
+    <p class="plan-note"><strong>Tu web, con tiempos claros desde el inicio.</strong> El plazo de entrega se define según el plan, el alcance y los materiales necesarios. Te confirmamos una fecha estimada en el presupuesto, antes de iniciar el proyecto.<br>El dominio y el alojamiento del sitio no están incluidos: los contratás y pagás vos, aparte. Te recomendamos cuáles y lo dejamos publicado ahí. Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. El precio de cada plan es el informado; lo que exceda su alcance se presupuesta por escrito antes de empezar. No incluye dominio, alojamiento ni costos de terceros. Están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta). El plan Con turnos incluye una conexión a medida con tu sistema de turnos, que se considera en la fecha estimada. Si además necesitás ordenar ventas, caja y turnos, <a href="/combo/" class="text-link">con el combo cualquiera de estos planes sale 10% menos</a>.</p>
   </div>
 </section>
 
@@ -556,7 +551,6 @@
           <tr><td>Formulario que guarda cada consulta en una planilla</td><td><span data-price="59">$90.600 ARS</span></td></tr>
           <tr><td>Medición de visitas y de anuncios (Google y Meta) configurada</td><td><span data-price="39">$59.900 ARS</span></td></tr>
           <tr><td>Ronda adicional de revisiones</td><td><span data-price="29">$44.500 ARS</span></td></tr>
-          <tr><td>Entrega urgente en 24 a 48 hs (solo planes Express y Pro)</td><td>+50% del plan</td></tr>
           <tr><td>Conexión con tu sistema de clientes</td><td>A cotizar</td></tr>
         </tbody>
       </table>
@@ -575,7 +569,7 @@
       <p class="band-events">Casamientos, cumpleaños, quinceañeras, aniversarios y eventos de empresa.</p>
       <div class="actions">
         <a href="/invitaciones/" class="btn btn-primary btn-lg" data-track="web-invitaciones-ver">Ver invitaciones digitales</a>
-        <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20vi%20las%20invitaciones%20digitales%20y%20quiero%20un%20presupuesto.%0ATipo%20de%20evento%3A%0AFecha%20del%20evento%3A%0ACiudad%3A%0ACantidad%20aproximada%20de%20invitados%3A%0A%0ARef%3A%20web-invitaciones%0AProducto%3A%20invitaciones" class="text-link" target="_blank" rel="noopener noreferrer" data-track="web-invitaciones-whatsapp">Pedir presupuesto</a>
+        <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20vi%20las%20invitaciones%20digitales%20y%20quiero%20consultar%20por%20una%20para%20mi%20evento.%0A%0ATipo%20de%20evento%3A%0AFecha%3A" class="text-link" target="_blank" rel="noopener noreferrer" data-track="web-invitaciones-whatsapp">Pedir presupuesto</a>
       </div>
     </div>
     <div class="hero-fan" aria-hidden="true"><div class="phone l" aria-hidden="true"><div class="phone-screen"><div class="inv is-static" data-ev="cumple"><div class="inv-cover"><div class="inv-kicker">Estás invitado</div><div class="inv-arch" aria-hidden="true"><svg width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><use href="#inv-scene" width="100%" height="100%"/></svg></div><div class="inv-names"><span>Martina</span><i>cumple</i><span>40</span></div><div class="inv-date">Viernes 9 de abril de 2027</div><span class="inv-open">Abrir invitación</span></div></div></div></div><div class="phone c" aria-hidden="true"><div class="phone-screen"><div class="inv is-static" data-ev="casamiento"><div class="inv-cover"><div class="inv-kicker">Nos casamos</div><div class="inv-arch" aria-hidden="true"><svg width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><use href="#inv-scene" width="100%" height="100%"/></svg></div><div class="inv-names"><span>Camila</span><i>y</i><span>Tomás</span></div><div class="inv-date">Sábado 20 de marzo de 2027</div><span class="inv-open">Abrir invitación</span></div></div></div></div><div class="phone r" aria-hidden="true"><div class="phone-screen"><div class="inv is-static" data-ev="empresa"><div class="inv-cover"><div class="inv-kicker">Evento corporativo</div><div class="inv-arch" aria-hidden="true"><svg width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><use href="#inv-scene" width="100%" height="100%"/></svg></div><div class="inv-names"><span>Encuentro</span><i>anual</i><span>2027</span></div><div class="inv-date">Jueves 18 de marzo de 2027</div><span class="inv-open">Abrir invitación</span></div></div></div></div></div>
@@ -587,12 +581,12 @@
   <div class="container">
     <h2 class="section-title title-center reveal">Cómo contratás.</h2>
     <div class="steps-4">
-      <div class="step-box reveal"><div class="step-number">Paso 01</div><h3>Nos escribís por WhatsApp</h3><p>Nos contás qué vendés y qué querés que haga quien entra: llamar, reservar o comprar. Te dejamos un mensaje para completar.</p></div>
+      <div class="step-box reveal"><div class="step-number">Paso 01</div><h3>Nos escribís por WhatsApp</h3><p>Nos contás qué vendés y qué querés que haga quien entra: llamar, reservar o comprar. Te dejamos un mensaje para completar.</p><div class="wa-preview" role="img" aria-label="Ejemplo del mensaje que se arma"><span>Hola Growi, quiero un presupuesto para un sitio web.<br><br>Mi rubro:<br>Qué quiero que haga quien entra (llamar, reservar, comprar):</span></div></div>
       <div class="step-box reveal"><div class="step-number">Paso 02</div><h3>Te pasamos el precio</h3><p>Antes de empezar sabés cuánto sale y qué incluye, por escrito.</p></div>
       <div class="step-box reveal"><div class="step-number">Paso 03</div><h3>Lo armamos con vos</h3><p>Armamos el sitio y lo ajustamos en las rondas de revisión de tu plan.</p></div>
       <div class="step-box reveal"><div class="step-number">Paso 04</div><h3>Lo publicamos</h3><p>Lo dejamos online y tenés 7 días de ajustes sin cargo desde la entrega.</p></div>
     </div>
-    <p class="text-center" style="margin-top:36px"><a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20un%20presupuesto%20para%20un%20sitio%20web.%0AMi%20rubro%3A%0AQu%C3%A9%20quer%C3%A9s%20que%20haga%20quien%20entra%20%28llamar%2C%20reservar%2C%20comprar%29%3A%0ATengo%20dominio%3A%20s%C3%AD%20%2F%20no%0ATengo%20logo%20y%20fotos%3A%20s%C3%AD%20%2F%20no%0A%0ARef%3A%20web-proceso%0AProducto%3A%20web" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track="web-proceso-whatsapp">Pedir presupuesto</a></p>
+    <p class="text-center" style="margin-top:36px"><a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20un%20presupuesto%20para%20un%20sitio%20web.%0A%0AMi%20rubro%3A%0AQu%C3%A9%20quiero%20que%20haga%20quien%20entra%20%28llamar%2C%20reservar%2C%20comprar%29%3A" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track="web-proceso-whatsapp">Pedir presupuesto</a></p>
   </div>
 </section>
 
@@ -607,7 +601,7 @@
       <li>En los dos, la puesta en marcha de GrowiApp va sin cargo</li>
     </ul>
     <div style="margin-top:32px">
-      <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+el+combo+App+%2B+Web.%0A%0ARef%3A%20web-bundle%0AProducto%3A%20web" class="btn btn-white btn-lg" target="_blank" rel="noopener noreferrer" data-track="web-bundle-whatsapp">Consultar por el combo</a>
+      <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+el+combo+App+%2B+Web." class="btn btn-white btn-lg" target="_blank" rel="noopener noreferrer" data-track="web-bundle-whatsapp">Consultar por el combo</a>
       <p style="margin-top:18px"><a href="/combo/" style="color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px">Ver el combo en detalle</a></p>
     </div>
   </div>
@@ -665,7 +659,7 @@
         <div class="faq-body">Sí. Tienen su propia página porque se arman para un evento y se comparten por enlace. Son una especialización de Growi y el precio no está acá: te lo pasamos por WhatsApp antes de empezar. <a href="/invitaciones/" class="text-link">Ver invitaciones digitales</a>.</div>
       </details>
     </div>
-    <p class="faq-more">¿Te quedó alguna duda? <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+duda+sobre+GrowiWeb.%0A%0ARef%3A%20web-faq%0AProducto%3A%20web" target="_blank" rel="noopener noreferrer" data-track="web-faq-whatsapp">Preguntanos por WhatsApp</a> y te respondemos el próximo día hábil.</p>
+    <p class="faq-more">¿Te quedó alguna duda? <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+duda+sobre+GrowiWeb." target="_blank" rel="noopener noreferrer" data-track="web-faq-whatsapp">Preguntanos por WhatsApp</a> y te respondemos en nuestro horario de atención (lunes a sábado, de 9 a 19 hs).</p>
   </div>
 </section>
 
@@ -674,8 +668,8 @@
   <div class="container text-center">
     <h2 class="cta-title reveal">¿Sabés qué necesitás?<br>Escribinos y te pasamos un precio.</h2>
     <p class="cta-lead">Contanos qué tenés en mente y te pasamos una propuesta con precio. No hace falta reunión previa.</p>
-    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+un+sitio+web+para+mi+negocio.+Les+cuento+qu%C3%A9+necesito%3A%0A%0ARef%3A%20web-final%0AProducto%3A%20web" class="btn btn-accent btn-lg" target="_blank" rel="noopener noreferrer" data-track="web-final-whatsapp">Hablar por WhatsApp</a>
-    <p class="cta-note">Te respondemos por WhatsApp el próximo día hábil.</p>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+un+sitio+web+para+mi+negocio.+Les+cuento+qu%C3%A9+necesito%3A" class="btn btn-accent btn-lg" target="_blank" rel="noopener noreferrer" data-track="web-final-whatsapp">Hablar por WhatsApp</a>
+    <p class="cta-note">Te respondemos por WhatsApp en nuestro horario de atención (lunes a sábado, de 9 a 19 hs).</p>
   </div>
 </section>
 
@@ -694,6 +688,7 @@
         <a href="/web/">GrowiWeb</a>
         <a href="/flow/">GrowiFlow</a>
         <a href="/combo/">Combo sistema + web</a>
+        <a href="/invitaciones/">Invitaciones digitales</a>
       </div>
       <div class="footer-col">
         <h3>Por rubro</h3>
@@ -704,12 +699,13 @@
       </div>
       <div class="footer-col">
         <h3>Contacto</h3>
-        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiWeb.%0A%0ARef%3A%20web-footer%0AProducto%3A%20web" target="_blank" rel="noopener noreferrer" data-track="web-footer-whatsapp">WhatsApp</a>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiWeb." target="_blank" rel="noopener noreferrer" data-track="web-footer-whatsapp">WhatsApp</a>
         <a href="mailto:hola@growi.ar">hola@growi.ar</a>
         <a href="/privacidad/">Privacidad</a>
         <a href="/terminos/">Términos</a>
       </div>
     </div>
+    <p class="aviso-l1">Growi se encuentra en etapa de lanzamiento y actualmente recibe consultas sobre sus servicios, sin aceptar contrataciones ni pagos. Los planes y precios publicados describen las propuestas previstas. Para conocer disponibilidad, alcance y condiciones, contactanos por WhatsApp o correo.</p>
     <div class="footer-bottom">
       <span>© 2026 Growi</span>
       <span>Crecé con tu negocio.</span>
@@ -717,7 +713,7 @@
   </div>
 </footer>
 
-<a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiWeb.%0A%0ARef%3A%20web-floating%0AProducto%3A%20web" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-track="web-floating-whatsapp">
+<a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiWeb." class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-track="web-floating-whatsapp">
   <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
