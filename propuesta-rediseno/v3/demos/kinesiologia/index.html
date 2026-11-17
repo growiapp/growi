@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo de Growi: Alameda Kinesiología (propuesta de demo rediseñada)</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="kine.css">
+</head>
+<body>
+<div class="demo-bar"><span><b>Demo de Growi</b> · sitio de ejemplo con contenido ficticio. No es un cliente.</span><span><a href="#demo-info">Sobre esta demo</a> · <a href="/propuesta-rediseno/v3/web/#trabajos">← Volver a GrowiWeb</a></span></div>
+<header class="top">
+  <div class="w">
+    <a class="brand" href="#">Alameda<span>.</span> kinesiología</a>
+    <nav aria-label="Principal"><a href="#cuerpo">Dónde te duele</a><a href="#primera">Primera consulta</a><a href="#turno">Turnos</a><a href="#preguntas">Preguntas</a><a href="#equipo">Equipo</a><a href="#donde">Cómo llegar</a></nav>
+    <a class="btn" href="#turno">Pedir turno</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="cuerpo">
+  <div class="w">
+    <div>
+      <p class="eye">Kinesiología y rehabilitación deportiva</p>
+      <h1>Volvé a <span>moverte.</span></h1>
+      <p class="lead">Marcá dónde te duele y te mostramos con qué consultan en esa zona. Después elegís día y horario para tu primera consulta.</p>
+      <a class="btn" href="#turno">Pedir turno</a> <a class="btn o" href="#primera">Cómo es la primera consulta</a>
+      <div class="hero-meta"><span>Lunes a viernes de 8 a 20</span><span>Sábados de 9 a 13</span></div>
+    </div>
+    <div class="body">
+      <div class="fig">
+        <div class="fig-tools" role="group" aria-label="Vista"><button type="button" data-s="front" aria-pressed="true">Frente</button><button type="button" data-s="back" aria-pressed="false">Espalda</button></div>
+        <div style="position:relative;padding-top:20px">
+          <svg viewBox="0 0 220 480" role="img" aria-label="Figura humana para elegir la zona de consulta">
+            <g id="fig-front" fill="none" stroke="#b9c9d0" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="110" cy="40" r="24" fill="#b9c9d0" stroke="none"/>
+              <path d="M110 66V92" stroke-width="18"/>
+              <path d="M70 104H150L146 206H74Z" fill="#b9c9d0" stroke-width="16"/>
+              <path d="M62 104 46 172 40 238" stroke-width="22"/><path d="M158 104 174 172 180 238" stroke-width="22"/>
+              <path d="M90 216 87 330 84 438" stroke-width="32"/><path d="M130 216 133 330 136 438" stroke-width="32"/>
+              <ellipse cx="80" cy="454" rx="18" ry="8" fill="#b9c9d0" stroke="none"/><ellipse cx="140" cy="454" rx="18" ry="8" fill="#b9c9d0" stroke="none"/>
+              <path d="M110 100V212" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 5" opacity=".7"/>
+              <path d="M134 295A36 36 0 0 1 164 330" stroke="#0b6e6e" stroke-width="2" stroke-dasharray="4 4"/><text x="168" y="326" font-size="11" fill="#085757" stroke="none" font-family="Archivo, sans-serif" font-weight="700">0–135°</text>
+            </g>
+            <g id="fig-back" style="display:none" fill="none" stroke="#b9c9d0" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="110" cy="40" r="24" fill="#b9c9d0" stroke="none"/>
+              <path d="M110 66V92" stroke-width="18"/>
+              <path d="M70 104H150L146 206H74Z" fill="#b9c9d0" stroke-width="16"/>
+              <path d="M62 104 46 172 40 238" stroke-width="22"/><path d="M158 104 174 172 180 238" stroke-width="22"/>
+              <path d="M90 216 87 330 84 438" stroke-width="32"/><path d="M130 216 133 330 136 438" stroke-width="32"/>
+              <ellipse cx="80" cy="454" rx="18" ry="8" fill="#b9c9d0" stroke="none"/><ellipse cx="140" cy="454" rx="18" ry="8" fill="#b9c9d0" stroke="none"/>
+              <path d="M110 80V206" stroke="#fff" stroke-width="3" stroke-dasharray="1 7" opacity=".9"/>
+              <path d="M84 116Q96 142 108 146M136 116Q124 142 112 146" stroke="#fff" stroke-width="1.5" opacity=".8"/>
+            </g>
+          </svg>
+          <div id="hot" style="position:absolute;left:0;right:0;top:20px;bottom:0"></div>
+        </div>
+      </div>
+      <div class="info" id="info" aria-live="polite">
+        <small>Zona elegida</small>
+        <h2>Rodilla</h2>
+        <ul class="chips"></ul>
+        <p class="pr"></p>
+        <button class="btn go" type="button">Pedir turno</button>
+        <p style="font-size:13px;color:#5b636e">Información ilustrativa del demo: no reemplaza una consulta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="primera">
+  <div class="w">
+    <h2 class="t">Sabés qué va a pasar antes de venir.</h2>
+    <p class="sub">La primera consulta es una evaluación, no una sesión a ciegas.</p>
+    <ol class="steps">
+      <li><b>01</b><h3>Nos contás qué te pasa</h3><p>Tu motivo de consulta, tus antecedentes y qué querés volver a hacer.</p></li>
+      <li><b>02</b><h3>Te evaluamos</h3><p>Revisamos movilidad, fuerza y dolor para entender tu caso.</p></li>
+      <li><b>03</b><h3>Armamos tu plan</h3><p>Te proponemos las sesiones y los ejercicios que van con tu situación.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="turno">
+  <div class="w">
+    <h2 class="t">Elegí tu turno.</h2>
+    <p class="sub">Tocá el día y el horario. Los horarios tachados ya están ocupados.</p>
+    <div class="book">
+      <form class="book-form" name="turno" onsubmit="return false">
+        <fieldset><legend>Tipo de consulta</legend><div class="opts">
+          <label><input type="radio" name="tipo" value="Primera consulta" checked><span>Primera consulta</span></label>
+          <label><input type="radio" name="tipo" value="Sesión de seguimiento"><span>Seguimiento</span></label>
+          <label><input type="radio" name="tipo" value="Posoperatorio"><span>Posoperatorio</span></label></div></fieldset>
+        <fieldset><legend>Profesional</legend><div class="opts">
+          <label><input type="radio" name="prof" value="Cualquiera disponible" checked><span>Cualquiera</span></label>
+          <label><input type="radio" name="prof" value="Lic. María Ríos"><span>M. Ríos</span></label>
+          <label><input type="radio" name="prof" value="Lic. Juan Paz"><span>J. Paz</span></label>
+          <label><input type="radio" name="prof" value="Lic. Laura Sosa"><span>L. Sosa</span></label>
+          <label><input type="radio" name="prof" value="Lic. Nora Gil"><span>N. Gil</span></label></div></fieldset>
+        <fieldset><legend>Día</legend><div class="opts days" id="days"></div></fieldset>
+        <fieldset><legend>Horario</legend><div class="opts" id="slots"></div></fieldset>
+      </form>
+      <aside class="book-sum" aria-live="polite">
+        <h3>Tu turno</h3>
+        <dl><div><dt>Motivo</dt><dd id="s-motivo"></dd></div><div><dt>Consulta</dt><dd id="s-tipo"></dd></div><div><dt>Profesional</dt><dd id="s-prof"></dd></div><div><dt>Cuándo</dt><dd id="s-cuando"></dd></div></dl>
+        <button class="btn" id="pedir" type="button">Pedir turno por WhatsApp</button>
+        <small>Se confirma por WhatsApp. En esta demo no se reserva nada.</small>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="preguntas">
+  <div class="w">
+    <h2 class="t">Antes de venir.</h2>
+    <p class="sub">Lo que más se pregunta, respondido acá y no por teléfono.</p>
+    <div class="qa">
+      <details><summary>¿Necesito orden médica?</summary><p>Para la primera consulta no. Si venís de una operación o con indicación médica, traela: nos ayuda a armar el plan.</p></details>
+      <details><summary>¿Trabajan con obras sociales?</summary><p>Atendemos algunas coberturas y también particulares. Escribinos con tu obra social y te decimos cómo se coordina.</p></details>
+      <details><summary>¿Cuánto dura una sesión?</summary><p>La primera consulta lleva alrededor de 50 minutos porque incluye la evaluación. Las siguientes, entre 40 y 45.</p></details>
+      <details><summary>¿Puedo cambiar o cancelar el turno?</summary><p>Sí, avisando por WhatsApp hasta el día anterior, así el horario le sirve a otro paciente.</p></details>
+    </div>
+    <p class="fake">Contenido de ejemplo: no son las condiciones de ningún consultorio real.</p>
+  </div>
+</section>
+<section class="sec" id="equipo">
+  <div class="w">
+    <h2 class="t">Quiénes te atienden.</h2>
+    <p class="sub">Equipo de ejemplo: los nombres y las especialidades son ficticios.</p>
+    <div class="team"><div><b>Lic. María Ríos</b><span>Kinesiología deportiva</span></div><div><b>Lic. Juan Paz</b><span>Rehabilitación traumatológica</span></div><div><b>Lic. Laura Sosa</b><span>Columna y postura</span></div><div><b>Lic. Nora Gil</b><span>Rehabilitación</span></div></div>
+  </div>
+</section>
+
+<section class="sec" id="donde">
+  <div class="w where">
+    <div><h2 class="t">Cómo llegar.</h2>
+      <dl><dt>Dirección</dt><dd>Calle de Ejemplo 1234, Ciudad de Ejemplo <small style="display:block;color:#5b636e">Dirección ficticia, solo para la demo.</small></dd><dt>Lunes a viernes</dt><dd>8:00 a 20:00</dd><dt>Sábados</dt><dd>9:00 a 13:00</dd><dt>Domingos y feriados</dt><dd>Cerrado</dd></dl></div>
+    <div class="map" role="img" aria-label="Mapa ilustrativo"><svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice"><rect width="400" height="240" fill="#dde6ea"/><path d="M0 120H400M120 0V240M280 0V240M0 60H400M0 180H400" stroke="#fff" stroke-width="10"/><path d="M0 120H400" stroke="#fff" stroke-width="18"/><circle cx="200" cy="120" r="12" fill="#0b6e6e"/><circle cx="200" cy="120" r="4" fill="#fff"/></svg></div>
+  </div>
+</section>
+<section class="sec" id="demo-info" style="background:#fff">
+  <div class="w" style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between">
+    <div style="max-width:62ch"><h2 class="t" style="font-size:clamp(26px,3.4vw,40px)">Esto es una demo de Growi.</h2><p class="sub" style="margin:0">El consultorio, el equipo y la dirección son ficticios. En un sitio real, el botón del turno abriría el WhatsApp del consultorio con el mensaje ya armado. Si querés un sitio así, el precio y el alcance te los pasamos por escrito antes de empezar.</p></div>
+    <a class="btn" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20vi%20la%20demo%20del%20consultorio%20de%20kinesiolog%C3%ADa%20y%20quiero%20un%20sitio%20as%C3%AD%20para%20mi%20negocio.%0A%0AMi%20rubro%3A" data-track="demo-kine-whatsapp">Quiero un sitio así</a>
+  </div>
+</section>
+</main>
+<footer><div class="w" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span>© Alameda Kinesiología (demo ficticia)</span><a href="/propuesta-rediseno/v3/web/" style="color:#fff">Sitio de ejemplo hecho con GrowiWeb →</a></div></footer>
+
+<dialog id="dlg" aria-labelledby="dlg-t">
+  <h3 id="dlg-t">Así llegaría tu consulta</h3>
+  <p style="margin:0;font-size:15.5px">En un sitio real, esto abriría el WhatsApp del consultorio con este mensaje listo para enviar. Acá no se envía nada.</p>
+  <div class="bubble" id="bubble"></div>
+  <div class="row"><a class="btn" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20vi%20la%20demo%20del%20consultorio%20de%20kinesiolog%C3%ADa%20y%20quiero%20un%20sitio%20as%C3%AD%20para%20mi%20negocio.%0A%0AMi%20rubro%3A">Quiero un sitio así</a><button class="btn o" id="dlg-x" type="button">Cerrar</button></div>
+</dialog>
+<script src="kine.js"></script>
+</body>
+</html>
