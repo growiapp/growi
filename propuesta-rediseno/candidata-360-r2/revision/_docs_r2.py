@@ -6,7 +6,7 @@ OUT = os.path.dirname(os.path.abspath(__file__))
 E = html.escape
 
 def page(titulo, cuerpo, cur=""):
-    links = [("index.html", "Inicio"), ("comparativa.html", "Comparativa"), ("economia.html", "Matriz económica"), ("verificacion.html", "Verificación y crítica")]
+    links = [("index.html", "Inicio"), ("comparativa.html", "Comparativa"), ("economia.html", "Matriz económica"), ("auditoria-flow.html", "Auditoría de GrowiFlow"), ("verificacion.html", "Verificación y crítica")]
     nav = "".join('<a href="%s"%s>%s</a>' % (h, ' aria-current="page"' if h == cur else "", n) for h, n in links)
     return ('<!doctype html>\n<html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow">'
             '<title>%s · Revisión Growi 360° r2</title><link rel="stylesheet" href="../assets/growi360.css"><link rel="stylesheet" href="rev.css"></head><body>'

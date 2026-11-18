@@ -113,47 +113,47 @@ def seq_cap(textos, nota):
             % ("".join('<p data-n="%d">%s</p>' % (i + 1, t) for i, t in enumerate(textos)), nota))
 
 def flow_stage():
-    pasos = ["Llega la consulta", "Se anota sola", "Vos confirmás", "Sale el recordatorio", "Resumen semanal"]
-    wa = ('<div class="wa sq-wa" aria-hidden="true"><p class="wa-h">WhatsApp del negocio</p>'
-          '<div class="msg sq" data-from="1"><span class="mt">Hola, ¿tienen turno el sábado a la mañana?</span><small>Julián · lunes 9:12</small></div>'
+    pasos = ["Llega la consulta", "Se anota", "Vos confirmás", "Sale el recordatorio", "Resumen semanal"]
+    wa = ('<div class="wa sq-wa" aria-hidden="true"><p class="wa-h">Mensajes del negocio</p>'
+          '<div class="msg sq" data-from="1"><span class="mt">Hola, ¿tienen turno el sábado a la mañana?</span><small>Julián · formulario del sitio · lunes 9:12</small></div>'
           '<div class="msg out sq" data-from="3"><span class="mt">Julián, te esperamos el sábado a las 11:15.</span><small>Lo respondés vos · lunes 9:30</small></div>'
-          '<div class="msg out auto sq" data-from="4"><span class="mt">Hola Julián, te recordamos tu turno de mañana a las 11:15.</span><small>Automático · viernes 9:00</small></div>'
-          '<div class="msg out auto sq" data-from="5"><span class="mt"><b>Resumen de la semana</b><br>12 turnos · 1 ausencia · lo más pedido: Control</span><small>Automático · viernes 18:00</small></div></div>')
+          '<div class="msg out auto sq" data-from="4"><span class="mt">Hola Julián, te recordamos tu turno de mañana a las 11:15.</span><small>Automático · por mail o WhatsApp · viernes 9:00</small></div>'
+          '<div class="msg out auto sq" data-from="5"><span class="mt"><b>Resumen de la semana</b><br>12 turnos · 1 ausencia · lo más pedido: Control</span><small>Automático · por mail o WhatsApp · viernes 18:00</small></div></div>')
     sheet = ('<div class="sheet" aria-hidden="true"><p class="ag-t">Planilla de turnos <small>(datos ficticios)</small></p>'
              '<div class="sheet-h"><span>Quién</span><span>Qué</span><span>Estado</span></div>'
              '<div class="sheet-r"><span>Marta</span><span>Control</span><span>Atendida</span></div>'
              '<div class="sheet-r sq" data-from="2"><span>Julián</span><span>Turno sábado</span><span class="st"><i data-at="2">Nueva</i><i data-at="3">Confirmada 11:15</i><i data-at="4">Recordada ✓</i></span></div>'
              '<div class="sheet-r"><span>Lucía</span><span>Control</span><span>Confirmada</span></div></div>')
-    caps = ["Un cliente escribe por WhatsApp, Instagram o un formulario.",
-            "GrowiFlow anota la consulta en tu planilla: no la copiás a mano.",
+    caps = ["Un cliente envía una consulta desde el formulario de tu sitio.",
+            "La consulta queda anotada en tu planilla, sin copiarla a mano. Con un formulario se arma con herramientas estándar.",
             "Vos respondés y confirmás el turno, como siempre. En el ejemplo, la planilla lo refleja.",
-            "El día anterior sale el recordatorio, sin que lo mandes. Menos ausencias.",
-            "Cada semana te llega un resumen por WhatsApp o mail: lo que pasó, sin armarlo vos."]
+            "El día anterior sale el recordatorio. Por mail se arma con la planilla; por WhatsApp requiere una cuenta aprobada por Meta y su costo de mensajes.",
+            "Cada semana te llega un resumen por mail o WhatsApp (mismas condiciones): lo que pasó, sin armarlo vos."]
     return ('<div class="seqx" data-seq>' + seq_top(pasos) + '<div class="seq-body">' + wa + '<div class="sq-arrow" aria-hidden="true">→</div>' + sheet + '</div>'
-            + seq_cap(caps, "Ilustración de un proceso posible, con datos ficticios: no es una captura de un cliente. Lo que se automatiza en tu negocio se define por escrito antes de empezar.") + '</div>')
+            + seq_cap(caps, "Ilustración de un proceso posible, con datos ficticios: no es una captura de un cliente ni una funcionalidad ya verificada. Si la consulta llega por WhatsApp o Instagram, anotarla sola depende de cuentas y aprobaciones de Meta: se evalúa y se confirma por escrito antes de empezar.") + '</div>')
 
 def combo_stage():
     pasos = ["Entra al sitio", "Te escribe", "Lo agendás", "Se atiende y se registra"]
-    sitio = ('<div class="cmb-scene sq" data-on="1"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Tu sitio · GrowiWeb (captura real de una demo)</span></div>'
-             '<div class="cmb-img"><img src="assets/img/combo-sitio.webp" width="1000" height="625" alt="Sitio de muestra de un centro de kinesiología con el botón Pedir turno." loading="lazy"><span class="ring" aria-hidden="true"></span></div></div></div>')
+    sitio = ('<div class="cmb-scene sq" data-on="1"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Centro Ribera · su sitio en GrowiWeb (captura de la demo)</span></div>'
+             '<div class="cmb-img"><img src="assets/img/ribera-d.webp" width="1000" height="625" alt="Sitio de muestra de Centro Ribera, un centro de kinesiología, con el botón Pedir turno." loading="lazy"><span class="ring" aria-hidden="true"></span></div></div></div>')
     wapp = ('<div class="cmb-scene sq" data-on="2"><div class="cmb-wa"><p class="wa-h">WhatsApp del negocio</p><div class="msg"><span class="mt">Hola, quiero turno para el sábado a la mañana.</span><small>Un cliente que vio tu sitio</small></div></div></div>')
-    app = ('<div class="cmb-scene sq" data-on="3 4"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Tu gestión · GrowiApp (captura real de la demo)</span></div>'
-           '<div class="cmb-img"><img src="assets/img/demo-app-escritorio.webp" width="1400" height="752" alt="Panel de GrowiApp de un negocio de ejemplo." loading="lazy">'
+    app = ('<div class="cmb-scene sq" data-on="3 4"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Centro Ribera · su gestión en GrowiApp (captura de la demo)</span></div>'
+           '<div class="cmb-img"><img src="assets/img/combo-app.webp" width="1000" height="567" alt="Panel de GrowiApp con el negocio de muestra Centro Ribera." loading="lazy">'
            '<div class="cmb-card c3 sq" data-from="3"><small>Agenda · sábado 11:15</small><b>Julián · Primera consulta</b></div>'
-           '<div class="cmb-card c4 sq" data-from="4"><small>Venta registrada en GrowiApp</small><b>Consulta · $18.500</b><small>El cierre de caja se arma solo</small></div></div></div></div>')
-    caps = ["Tu cliente encuentra tu sitio y toca «Pedir turno».",
-            "La consulta te llega por WhatsApp, como hoy: es el puente entre el sitio y tu gestión.",
-            "La cargás en la agenda de GrowiApp. Hoy este paso es manual; con GrowiFlow la consulta puede anotarse sola en una planilla.",
-            "Se atiende y vos registrás la venta en GrowiApp: el cierre de caja se arma solo."]
+           '<div class="cmb-card c4 sq" data-from="4"><small>Venta registrada en GrowiApp</small><b>Consulta inicial · $21.000</b><small>El cierre de caja se arma solo</small></div></div></div></div>')
+    caps = ["Un paciente de Centro Ribera encuentra el sitio y toca «Pedir turno».",
+            "La consulta le llega al centro por WhatsApp, como hoy: es el puente entre el sitio y la gestión.",
+            "El centro la carga en la agenda de GrowiApp. Este paso es manual. Anotarla sola es otro servicio (GrowiFlow) y se define aparte.",
+            "Se atiende y el centro registra la venta en GrowiApp: el cierre de caja se arma solo."]
     return ('<div class="seqx combo-seq" data-seq>' + seq_top(pasos) + '<div class="cmb-body">' + sitio + wapp + app + '</div>'
-            + seq_cap(caps, "Recorrido ilustrativo armado con capturas reales de las demos y datos ficticios. El sitio y el sistema no se conectan solos: el puente es el WhatsApp.") + '</div>')
+            + seq_cap(caps, "Recorrido ilustrativo de un mismo negocio de muestra (Centro Ribera), armado con capturas de las demos y datos ficticios. El sitio y el sistema no se conectan solos: el puente es el WhatsApp.") + '</div>')
 
-def web_stage(sroot):
+def web_stage(rel):
     return ('<div class="wprev" data-wprev><div class="wp-tools"><div class="seg" role="group" aria-label="Sitio de muestra"><button type="button" class="active" data-demo="centro-ribera" aria-pressed="true">Centro Ribera · consultorio</button><button type="button" data-demo="ceramica" aria-pressed="false">Taller de cerámica</button></div>'
-            '<div class="seg" role="group" aria-label="Dispositivo"><button type="button" class="active" data-dev="d" aria-pressed="true">Escritorio</button><button type="button" data-dev="m" aria-pressed="false">Celular</button></div></div>'
-            '<div class="wp-view"><div class="wp-scale"><iframe title="Sitio de muestra de Growi (contenido ficticio)" data-base="demos/web/" data-src="demos/web/centro-ribera/index.html" width="1280" height="820"></iframe></div></div>'
-            '<p class="cap">Sitio de muestra de Growi con contenido ficticio: no es un cliente. Elegí una zona del cuerpo, pedí un turno y recorré las secciones.</p>'
-            '<p class="cap"><a href="demos/web/centro-ribera/index.html" target="_blank" rel="noopener">Abrir Centro Ribera en pantalla completa ↗</a></p></div>')
+            '<div class="seg" role="group" aria-label="Dispositivo"><button type="button" class="active" data-dev="d" aria-pressed="true">Escritorio</button><button type="button" data-dev="m" aria-pressed="false">Celular</button></div>'
+            '<a class="btn k sm wp-open" data-open href="%sdemos/web/centro-ribera/index.html" target="_blank" rel="noopener">Abrir la demo completa ↗</a></div>'
+            '<div class="wp-view"><div class="wp-scale"><iframe title="Sitio de muestra de Growi (contenido ficticio)" data-base="%sdemos/web/" data-src="%sdemos/web/centro-ribera/index.html" width="1280" height="820"></iframe></div></div>'
+            '<p class="cap">Sitio de muestra de Growi con contenido ficticio: no es un cliente. Elegí una zona del cuerpo, pedí un turno y recorré las secciones.</p></div>' % (rel, rel, rel))
 
 
 def home():
@@ -175,9 +175,9 @@ def home():
                   ["Un sitio que muestra lo que hacés y deja pedir turno o consultar", "Lo dejamos publicado: vos no tocás nada técnico", "Plantilla adaptada a tu rubro o diseño a medida"],
                   ["Precio y alcance por escrito, antes de empezar", "Revisiones incluidas según el plan", "7 días de ajustes sin cargo desde la entrega"],
                   "desde %s, pago único · dominio y alojamiento aparte" % d(200),
-                  '<a class="btn k sm" href="web/" data-track="home-xp-web">Ver GrowiWeb →</a>', web_stage(sroot))
+                  '<a class="btn k sm" href="web/" data-track="home-xp-web">Ver GrowiWeb →</a>', web_stage(""))
     p_flow = panel("flow", False, "Que lo repetitivo se haga solo.",
-                   ["Lo que entra por WhatsApp, Instagram o un formulario se anota solo en una planilla", "El aviso del turno le llega solo a tu cliente", "Un resumen de tus ventas por WhatsApp o mail"],
+                   ["Las consultas de un formulario se anotan en una planilla; WhatsApp e Instagram se definen caso por caso", "El aviso del turno sale solo, por mail o por WhatsApp (este último con requisitos de Meta)", "Un resumen de tus ventas por mail o WhatsApp"],
                    ["Lo armamos nosotros y lo dejamos andando", "No hace falta tener GrowiApp ni GrowiWeb", "7 días de ajustes sin cargo desde la entrega"],
                    "pago único · pedidos y consultas desde %s, reportes y recordatorios %s" % (d(79), d(89)),
                    '<a class="btn k sm" href="%sflow/" data-track="home-xp-flow">Ver GrowiFlow →</a>' % sroot, flow_stage(),
@@ -284,9 +284,8 @@ def web():
             '<p class="sub">Diseñamos y desarrollamos landing pages y sitios institucionales. Los dejamos publicados: vos no tocás nada técnico, y sabés cuánto sale antes de empezar.</p>'
             '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">%s<a class="btn o" href="#ejemplos">Ver ejemplos ↓</a></div>'
             '<ul class="proof"><li><span>Precio y alcance por escrito antes de empezar</span></li><li><span>Dominio y alojamiento los pagás vos, aparte</span></li></ul></div>'
-            '<div class="demo-pair"><div class="frame"><div class="bar"><i></i><i></i><i></i><span style="margin-left:8px">Demo de Growi · sitio institucional</span></div><img src="../assets/img/combo-sitio.webp" width="1000" height="632" alt="Centro Ribera, sitio de muestra de un centro de kinesiología." fetchpriority="high"></div>'
-            '<div class="phone"><img src="../assets/img/ribera-m.webp" width="390" height="800" alt="La misma demo, en el celular." loading="lazy"></div></div></div></section>\n'
-            % btn(msg, "web-hero-whatsapp", "Pedir presupuesto"))
+            '<div>%s</div></div></section>\n'
+            % (btn(msg, "web-hero-whatsapp", "Pedir presupuesto"), web_stage('../')))
     def cta(plan):
         return btn("Hola Growi, quiero un presupuesto para el plan %s de GrowiWeb.\n\nMi rubro:" % plan, "web-pricing-whatsapp", "Consultar por el plan %s" % plan, "wide")
     def tk(code, name, sub, lines, usd, fine, ribbon=""):
@@ -313,7 +312,7 @@ def web():
               % ("".join('<tr><td>%s</td><td><span data-price="%s">$</span></td></tr>' % (E(a), b) for a, b in ex), sroot))
     ejem = ('<section class="sec dark" id="ejemplos" aria-labelledby="h-ej"><div class="w"><p class="eyebrow">Ejemplos</p><h2 id="h-ej">Dos sitios de muestra.</h2>'
             '<p class="lead">Son demos de Growi con contenido ficticio: no son clientes.</p>'
-            '<div class="cmb"><div><div class="frame"><img src="../assets/img/combo-sitio.webp" width="1000" height="632" alt="Centro Ribera, sitio de muestra de un centro de kinesiología." loading="lazy"></div><p class="cap" style="color:#d4d4cf">Un consultorio de kinesiología · sitio institucional con turnos.</p><p style="margin-top:12px"><a class="btn sm" href="%sweb/demos/centro-ribera/index.html" data-track="web-trabajo-institucional-abrir">Abrir la demo →</a></p></div>'
+            '<div class="cmb"><div><div class="frame"><img src="../assets/img/ribera-d.webp" width="1000" height="625" alt="Centro Ribera, sitio de muestra de un centro de kinesiología." loading="lazy"></div><p class="cap" style="color:#d4d4cf">Un consultorio de kinesiología · sitio institucional con turnos.</p><p style="margin-top:12px"><a class="btn sm" href="%sweb/demos/centro-ribera/index.html" data-track="web-trabajo-institucional-abrir">Abrir la demo →</a></p></div>'
             '<div><div class="frame"><img src="../assets/img/demo-web-ceramica-d.webp" width="1280" height="800" alt="Demo de una landing page para un taller de cerámica." loading="lazy"></div><p class="cap" style="color:#d4d4cf">Un taller de cerámica · landing page.</p><p style="margin-top:12px"><a class="btn sm" href="%sweb/demos/ceramica/" data-track="web-trabajo-landing-abrir">Abrir la demo →</a></p></div></div></div></section>\n' % (sroot, sroot))
     pasos = [("01", "Nos escribís por WhatsApp", "Nos contás qué vendés y qué querés que haga quien entra: llamar, reservar o comprar. Te dejamos un mensaje para completar."), ("02", "Te pasamos el precio", "Antes de empezar sabés cuánto sale y qué incluye, por escrito."),
              ("03", "Lo armamos con vos", "Armamos el sitio y lo ajustamos en las rondas de revisión de tu plan."), ("04", "Lo publicamos", "Lo dejamos online y tenés 7 días de ajustes sin cargo desde la entrega.")]

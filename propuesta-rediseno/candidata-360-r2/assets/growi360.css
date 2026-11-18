@@ -451,3 +451,11 @@ body.menu-open{overflow:hidden}
 .js-seq .msg.sq:not(.on){display:none}.seqx .wa{padding:12px}
 .appwrap{background:var(--papel);border-radius:10px}
 .wp-scale,.wp-scale iframe{width:1040px}.wp-scale iframe{height:700px}
+
+/* r2c: la vista previa dentro de la grilla del hero no ensancha la pagina */
+.ph-g>*{min-width:0}.ph .wprev{max-width:100%}.wp-open{margin-left:auto}@media(max-width:720px){.wp-open{margin-left:0;width:100%;justify-content:center}}
+@media(max-width:1000px){.ph-g,.caso,.faq-g{grid-template-columns:minmax(0,1fr)}}
+
+/* r2c: minimo de 12 px en rotulos y leyendas */
+.ribbon,.pill,.stamp,.msg small,.sheet-h,.cmb-card small{font-size:12px}
+.t-lines li.soon .v{font-size:12px}

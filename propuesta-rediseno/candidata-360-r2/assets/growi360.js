@@ -135,11 +135,13 @@
       else { s = Math.min(1, (W - 24) / 390); sc.style.transform = "scale(" + s + ")"; sc.style.left = Math.round((W - 390 * s) / 2) + "px"; sc.style.top = "12px"; view.style.height = Math.round(780 * s + 24) + "px"; }
     };
     fr.src = fr.getAttribute("data-src"); fit();
-    if (window.matchMedia("(max-width:720px)").matches) { var mb = $("[data-dev=m]", w); if (mb) setTimeout(function () { mb.click(); }, 0); }
+    var mb = $("[data-dev=m]", w); if (mb) setTimeout(function () { mb.click(); }, 0); /* vista de celular por defecto: tamaño nativo, legible */
+    var op = $("[data-open]", w);
     if (window.ResizeObserver) new ResizeObserver(fit).observe(view); else window.addEventListener("resize", fit);
-    $$("[data-demo]", w).forEach(function (b) { b.addEventListener("click", function () { fr.src = fr.getAttribute("data-base") + b.getAttribute("data-demo") + "/index.html"; $$("[data-demo]", w).forEach(function (x) { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", String(x === b)); }); }); });
+    $$("[data-demo]", w).forEach(function (b) { b.addEventListener("click", function () { fr.src = fr.getAttribute("data-base") + b.getAttribute("data-demo") + "/index.html"; if (op) op.href = fr.src; $$("[data-demo]", w).forEach(function (x) { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", String(x === b)); }); }); });
     $$("[data-dev]", w).forEach(function (b) { b.addEventListener("click", function () { dev = b.getAttribute("data-dev"); view.classList.toggle("m", dev === "m"); fit(); $$("[data-dev]", w).forEach(function (x) { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", String(x === b)); }); }); });
   }
+  if ($("[data-wprev]") && !xt.length) webInit(); /* páginas de línea: vista previa activa al cargar */
   function seqInit(s) {
     if (!s || s.__i) { if (s && s.__play) s.__play(); return; }
     s.__i = 1; s.classList.add("js-seq");
