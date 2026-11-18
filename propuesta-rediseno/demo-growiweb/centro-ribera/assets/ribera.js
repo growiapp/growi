@@ -19,17 +19,27 @@
   /* ---------- Home: el cuerpo es el selector ---------- */
   var sel = $("[data-sel]");
   if (sel) {
-    var panels = $$("[data-zona]"), ringEl = $("[data-ring]", sel);
+    var panels = $$("[data-zona]"), ringEl = $("[data-ring]", sel), hp = $(".hero-p");
+    /* con teclado (flechas en ráfaga) no se anima ni el aro ni el panel */
+    var kb = false;
     var show = function (z, anim) {
-      panels.forEach(function (p) { p.hidden = p.getAttribute("data-zona") !== z; });
       var r = $('input[value="' + z + '"]', sel), pt = r && r.parentNode;
       if (!pt) return;
-      ringEl.setAttribute("style", pt.getAttribute("style"));
-      ringEl.classList.toggle("kb", !!kb);
-      if (anim && !reduce && !kb) { ringEl.classList.remove("go"); void ringEl.offsetWidth; ringEl.classList.add("go"); }
+      panels.forEach(function (p) { p.hidden = p.getAttribute("data-zona") !== z; });
+      if (hp) hp.classList.toggle("kb", kb);
+      var glide = anim && !reduce && !kb;
+      /* el aro se mueve con la propiedad translate (FLIP): se mide dónde está (incluso a mitad de camino), se coloca en destino y se anima la diferencia */
+      var a = glide ? ringEl.getBoundingClientRect() : null;
+      ringEl.style.cssText = pt.getAttribute("style");
+      if (!glide) return;
+      var b = ringEl.getBoundingClientRect(), dx = a.left - b.left, dy = a.top - b.top;
+      ringEl.classList.remove("go"); void ringEl.offsetWidth; ringEl.classList.add("go");
+      if (!dx && !dy) return;
+      ringEl.style.translate = dx + "px " + dy + "px";
+      void ringEl.offsetWidth;
+      ringEl.style.transition = "translate .3s var(--ease)";
+      ringEl.style.translate = "none";
     };
-    /* con teclado (flechas en ráfaga) el aro salta sin animar */
-    var kb = false;
     sel.addEventListener("keydown", function () { kb = true; });
     sel.addEventListener("pointerdown", function () { kb = false; });
     sel.addEventListener("change", function (e) {
@@ -50,7 +60,7 @@
      2) Orientar: marcadores sobre la foto abren el servicio de cada lugar.
      3) Narrar: los arcos de la primera consulta se dibujan en orden.
      Con "reducir movimiento" todo se muestra en su estado final, sin animar. */
-  function ease(t) { return 1 - Math.pow(1 - t, 3); }
+  function ease(t) { return 1 - Math.pow(1 - t, 5); }
   function tween(dur, fn, done) {
     var t0 = null, id;
     function step(ts) {
@@ -109,7 +119,7 @@
       seq.classList.add("js-seq");
       var io = new IntersectionObserver(function (en) {
         var k = 0;
-        en.forEach(function (x) { if (x.isIntersecting) { x.target.style.setProperty("--d", (k++ * 0.42) + "s"); x.target.classList.add("in"); io.unobserve(x.target); } });
+        en.forEach(function (x) { if (x.isIntersecting) { x.target.style.setProperty("--d", (k++ * 0.15) + "s"); x.target.classList.add("in"); io.unobserve(x.target); } });
       }, { threshold: 0.3 });
       hs.forEach(function (h, n) { h.style.transitionDelay = ""; io.observe(h); });
     }

@@ -138,7 +138,6 @@ footer .aviso{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);
 .mot a{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:44px;text-decoration:none;font-weight:500}
 .mot a span:last-child{font:700 18px var(--disp);transition:transform .2s var(--ease)}
 .mot a:hover span:first-child{text-decoration:underline;text-decoration-color:var(--coral);text-decoration-thickness:3px;text-underline-offset:4px}
-.mot a:hover span:last-child{transform:translateX(4px)}
 .mot li:has(a){padding:0}
 .stp .err{color:var(--coral-ink);font-weight:600;min-height:24px;margin-top:12px}
 .stp .err:empty{min-height:0;margin:0}
@@ -148,7 +147,7 @@ footer .aviso{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);
 .grp:first-child{margin-top:0}
 /* motion del turnero: entrada de paso y cambio en el resumen */
 .mo .stp:not([hidden]){animation:stepin .24s var(--ease) both}
-.mo .aside dd.flash{animation:flash 1s var(--ease)}
+.mo .aside dd.flash{animation:flash .5s var(--ease)}
 @keyframes stepin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes flash{0%{background:rgba(255,106,77,.38)}100%{background:transparent}}
 .aside dd{border-radius:6px;margin-left:-6px;padding-left:6px}
@@ -199,12 +198,11 @@ footer .aviso{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);
 .ring-c{fill:rgba(255,106,77,.16);stroke:var(--coral);stroke-width:3}
 .ring-k .k{stroke:var(--ink);stroke-width:1.6;opacity:.5;stroke-linecap:round;fill:none}
 .ring-k .big{stroke-width:2.4;opacity:.9}
-.mo .rg{transition:left .6s var(--ease),top .6s var(--ease)}
-.mo .rg.go svg{animation:ringin .7s var(--ease)}
-.mo .rg.kb{transition:none}
+.mo .rg.go svg{animation:ringin .22s var(--ease)}
+.mo .hero-p.kb .zp{animation:none}
 .mo [data-done]:not([hidden]){animation:stepin .3s var(--ease) both}
 @keyframes peek{from{opacity:.55}to{opacity:1}}
-@keyframes ringin{from{transform:scale(.55) rotate(-40deg);opacity:.2}to{transform:none;opacity:1}}
+@keyframes ringin{from{transform:scale(.9);opacity:.3}to{transform:none;opacity:1}}
 .hero-p{grid-area:p}
 .zp{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px}
 .zp[hidden]{display:none}
@@ -212,7 +210,7 @@ footer .aviso{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);
 .zp h2{font-size:clamp(2rem,3.4vw,2.8rem);max-width:none}
 .zp .que{margin:10px 0 22px;color:var(--ink2);max-width:44ch}
 .zp h3{font:700 14px/1.2 var(--txt);color:var(--ink2);margin-bottom:6px;letter-spacing:0}
-.mo .zp:not([hidden]){animation:stepin .3s var(--ease) both}
+.mo .zp:not([hidden]){animation:stepin .2s var(--ease) both}
 
 /* el centro: foto con un solo arco anclado al goniómetro real */
 .sala{background:var(--paper)}
@@ -251,24 +249,23 @@ footer .aviso{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);
 .dots{display:none}
 @media (min-width:721px){
   .mo .js-seq .hs{opacity:0;transform:translateY(28px)}
-  .mo .js-seq .hs.in{opacity:1;transform:none;transition:opacity .7s var(--ease) var(--d,0s),transform .7s var(--ease) var(--d,0s)}
+  .mo .js-seq .hs.in{opacity:1;transform:none;transition:opacity .5s var(--ease) var(--d,0s),transform .5s var(--ease) var(--d,0s)}
   .mo .js-seq .hs img{clip-path:inset(0 0 100% 0)}
-  .mo .js-seq .hs.in img{clip-path:inset(0);transition:clip-path .9s var(--ease) calc(.15s + var(--d,0s))}
+  .mo .js-seq .hs.in img{clip-path:inset(0);transition:clip-path .6s var(--ease) calc(.1s + var(--d,0s))}
   .mo .js-seq .hs .n::after{transform:scaleX(0);background:var(--coral)}
-  .mo .js-seq .hs.in .n::after{transform:scaleX(1);transition:transform .9s var(--ease) calc(.45s + var(--d,0s))}
+  .mo .js-seq .hs.in .n::after{transform:scaleX(1);transition:transform .6s var(--ease) calc(.3s + var(--d,0s))}
 }
 
 /* servicios de la home: composición asimétrica */
 .bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
 .bento a{display:flex;flex-direction:column;justify-content:space-between;gap:14px;text-decoration:none;border-radius:var(--r);padding:28px;transition:transform .25s var(--ease),border-color .15s}
-.bento a:hover{transform:translateY(-3px)}
 .bento h3{font-size:clamp(1.3rem,2.1vw,1.7rem)}
 .bento p{color:var(--ink2)}
 .sv-big{grid-column:span 7;grid-row:span 2;background:var(--coral);min-height:340px}
 .sv-big h3{font-size:clamp(2rem,3.6vw,3.2rem);letter-spacing:-.035em;line-height:1;max-width:12ch}
 .sv-big p{color:var(--ink);font-weight:500;max-width:32ch;font-size:18px}
 .sv-big .tag{font:700 12px/1 var(--txt);letter-spacing:.09em;text-transform:uppercase;align-self:flex-start;background:var(--ink);color:#fff;padding:8px 11px;border-radius:6px}
-.sv-big .go{font-weight:700}.sv-big .go b{display:inline-block;transition:transform .2s var(--ease)}.sv-big:hover .go b{transform:translateX(5px)}
+.sv-big .go{font-weight:700}.sv-big .go b{display:inline-block;transition:transform .2s var(--ease)}
 .sv-c{grid-column:span 5;background:var(--paper);border:1px solid var(--line)}
 .sv-c:hover{border-color:var(--ink)}
 .sv-c .go{font:700 22px var(--disp);align-self:flex-end}
@@ -401,3 +398,9 @@ footer .aviso{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);
 .brand svg .body{stroke:var(--ink);fill:none;stroke-linecap:round}
 
 h1,h2,h3{text-wrap:balance}.lead,.sub{text-wrap:pretty}
+
+@media (hover:hover) and (pointer:fine){
+  .mot a:hover span:last-child{transform:translateX(4px)}
+  .bento a:hover{transform:translateY(-3px)}
+  .sv-big:hover .go b{transform:translateX(5px)}
+}

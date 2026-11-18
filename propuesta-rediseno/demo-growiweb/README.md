@@ -23,6 +23,13 @@ Regenerar las páginas: `python _construir.py` (en esta carpeta).
 - Una crítica visual independiente sobre capturas. Se corrigieron: escenas de la primera consulta que cargaban tarde, recortes de zona, rótulo tapado por el aro, contraste de matrículas y de la banda de la foto en móvil, tarjeta de servicios en móvil.
 - Evidencia: `centro-ribera/evidencia/v2/` (antes/después, estados del selector, `movimiento-aro.png/.gif` y `movimiento-primera-consulta.png` con tiempos reales en ms).
 
+## Cierre de motion (tras `review-animations`)
+- Con teclado (flechas) no se anima ni el aro ni el panel de zona.
+- El aro se mueve con `translate` (técnica FLIP: se mide dónde está, se coloca en destino y se anima la diferencia), en 300 ms y retomando desde donde está si se lo interrumpe. Ya no anima `left/top`. Sin giro.
+- Hover con movimiento solo con `(hover:hover) and (pointer:fine)`. Resaltado del resumen 0,5 s. Cascada de la primera consulta con 150 ms entre escenas y 0,5 a 0,6 s por escena.
+- No se hicieron: cierre animado de las preguntas frecuentes (sería animación nueva) ni cambio del ancho de los puntos del carrusel. En modo reducido sigue sin movimiento.
+- Material para evaluar: `centro-ribera/evidencia/v3/` (capturas completas de escritorio y móvil, selector, primera consulta, `demo-selector.gif`, `demo-primera-consulta.gif`).
+
 ## Defectos que persisten
 - **Rostros sin rasgos** en todas las ilustraciones: se leen como estilo genérico de IA, no como estilo propio. La piel durazno uniforme desentona con la foto de luz natural.
 - **Foto y vector conviven a medias:** el puente es el arco coral sobre el goniómetro; no hay una pieza que unifique ambos lenguajes.
