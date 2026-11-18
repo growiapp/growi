@@ -644,6 +644,21 @@ body.menu-open{overflow:hidden}
 .sec h2{font-size:clamp(1.9rem,3.6vw,3rem)}
 .cierre h2{font-size:clamp(2.1rem,4.6vw,3.6rem)}
 .ph .sub{font-size:1.12rem}
+/* tablet y móvil grande (hasta 1000 px, donde el hero ya es de una columna): la demo tiene que entrar en el primer pantallazo */
+@media(max-width:1000px){
+  .ctx{display:none}
+  .ph{padding:22px 0 40px}
+  .ph .crumb{display:none}
+  .ph h1{font-size:clamp(1.9rem,5.4vw,2.8rem);line-height:1}
+  .ph .sub{font-size:1.02rem;margin-top:12px;line-height:1.42;max-width:58ch}
+  .ph .cta-row,.ph [style*="flex-wrap"]{margin-top:16px!important}
+  .ph .cta-row .btn.o,.ph [style*="flex-wrap"] .btn.o{display:none}
+  .ph .proof{margin-top:12px}.ph .proof li:nth-child(n+2){display:none}
+  .ph-g{gap:22px}.ph-wide .ph-top{gap:14px;margin-bottom:18px}
+  .sec{padding:64px 0}
+  .hero2{padding:22px 0 14px}.hero2-g{gap:14px}.hero2 .cta-row .btn.o,.hero-proof{display:none}
+  .hero2 h1{font-size:clamp(2.4rem,7.4vw,3.6rem)}.hero2 .sub{max-width:54ch}
+}
 @media(max-width:720px){
   .ph{padding:18px 0 36px}
   .ph .crumb{display:none}

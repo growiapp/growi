@@ -117,11 +117,11 @@ def combo():
 def invitaciones():
     pg = Pg("invitaciones/"); rel = pg.rel
     msg = "Hola Growi, quiero consultar por una invitación digital para mi evento.\n\nTipo de evento:\nFecha:"
-    hero = ('<section class="ph invh" data-sticky-hide aria-labelledby="h1"><div class="w ph-g"><div><p class="crumb"><a href="%s">Growi</a> / <span>Invitaciones digitales</span></p><p class="eyebrow">Una especialización de Growi · para tus eventos</p>'
-            '<h1 id="h1">Tu celebración, en una invitación que <mark class="sweep">se abre como un regalo</mark>.</h1>'
-            '<p class="sub">Invitaciones digitales diseñadas a medida para casamientos, cumpleaños, quinceañeras, eventos de empresa y cualquier otra celebración. Se comparten con un enlace.</p>'
-            '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">%s<a class="btn o" href="#perfiles">Mirá cómo se personaliza ↓</a></div>'
-            '<ul class="proof"><li><span>Con presupuesto y alcance por escrito, sin precio de lista · hoy solo consultas</span></li><li><span>Los invitados confirman por WhatsApp: llega a tu teléfono</span></li></ul></div>'
+    hero = ('<section class="ph invh" data-sticky-hide aria-labelledby="h1"><div class="w ph-g"><div><p class="crumb"><a href="%s">Growi</a> / <span>Invitaciones digitales</span></p><p class="eyebrow">Invitaciones digitales · para tus eventos</p>'
+            '<h1 id="h1">La invitación de tu evento, <mark class="sweep">diseñada a medida</mark>.</h1>'
+            '<p class="sub">Para casamientos, cumpleaños, quinceañeras y eventos de empresa. Se comparte con un enlace y tus invitados confirman por WhatsApp.</p>'
+            '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:26px">%s<a class="btn o" href="#perfiles">Ver cómo se personaliza ↓</a></div>'
+            '<ul class="proof"><li><span>Con presupuesto y alcance por escrito, sin precio de lista · hoy solo consultas</span></li><li><span>Una página propia, online hasta 30 días después del evento</span></li></ul></div>'
             '<div id="demo">%s<p class="cap">Invitaciones de muestra con datos ficticios. Abrilas y recorrelas: cada una se cuenta de otra manera (capítulos, tarjetas o agenda por bloques).</p></div></div></section>\n'
             % (pg.u(""), btn(msg, "inv-hero-whatsapp", "Pedir presupuesto"), inv_frame(rel, "exp", "Invitaciones de muestra: elegí un casamiento, un cumpleaños o un evento de empresa", 700)))
     perf = ('<section class="sec invs" id="perfiles" aria-labelledby="h-pf"><div class="w"><p class="eyebrow">Personalización avanzada, a medida</p><h2 id="h-pf">Cuando tus invitados no viven el día de la misma manera.</h2>'

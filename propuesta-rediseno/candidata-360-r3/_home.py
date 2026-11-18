@@ -55,7 +55,7 @@ def home():
     necesidad = ('<section class="xp" id="necesidad" aria-labelledby="h-xp"><div class="w"><p class="eyebrow">Elegí lo que más se parece a tu caso</p><h2 id="h-xp" class="xp-title">¿Qué necesitás resolver?</h2>'
                  '<div class="xp-tabs" role="tablist" aria-label="Qué necesitás resolver">%s</div>%s%s%s%s</div></section>\n' % (tabs, p_app, p_web, p_flow, p_combo))
     caso = caso_cafe(rel, pg.u("app/cafeterias/"))
-    eventos = ('<section class="ev3" aria-labelledby="h-evt"><div class="w ev3-g"><div><p class="eyebrow">Para tus celebraciones · aparte del negocio</p><h2 id="h-evt">Invitaciones digitales que se abren como un regalo.</h2>'
+    eventos = ('<section class="ev3" aria-labelledby="h-evt"><div class="w ev3-g"><div><p class="eyebrow">Para tus celebraciones · aparte del negocio</p><h2 id="h-evt">Invitaciones digitales para tus eventos.</h2>'
                '<p class="lead">Casamientos, cumpleaños, quinceañeras y eventos de empresa: una invitación a medida que se comparte con un enlace y que cada invitado recorre a su manera.</p>'
                '<p class="xp-pr" style="margin-top:20px">Con presupuesto · sin precio de lista</p>'
                '<div class="xp-cta" style="margin-top:20px"><a class="btn k" href="%s" data-track="home-invitaciones-link">Ver las invitaciones →</a>%s</div></div>%s</div></section>\n'
