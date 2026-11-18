@@ -1,55 +1,61 @@
-# Auditoría de exactitud comercial de GrowiFlow. Uso: python _docs_r2c.py
+# Inventario de GrowiFlow y conciliacion del copy. Uso: python _docs_r2c.py
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _docs_r2 import page, tabla, write
 
-A = "<b>1 · Implementada y comprobada</b>"
-B = "<b>2 · Entregable por configuración o desarrollo</b> (pendiente de confirmar)"
-C = "<b>3 · Depende de permisos de terceros</b>"
-D = "<b>4 · Conceptual o no disponible</b>"
-
 def auditoria():
-    cap = [
-        ["Formulario web → planilla", B, "Patrón estándar; no es imposible por no estar en el repositorio (el sitio es estático y las entregas viven fuera). No hay prueba de una entrega real.", "Cuenta de planilla del cliente"],
-        ["Aviso por mail al entrar una consulta", B, "Estándar a partir de una planilla o formulario.", "Mail del cliente"],
-        ["Recordatorios por mail desde una planilla", B, "Estándar. Con calendario como fuente, depende de cuál.", "Mail; planilla o calendario del cliente"],
-        ["Reportes armados con IA a partir de una planilla", B, "Entregable. El costo de uso de la IA ya se informa aparte.", "Proveedor de IA"],
-        ["Automatización a medida", B, "Ya se presenta como «te decimos si se puede y cuánto sale». Es honesto.", "Según el caso"],
-        ["Recordatorios y reportes <b>por WhatsApp</b>", C, "Requieren la API de WhatsApp Business: plantillas aprobadas por Meta y costo por mensaje (ya aclarado en el sitio).", "Meta; número habilitado; posible proveedor"],
-        ["WhatsApp <b>entrante</b> anotado en una planilla", C, "Posible con la API y webhooks, incluso conviviendo con la app de WhatsApp Business (fuente de terceros). Requiere onboarding de Meta, que el propio sitio dice no tener aún para el bot.", "Meta; número habilitado; proveedor"],
-        ["Instagram <b>entrante</b> anotado en una planilla", C, "Requiere cuenta profesional vinculada a una página de Facebook y app de Meta; para cuentas de terceros, revisión de la app y verificación del negocio.", "Meta (revisión de app)"],
-        ["Reportes que leen solos los datos de GrowiApp («se activa directo»)", D, "No hay conexión documentada. Hasta confirmarla, es conceptual.", "Acceso a los datos de GrowiApp"],
-        ["Bot de WhatsApp para preguntas frecuentes", D, "El sitio ya lo marca «Próximamente», sin fecha. Correcto.", "Meta"],
-        ["GrowiFlow conectado automáticamente con GrowiApp o GrowiWeb (Combo)", D, "No hay conexión documentada entre productos. La candidata ya no la insinúa.", "Desarrollo propio"],
-        ["Ninguna capacidad de GrowiFlow", A, "Nada de GrowiFlow está comprobado en el repositorio. Si hay entregas hechas, no figuran acá.", "—"]]
-    rutas = [
-        ["flow/index.html:13-14, :23-24, :286", "«Lo que hacés a mano todos los días, que se haga solo»", "Promesa general de automatización total", "«Las tareas que repetís todos los días, armadas a medida»"],
-        ["flow/index.html:87 (descripción estructurada), :389", "«Lo que llega por WhatsApp, Instagram o un formulario se anota solo en una planilla, con aviso al entrar algo nuevo»", "Presenta como disponible (3) y (4) la captura de WhatsApp e Instagram", "«Las consultas de un formulario se anotan en una planilla, con aviso por mail. WhatsApp e Instagram se evalúan caso por caso»"],
-        ["flow/index.html:287, :371, :373", "«El aviso le llega solo al cliente» · «Sale por WhatsApp o por mail, sin que nadie tenga que acordarse»", "WhatsApp sin la condición de Meta en la promesa (la aclaración está solo en el pie de la sección)", "«Sale por mail o, con una cuenta habilitada por Meta, por WhatsApp»"],
-        ["flow/index.html:374", "«Toma los datos de la planilla o el calendario que ya usás»", "Calendario sin confirmar", "«…de la planilla que ya usás (el calendario, según lo que se confirme en el presupuesto)»"],
-        ["flow/index.html:388, :391", "«Ningún pedido se te pierde en el chat» · «Ves de un vistazo qué contestaste y qué falta»", "Absoluto, e implica leer las respuestas del chat", "«Tus pedidos y consultas quedan anotados en una planilla» · «Marcás en la planilla qué contestaste y ves qué falta»"],
-        ["flow/index.html:390", "«Te avisa apenas entra algo nuevo»", "Sin canal", "«Te avisa por mail apenas entra una consulta nueva»"],
-        ["flow/index.html:453", "«Queda andando solo»", "Absoluto", "«Queda funcionando»"],
-        ["flow/index.html:490, :514; app/index.html:896", "«Se activa directo» con los datos de GrowiApp", "Conexión no documentada", "«Lo preparamos con los datos que ya cargaste» (si no se confirma la lectura automática: «a partir de un export o una planilla»)"],
-        ["index.html:337", "«Los avisos a tus clientes salen solos… Los pedidos que entran por WhatsApp quedan anotados»", "Presenta como disponible la captura de WhatsApp", "«Avisos a tus clientes por mail o WhatsApp y un resumen de ventas, a medida de tu negocio. Los pedidos de un formulario quedan anotados en una planilla»"],
-        ["app/index.html:736", "«…que los avisos de turno salgan solos»", "Leve: remite a Recordatorios", "Sin cambio si se corrige Recordatorios"]]
-    c = ('<p class="eyebrow">Exactitud comercial</p><h1>Auditoría de las promesas de GrowiFlow</h1>'
-         '<div class="aviso"><b>Conclusión.</b> Que algo no esté en el repositorio estático no prueba que sea imposible ni que no exista: solo prueba que acá no hay evidencia. Se clasificó cada capacidad en cuatro clases. Lo que depende de Meta (WhatsApp, Instagram) no puede presentarse como disponible; lo que es estándar (formulario a planilla, avisos por mail) puede ofrecerse como servicio una vez que quien opera lo confirme. No se modificó el sitio publicado.</div>'
-         '<h2>1. Clasificación de capacidades</h2>' + tabla(["Capacidad", "Clase", "Fundamento", "Dependencias"], cap, "mx") +
-         '<h2>2. Afirmaciones del L1 publicado que exceden lo comprobado, y texto propuesto</h2><p class="lead">Son cambios de copy preparados, <b>no aplicados</b> en producción. No tocan precios, avisos legales ni condiciones.</p>' +
-         tabla(["Ruta (L1)", "Texto actual", "Problema", "Texto propuesto"], rutas, "mx") +
-         '<h2>3. En la candidata</h2><ul class="bul">'
-         '<li>Ya corregido: el panel y la ilustración de GrowiFlow parten del formulario, ponen la condición de Meta junto a «WhatsApp» y se declaran ilustrativos y no verificados; el Combo dice que el paso de agenda es manual.</li>'
-         '<li>Corregido en esta ronda: la pestaña «Que los avisos salgan solos» pasó a «Tareas repetitivas, a medida», y el título del panel a «Menos tareas repetitivas, armadas a medida».</li>'
-         '<li>Pendiente de confirmación: las frases del panel que describen avisos por mail o WhatsApp como parte del servicio (siguen sujetas a la consulta de abajo).</li></ul>'
-         '<h2>4. Una sola consulta para quien opera</h2><div class="aviso"><b>¿Cuáles de estas capacidades entregás hoy, y con qué herramienta?</b> Respondé sí o no, y la herramienta, para cada una: '
-         '(a) formulario web → planilla; (b) aviso por mail al entrar una consulta; (c) recordatorios por mail desde una planilla; (d) recordatorios por calendario; (e) recordatorios y reportes por WhatsApp (¿con la API oficial de Meta?, ¿a nombre de quién?); '
-         '(f) WhatsApp entrante anotado en una planilla; (g) Instagram entrante anotado en una planilla; (h) reportes que leen solos los datos de GrowiApp; (i) alguna entrega real y verificada de GrowiFlow que se pueda citar. '
-         'Con esa lista se confirma el texto propuesto o se ajusta.</div>'
-         '<p class="note">Fuentes consultadas: <a href="https://developers.facebook.com/documentation/business-messaging/instagram-messaging/app-review">Meta: revisión de app para mensajería de Instagram</a>, '
-         '<a href="https://developers.facebook.com/documentation/business-messaging/messenger-platform/overview">Meta: Messenger Platform</a> y '
-         '<a href="https://docs.360dialog.com/partner/waba-management/whatsapp-coexistence">documentación de un proveedor sobre la coexistencia de WhatsApp Business y la API</a> (fuente de terceros).</p>')
-    write("auditoria-flow.html", page("Auditoría de GrowiFlow", c, "auditoria-flow.html"))
+    inv = [
+        ["Sincronizar GrowiApp con una planilla de Google (ventas, turnos, clientes, reservas, gastos)",
+         "<b>Implementada</b> (código real, rubro cafetería, versión 7)",
+         "<code>Código AppsScript.txt</code> dentro de <code>Sitema de gestión Cafetería.zip</code> (carpeta Growi de Documentos). Leído completo (405 líneas); no ejecutado.",
+         "Pedidos HTTP de la app con la acción (<code>addVentas</code>, <code>updateClientes</code>…)", "Filas en 9 hojas: Ventas, Menu, Turnos, Clientes, Reservas, Gastos, Operadores, MesasActivas, TurnoActivo",
+         "Google Sheets y Apps Script del cliente", "No envía mails, reportes, recordatorios ni WhatsApp. El acceso es «Cualquiera»: la URL es el único secreto, sin autenticación propia",
+         "«Tus ventas y turnos quedan también en una planilla tuya», a medida"],
+        ["Enlace de WhatsApp con el mensaje armado",
+         "<b>Demo funcional</b> con prueba automática",
+         "<code>invitaciones/enlaces.js</code> y <code>prototipos/pruebas/confirmacion-whatsapp/prueba-unitaria.js</code>: 8 pruebas, todas pasan (ejecutadas hoy, local, datos sintéticos)",
+         "Teléfono y datos del evento", "URL <code>wa.me</code> bien codificada, con rechazo de entradas inválidas", "Ninguna (abre WhatsApp)",
+         "Es un enlace que toca la persona: no envía ni lee mensajes", "«Botón que abre WhatsApp con el mensaje listo»"],
+        ["Actualización programada con aviso si falla (tipo de cambio del sitio)",
+         "<b>Implementada</b> (workflow definido); sin ejecución en este clon",
+         "<code>.github/workflows/tipo-de-cambio.yml</code> y <code>.github/scripts/actualizar-cambio.mjs</code>. No se ejecutó: consulta un servicio externo y hace push",
+         "API pública del dólar oficial", "Precios recalculados y un issue si falla", "GitHub Actions; servicio de cotización",
+         "Es interna del sitio, no un paquete de cliente", "No se vende; muestra criterio en automatización programada con alertas"],
+        ["Pedidos y consultas en una planilla (formulario → planilla)",
+         "<b>Pendiente de evidencia</b>. El propietario la declara «en vivo, sobre Apps Script» (propuesta interna, 19/09/2026)",
+         "Sin artefacto específico en el workspace. La técnica sí está probada en la primera fila", "Formulario del cliente", "Fila nueva en una planilla", "Apps Script / Google Sheets",
+         "Sin evidencia de aviso por mail ni de captura desde WhatsApp o Instagram", "<b>A medida:</b> «lo que entra por tu formulario queda anotado en una planilla»"],
+        ["Recordatorios automáticos",
+         "<b>Pendiente de evidencia</b>. Declarado «en vivo» y sin depender de Meta",
+         "Sin artefacto en el workspace", "Planilla o calendario con fecha y contacto", "Aviso al cliente", "Por mail: Apps Script. Por WhatsApp: API de Meta",
+         "No consta el canal ni la fuente de datos", "<b>A medida</b> por mail; <b>condicionado</b> si es por WhatsApp"],
+        ["Reportes automáticos con IA",
+         "<b>Pendiente de evidencia</b>. Declarado «en vivo»",
+         "Sin artefacto en el workspace", "Planilla; datos de GrowiApp", "Resumen periódico", "Proveedor de IA (costo de uso aparte); mail o WhatsApp",
+         "Que lea solo los datos de GrowiApp no está demostrado: hoy solo consta la sincronización a planilla", "<b>A medida</b> a partir de una planilla"],
+        ["WhatsApp o Instagram entrante anotado en una planilla", "<b>No demostrada</b>",
+         "Sin artefacto", "Mensajes entrantes", "Fila en una planilla", "API de WhatsApp Business o de mensajería de Instagram (permisos y revisión de Meta)", "Sin integración operativa",
+         "<b>Condicionada</b>: «según los permisos de Meta»"],
+        ["Bot de WhatsApp para preguntas frecuentes", "<b>Pendiente</b> (aprobación de Meta, sin fecha)", "El sitio vigente ya lo marca «Próximamente»", "—", "—", "Meta", "No disponible", "No se promete"]]
+    con = [
+        ["«Pedidos y consultas del formulario quedan anotados solos en una planilla» (candidata); L1: «lo que llega por WhatsApp, Instagram o un formulario se anota solo»", "Ofrecible a medida (formulario). WhatsApp e Instagram: condicionada", "Candidata corregida. L1: parche"],
+        ["«Recordatorios de turno que salen solos, por mail o WhatsApp»", "Ofrecible a medida (mail); condicionada (WhatsApp)", "Candidata: se aclara «según los permisos de Meta» en el paso del ejemplo. L1: parche"],
+        ["«Un resumen de tus ventas, armado y enviado cada semana»", "Ofrecible a medida", "Candidata corregida. L1: «se activa directo» pasa a «lo armamos a partir de ellos»"],
+        ["«Ningún pedido se te pierde en el chat», «Queda andando solo», «Ves qué contestaste» (L1)", "No demostrada (absolutos; implica leer respuestas del chat)", "Solo L1: parche"],
+        ["Ilustración de GrowiFlow en la home", "Ilustrativa: se rotula como ejemplo con datos ficticios, hecho a medida", "Candidata: sin la frase «no es funcionalidad verificada», que hacía parecer que Growi no sabe hacerlo"],
+        ["Combo: «El sitio y el sistema no se conectan solos: el puente es el WhatsApp»", "Demostrada como descripción honesta", "Sin cambio"],
+        ["«Cierre de caja automático» (GrowiApp)", "Demostrada en la demo de GrowiApp", "Sin cambio"],
+        ["Caso y cita de Colo Café", "No demostrada la autorización (ver más abajo)", "Candidata: retirado. L1: parche lo retira"]]
+    c = ('<p class="eyebrow">GrowiFlow</p><h1>Qué está comprobado y qué se ofrece</h1>'
+         '<div class="aviso"><b>Criterio.</b> El propietario confirmó que GrowiFlow tiene automatizaciones o demos técnicas comprobadas. Acá se registra solo lo que tiene evidencia verificable en el workspace; el resto queda <b>pendiente de evidencia</b>, sin inventarla y sin darlo por inexistente. Nada de esto autoriza contratar ni cobrar: el aviso L1 sigue vigente.</div>'
+         '<h2>1. Inventario</h2>' + tabla(["Capacidad", "Estado", "Evidencia", "Entradas", "Salidas", "Dependencias", "Límites", "Oferta honesta"], inv, "mx") +
+         '<h2>2. Conciliación del copy</h2><p class="lead">Clases: <b>demostrada</b>, <b>ofrecible a medida</b>, <b>condicionada</b> (permisos o proveedores) y <b>no demostrada</b>.</p>' +
+         tabla(["Afirmación", "Clase", "Tratamiento"], con, "mx") +
+         '<p class="note">El parche para el sitio vigente está en <code>revision/parche-L1-NO-APLICADO.patch</code> (14 bloques, 4 archivos). Verificado con <code>git apply --check</code>; <b>no está aplicado</b>.</p>'
+         '<h2>3. Colo Café</h2><p class="lead">La cita atribuida a «Rodrigo, dueño de Colo Café» entró al sitio el 19/09/2026 (commit <code>4b9192b</code>). El workspace confirma una relación técnica real (existe el proyecto <code>colocafe</code> con la aplicación y su base de datos), pero <b>no hay autorización escrita para citar textualmente ni para usar el nombre y el logo</b>. Una relación comercial no equivale a esa autorización. Se retiró la cita, el nombre y el logo de la candidata y el parche de L1 los retira hasta contar con ese permiso.</p>'
+         '<h2>4. Consulta única para el propietario</h2><div class="aviso">(1) Para Pedidos, Recordatorios y Reportes: ¿dónde están los artefactos (script, exportación del flujo o demo grabada) y se usaron con un cliente real o con datos de prueba? (2) ¿Por qué canal salen hoy los recordatorios y los reportes: mail, enlace de WhatsApp o la API de Meta? (3) ¿Hay autorización escrita de Colo Café para citar el texto, el nombre y el logo? Con eso se confirma o se ajusta el copy.</div>'
+         '<p class="note">Fuentes técnicas externas: <a href="https://developers.facebook.com/documentation/business-messaging/instagram-messaging/app-review">Meta: revisión de app para mensajería de Instagram</a> y <a href="https://developers.facebook.com/documentation/business-messaging/messenger-platform/overview">Meta: Messenger Platform</a>.</p>')
+    write("auditoria-flow.html", page("GrowiFlow: capacidades y copy", c, "auditoria-flow.html"))
 
 if __name__ == "__main__":
     auditoria()

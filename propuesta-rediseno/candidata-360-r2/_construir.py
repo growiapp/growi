@@ -117,20 +117,20 @@ def flow_stage():
     wa = ('<div class="wa sq-wa" aria-hidden="true"><p class="wa-h">Mensajes del negocio</p>'
           '<div class="msg sq" data-from="1"><span class="mt">Hola, ¿tienen turno el sábado a la mañana?</span><small>Julián · formulario del sitio · lunes 9:12</small></div>'
           '<div class="msg out sq" data-from="3"><span class="mt">Julián, te esperamos el sábado a las 11:15.</span><small>Lo respondés vos · lunes 9:30</small></div>'
-          '<div class="msg out auto sq" data-from="4"><span class="mt">Hola Julián, te recordamos tu turno de mañana a las 11:15.</span><small>Automático · por mail o WhatsApp · viernes 9:00</small></div>'
-          '<div class="msg out auto sq" data-from="5"><span class="mt"><b>Resumen de la semana</b><br>12 turnos · 1 ausencia · lo más pedido: Control</span><small>Automático · por mail o WhatsApp · viernes 18:00</small></div></div>')
+          '<div class="msg out auto sq" data-from="4"><span class="mt">Hola Julián, te recordamos tu turno de mañana a las 11:15.</span><small>Automático · viernes 9:00</small></div>'
+          '<div class="msg out auto sq" data-from="5"><span class="mt"><b>Resumen de la semana</b><br>12 turnos · 1 ausencia · lo más pedido: Control</span><small>Automático · viernes 18:00</small></div></div>')
     sheet = ('<div class="sheet" aria-hidden="true"><p class="ag-t">Planilla de turnos <small>(datos ficticios)</small></p>'
              '<div class="sheet-h"><span>Quién</span><span>Qué</span><span>Estado</span></div>'
              '<div class="sheet-r"><span>Marta</span><span>Control</span><span>Atendida</span></div>'
              '<div class="sheet-r sq" data-from="2"><span>Julián</span><span>Turno sábado</span><span class="st"><i data-at="2">Nueva</i><i data-at="3">Confirmada 11:15</i><i data-at="4">Recordada ✓</i></span></div>'
              '<div class="sheet-r"><span>Lucía</span><span>Control</span><span>Confirmada</span></div></div>')
     caps = ["Un cliente envía una consulta desde el formulario de tu sitio.",
-            "La consulta queda anotada en tu planilla, sin copiarla a mano. Con un formulario se arma con herramientas estándar.",
+            "La consulta queda anotada en tu planilla, sin copiarla a mano.",
             "Vos respondés y confirmás el turno, como siempre. En el ejemplo, la planilla lo refleja.",
-            "El día anterior sale el recordatorio. Por mail se arma con la planilla; por WhatsApp requiere una cuenta aprobada por Meta y su costo de mensajes.",
-            "Cada semana te llega un resumen por mail o WhatsApp (mismas condiciones): lo que pasó, sin armarlo vos."]
+            "El día anterior sale el recordatorio, sin que lo mandes. Por WhatsApp, según los permisos de Meta.",
+            "Cada semana te llega un resumen de lo que pasó, ya armado."]
     return ('<div class="seqx" data-seq>' + seq_top(pasos) + '<div class="seq-body">' + wa + '<div class="sq-arrow" aria-hidden="true">→</div>' + sheet + '</div>'
-            + seq_cap(caps, "Ilustración de un proceso posible, con datos ficticios: no es una captura de un cliente ni una funcionalidad ya verificada. Si la consulta llega por WhatsApp o Instagram, anotarla sola depende de cuentas y aprobaciones de Meta: se evalúa y se confirma por escrito antes de empezar.") + '</div>')
+            + seq_cap(caps, "Ejemplo ilustrativo con datos ficticios. Cada automatización se arma a medida y se prueba con vos antes de dejarla andando. Anotar solas las consultas de WhatsApp o Instagram depende de permisos de Meta.") + '</div>')
 
 def combo_stage():
     pasos = ["Entra al sitio", "Te escribe", "Lo agendás", "Se atiende y se registra"]
@@ -170,15 +170,15 @@ def home():
                   "desde %s/mes + %s de puesta en marcha" % (d(15), d(49)),
                   '<a class="btn k sm" href="app/" data-track="home-xp-app">Ver GrowiApp →</a><a class="btn o sm" href="%sapp/#demo" data-track="home-xp-app-demo">Probar la demo completa</a>' % sroot,
                   '<div class="appwrap"><iframe class="appdemo" src="demos/app.html" title="Demo interactiva de GrowiApp: elegí tu rubro y mirá el panel" height="760" loading="lazy"></iframe></div>'
-                  '<p class="cap">GrowiApp: demo real, con datos ilustrativos. Elegí un rubro y los datos cambian.</p>', '<div class="caso-in"><img src="assets/img/colocafe-logo.png" alt="Logo de Colo Café" width="48" height="48" loading="lazy"><div><p class="proof-k">Caso real · Colo Café</p><blockquote>«Necesitábamos ordenar ventas, reservas y caja sin depender de planillas. Growi nos ayudó a tener una operación más clara y fácil de seguir.»</blockquote><cite>Rodrigo, dueño de Colo Café</cite></div></div>')
+                  '<p class="cap">GrowiApp: demo real, con datos ilustrativos. Elegí un rubro y los datos cambian.</p>')
     p_web = panel("web", False, "Un sitio que presenta tu negocio y facilita las consultas.",
                   ["Un sitio que muestra lo que hacés y deja pedir turno o consultar", "Lo dejamos publicado: vos no tocás nada técnico", "Plantilla adaptada a tu rubro o diseño a medida"],
                   ["Precio y alcance por escrito, antes de empezar", "Revisiones incluidas según el plan", "7 días de ajustes sin cargo desde la entrega"],
                   "desde %s, pago único · dominio y alojamiento aparte" % d(200),
                   '<a class="btn k sm" href="web/" data-track="home-xp-web">Ver GrowiWeb →</a>', web_stage(""))
     p_flow = panel("flow", False, "Menos tareas repetitivas, armadas a medida.",
-                   ["Las consultas de un formulario se anotan en una planilla; WhatsApp e Instagram se definen caso por caso", "El aviso del turno sale solo, por mail o por WhatsApp (este último con requisitos de Meta)", "Un resumen de tus ventas por mail o WhatsApp"],
-                   ["Lo armamos nosotros y lo dejamos andando", "No hace falta tener GrowiApp ni GrowiWeb", "7 días de ajustes sin cargo desde la entrega"],
+                   ["Los pedidos y consultas de tu formulario quedan anotados solos en una planilla", "Recordatorios de turno que salen solos, por mail o WhatsApp", "Un resumen de tus ventas, armado y enviado cada semana"],
+                   ["Lo armamos a medida de tu negocio y lo probamos con vos", "No hace falta tener GrowiApp ni GrowiWeb", "7 días de ajustes sin cargo desde la entrega"],
                    "pago único · pedidos y consultas desde %s, reportes y recordatorios %s" % (d(79), d(89)),
                    '<a class="btn k sm" href="%sflow/" data-track="home-xp-flow">Ver GrowiFlow →</a>' % sroot, flow_stage(),
                    '<p class="soon-n"><span class="pill">Próximamente</span> Bot de WhatsApp para preguntas frecuentes. Todavía no está disponible.</p>')
