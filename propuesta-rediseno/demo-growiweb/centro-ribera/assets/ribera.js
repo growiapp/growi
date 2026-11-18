@@ -16,31 +16,29 @@
     p.appendChild(b);
   })();
 
-  /* ---------- Home: selector de zona ---------- */
+  /* ---------- Home: el cuerpo es el selector ---------- */
   var sel = $("[data-sel]");
   if (sel) {
-    var panels = $$("[data-zona]");
-    var dots = $$(".dot");
-    var show = function (z, animate) {
-      panels.forEach(function (p) {
-        var on = p.getAttribute("data-zona") === z;
-        p.hidden = !on;
-        if (on && animate) setTimeout(function () { window.__medir && window.__medir($("svg.ilu", p)); }, 0);
-      });
-      dots.forEach(function (d) { d.classList.toggle("on", d.getAttribute("data-z") === z); });
+    var panels = $$("[data-zona]"), ringEl = $("[data-ring]", sel);
+    var show = function (z, anim) {
+      panels.forEach(function (p) { p.hidden = p.getAttribute("data-zona") !== z; });
+      var r = $('input[value="' + z + '"]', sel), pt = r && r.parentNode;
+      if (!pt) return;
+      ringEl.setAttribute("style", pt.getAttribute("style"));
+      if (anim && !reduce) { ringEl.classList.remove("go"); void ringEl.offsetWidth; ringEl.classList.add("go"); }
     };
-    sel.addEventListener("change", function (e) { if (e.target.name === "zona") show(e.target.value, true); });
-    dots.forEach(function (d) {
-      d.addEventListener("click", function () {
-        var z = d.getAttribute("data-z");
-        var r = $('input[name="zona"][value="' + z + '"]', sel);
-        if (r) { r.checked = true; show(z, true); }
-      });
+    sel.addEventListener("change", function (e) {
+      if (e.target.name !== "zona") return;
+      show(e.target.value, true);
+      var hp = $(".hero-p");
+      if (hp && window.matchMedia("(max-width:980px)").matches) {
+        var y = hp.getBoundingClientRect().top + window.pageYOffset - 76;
+        if (hp.getBoundingClientRect().top > window.innerHeight * 0.6) window.scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" });
+      }
     });
     var first = $('input[name="zona"]:checked', sel);
     show(first ? first.value : "rodilla", false);
   }
-
 
   /* ---------- Movimiento con significado ----------
      1) Medir: el miembro recorre el rango mientras el arco se dibuja y el número cuenta.
@@ -92,28 +90,24 @@
   window.__estado = function (root, e, opts) { var st = preparar(root, opts); if (!st) return; if (root.__stop) root.__stop(); e >= 1 ? st.fin() : st.set(e); };
   window.__medir = medir;
 
-  /* selector de la home: la figura visible mide su movimiento */
-  var playFig = function (panel) { medir($("svg.ilu", panel)); };
-  if (reduce) { $$("[data-replay]").forEach(function (b) { b.hidden = true; }); }
-  document.addEventListener("click", function (e) {
-    var b = e.target.closest && e.target.closest("[data-replay]");
-    if (b) playFig(b.closest("[data-zona]"));
-  });
-
-  /* primera consulta: "Medimos" mide y "Armamos el plan" suma la meta acordada */
+  /* primera consulta: cada escena entra cuando llegás a ella; en móvil, indicador del carrusel */
   var seq = $("[data-seq]");
-  if (seq && !reduce && "IntersectionObserver" in window) {
-    var gs = $$("svg.glyph", seq), gm = gs[1], gp = gs[2];
-    var goal = gp ? $$(".goal,.goal-t", gp) : [];
-    if (gm) window.__estado(gm, 0);
-    goal.forEach(function (g) { g.style.opacity = "0"; });
-    var io = new IntersectionObserver(function (en) {
-      if (!en[0].isIntersecting) return;
-      io.disconnect();
-      if (gm) medir(gm, { dur: 900 });
-      setTimeout(function () { goal.forEach(function (g) { g.style.transition = "opacity .6s"; g.style.opacity = "1"; }); }, 1200);
-    }, { threshold: 0.4 });
-    io.observe(seq);
+  if (seq) {
+    var hs = $$(".hs", seq), dts = $$(".dots i");
+    if (seq.scrollWidth > seq.clientWidth + 2) seq.tabIndex = 0;
+    var upd = function () {
+      var step = hs[1].offsetLeft - hs[0].offsetLeft, i = step > 0 ? Math.round(seq.scrollLeft / step) : 0;
+      dts.forEach(function (d, n) { d.classList.toggle("on", n === Math.min(i, hs.length - 1)); });
+    };
+    seq.addEventListener("scroll", upd, { passive: true }); upd();
+    if (!reduce && "IntersectionObserver" in window) {
+      seq.classList.add("js-seq");
+      var io = new IntersectionObserver(function (en) {
+        var k = 0;
+        en.forEach(function (x) { if (x.isIntersecting) { x.target.style.setProperty("--d", (k++ * 0.42) + "s"); x.target.classList.add("in"); io.unobserve(x.target); } });
+      }, { threshold: 0.3 });
+      hs.forEach(function (h, n) { h.style.transitionDelay = ""; io.observe(h); });
+    }
   }
 
   /* barra fija móvil: aparece cuando el selector ya pasó */
@@ -122,59 +116,35 @@
     new IntersectionObserver(function (en) { fb.classList.toggle("off", en[0].isIntersecting); }).observe(selEl);
   }
 
-  /* servicios: cada zona mide su rango al entrar en pantalla (una vez) */
-  var zn = $$(".zn svg.ilu");
-  if (zn.length && !reduce && "IntersectionObserver" in window) {
+  /* servicios: el aro marca la zona al entrar en pantalla (una vez) */
+  var zs = $$(".zn .rg");
+  if (zs.length && !reduce && "IntersectionObserver" in window) {
+    $(".zonas").classList.add("js-z");
     var iz = new IntersectionObserver(function (en) {
-      en.forEach(function (x) { if (x.isIntersecting) { iz.unobserve(x.target); medir(x.target); } });
+      en.forEach(function (x) { if (x.isIntersecting) { iz.unobserve(x.target); x.target.classList.add("go"); } });
     }, { threshold: 0.6 });
-    zn.forEach(function (s) { window.__estado(s, 0); iz.observe(s); });
+    zs.forEach(function (r) { iz.observe(r); });
   }
 
-  /* escena del hero */
+  /* el centro: un arco anclado al goniómetro de la foto, sin número */
   var scene = $("[data-scene]");
   if (scene) {
     var svg = $("[data-scene-svg]", scene), g = $("[data-g]", scene), img = $("img", scene);
-    var pins = $$(".pin", scene), cards = $$(".pincard", scene), lblS = $("[data-lbl]", scene);
-    var NW = 1672, NH = 941, map = { s: 1, ox: 0, oy: 0 };
+    var NW = 1672, NH = 941;
     var place = function () {
-      var W = scene.clientWidth, H = scene.clientHeight, im = $("picture", scene).getBoundingClientRect();
-      var ph = im.height || H, s = Math.max(W / NW, ph / NH);
-      map = { s: s, ox: (W - NW * s) / 2, oy: ph - NH * s };
-      g.setAttribute("transform", "translate(" + map.ox + " " + map.oy + ") scale(" + map.s + ")");
+      var W = scene.clientWidth, ph = $("picture", scene).getBoundingClientRect().height || scene.clientHeight, s = Math.max(W / NW, ph / NH);
+      g.setAttribute("transform", "translate(" + (W - NW * s) / 2 + " " + (ph - NH * s) + ") scale(" + s + ")");
       svg.setAttribute("viewBox", "0 0 " + W + " " + ph);
       svg.style.height = ph + "px";
-      var at = function (el) { el.style.left = (map.ox + parseFloat(el.getAttribute("data-x")) * map.s) + "px"; el.style.top = (map.oy + parseFloat(el.getAttribute("data-y")) * map.s) + "px"; };
-      pins.forEach(at); at(lblS);
-      cards.forEach(function (c) { if (!c.hidden) openCard(c.getAttribute("data-card"), true); });
     };
-    var openCard = function (k, keep) {
-      cards.forEach(function (c) { var on = c.getAttribute("data-card") === k; c.hidden = !on; });
-      pins.forEach(function (p) { p.setAttribute("aria-expanded", p.getAttribute("data-pin") === k ? "true" : "false"); });
-      var p = $('.pin[data-pin="' + k + '"]', scene), c = $('[data-card="' + k + '"]', scene);
-      if (!p || !c) return;
-      if (window.matchMedia("(max-width:720px)").matches) { c.style.left = ""; c.style.top = ""; return; }
-      var W = scene.clientWidth, H = $("picture", scene).clientHeight, x = parseFloat(p.style.left), y = parseFloat(p.style.top), cw = c.offsetWidth, ch = c.offsetHeight;
-      var onLeft = p.getAttribute("data-side") === "l";
-      var left = onLeft ? x - 26 - cw : x + 26; if (left + cw > W - 12) left = x - 26 - cw; if (left < 12) left = x + 26; if (left + cw > W - 12 || left < 12) left = Math.max(12, Math.min(W - cw - 12, x - cw / 2));
-      var top = y - ch / 2; top = Math.max(12, Math.min(H - ch - 12, top));
-      c.style.left = left + "px"; c.style.top = top + "px";
-    };
-    var closeCards = function () { cards.forEach(function (c) { c.hidden = true; }); pins.forEach(function (p) { p.setAttribute("aria-expanded", "false"); }); };
-    pins.forEach(function (p) {
-      p.addEventListener("click", function (e) {
-        e.stopPropagation();
-        var k = p.getAttribute("data-pin"), open = p.getAttribute("aria-expanded") === "true";
-        if (open) closeCards(); else openCard(k);
-        if (k === "eval" && !open) medir(svg, { label: lblS });
-      });
-    });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeCards(); });
-    document.addEventListener("click", function (e) { if (!e.target.closest(".pincard")) closeCards(); });
     place();
     if (window.ResizeObserver) new ResizeObserver(place).observe(scene); else window.addEventListener("resize", place);
-    var go = function () { medir(svg, { label: lblS, dur: 1100 }); };
-    if (img && !img.complete) img.addEventListener("load", function () { place(); go(); }); else go();
+    if (img && !img.complete) img.addEventListener("load", place);
+    if (!reduce && "IntersectionObserver" in window) {
+      window.__estado(svg, 0);
+      var isc = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { isc.disconnect(); medir(svg, { dur: 1300 }); } }, { threshold: 0.45 });
+      isc.observe(scene);
+    }
   }
 
   /* ---------- Turnos: recorrido simulado ---------- */
@@ -277,12 +247,17 @@
     set("motivo", motivoTxt());
     set("prof", S.prof === "0" ? "Sin preferencia" : PR[+S.prof - 1].nombre);
     set("cuando", S.fecha && S.hora ? fechaCorta(S.fecha) + ", " + S.hora : "");
-    $$("[data-ilu]", tw).forEach(function (f) {
-      var on = f.getAttribute("data-ilu") === S.zona, was = !f.hidden;
-      f.hidden = !on;
-      if (on && !was) window.__medir($("svg.ilu", f));
-    });
-    var ph = $("[data-ilu-vacio]", tw); if (ph) ph.hidden = !!S.zona;
+    var zf = $("[data-zfig]", tw), ph = $("[data-ilu-vacio]", tw);
+    if (zf) {
+      zf.hidden = !S.zona;
+      if (S.zona && zf.__z !== S.zona) {
+        var pt = ZN[S.zona].pt, f = $(".zfig", zf), rg = $(".rg", zf);
+        f.style.setProperty("--x", pt[0]); f.style.setProperty("--y", pt[1]); f.style.setProperty("--s", pt[2]);
+        if (!reduce) { rg.classList.remove("go"); void rg.offsetWidth; rg.classList.add("go"); }
+        zf.__z = S.zona;
+      }
+    }
+    if (ph) ph.hidden = !!S.zona;
   }
 
   function go(n, focus) {

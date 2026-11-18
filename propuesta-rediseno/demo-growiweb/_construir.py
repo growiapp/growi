@@ -2,7 +2,6 @@
 # Uso: python _construir.py   (escribe centro-ribera/*.html)
 import json, math, os, html
 from urllib.parse import quote
-import _ilus as I
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "centro-ribera")
 E = html.escape
@@ -46,34 +45,11 @@ FAQ = [
     ("¿Cuántas sesiones voy a necesitar?", "Depende de cada caso. Lo definimos con vos después de la evaluación y no prometemos plazos."),
     ("¿Cómo cambio o cancelo un turno?", "Avisanos por WhatsApp con 24 horas de anticipación y te ofrecemos otro horario."),
 ]
-AVISO_IA = "La fotografía del encabezado de la página de inicio es una imagen ilustrativa generada con IA. " if os.environ.get("HERO", "B") == "B" else ""
+AVISO_IA = "Las imágenes de la página de inicio (fotografía del centro e ilustraciones) son ilustrativas y generadas con IA. "
 GROWI = "https://wa.me/5491170593877?text=" + quote("Hola Growi, vi la demo de Centro Ribera y quiero un sitio así.\n\n(ref: demo-centro-ribera)")
 
 MARK = ('<svg viewBox="0 0 34 34" aria-hidden="true" focusable="false"><path class="arc" d="M5 28 A23 23 0 0 1 28 5"/>'
         '<path class="body" stroke-width="3.5" d="M5 28 H27"/><circle cx="5" cy="28" r="4" fill="#0e2f3b"/></svg>')
-
-
-def glyph(kind):
-    """inicio: punto de partida. medir: el arco mide (se anima). plan: lo medido y la meta acordada (línea punteada)."""
-    r, cx, cy, th = 90, 60, 112, 75
-    P = lambda a, rr: (cx + rr * math.cos(math.radians(a)), cy - rr * math.sin(math.radians(a)))
-    head_ = '<svg class="glyph" viewBox="0 0 210 128" aria-hidden="true" focusable="false">'
-    base = '<path class="ref" d="M%d 112 H200"/>' % cx
-    joint = '<circle class="joint" cx="%d" cy="112" r="8"/>' % cx
-    if kind == "inicio":
-        return head_ + base + joint + "</svg>"
-    ticks = "".join('<path class="tick" d="M%.1f %.1f L%.1f %.1f"/>' % (*P(t, r - 6), *P(t, r + (9 if t % 30 == 0 else 4))) for t in range(10, th, 10))
-    ex, ey = P(th, r)
-    arc_ = '<path class="arc" pathLength="1" d="M%d 112 A%d %d 0 0 0 %.1f %.1f"/>' % (cx + r, r, r, ex, ey)
-    if kind == "medir":
-        ax, ay = P(th, r + 22)
-        lx, ly = P(th / 2, r + 40)
-        return (head_ + base + ticks + arc_ + '<g class="mv" data-pivot="%d 112" data-rot="%d"><path class="armv" d="M%d 112 L%.1f %.1f"/></g>' % (cx, th, cx, ax, ay)
-                + '<text class="lbl" data-deg="%d" x="%.0f" y="%.0f" text-anchor="middle">%d°</text><text class="lbl-s" x="%.0f" y="%.0f" text-anchor="middle">ejemplo</text>' % (th, lx, ly, th, lx, ly + 15)
-                + joint + "</svg>")
-    gx, gy = P(115, r)
-    goal = '<path class="goal" d="M%.1f %.1f A%d %d 0 0 0 %.1f %.1f"/><text class="lbl-s goal-t" x="6" y="18">objetivo</text>' % (ex, ey, r, r, gx, gy)
-    return head_ + base + ticks + arc_ + goal + joint + "</svg>"
 
 
 def head(title, desc):
@@ -81,7 +57,7 @@ def head(title, desc):
             '<meta name="robots" content="noindex, nofollow">\n<title>%s</title>\n<meta name="description" content="%s">\n<meta name="theme-color" content="#0e2f3b">\n'
             '<link rel="preload" href="assets/fonts/FamiljenGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
             '<link rel="preload" href="assets/fonts/HankenGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
-            '<script>var d=document.documentElement,o=null;try{o=localStorage.getItem("cr_motion")}catch(e){}try{var r=matchMedia("(prefers-reduced-motion: reduce)").matches;if(o==="on"||(!r&&o!=="off"))d.classList.add("mo")}catch(e){}</script>\n<noscript><style>.sel,.pin,.scene-hint,.replay,.scene,.scene-lbl{display:none!important}.fig-wrap [data-zona][hidden]{display:grid!important}</style></noscript>\n<link rel="stylesheet" href="assets/ribera.css">\n</head>\n<body>\n<a class="sr" href="#contenido">Saltar al contenido</a>\n' % (E(title), E(desc)))
+            '<script>var d=document.documentElement,o=null;try{o=localStorage.getItem("cr_motion")}catch(e){}try{var r=matchMedia("(prefers-reduced-motion: reduce)").matches;if(o==="on"||(!r&&o!=="off"))d.classList.add("mo")}catch(e){}</script>\n<noscript><style>.sel,.scene{display:none!important}.zp[hidden]{display:block!important}.hero-p{display:grid;gap:16px}.hero-g{grid-template-areas:"t" "p"!important;grid-template-columns:1fr!important}</style></noscript>\n<link rel="stylesheet" href="assets/ribera.css">\n</head>\n<body>\n<a class="sr" href="#contenido">Saltar al contenido</a>\n' % (E(title), E(desc)))
 
 
 def top(cur):
@@ -107,6 +83,42 @@ def foot(fix=True):
     return s + '<script src="assets/ribera.js" defer></script>\n</body>\n</html>\n'
 
 
+# ---------------- Piezas compartidas ----------------
+# Puntos de cada zona sobre cuerpo.png (fracciones del ancho y del alto) + lado del rótulo + zoom del recorte.
+ZPT = {
+    "hombro": (0.63, 0.195, "r", 1.6),
+    "espalda": (0.57, 0.36, "r", 1.5),
+    "cadera": (0.38, 0.50, "l", 1.6),
+    "rodilla": (0.58, 0.675, "r", 1.7),
+    "tobillo": (0.31, 0.915, "l", 1.5),
+    "codo": (0.29, 0.32, "l", 1.6),
+}
+CORTO = {"hombro": "Hombro", "espalda": "Espalda", "cadera": "Cadera", "rodilla": "Rodilla", "tobillo": "Tobillo", "codo": "Codo"}
+QUE = {
+    "hombro": "Medimos cuánto levantás el brazo y la fuerza al empujar y al tirar.",
+    "espalda": "Medimos cuánto te flexionás y rotás, y cómo se sostiene el tronco.",
+    "cadera": "Medimos la movilidad de la cadera y la fuerza de glúteos y piernas.",
+    "rodilla": "Medimos cuánto flexiona y extiende la rodilla, y la fuerza del muslo.",
+    "tobillo": "Medimos la movilidad del tobillo y el equilibrio al apoyar.",
+    "codo": "Medimos la movilidad de codo y muñeca, y la fuerza de agarre.",
+}
+
+
+def ring():
+    t = "".join('<path d="M0 %d V%d" transform="rotate(%d)" class="%s"/>' % (-44, -49 if a % 90 else -52, a, "k" if a % 90 else "k big") for a in range(0, 360, 15))
+    return '<svg viewBox="-56 -56 112 112" aria-hidden="true" focusable="false"><circle class="ring-c" r="43"/><g class="ring-k">%s</g></svg>' % t
+
+
+def cuerpo(cls=""):
+    return ('<picture><source type="image/avif" srcset="assets/img/cuerpo-700.avif"><source type="image/webp" srcset="assets/img/cuerpo-700.webp">'
+            '<img %ssrc="assets/img/cuerpo-700.webp" width="700" height="1050" alt="" decoding="async"></picture>' % ('class="%s" ' % cls if cls else ""))
+
+
+def zfig(z):
+    x, y, _, s = ZPT[z]
+    return '<div class="zfig" style="--x:%s;--y:%s;--s:%s">%s<i class="rg">%s</i></div>' % (x, y, s, cuerpo(), ring())
+
+
 def motivos(z, links=True):
     items = []
     for i, m in enumerate(ZN[z][1]):
@@ -114,116 +126,105 @@ def motivos(z, links=True):
     return '<ul class="mot">%s</ul>' % "".join(items)
 
 
-def caption(z):
-    nom, mov, deg = I.INFO[z]
-    return '<p class="cap"><b>%s</b>, %s. El arco coral marca el ángulo que medimos; los grados son de ejemplo.</p>' % (E(ZN[z][0]), E(mov.lower()))
-
-
 # ---------------- Home ----------------
-H1 = "¿Qué te molesta? Empecemos por ahí."
-SUB = "Elegí la zona y mirá los motivos de consulta más frecuentes. Después pedís turno en cuatro pasos."
+H1 = "¿Qué te molesta?"
+H1B = "Empecemos por ahí."
+SUB = "Tocá la zona en el cuerpo y mirá por qué consultan. Después pedís turno en cuatro pasos."
 FOTO_ALT = "Sala de kinesiología con camilla azul, espaldera de madera, bandas elásticas de colores y un goniómetro sobre el escritorio. Imagen ilustrativa generada con IA."
 
 
 def foto():
     return ('<picture><source type="image/avif" srcset="assets/img/sala-900.avif 900w, assets/img/sala-1672.avif 1672w" sizes="100vw">'
             '<source type="image/webp" srcset="assets/img/sala-900.webp 900w, assets/img/sala-1672.webp 1672w" sizes="100vw">'
-            '<img src="assets/img/sala-1672.webp" width="1672" height="941" alt="%s" fetchpriority="high" decoding="async"></picture>' % E(FOTO_ALT))
-
-
-PINS = [
-    ("eval", 457, 822, "Evaluación de movimiento", "Medimos el rango de cada articulación antes de armar el plan.", "servicios.html#evaluacion"),
-    ("esp", 1000, 412, "Readaptación deportiva", "Fuerza, movilidad y gesto para volver al deporte con criterios claros.", "servicios.html#readaptacion"),
-    ("cam", 1190, 566, "Kinesiología traumatológica", "Tratamiento de lesiones de músculos, tendones y articulaciones.", "servicios.html#traumatologica"),
-]
+            '<img src="assets/img/sala-1672.webp" width="1672" height="941" alt="%s" loading="lazy" decoding="async"></picture>' % E(FOTO_ALT))
 
 
 def escena():
+    """Un solo arco, anclado al goniómetro de la foto: dibuja el rango sin inventar un número."""
     px, py, a0, rot, R, L = 457, 822, 2, 55, 120, 215
     P = lambda a, r: (px + r * math.cos(math.radians(a)), py + r * math.sin(math.radians(a)))
     a1 = a0 - rot
     p1, p2, e = P(a0, R), P(a1, R), P(a1, L)
     ref_end = P(a0, 360)
     ticks = "".join('<path class="tick s" d="M%.1f %.1f L%.1f %.1f"/>' % (*P(a0 - t, R - 7), *P(a0 - t, R + (10 if t % 15 == 0 else 4))) for t in range(5, rot, 5))
-    svg = ('<svg class="scene" data-scene-svg aria-hidden="true" focusable="false"><g data-g>'
-           '<path class="ref s" d="M%.1f %.1f L%.1f %.1f"/>%s<path class="arc s" pathLength="1" d="M%.1f %.1f A%d %d 0 0 0 %.1f %.1f"/>'
-           '<g class="mv" data-pivot="%d %d" data-rot="%d"><path class="armv s" d="M%d %d L%.1f %.1f"/></g></g></svg>'
-           % (px, py, *ref_end, ticks, *p1, R, R, *p2, px, py, rot, px, py, *e))
-    lx, ly = P(a0 - rot / 2, R + 38)
-    lbl = '<span class="scene-lbl" data-lbl data-deg="%d" data-x="%.0f" data-y="%.0f"><b>%d°</b><small>ejemplo</small></span>' % (rot, lx, ly, rot)
-    pins = "".join('<button type="button" class="pin" data-pin="%s" data-x="%d" data-y="%d" aria-expanded="false" aria-controls="card-%s" aria-label="%s: ver qué hacemos acá" data-side="%s"><span class="pin-t">%s</span></button>' % (k, x, y, k, E(t), "l" if k == "eval" else "r", E(t)) for k, x, y, t, d, h in PINS)
-    cards = "".join('<div class="pincard" id="card-%s" data-card="%s" hidden><b>%s</b><p>%s</p><a href="%s">Ver servicio</a></div>' % (k, k, E(t), E(d), h) for k, x, y, t, d, h in PINS)
-    return svg + lbl + pins + cards + '<p class="scene-hint">Elegí un círculo para ver qué hacemos en cada lugar.</p>'
+    return ('<svg class="scene" data-scene-svg aria-hidden="true" focusable="false"><g data-g>'
+            '<path class="ref s" d="M%.1f %.1f L%.1f %.1f"/>%s<path class="arc s" pathLength="1" d="M%.1f %.1f A%d %d 0 0 0 %.1f %.1f"/>'
+            '<g class="mv" data-pivot="%d %d" data-rot="%d"><path class="armv s" d="M%d %d L%.1f %.1f"/></g></g></svg>'
+            % (px, py, *ref_end, ticks, *p1, R, R, *p2, px, py, rot, px, py, *e))
 
 
-def hero_html(hero, chips, dots, panels):
-    tool = ('<fieldset class="sel" data-sel><legend>Zona que te molesta</legend><p class="selhint">Elegí un botón o tocá un punto del cuerpo.</p><div class="sel-g"><div class="mapw">%s%s</div><div class="chips">%s</div></div></fieldset>'
-            % (I.MAPA, "".join(dots), "".join(chips)))
-    plates = '<div class="fig-wrap" aria-live="polite">%s</div>' % "".join(panels)
-    if hero == "B":
-        return ('<section class="hero hero-b" aria-labelledby="h1"><div class="heroimg" data-scene>%s%s<div class="w heroin"><div class="ht"><h1 id="h1">%s</h1><p class="sub">%s</p></div></div></div>'
-                '<div class="w herotool"><div>%s</div>%s</div></section>\n' % (foto(), escena(), H1, SUB, tool, plates))
-    return ('<section class="hero" aria-labelledby="h1"><div class="w"><div><h1 id="h1">%s</h1><p class="sub">%s</p>%s</div>%s</div></section>\n' % (H1, SUB, tool, plates))
-
-
-def home(hero="A"):
-    chips, panels, dots = [], [], []
+def sel_html():
+    pts = ""
     for z in ORDEN:
-        chk = " checked" if z == "rodilla" else ""
-        chips.append('<label class="chip"><input type="radio" name="zona" value="%s"%s><span>%s</span></label>' % (z, chk, E(ZN[z][0])))
-        x, y = I.MAP_PTS[z]
-        dots.append('<span class="dot" data-z="%s" style="left:%.1f%%;top:%.1f%%"></span>' % (z, x / 160 * 100, y / 300 * 100))
-        panels.append('<div class="plate" data-zona="%s"%s><div><div class="fig">%s</div>%s<button type="button" class="replay" data-replay>Repetir el movimiento</button></div><div><h2>Motivos de consulta frecuentes</h2>%s'
-                      '<a class="btn wide" href="turnos.html?zona=%s">Pedir turno</a></div></div>'
-                      % (z, "" if z == "rodilla" else " hidden", I.ILUS[z], caption(z), motivos(z), z))
-    pasos = [("Charlamos", "Nos contás qué te pasa, desde cuándo y qué querés volver a hacer.", "inicio"),
-             ("Medimos", "Registramos cuánto se mueve cada articulación y cuánta fuerza tiene la zona.", "medir"),
-             ("Armamos el plan", "Te explicamos qué vemos, qué ejercicios proponemos y cuántas sesiones estimamos, y lo acordamos con vos.", "plan")]
-    srv = "".join('<a href="servicios.html#%s"><h3>%s</h3><p>%s</p><span class="go" aria-hidden="true">→</span></a>' % (k, E(n), E(b)) for k, n, b, *_ in SERV[:4])
-    eq = "".join('<li><span class="mono" aria-hidden="true">%s</span><div><h3>%s</h3><p>%s</p><small>Matrícula ficticia 00.00%d</small></div></li>' % (ini, E(n), E(esp), i + 1) for i, (n, esp, ini) in enumerate(PROF))
+        x, y, side, _ = ZPT[z]
+        pts += ('<label class="pt" data-side="%s" style="--x:%s;--y:%s"><input type="radio" name="zona" value="%s"%s><i class="pd"></i><span class="pl"><span class="pc-l">%s</span><span class="pc-c">%s</span></span></label>'
+                % (side, x, y, z, " checked" if z == "rodilla" else "", E(ZN[z][0]), E(CORTO[z])))
+    return ('<fieldset class="sel" data-sel><legend>Zona que te molesta</legend><div class="bodyw">%s<i class="rg" data-ring style="--x:%s;--y:%s">%s</i>%s</div></fieldset>' % (cuerpo("bodyimg"), ZPT["rodilla"][0], ZPT["rodilla"][1], ring(), pts))
+
+
+def home():
+    z0 = "rodilla"
+    panels = "".join('<div class="zp" data-zona="%s"%s><p class="eyebrow">Zona elegida</p><h2>%s</h2><p class="que">%s</p><h3>Motivos de consulta frecuentes</h3>%s<a class="btn wide" href="turnos.html?zona=%s">Pedir turno por %s</a></div>'
+                     % (z, "" if z == z0 else " hidden", E(ZN[z][0]), E(QUE[z]), motivos(z), z, E(ZN[z][0].lower())) for z in ORDEN)
+    hero = ('<section class="hero" aria-labelledby="h1"><div class="w hero-g"><div class="hero-t"><p class="eyebrow">Kinesiología y rehabilitación deportiva</p>'
+            '<h1 id="h1">%s <span>%s</span></h1><p class="sub">%s</p></div>%s<div class="hero-p" aria-live="polite">%s</div></div></section>\n' % (H1, H1B, E(SUB), sel_html(), panels))
+    sala = ('<section class="sala" aria-labelledby="h-sala"><div class="salaimg" data-scene>%s%s<div class="w salain"><div class="salat"><p class="eyebrow">El centro</p>'
+            '<h2 id="h-sala">Medimos antes de decidir.</h2><p>Tu plan sale de cómo te movés vos, no de una receta general.</p></div></div></div></section>\n' % (foto(), escena()))
+    pasos = [("charlamos", "Charlamos", "Nos contás qué te pasa, desde cuándo y qué querés volver a hacer.", "Un motivo de consulta claro"),
+             ("medimos", "Medimos", "Registramos cuánto se mueve cada articulación y cuánta fuerza tiene la zona.", "Datos de tu movimiento y tu fuerza"),
+             ("plan", "Armamos el plan", "Te explicamos qué vemos, qué ejercicios proponemos y cuántas sesiones estimamos, y lo acordamos con vos.", "Un plan acordado con vos")]
+    hist = "".join('<li class="hs"><span class="n" aria-hidden="true">0%d</span><figure><picture><source type="image/avif" srcset="assets/img/%s.avif"><source type="image/webp" srcset="assets/img/%s.webp">'
+                   '<img src="assets/img/%s.webp" width="900" height="675" alt="%s" decoding="async"></picture></figure><h3>%s</h3><p>%s</p><p class="te"><span>Te llevás</span>%s</p></li>'
+                   % (i + 1, k, k, k, E(ALT_PASOS[k]), E(n), E(b), E(t)) for i, (k, n, b, t) in enumerate(pasos))
+    consulta = ('<section class="sec dark consulta" aria-labelledby="h-pasos"><div class="w"><p class="eyebrow">Tu primera visita</p><h2 id="h-pasos">Una hora para entender qué te pasa.</h2>'
+                '<p class="lead">Charlamos, medimos y decidimos juntos cómo seguir. Esto es lo que va a pasar.</p></div>'
+                '<div class="w"><ol class="hist" data-seq aria-label="Pasos de la primera consulta">%s</ol><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div></div></section>\n' % hist)
+    big = SERV[0]
+    srv = '<a class="sv-big" href="servicios.html#%s"><span class="tag">Empezá por acá</span><h3>%s</h3><p>%s</p><span class="go">Ver el servicio <b aria-hidden="true">→</b></span></a>' % (big[0], E(big[1]), E(big[2]))
+    srv += "".join('<a class="sv-c" href="servicios.html#%s"><h3>%s</h3><p>%s</p><span class="go" aria-hidden="true">→</span></a>' % (k, E(n), E(b)) for k, n, b, *_ in SERV[1:4])
+    servicios_s = ('<section class="sec" aria-labelledby="h-srv"><div class="w"><div class="sh"><h2 id="h-srv">Lo que hacemos.</h2><a class="btn ghost" href="servicios.html">Ver todos los servicios</a></div><div class="bento">%s</div></div></section>\n' % srv)
+    eq = "".join('<li><span class="mono" aria-hidden="true">%s</span><h3>%s</h3><p>%s</p><small>Matrícula ficticia 00.00%d</small></li>' % (ini, E(n), E(esp), i + 1) for i, (n, esp, ini) in enumerate(PROF))
+    equipo = ('<section class="sec tint" aria-labelledby="h-eq"><div class="w"><div class="sh"><h2 id="h-eq">Quiénes te atienden.</h2><p class="lead">Un equipo chico, con una persona de referencia en todo tu tratamiento.</p></div><ul class="eqg">%s</ul></div></section>\n' % eq)
     faq = "".join("<details><summary>%s</summary><p>%s</p></details>" % (E(q), E(a)) for q, a in FAQ)
-    body = (head("Centro Ribera (ejemplo) | Kinesiología y rehabilitación deportiva", "Sitio de ejemplo de GrowiWeb para un centro de kinesiología ficticio. Elegí la zona que te molesta y pedí turno.")
-            + top("home") + '<main id="contenido">\n'
-            + hero_html(hero, chips, dots, panels)
-            + '<section class="sec" aria-labelledby="h-pasos"><div class="w"><h2 id="h-pasos">Así es la primera consulta.</h2>'
-              '<p class="lead">Una hora para entender qué te pasa, medirlo y decidir juntos cómo seguir.</p><div class="pasos" data-seq>%s</div></div></section>\n'
-              % "".join('<div class="paso">%s<h3>%s</h3><p>%s</p></div>' % (glyph(t), n, b) for n, b, t in pasos)
-            + '<section class="sec alt" aria-labelledby="h-srv"><div class="w"><h2 id="h-srv">Lo que hacemos.</h2><div class="srv">%s</div>'
-              '<p style="margin-top:22px"><a class="btn ghost" href="servicios.html">Ver todos los servicios</a></p></div></section>\n' % srv
-            + '<section class="sec" aria-labelledby="h-eq"><div class="w eq"><div><h2 id="h-eq">Quiénes te atienden.</h2>'
-              '<p class="lead">Un equipo chico, con una persona de referencia en todo tu tratamiento.</p></div><ul>%s</ul></div></section>\n' % eq
-            + '<section class="sec alt" aria-labelledby="h-cob"><div class="w"><h2 id="h-cob">Cobertura y pagos.</h2><div class="cob">'
-              '<div><h3>Con tu cobertura</h3><p>Te damos el comprobante para que presentes el reintegro en tu obra social o prepaga. Antes de tu primera visita te contamos cómo hacerlo.</p></div>'
-              '<div><h3>Sin cobertura</h3><p>Pagás cada sesión al terminarla. Los valores te los pasamos por WhatsApp cuando pedís turno.</p></div></div></div></section>\n'
-            + '<section class="sec" aria-labelledby="h-faq"><div class="w"><h2 id="h-faq">Preguntas frecuentes.</h2><div class="faq">%s</div></div></section>\n' % faq
-            + '<section class="cierre" aria-labelledby="h-cierre"><div class="w"><div><h2 id="h-cierre">Elegí un horario que te quede cómodo.</h2>'
-              '<p>Son cuatro pasos. Después podés cambiar el turno avisando con 24 horas de anticipación.</p></div><a class="btn" href="turnos.html">Pedir turno</a></div></section>\n</main>\n' + foot())
-    return body
+    antes = ('<section class="sec" aria-labelledby="h-faq"><div class="w antes"><div class="cob"><h2 id="h-faq">Antes de venir.</h2>'
+             '<div><h3>Con tu cobertura</h3><p>Te damos el comprobante para que presentes el reintegro en tu obra social o prepaga. Antes de tu primera visita te contamos cómo hacerlo.</p></div>'
+             '<div><h3>Sin cobertura</h3><p>Pagás cada sesión al terminarla. Los valores te los pasamos por WhatsApp cuando pedís turno.</p></div></div>'
+             '<div class="faq">%s</div></div></section>\n' % faq)
+    cierre = ('<section class="cierre" aria-labelledby="h-cierre"><div class="w"><h2 id="h-cierre">Elegí un horario que te quede cómodo.</h2>'
+              '<div><p>Son cuatro pasos. Después podés cambiar el turno avisando con 24 horas de anticipación.</p><a class="btn dk" href="turnos.html">Pedir turno</a></div></div></section>\n')
+    return (head("Centro Ribera (ejemplo) | Kinesiología y rehabilitación deportiva", "Sitio de ejemplo de GrowiWeb para un centro de kinesiología ficticio. Tocá la zona que te molesta y pedí turno.")
+            + top("home") + '<main id="contenido">\n' + hero + sala + consulta + servicios_s + equipo + antes + cierre + '</main>\n' + foot())
+
+
+ALT_PASOS = {
+    "charlamos": "Ilustración: una kinesióloga y una persona conversan sentadas en el consultorio.",
+    "medimos": "Ilustración: una kinesióloga mide con un goniómetro la rodilla de una persona sentada en la camilla.",
+    "plan": "Ilustración: la kinesióloga y la persona miran juntas el plan de ejercicios.",
+}
 
 
 # ---------------- Servicios ----------------
 def servicios():
     nav = "".join('<a href="#%s">%s</a>' % (k, E(n)) for k, n, *_ in SERV)
     blocks = "".join('<article class="sv" id="%s"><h2>%s</h2><p class="lead">%s</p><dl><dt>Para quién</dt><dd>%s</dd><dt>Duración</dt><dd>%s</dd></dl></article>' % (k, E(n), E(d), E(p), E(t)) for k, n, b, d, p, t in SERV)
-    zon = "".join('<article class="zn"><div class="fig">%s</div><h3>%s</h3>%s%s</article>' % (I.ILUS[z], E(ZN[z][0]), caption(z), motivos(z)) for z in ORDEN)
+    zon = "".join('<article class="zn">%s<h3>%s</h3><p class="cap">%s</p>%s</article>' % (zfig(z), E(ZN[z][0]), E(QUE[z]), motivos(z)) for z in ORDEN)
     return (head("Servicios | Centro Ribera (ejemplo)", "Servicios de kinesiología y rehabilitación deportiva de Centro Ribera, un negocio ficticio de ejemplo.")
             + top("servicios") + '<main id="contenido">\n<section class="ph"><div class="w"><h1>Lo que hacemos, y para quién.</h1>'
               '<p class="lead">Cinco servicios. Si no sabés cuál te corresponde, empezá por la evaluación de movimiento.</p></div></section>\n'
               '<section class="sec"><div class="w svc"><nav aria-label="Servicios">%s</nav><div>%s</div></div></section>\n' % (nav, blocks)
-            + '<section class="sec alt" aria-labelledby="h-zonas"><div class="w"><h2 id="h-zonas">Qué medimos en cada zona.</h2>'
+            + '<section class="sec tint" aria-labelledby="h-zonas"><div class="w"><h2 id="h-zonas">Qué medimos en cada zona.</h2>'
               '<p class="lead">Elegí un motivo de consulta y pedí turno con la zona ya cargada.</p><div class="zonas">%s</div></div></section>\n' % zon
-            + '<section class="cierre"><div class="w"><div><h2>¿Empezamos por la evaluación?</h2><p>Medimos, te explicamos qué vemos y acordamos el plan en una hora.</p></div>'
-              '<a class="btn" href="turnos.html">Pedir turno</a></div></section>\n</main>\n' + foot())
+            + '<section class="cierre"><div class="w"><h2>¿Empezamos por la evaluación?</h2><div><p>Medimos, te explicamos qué vemos y acordamos el plan en una hora.</p>'
+              '<a class="btn dk" href="turnos.html">Pedir turno</a></div></div></section>\n</main>\n' + foot())
 
 
 # ---------------- Turnos ----------------
 def turnos():
-    datos = {"zonas": {z: {"nombre": ZN[z][0], "motivos": ZN[z][1]} for z in ORDEN},
+    datos = {"zonas": {z: {"nombre": ZN[z][0], "motivos": ZN[z][1], "pt": [ZPT[z][0], ZPT[z][1], ZPT[z][3]]} for z in ORDEN},
              "profesionales": [{"nombre": n, "esp": e} for n, e, _ in PROF]}
     zrows = "".join('<label class="row"><input type="radio" name="zona" value="%s"><span>%s</span></label>' % (z, E(ZN[z][0])) for z in ORDEN)
     prows = '<label class="row"><input type="radio" name="prof" value="0" checked><span>Sin preferencia<small>Te damos el primer horario libre.</small></span></label>'
     prows += "".join('<label class="row"><input type="radio" name="prof" value="%d"><span>%s<small>%s</small></span></label>' % (i + 1, E(n), E(e)) for i, (n, e, _) in enumerate(PROF))
-    ilus = "".join('<div data-ilu="%s" hidden>%s</div>' % (z, I.ILUS[z]) for z in ORDEN)
 
     def nav(back, nxt):
         return '<div class="nav2">%s%s</div>' % ('<button type="button" class="btn ghost" data-a="back">Atrás</button>' if back else "", nxt)
@@ -246,8 +247,8 @@ def turnos():
             '<textarea id="msg" class="msg" readonly data-msg></textarea><div class="nav2"><button type="button" class="btn" data-a="copy">Copiar mensaje</button>'
             '<button type="button" class="btn ghost" data-a="reset">Empezar de nuevo</button></div><p class="live" data-live role="status"></p></section>')
     prog = '<ol class="prog" aria-label="Pasos">%s</ol>' % "".join("<li>%s</li>" % n for n in ["Motivo", "Profesional", "Horario", "Datos"])
-    aside = ('<aside class="aside" aria-label="Resumen de tu turno"><h2>Tu turno</h2><div class="fig"><p data-ilu-vacio class="hint" style="padding:36px 18px;text-align:center;color:#34505b">Elegí una zona para ver el movimiento que medimos.</p>%s</div>'
-             '<dl><dt>Zona</dt><dd data-r="zona"></dd><dt>Motivo</dt><dd data-r="motivo"></dd><dt>Profesional</dt><dd data-r="prof"></dd><dt>Día y hora</dt><dd data-r="cuando"></dd></dl></aside>' % ilus)
+    aside = ('<aside class="aside" aria-label="Resumen de tu turno"><h2>Tu turno</h2><div class="afig"><p data-ilu-vacio class="hint">Elegí una zona para verla en el cuerpo.</p><div data-zfig hidden>%s</div></div>'
+             '<dl><dt>Zona</dt><dd data-r="zona"></dd><dt>Motivo</dt><dd data-r="motivo"></dd><dt>Profesional</dt><dd data-r="prof"></dd><dt>Día y hora</dt><dd data-r="cuando"></dd></dl></aside>' % zfig("rodilla"))
     return (head("Pedir turno | Centro Ribera (ejemplo)", "Recorrido de turnos simulado de Centro Ribera, un negocio ficticio. No se reserva ningún turno real.")
             + top("turnos") + '<main id="contenido">\n<section class="ph"><div class="w"><h1>Pedí tu turno.</h1>'
               '<p class="lead">Cuatro pasos. Es una simulación: no se reserva ningún turno real ni se envía ningún dato.</p><noscript><p class="demo-n">Esta simulación necesita JavaScript para funcionar.</p></noscript></div></section>\n'
@@ -256,9 +257,7 @@ def turnos():
 
 
 if __name__ == "__main__":
-    import sys
-    hero = os.environ.get("HERO", "B")
-    for name, fn in (("index.html", lambda: home(hero)), ("servicios.html", servicios), ("turnos.html", turnos)) + ((("index-a.html", lambda: home("A")), ("index-b.html", lambda: home("B"))) if os.environ.get("VARIANTES") else ()):
+    for name, fn in (("index.html", home), ("servicios.html", servicios), ("turnos.html", turnos)):
         with open(os.path.join(OUT, name), "w", encoding="utf-8", newline="\n") as f:
             f.write(fn())
         print(name, os.path.getsize(os.path.join(OUT, name)))
