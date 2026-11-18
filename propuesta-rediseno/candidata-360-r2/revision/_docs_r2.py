@@ -11,7 +11,7 @@ def page(titulo, cuerpo, cur=""):
     return ('<!doctype html>\n<html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow">'
             '<title>%s · Revisión Growi 360° r2</title><link rel="stylesheet" href="../assets/growi360.css"><link rel="stylesheet" href="rev.css"></head><body>'
             '<a class="sr" href="#c">Saltar al contenido</a><header class="rv-top"><div class="w"><a class="logo" href="../">Growi<i>.</i></a><nav aria-label="Revisión">%s</nav>'
-            '<a class="prev" href="../../candidata-360/revision/index.html">Revisión de la candidata 17177a1 →</a></div></header>'
+            '</div></header>'
             '<main id="c" class="w rv">%s</main><footer class="rv-foot w"><p>Candidata local r2, solo para revisión. No publicada: ningún precio, aviso L1, gate ni producción fue modificado. Todo número económico es un supuesto explícito, no un dato medido.</p></footer></body></html>\n'
             % (E(titulo), nav, cuerpo))
 
@@ -79,22 +79,29 @@ def economia():
         fr.append([lin, E(nom), "%.1f → <b>%s h</b> (−%.0f%%)" % (h[1], ("%g" % Hs), red), usd(mb), usd(vig) if vig else "—", E(palancas.get(_id, ""))])
     rees = tabla(["Línea", "Concepto", "Horas medias supuestas → horas objetivo", "Mínimo viable Base con esas horas", "Vigente", "Qué hay que cambiar en la entrega"], fr)
     # escenarios
+    def mg(P, h, so, T=0):
+        return EC.margen(P, B["c"], B["r"], h, so, T)
+    def celda(P, h, so, T=0):
+        mn = EC.minimo(B["c"], B["r"], B["m"], h, so, T)
+        m = mg(P, h, so, T)
+        return "%s h + %s h soporte<br>mín. viable <b>%s</b><br><small>margen al vigente %s</small>" % (("%g" % h).replace(".", ","), ("%g" % so).replace(".", ","), usd(mn), ("%.0f%%" % m) if m is not None else "—")
     fe = []
     for it in EC.UNICOS:
         _id, lin, nom, vig, h, so, T, anc, Hs, Ss = it
-        cons, rec, prem = EC.escenarios_unico(it)
-        mc = lambda P: EC.margen(P, B["c"], B["r"], Hs, Ss, T) if P else None
-        def cel(P):
-            return "%s <small>(%s · margen %s)</small>" % (usd(P), pct(EC.dpct(vig, P)) if vig and P else "nuevo", ("%.0f%%" % mc(P)) if P else "—") if P else "—"
-        fe.append([lin, E(nom), usd(vig) if vig else "sin precio", cel(cons), cel(rec), cel(prem)])
-    esc = tabla(["Línea", "Concepto", "Vigente", "Conservador", "Recomendado", "Premium"], fe, "mx")
-    # mensuales por escenario (soporte)
-    cm = tabla(["Concepto", "Vigente", "Conservador", "Recomendado", "Premium", "Qué lo hace viable"], [
-        ["GrowiApp Start · mensual", usd(15), usd(15) + " <small>(solo viable con ≤ 0,5 h de soporte por cliente al mes)</small>", usd(19), usd(25), "Soporte por autoservicio y por horario; WhatsApp prioritario queda en Pro y Multi. Pago anual con descuento: mejora el flujo."],
-        ["GrowiApp Pro · mensual", usd(29), usd(29), usd(35), usd(42), "Con 1,25 h/mes de soporte y USD 5 de infra, el piso es USD 30."],
-        ["GrowiApp Multi · mensual", usd(49), usd(49), usd(55), usd(65), "Con 1,75 h/mes de soporte y USD 5 de infra, el piso es USD 39."],
-        ["Cuidado del sitio · mensual (nuevo)", "no existe", usd(9), usd(12), usd(15), "Dominio y alojamiento gestionados y cambios chicos: ingreso recurrente que hoy no existe."],
-        ["Cuidado de la automatización · mensual (nuevo)", "no existe", "—", usd(12), usd(15), "Cubre los cambios de las plataformas, que hoy el pago único no cubre."]])
+        if vig is None:
+            lec = "Sin precio hoy: no se evalúa hasta tener horas verificadas."
+        else:
+            ma, mb = mg(vig, h[1], so[1], T), mg(vig, Hs, Ss, T)
+            if mb >= 20: lec = "Cierra con margen solo si se logra B. <b>No demostrado.</b>"
+            elif mb >= 0: lec = "Cubre el costo pero no el margen objetivo ni siquiera con B."
+            else: lec = "No cierra ni con B: hay que cambiar alcance o cobro."
+        fe.append([lin, E(nom), usd(vig) if vig else "sin precio", celda(vig or 0, h[1], so[1], T) if vig else "—", celda(vig or 0, Hs, Ss, T) if vig else "—", "Sin datos medidos", lec])
+    esc = tabla(["Línea", "Concepto", "Vigente", "A · Horas actuales supuestas", "B · Horas estandarizadas propuestas", "C · Horas verificadas", "Lectura"], fe, "mx")
+    fm = []
+    for _id, lin, nom, vig, sh, anc, so_obj in EC.MENSUALES:
+        ca = B["c"] * sh[1] + B["infra"]; cb = B["c"] * so_obj + B["infra"]
+        fm.append([E(nom), usd(vig), "%g h/mes · costo %s · margen %.0f%%" % (sh[1], usd(ca), (vig - ca) / vig * 100), "%g h/mes · costo %s · margen %.0f%%" % (so_obj, usd(cb), (vig - cb) / vig * 100), "Sin datos medidos"])
+    cm = tabla(["Concepto", "Vigente por mes", "A · Soporte actual supuesto", "B · Soporte estandarizado propuesto", "C · Verificado"], fm, "mx")
     eco = json.dumps({"unicos": [dict(id=i[0], linea=i[1], nombre=i[2], vigente=i[3], h=i[4], s=i[5], t=i[6]) for i in EC.UNICOS if i[3]],
                       "mensuales": [dict(id=m[0], nombre=m[2], vigente=m[3], sh=m[4]) for m in EC.MENSUALES]}, ensure_ascii=False)
     calc = ('<div class="calc" id="calc"><div class="calc-in"><label>Costo por hora (USD)<input id="c-c" type="number" step="1" min="0" value="15"></label>'
@@ -124,18 +131,15 @@ def economia():
               '<h2>3. Matriz: precio mínimo económicamente viable</h2><p class="lead">Por concepto y bajo los tres juegos de supuestos. «Horas máx. que sostiene el vigente» responde: ¿cuántas horas puede insumir esta entrega para que el precio actual cubra el costo con margen del 20%%? Si la entrega real excede esa cifra, el paquete pierde plata.</p>%s'
               '<p class="note"><b>Lectura honesta:</b> con horas medias, ningún precio vigente cierra. Eso se resuelve de tres maneras, no solo subiendo la lista: (1) estandarizar la entrega para que insuma menos horas; (2) cambiar el alcance; (3) cambiar el modelo de cobro (recurrente, por hora o por bloque). Si las horas reales ya son las de la columna «horas máx.», los precios vigentes son correctos.</p>'
               '<h2>4. Recurrentes (mensuales por cliente)</h2>%s'
-              '<h2>5. Qué hay que cambiar para que cada paquete sea viable a un precio competitivo</h2><p class="lead">Las horas objetivo son <b>metas operativas supuestas</b>, no mediciones: exigen estandarizar la entrega (plantillas, formularios de contenido, rondas acotadas). El mínimo viable se recalcula con esas horas.</p>%s'
-              '<h2>6. Tres escenarios revisados</h2><dl class="def"><dt>Conservador</dt><dd>Mantiene los precios de lista vigentes y estandariza la entrega al nivel de las horas objetivo. Margen al vigente con supuestos Base entre paréntesis. Cliente: el que compra por precio de entrada. Riesgo: depende por completo de lograr las horas objetivo; si no se logran, pierde margen.</dd>'
-              '<dt>Recomendado</dt><dd>Precio = mínimo viable Base con la entrega estandarizada, redondeado a USD 5 y sin bajar nunca un precio vigente. Margen objetivo del 20%%. Cliente: negocios establecidos que valoran la entrega hecha. Riesgo: los paquetes que quedan sobre el ancla de mercado (Performance, institucionales, Invitación) necesitan reencuadre comercial.</dd>'
-              '<dt>Premium</dt><dd>Mínimo viable con supuestos Exigentes (USD 25/h, 30%% de contingencia, 35%% de margen). Pensado para un Growi con casos y lista de espera. Riesgo alto: queda muy por encima de los comparables publicados.</dd></dl>%s'
-              '<h3>Recurrentes por escenario</h3>%s'
+              '<h2>5. Horas estandarizadas propuestas (B): qué habría que cambiar en la entrega</h2><p class="lead">Las horas objetivo son <b>metas operativas supuestas</b>, no mediciones: exigen estandarizar la entrega (plantillas, formularios de contenido, rondas acotadas). El mínimo viable se recalcula con esas horas.</p>%s'
+              '<h2>6. Tres escenarios de horas</h2><p class="lead"><b>A</b> son las horas que hoy se suponen para entregar cada paquete. <b>B</b> son horas estandarizadas que se proponen como meta, y exigen cambios de entrega (plantillas, formularios de contenido, rondas acotadas). <b>C</b> son horas realmente medidas en entregas hechas: hoy no existen. Los precios vigentes no se tocan.</p><div class="aviso"><b>Ningún paquete puede declararse rentable todavía.</b> Todo resultado positivo de la columna B depende de reducciones de esfuerzo que no están demostradas. Hasta cargar horas verificadas (columna C), la decisión de precios queda abierta.</div>%s<h3>Recurrentes</h3>%s'
               '<h2>7. Calculadora (editable)</h2><p class="lead">Cambiá los supuestos o las horas de cada fila con tus datos reales y se recalcula el mínimo viable.</p>%s%s'
               '<h2>8. Datos que faltan para decidir</h2><ol class="steps"><li><b>Horas reales de entrega</b><span>De las últimas entregas de cada tipo: cuántas horas insumieron la puesta en marcha, cada plan web y cada paquete de Flow. Es el dato que más mueve la matriz.</span></li>'
               '<li><b>Costo de infraestructura por cliente de GrowiApp</b><span>Alojamiento, base de datos y servicios de terceros por cliente y por mes, y el costo fijo mensual a repartir.</span></li>'
               '<li><b>Soporte real por cliente</b><span>Horas de WhatsApp por cliente al mes en los primeros 3 meses y después.</span></li>'
               '<li><b>Valor de tu hora</b><span>El costo/hora imputado (lo que cobrarías por tu tiempo en otro trabajo). Sin ese número, el margen es indeterminado.</span></li>'
               '<li><b>Frecuencia de cambios de alcance</b><span>Qué porcentaje de proyectos pidió más de lo escrito, para calibrar la contingencia.</span></li></ol>'
-              '<h2>9. Referencias de mercado y límites</h2><p class="note">Los anclas provienen de la investigación de la etapa anterior (consultada el 2026-11-18, con confianza marcada). Dólar oficial venta: ARS %s. No se verificaron los precios de agencias argentinas, el costo/hora de un freelance en Argentina ni la tarifa oficial de Meta. Detalle de fuentes: <a href="../../candidata-360/revision/precios.html">pricing de la candidata 17177a1</a>.</p>'
+              '<h2>9. Referencias de mercado y límites</h2><p class="note">Los anclas provienen de la investigación de la etapa anterior (consultada el 2026-11-18, con confianza marcada). Dólar oficial venta: ARS %s. No se verificaron los precios de agencias argentinas, el costo/hora de un freelance en Argentina ni la tarifa oficial de Meta. Detalle de fuentes: la investigación de pricing de la etapa anterior (en el repositorio, <code>propuesta-rediseno/candidata-360/revision/precios.html</code>).</p>'
               % (sup, mat, men, rees, esc, cm, calc, js, "{:,}".format(EC.FX).replace(",", "."))).replace("%%", "%")
     cuerpo = cuerpo.replace("%s" , "%s") if False else cuerpo
     write("economia.html", page("Matriz económica", cuerpo, "economia.html"))

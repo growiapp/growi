@@ -107,7 +107,7 @@
     var showXp = function (t, foc) {
       xt.forEach(function (x) { var on = x === t; x.setAttribute("aria-selected", String(on)); x.tabIndex = on ? 0 : -1; $("#p-" + x.getAttribute("data-xp")).hidden = !on; });
       var id = t.getAttribute("data-xp");
-      if (id === "web") webInit(); if (id === "flow") flowInit();
+      if (id === "web") webInit(); if (id === "flow") flowInit(); if (id === "combo") comboInit();
       if (foc) t.focus();
       if (typeof window.plausible === "function") window.plausible("producto_visto", { props: { linea: id } });
     };
@@ -122,7 +122,7 @@
     var ifr = $("iframe.appdemo");
     window.addEventListener("message", function (e) {
       var d = e.data; if (!d || d.growiDemo !== "app" || !ifr) return;
-      var mob = window.matchMedia("(max-width:720px)").matches, h = Math.min(d.h, mob ? 760 : 1100); ifr.setAttribute("scrolling", h < d.h ? "yes" : "no");
+      var h = d.h; ifr.setAttribute("scrolling", "no");
       if (Math.abs(h - (parseInt(ifr.style.height, 10) || 0)) > 6) ifr.style.height = h + "px";
     });
   }
@@ -131,32 +131,37 @@
     var fr = $("iframe", w), view = $(".wp-view", w), sc = $(".wp-scale", w), dev = "d";
     var fit = function () {
       var W = view.clientWidth, s;
-      if (dev === "d") { s = W / 1280; sc.style.transform = "scale(" + s + ")"; sc.style.left = "0"; view.style.height = Math.round(820 * s) + "px"; }
-      else { s = Math.min(1, (W - 24) / 390); sc.style.transform = "scale(" + s + ")"; sc.style.left = Math.round((W - 390 * s) / 2) + "px"; view.style.height = Math.round(780 * s + 24) + "px"; sc.style.top = "12px"; }
-      if (dev === "d") sc.style.top = "0";
+      if (dev === "d") { s = W / 1040; sc.style.transform = "scale(" + s + ")"; sc.style.left = "0"; sc.style.top = "0"; view.style.height = Math.round(700 * s) + "px"; }
+      else { s = Math.min(1, (W - 24) / 390); sc.style.transform = "scale(" + s + ")"; sc.style.left = Math.round((W - 390 * s) / 2) + "px"; sc.style.top = "12px"; view.style.height = Math.round(780 * s + 24) + "px"; }
     };
     fr.src = fr.getAttribute("data-src"); fit();
+    if (window.matchMedia("(max-width:720px)").matches) { var mb = $("[data-dev=m]", w); if (mb) setTimeout(function () { mb.click(); }, 0); }
     if (window.ResizeObserver) new ResizeObserver(fit).observe(view); else window.addEventListener("resize", fit);
     $$("[data-demo]", w).forEach(function (b) { b.addEventListener("click", function () { fr.src = fr.getAttribute("data-base") + b.getAttribute("data-demo") + "/index.html"; $$("[data-demo]", w).forEach(function (x) { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", String(x === b)); }); }); });
     $$("[data-dev]", w).forEach(function (b) { b.addEventListener("click", function () { dev = b.getAttribute("data-dev"); view.classList.toggle("m", dev === "m"); fit(); $$("[data-dev]", w).forEach(function (x) { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", String(x === b)); }); }); });
   }
-  function flowInit() {
-    var f = $("[data-flow]"); if (!f) return;
-    var replay = function () { f.classList.remove("play"); void f.offsetWidth; f.classList.add("play"); };
-    if (!f.__i) {
-      f.__i = 1;
-      $$(".fx-tabs button[data-sc]", f).forEach(function (b) {
-        b.addEventListener("click", function () {
-          var n = b.getAttribute("data-sc");
-          $$(".scene", f).forEach(function (s) { s.hidden = s.getAttribute("data-sc") !== n; });
-          $$(".fx-tabs button[data-sc]", f).forEach(function (x) { var on = x === b; x.classList.toggle("on", on); x.setAttribute("aria-pressed", String(on)); });
-          replay();
-        });
-      });
-      var r = $("[data-replay]", f); if (r) r.addEventListener("click", replay);
-    }
-    replay();
+  function seqInit(s) {
+    if (!s || s.__i) { if (s && s.__play) s.__play(); return; }
+    s.__i = 1; s.classList.add("js-seq");
+    var n = $$(".seq-steps button", s), max = n.length, step = max, t = 0;
+    var set = function (k) {
+      step = k;
+      n.forEach(function (b, i) { b.setAttribute("aria-pressed", String(i + 1 === k)); b.classList.toggle("done", i + 1 < k); });
+      $$("[data-from]", s).forEach(function (e) { var f = +e.getAttribute("data-from"); e.classList.toggle("on", f <= k); e.classList.toggle("now", f === k); });
+      $$("[data-on]", s).forEach(function (e) { e.classList.toggle("on", (" " + e.getAttribute("data-on") + " ").indexOf(" " + k + " ") > -1); });
+      $$(".st", s).forEach(function (st) { var best = null; $$("i[data-at]", st).forEach(function (i) { i.classList.remove("on"); var a = +i.getAttribute("data-at"); if (a <= k && (!best || a > +best.getAttribute("data-at"))) best = i; }); if (best) best.classList.add("on"); });
+      $$(".seq-cap p", s).forEach(function (p) { p.classList.toggle("on", +p.getAttribute("data-n") === k); });
+    };
+    var stop = function () { clearInterval(t); t = 0; };
+    var play = function () { stop(); set(1); t = setInterval(function () { if (step >= max) { stop(); return; } set(step + 1); }, 2600); };
+    n.forEach(function (b, i) { b.addEventListener("click", function () { stop(); set(i + 1); }); });
+    var r = $("[data-replay]", s); if (r) r.addEventListener("click", play);
+    s.__play = function () { if (document.documentElement.classList.contains("mo")) play(); };
+    set(max);
+    if (document.documentElement.classList.contains("mo")) play();
   }
+  function flowInit() { seqInit($("#p-flow [data-seq]")); }
+  function comboInit() { seqInit($("#p-combo [data-seq]")); }
 
   /* GrowiApp: período anual (15% menos) sobre el precio mensual en USD */
   var per = $$("[data-period]");
