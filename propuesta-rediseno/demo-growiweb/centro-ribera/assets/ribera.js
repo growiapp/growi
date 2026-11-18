@@ -31,6 +31,7 @@
       /* el aro se mueve con la propiedad translate (FLIP): se mide dónde está (incluso a mitad de camino), se coloca en destino y se anima la diferencia */
       var a = glide ? ringEl.getBoundingClientRect() : null;
       ringEl.style.cssText = pt.getAttribute("style");
+      ringEl.setAttribute("data-s", pt.getAttribute("data-side"));
       if (!glide) return;
       var b = ringEl.getBoundingClientRect(), dx = a.left - b.left, dy = a.top - b.top;
       ringEl.classList.remove("go"); void ringEl.offsetWidth; ringEl.classList.add("go");
@@ -267,7 +268,7 @@
       zf.hidden = !S.zona;
       if (S.zona && zf.__z !== S.zona) {
         var pt = ZN[S.zona].pt, f = $(".zfig", zf), rg = $(".rg", zf);
-        f.style.setProperty("--x", pt[0]); f.style.setProperty("--y", pt[1]); f.style.setProperty("--s", pt[2]);
+        f.style.setProperty("--x", pt[0]); f.style.setProperty("--y", pt[1]); f.style.setProperty("--s", pt[2]); rg.setAttribute("data-s", pt[3]);
         if (!reduce) { rg.classList.remove("go"); void rg.offsetWidth; rg.classList.add("go"); }
         zf.__z = S.zona;
       }

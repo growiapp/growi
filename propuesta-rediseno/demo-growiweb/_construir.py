@@ -86,12 +86,12 @@ def foot(fix=True):
 # ---------------- Piezas compartidas ----------------
 # Puntos de cada zona sobre cuerpo.png (fracciones del ancho y del alto) + lado del rótulo + zoom del recorte.
 ZPT = {
-    "hombro": (0.63, 0.195, "r", 1.6),
-    "espalda": (0.57, 0.36, "r", 1.5),
-    "cadera": (0.38, 0.50, "l", 1.6),
-    "rodilla": (0.58, 0.675, "r", 1.7),
-    "tobillo": (0.31, 0.915, "l", 1.5),
-    "codo": (0.29, 0.32, "l", 1.6),
+    "hombro": (0.64, 0.20, "r", 1.7),
+    "espalda": (0.56, 0.335, "r", 1.5),
+    "cadera": (0.585, 0.47, "r", 1.7),
+    "rodilla": (0.60, 0.69, "r", 1.8),
+    "tobillo": (0.31, 0.87, "l", 1.6),
+    "codo": (0.27, 0.40, "l", 1.7),
 }
 CORTO = {"hombro": "Hombro", "espalda": "Espalda", "cadera": "Cadera", "rodilla": "Rodilla", "tobillo": "Tobillo", "codo": "Codo"}
 QUE = {
@@ -105,8 +105,18 @@ QUE = {
 
 
 def ring():
-    t = "".join('<path d="M0 %d V%d" transform="rotate(%d)" class="%s"/>' % (-44, -49 if a % 90 else -52, a, "k" if a % 90 else "k big") for a in range(0, 360, 15))
-    return '<svg viewBox="-56 -56 112 112" aria-hidden="true" focusable="false"><circle class="ring-c" r="43"/><g class="ring-k">%s</g></svg>' % t
+    """Indicador de zona: marcador de ángulo (referencia, rayo y arco entre ambos) que sale del punto hacia el rótulo."""
+    P = lambda ang, r: (r * math.cos(math.radians(ang)), r * math.sin(math.radians(ang)))
+    r0, r1, a = 9, 44, -38
+    ref = "M%.1f 0 L%.1f 0" % (r0, r1)
+    rx0, ry0 = P(a, r0); rx1, ry1 = P(a, r1)
+    ray = "M%.1f %.1f L%.1f %.1f" % (rx0, ry0, rx1, ry1)
+    ax, ay = P(a, 27)
+    arc = "M27 0 A27 27 0 0 0 %.1f %.1f" % (ax, ay)
+    return ('<svg viewBox="-56 -56 112 112" aria-hidden="true" focusable="false">'
+            '<g class="ring-h"><path d="%s"/><path d="%s"/><path d="%s"/></g>'
+            '<path class="ring-r" d="%s"/><path class="ring-a" d="%s"/><path class="ring-a" d="%s"/>'
+            '<circle class="ring-dh" r="7"/><circle class="ring-d" r="4.2"/></svg>' % (ref, ray, arc, ref, ray, arc))
 
 
 def cuerpo(cls=""):
@@ -116,7 +126,7 @@ def cuerpo(cls=""):
 
 def zfig(z):
     x, y, _, s = ZPT[z]
-    return '<div class="zfig" style="--x:%s;--y:%s;--s:%s">%s<i class="rg">%s</i></div>' % (x, y, s, cuerpo(), ring())
+    return '<div class="zfig" style="--x:%s;--y:%s;--s:%s">%s<i class="rg" data-s="%s">%s</i></div>' % (x, y, s, cuerpo(), ZPT[z][2], ring())
 
 
 def motivos(z, links=True):
@@ -159,7 +169,7 @@ def sel_html():
         x, y, side, _ = ZPT[z]
         pts += ('<label class="pt" data-side="%s" style="--x:%s;--y:%s"><input type="radio" name="zona" value="%s"%s><i class="pd"></i><span class="pl"><span class="pc-l">%s</span><span class="pc-c">%s</span></span></label>'
                 % (side, x, y, z, " checked" if z == "rodilla" else "", E(ZN[z][0]), E(CORTO[z])))
-    return ('<fieldset class="sel" data-sel><legend>Zona que te molesta</legend><div class="bodyw">%s<i class="rg" data-ring style="--x:%s;--y:%s">%s</i>%s</div></fieldset>' % (cuerpo("bodyimg"), ZPT["rodilla"][0], ZPT["rodilla"][1], ring(), pts))
+    return ('<fieldset class="sel" data-sel><legend>Zona que te molesta</legend><div class="bodyw">%s<i class="rg" data-ring data-s="%s" style="--x:%s;--y:%s">%s</i>%s</div></fieldset>' % (cuerpo("bodyimg"), ZPT["rodilla"][2], ZPT["rodilla"][0], ZPT["rodilla"][1], ring(), pts))
 
 
 def home():
@@ -220,7 +230,7 @@ def servicios():
 
 # ---------------- Turnos ----------------
 def turnos():
-    datos = {"zonas": {z: {"nombre": ZN[z][0], "motivos": ZN[z][1], "pt": [ZPT[z][0], ZPT[z][1], ZPT[z][3]]} for z in ORDEN},
+    datos = {"zonas": {z: {"nombre": ZN[z][0], "motivos": ZN[z][1], "pt": [ZPT[z][0], ZPT[z][1], ZPT[z][3], ZPT[z][2]]} for z in ORDEN},
              "profesionales": [{"nombre": n, "esp": e} for n, e, _ in PROF]}
     zrows = "".join('<label class="row"><input type="radio" name="zona" value="%s"><span>%s</span></label>' % (z, E(ZN[z][0])) for z in ORDEN)
     prows = '<label class="row"><input type="radio" name="prof" value="0" checked><span>Sin preferencia<small>Te damos el primer horario libre.</small></span></label>'

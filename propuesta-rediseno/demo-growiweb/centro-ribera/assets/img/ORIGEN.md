@@ -12,3 +12,10 @@
 - **Contenido:** personas ficticias sin rasgos faciales (figura de pie para el selector y tres escenas de la primera consulta). No representan a nadie real. Se declaran como ilustraciones generadas con IA en el aviso del pie.
 - **Desvío respecto del pedido:** piel y cabello usan tonos fuera de la paleta indicada (informado por Codex).
 - **Uso:** solo esta demo local. Si se publicara, revisar los términos de uso de la herramienta generadora.
+
+## Serie editorial v2 (iteración de dirección artística)
+- **Archivos:** `cuerpo-700`, `charlamos`, `medimos`, `plan` (AVIF y WebP), que reemplazan a la serie anterior. Originales PNG en `generadas/v2/` (`cuerpo-v2` 1024x1536; escenas 1200x900).
+- **Cómo se obtuvieron:** Codex `image_gen`, delegación explícita de la dueña para este pedido, una sola corrida de cuatro piezas. Sin fal y sin costos adicionales.
+- **Contenido:** dos personajes ficticios (kinesióloga y paciente) con rostros expresivos, en la misma sala que la foto del hero. No representan a nadie real. Se declaran ilustrativas y generadas con IA en el aviso del pie.
+- **Desvíos informados por Codex:** el fondo de la figura varía 2 niveles de 255 (se compensa con el color del panel); un acento coral secundario pequeño en la esquina inferior izquierda de dos escenas.
+- **Uso:** solo esta demo local. Si se publicara, revisar los términos de uso de la herramienta generadora.

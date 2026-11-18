@@ -23,6 +23,13 @@ Regenerar las páginas: `python _construir.py` (en esta carpeta).
 - Una crítica visual independiente sobre capturas. Se corrigieron: escenas de la primera consulta que cargaban tarde, recortes de zona, rótulo tapado por el aro, contraste de matrículas y de la banda de la foto en móvil, tarjeta de servicios en móvil.
 - Evidencia: `centro-ribera/evidencia/v2/` (antes/después, estados del selector, `movimiento-aro.png/.gif` y `movimiento-primera-consulta.png` con tiempos reales en ms).
 
+## Dirección artística (candidata actual)
+- **Ilustraciones rehechas** (Codex ImageGen, una sola corrida de 4 piezas): personajes fijos con rostros expresivos, estilo acuarela editorial, y las escenas de «Primera consulta» ocurren en la misma sala de la foto (camilla azul, espaldera, planta, bandas). Reemplazan a las anteriores sin rasgos faciales. Procedencia en `centro-ribera/assets/img/ORIGEN.md`; originales en `assets/img/generadas/v2/`.
+- **Indicador del selector:** el círculo con marcas se reemplazó por un punto y un arco parcial de goniómetro que mira hacia el rótulo. No tapa la ilustración. Mismo componente en Servicios y Turnos.
+- **Coherencia:** el color del panel del selector coincide con el fondo de la figura; la foto de la sala lleva un grano de papel sutil; las escenas comparten luz, paleta y escenario con la foto.
+- **Móvil:** en «Primera consulta» la imagen ocupa el borde superior de la tarjeta y el número flota como etiqueta; rótulos del selector cortos y sin solapes de 320 a 1440 px.
+- Evidencia: `centro-ribera/evidencia/v4/` (capturas, estados del selector, antes/después, `demo-selector.gif`, `demo-primera-consulta.gif`).
+
 ## Cierre de motion (tras `review-animations`)
 - Con teclado (flechas) no se anima ni el aro ni el panel de zona.
 - El aro se mueve con `translate` (técnica FLIP: se mide dónde está, se coloca en destino y se anima la diferencia), en 300 ms y retomando desde donde está si se lo interrumpe. Ya no anima `left/top`. Sin giro.
