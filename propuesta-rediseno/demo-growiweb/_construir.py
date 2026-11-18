@@ -42,24 +42,38 @@ FAQ = [
     ("¿Necesito orden médica?", "Para la primera consulta no. Si tu cobertura la pide para el reintegro, te avisamos antes de que vengas."),
     ("¿Cuánto dura la primera consulta?", "Alrededor de una hora: charla, mediciones y explicación del plan."),
     ("¿Qué tengo que llevar?", "Ropa cómoda para moverte, los estudios o informes que tengas y, si te operaron, la indicación de tu médico."),
-    ("¿Atienden con obra social o prepaga?", "Te damos el comprobante para que presentes el reintegro en tu cobertura. Consultanos antes de venir y te contamos cómo hacerlo."),
+    ("¿Atienden con obra social o prepaga?", "Con reintegro: te damos el comprobante para que lo presentes en tu cobertura. Consultanos antes de venir."),
     ("¿Cuántas sesiones voy a necesitar?", "Depende de cada caso. Lo definimos con vos después de la evaluación y no prometemos plazos."),
     ("¿Cómo cambio o cancelo un turno?", "Avisanos por WhatsApp con 24 horas de anticipación y te ofrecemos otro horario."),
 ]
+AVISO_IA = "La fotografía del encabezado de la página de inicio es una imagen ilustrativa generada con IA. " if os.environ.get("HERO", "B") == "B" else ""
 GROWI = "https://wa.me/5491170593877?text=" + quote("Hola Growi, vi la demo de Centro Ribera y quiero un sitio así.\n\n(ref: demo-centro-ribera)")
 
 MARK = ('<svg viewBox="0 0 34 34" aria-hidden="true" focusable="false"><path class="arc" d="M5 28 A23 23 0 0 1 28 5"/>'
         '<path class="body" stroke-width="3.5" d="M5 28 H27"/><circle cx="5" cy="28" r="4" fill="#0e2f3b"/></svg>')
 
 
-def glyph(theta):
-    # arco de goniómetro grande (mismo lenguaje que las figuras): referencia, marcas cada 10° y arco coral
-    r, cx, cy = 100, 20, 112
+def glyph(kind):
+    """inicio: punto de partida. medir: el arco mide (se anima). plan: lo medido y la meta acordada (línea punteada)."""
+    r, cx, cy, th = 90, 60, 112, 75
     P = lambda a, rr: (cx + rr * math.cos(math.radians(a)), cy - rr * math.sin(math.radians(a)))
-    ex, ey = P(theta, r)
-    ticks = "".join('<path class="tick" d="M%.1f %.1f L%.1f %.1f"/>' % (*P(t, r - 6), *P(t, r + (9 if t % 30 == 0 else 4))) for t in range(10, theta, 10))
-    return ('<svg viewBox="0 0 210 128" aria-hidden="true" focusable="false"><path class="ref" d="M20 112 H196"/>%s'
-            '<path class="arc" d="M120 112 A100 100 0 0 0 %.1f %.1f"/><circle class="joint" cx="20" cy="112" r="8"/></svg>' % (ticks, ex, ey))
+    head_ = '<svg class="glyph" viewBox="0 0 210 128" aria-hidden="true" focusable="false">'
+    base = '<path class="ref" d="M%d 112 H200"/>' % cx
+    joint = '<circle class="joint" cx="%d" cy="112" r="8"/>' % cx
+    if kind == "inicio":
+        return head_ + base + joint + "</svg>"
+    ticks = "".join('<path class="tick" d="M%.1f %.1f L%.1f %.1f"/>' % (*P(t, r - 6), *P(t, r + (9 if t % 30 == 0 else 4))) for t in range(10, th, 10))
+    ex, ey = P(th, r)
+    arc_ = '<path class="arc" pathLength="1" d="M%d 112 A%d %d 0 0 0 %.1f %.1f"/>' % (cx + r, r, r, ex, ey)
+    if kind == "medir":
+        ax, ay = P(th, r + 22)
+        lx, ly = P(th / 2, r + 40)
+        return (head_ + base + ticks + arc_ + '<g class="mv" data-pivot="%d 112" data-rot="%d"><path class="armv" d="M%d 112 L%.1f %.1f"/></g>' % (cx, th, cx, ax, ay)
+                + '<text class="lbl" data-deg="%d" x="%.0f" y="%.0f" text-anchor="middle">%d°</text><text class="lbl-s" x="%.0f" y="%.0f" text-anchor="middle">ejemplo</text>' % (th, lx, ly, th, lx, ly + 15)
+                + joint + "</svg>")
+    gx, gy = P(115, r)
+    goal = '<path class="goal" d="M%.1f %.1f A%d %d 0 0 0 %.1f %.1f"/><text class="lbl-s goal-t" x="6" y="18">objetivo</text>' % (ex, ey, r, r, gx, gy)
+    return head_ + base + ticks + arc_ + goal + joint + "</svg>"
 
 
 def head(title, desc):
@@ -67,7 +81,7 @@ def head(title, desc):
             '<meta name="robots" content="noindex, nofollow">\n<title>%s</title>\n<meta name="description" content="%s">\n<meta name="theme-color" content="#0e2f3b">\n'
             '<link rel="preload" href="assets/fonts/FamiljenGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
             '<link rel="preload" href="assets/fonts/HankenGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
-            '<link rel="stylesheet" href="assets/ribera.css">\n</head>\n<body>\n<a class="sr" href="#contenido">Saltar al contenido</a>\n' % (E(title), E(desc)))
+            '<script>var d=document.documentElement,o=null;try{o=localStorage.getItem("cr_motion")}catch(e){}try{var r=matchMedia("(prefers-reduced-motion: reduce)").matches;if(o==="on"||(!r&&o!=="off"))d.classList.add("mo")}catch(e){}</script>\n<noscript><style>.sel,.pin,.scene-hint,.replay,.scene,.scene-lbl{display:none!important}.fig-wrap [data-zona][hidden]{display:grid!important}</style></noscript>\n<link rel="stylesheet" href="assets/ribera.css">\n</head>\n<body>\n<a class="sr" href="#contenido">Saltar al contenido</a>\n' % (E(title), E(desc)))
 
 
 def top(cur):
@@ -75,7 +89,7 @@ def top(cur):
         return '<a href="%s"%s>%s</a>' % (href, ' aria-current="page"' if cur == key else "", txt)
     return ('<div class="fict"><div class="w"><p>Sitio de ejemplo con contenido ficticio. '
             '<a href="%s" target="_blank" rel="noopener noreferrer">Quiero un sitio así</a></p></div></div>\n'
-            '<header class="top"><div class="w"><a class="brand" href="index.html" aria-label="Centro Ribera, inicio">%s<span>Centro Ribera<small>Kinesiología y rehabilitación deportiva</small></span></a>'
+            '<header class="top"><div class="w"><a class="brand" href="index.html" aria-label="Centro Ribera Kinesiología y rehabilitación deportiva, inicio">%s<span>Centro Ribera <small>Kinesiología y rehabilitación deportiva</small></span></a>'
             '<nav class="nav" aria-label="Principal">%s<a class="btn" href="turnos.html"%s>Pedir turno</a></nav></div></header>\n'
             % (GROWI, MARK, a("servicios.html", "Servicios", "servicios"), ' aria-current="page"' if cur == "turnos" else ""))
 
@@ -87,9 +101,9 @@ def foot(fix=True):
          '<div><h2>Páginas</h2><p><a href="index.html">Inicio</a><br><a href="servicios.html">Servicios</a><br><a href="turnos.html">Pedir turno</a></p></div></div>'
          '<p class="aviso">Centro Ribera es un negocio ficticio. Los profesionales, matrículas, teléfonos, direcciones y horarios son de ejemplo. '
          'Los motivos de consulta que ves en el sitio son orientativos y no reemplazan una evaluación profesional. '
-         'Sitio hecho con GrowiWeb. <a href="%s" target="_blank" rel="noopener noreferrer">Quiero un sitio así</a>.</p></div></footer>\n' % (MARK, GROWI))
+         '%sSitio hecho con GrowiWeb. <a href="%s" target="_blank" rel="noopener noreferrer">Quiero un sitio así</a>.</p></div></footer>\n' % (MARK, AVISO_IA, GROWI))
     if fix:
-        s += '<div class="fixbar"><a class="btn wide" href="turnos.html">Pedir turno</a></div>\n'
+        s += '<div class="fixbar" data-late><a class="btn wide" href="turnos.html">Pedir turno</a></div>\n'
     return s + '<script src="assets/ribera.js" defer></script>\n</body>\n</html>\n'
 
 
@@ -102,45 +116,88 @@ def motivos(z, links=True):
 
 def caption(z):
     nom, mov, deg = I.INFO[z]
-    return '<p class="cap"><b>%s</b>, %s. El arco coral marca el ángulo que medimos en la consulta (ejemplo: %d°).</p>' % (E(ZN[z][0]), E(mov.lower()), deg)
+    return '<p class="cap"><b>%s</b>, %s. El arco coral marca el ángulo que medimos; los grados son de ejemplo.</p>' % (E(ZN[z][0]), E(mov.lower()))
 
 
 # ---------------- Home ----------------
-def home():
+H1 = "¿Qué te molesta? Empecemos por ahí."
+SUB = "Elegí la zona y mirá los motivos de consulta más frecuentes. Después pedís turno en cuatro pasos."
+FOTO_ALT = "Sala de kinesiología con camilla azul, espaldera de madera, bandas elásticas de colores y un goniómetro sobre el escritorio. Imagen ilustrativa generada con IA."
+
+
+def foto():
+    return ('<picture><source type="image/avif" srcset="assets/img/sala-900.avif 900w, assets/img/sala-1672.avif 1672w" sizes="100vw">'
+            '<source type="image/webp" srcset="assets/img/sala-900.webp 900w, assets/img/sala-1672.webp 1672w" sizes="100vw">'
+            '<img src="assets/img/sala-1672.webp" width="1672" height="941" alt="%s" fetchpriority="high" decoding="async"></picture>' % E(FOTO_ALT))
+
+
+PINS = [
+    ("eval", 457, 822, "Evaluación de movimiento", "Medimos el rango de cada articulación antes de armar el plan.", "servicios.html#evaluacion"),
+    ("esp", 1000, 412, "Readaptación deportiva", "Fuerza, movilidad y gesto para volver al deporte con criterios claros.", "servicios.html#readaptacion"),
+    ("cam", 1190, 566, "Kinesiología traumatológica", "Tratamiento de lesiones de músculos, tendones y articulaciones.", "servicios.html#traumatologica"),
+]
+
+
+def escena():
+    px, py, a0, rot, R, L = 457, 822, 2, 55, 120, 215
+    P = lambda a, r: (px + r * math.cos(math.radians(a)), py + r * math.sin(math.radians(a)))
+    a1 = a0 - rot
+    p1, p2, e = P(a0, R), P(a1, R), P(a1, L)
+    ref_end = P(a0, 360)
+    ticks = "".join('<path class="tick s" d="M%.1f %.1f L%.1f %.1f"/>' % (*P(a0 - t, R - 7), *P(a0 - t, R + (10 if t % 15 == 0 else 4))) for t in range(5, rot, 5))
+    svg = ('<svg class="scene" data-scene-svg aria-hidden="true" focusable="false"><g data-g>'
+           '<path class="ref s" d="M%.1f %.1f L%.1f %.1f"/>%s<path class="arc s" pathLength="1" d="M%.1f %.1f A%d %d 0 0 0 %.1f %.1f"/>'
+           '<g class="mv" data-pivot="%d %d" data-rot="%d"><path class="armv s" d="M%d %d L%.1f %.1f"/></g></g></svg>'
+           % (px, py, *ref_end, ticks, *p1, R, R, *p2, px, py, rot, px, py, *e))
+    lx, ly = P(a0 - rot / 2, R + 38)
+    lbl = '<span class="scene-lbl" data-lbl data-deg="%d" data-x="%.0f" data-y="%.0f"><b>%d°</b><small>ejemplo</small></span>' % (rot, lx, ly, rot)
+    pins = "".join('<button type="button" class="pin" data-pin="%s" data-x="%d" data-y="%d" aria-expanded="false" aria-controls="card-%s" aria-label="%s: ver qué hacemos acá" data-side="%s"><span class="pin-t">%s</span></button>' % (k, x, y, k, E(t), "l" if k == "eval" else "r", E(t)) for k, x, y, t, d, h in PINS)
+    cards = "".join('<div class="pincard" id="card-%s" data-card="%s" hidden><b>%s</b><p>%s</p><a href="%s">Ver servicio</a></div>' % (k, k, E(t), E(d), h) for k, x, y, t, d, h in PINS)
+    return svg + lbl + pins + cards + '<p class="scene-hint">Elegí un círculo para ver qué hacemos en cada lugar.</p>'
+
+
+def hero_html(hero, chips, dots, panels):
+    tool = ('<fieldset class="sel" data-sel><legend>Zona que te molesta</legend><p class="selhint">Elegí un botón o tocá un punto del cuerpo.</p><div class="sel-g"><div class="mapw">%s%s</div><div class="chips">%s</div></div></fieldset>'
+            % (I.MAPA, "".join(dots), "".join(chips)))
+    plates = '<div class="fig-wrap" aria-live="polite">%s</div>' % "".join(panels)
+    if hero == "B":
+        return ('<section class="hero hero-b" aria-labelledby="h1"><div class="heroimg" data-scene>%s%s<div class="w heroin"><div class="ht"><h1 id="h1">%s</h1><p class="sub">%s</p></div></div></div>'
+                '<div class="w herotool"><div>%s</div>%s</div></section>\n' % (foto(), escena(), H1, SUB, tool, plates))
+    return ('<section class="hero" aria-labelledby="h1"><div class="w"><div><h1 id="h1">%s</h1><p class="sub">%s</p>%s</div>%s</div></section>\n' % (H1, SUB, tool, plates))
+
+
+def home(hero="A"):
     chips, panels, dots = [], [], []
     for z in ORDEN:
         chk = " checked" if z == "rodilla" else ""
         chips.append('<label class="chip"><input type="radio" name="zona" value="%s"%s><span>%s</span></label>' % (z, chk, E(ZN[z][0])))
         x, y = I.MAP_PTS[z]
         dots.append('<span class="dot" data-z="%s" style="left:%.1f%%;top:%.1f%%"></span>' % (z, x / 160 * 100, y / 300 * 100))
-        panels.append('<div class="plate" data-zona="%s"%s><div><div class="fig">%s</div>%s</div><div><h2>Motivos de consulta frecuentes</h2>%s'
+        panels.append('<div class="plate" data-zona="%s"%s><div><div class="fig">%s</div>%s<button type="button" class="replay" data-replay>Repetir el movimiento</button></div><div><h2>Motivos de consulta frecuentes</h2>%s'
                       '<a class="btn wide" href="turnos.html?zona=%s">Pedir turno</a></div></div>'
                       % (z, "" if z == "rodilla" else " hidden", I.ILUS[z], caption(z), motivos(z), z))
-    pasos = [("Charlamos", "Nos contás qué te pasa, desde cuándo y qué querés volver a hacer.", 35),
-             ("Medimos", "Registramos cuánto se mueve cada articulación y cuánta fuerza tiene la zona.", 75),
-             ("Armamos el plan", "Te explicamos qué vemos, qué ejercicios proponemos y cuántas sesiones estimamos, y lo acordamos con vos.", 115)]
+    pasos = [("Charlamos", "Nos contás qué te pasa, desde cuándo y qué querés volver a hacer.", "inicio"),
+             ("Medimos", "Registramos cuánto se mueve cada articulación y cuánta fuerza tiene la zona.", "medir"),
+             ("Armamos el plan", "Te explicamos qué vemos, qué ejercicios proponemos y cuántas sesiones estimamos, y lo acordamos con vos.", "plan")]
     srv = "".join('<a href="servicios.html#%s"><h3>%s</h3><p>%s</p><span class="go" aria-hidden="true">→</span></a>' % (k, E(n), E(b)) for k, n, b, *_ in SERV[:4])
     eq = "".join('<li><span class="mono" aria-hidden="true">%s</span><div><h3>%s</h3><p>%s</p><small>Matrícula ficticia 00.00%d</small></div></li>' % (ini, E(n), E(esp), i + 1) for i, (n, esp, ini) in enumerate(PROF))
     faq = "".join("<details><summary>%s</summary><p>%s</p></details>" % (E(q), E(a)) for q, a in FAQ)
     body = (head("Centro Ribera (ejemplo) | Kinesiología y rehabilitación deportiva", "Sitio de ejemplo de GrowiWeb para un centro de kinesiología ficticio. Elegí la zona que te molesta y pedí turno.")
             + top("home") + '<main id="contenido">\n'
-            + '<section class="hero" aria-labelledby="h1"><div class="w"><div><h1 id="h1">¿Qué te molesta? Empecemos por ahí.</h1>'
-              '<p class="sub">Elegí la zona y mirá los motivos de consulta más frecuentes. Después pedís turno en cuatro pasos.</p>'
-              '<fieldset class="sel" data-sel><legend>Zona que te molesta</legend><div class="sel-g"><div class="mapw">%s%s</div><div class="chips">%s</div></div></fieldset></div>'
-              '<div class="fig-wrap" aria-live="polite">%s</div></div></section>\n' % (I.MAPA, "".join(dots), "".join(chips), "".join(panels))
+            + hero_html(hero, chips, dots, panels)
             + '<section class="sec" aria-labelledby="h-pasos"><div class="w"><h2 id="h-pasos">Así es la primera consulta.</h2>'
-              '<p class="lead">Una hora para entender qué te pasa, medirlo y decidir juntos cómo seguir.</p><div class="pasos">%s</div></div></section>\n'
+              '<p class="lead">Una hora para entender qué te pasa, medirlo y decidir juntos cómo seguir.</p><div class="pasos" data-seq>%s</div></div></section>\n'
               % "".join('<div class="paso">%s<h3>%s</h3><p>%s</p></div>' % (glyph(t), n, b) for n, b, t in pasos)
             + '<section class="sec alt" aria-labelledby="h-srv"><div class="w"><h2 id="h-srv">Lo que hacemos.</h2><div class="srv">%s</div>'
               '<p style="margin-top:22px"><a class="btn ghost" href="servicios.html">Ver todos los servicios</a></p></div></section>\n' % srv
             + '<section class="sec" aria-labelledby="h-eq"><div class="w eq"><div><h2 id="h-eq">Quiénes te atienden.</h2>'
-              '<p class="lead">Un equipo chico, para que te atienda siempre la misma persona.</p></div><ul>%s</ul></div></section>\n' % eq
+              '<p class="lead">Un equipo chico, con una persona de referencia en todo tu tratamiento.</p></div><ul>%s</ul></div></section>\n' % eq
             + '<section class="sec alt" aria-labelledby="h-cob"><div class="w"><h2 id="h-cob">Cobertura y pagos.</h2><div class="cob">'
               '<div><h3>Con tu cobertura</h3><p>Te damos el comprobante para que presentes el reintegro en tu obra social o prepaga. Antes de tu primera visita te contamos cómo hacerlo.</p></div>'
               '<div><h3>Sin cobertura</h3><p>Pagás cada sesión al terminarla. Los valores te los pasamos por WhatsApp cuando pedís turno.</p></div></div></div></section>\n'
             + '<section class="sec" aria-labelledby="h-faq"><div class="w"><h2 id="h-faq">Preguntas frecuentes.</h2><div class="faq">%s</div></div></section>\n' % faq
             + '<section class="cierre" aria-labelledby="h-cierre"><div class="w"><div><h2 id="h-cierre">Elegí un horario que te quede cómodo.</h2>'
-              '<p>Son cuatro pasos y podés cambiarlo cuando quieras.</p></div><a class="btn" href="turnos.html">Pedir turno</a></div></section>\n</main>\n' + foot())
+              '<p>Son cuatro pasos. Después podés cambiar el turno avisando con 24 horas de anticipación.</p></div><a class="btn" href="turnos.html">Pedir turno</a></div></section>\n</main>\n' + foot())
     return body
 
 
@@ -154,8 +211,8 @@ def servicios():
               '<p class="lead">Cinco servicios. Si no sabés cuál te corresponde, empezá por la evaluación de movimiento.</p></div></section>\n'
               '<section class="sec"><div class="w svc"><nav aria-label="Servicios">%s</nav><div>%s</div></div></section>\n' % (nav, blocks)
             + '<section class="sec alt" aria-labelledby="h-zonas"><div class="w"><h2 id="h-zonas">Qué medimos en cada zona.</h2>'
-              '<p class="lead">Elegí un motivo de consulta y pedís turno con la zona ya cargada.</p><div class="zonas">%s</div></div></section>\n' % zon
-            + '<section class="cierre"><div class="w"><div><h2>¿Empezamos por la evaluación?</h2><p>Una hora para medir, entender y acordar el plan.</p></div>'
+              '<p class="lead">Elegí un motivo de consulta y pedí turno con la zona ya cargada.</p><div class="zonas">%s</div></div></section>\n' % zon
+            + '<section class="cierre"><div class="w"><div><h2>¿Empezamos por la evaluación?</h2><p>Medimos, te explicamos qué vemos y acordamos el plan en una hora.</p></div>'
               '<a class="btn" href="turnos.html">Pedir turno</a></div></section>\n</main>\n' + foot())
 
 
@@ -184,7 +241,7 @@ def turnos():
           '<div class="fld"><label for="nota">Algo que quieras contarnos <i>(opcional)</i></label><textarea id="nota" name="nota" maxlength="240"></textarea></div>%s</fieldset></form>'
           % nav(True, '<button type="submit" class="btn">Confirmar turno</button>'))
     s3 = s3.replace('<div class="nav2">', '<div class="nav2">', 1)
-    done = ('<section class="ok-box" data-done hidden><h2 tabindex="-1">Así quedaría tu pedido</h2><p>Revisá el mensaje. En un sitio real, este botón abriría el WhatsApp del centro con estos datos.</p>'
+    done = ('<section class="ok-box" data-done hidden><h2 tabindex="-1">Así quedaría tu pedido</h2><p>Revisá el mensaje. En un sitio real, se enviaría por WhatsApp al centro con estos datos.</p>'
             '<p class="demo-n">Demo: no se reservó ningún turno ni se envió ningún dato.</p><label for="msg" style="display:block;margin-top:16px;font-weight:700">Mensaje de WhatsApp de ejemplo</label>'
             '<textarea id="msg" class="msg" readonly data-msg></textarea><div class="nav2"><button type="button" class="btn" data-a="copy">Copiar mensaje</button>'
             '<button type="button" class="btn ghost" data-a="reset">Empezar de nuevo</button></div><p class="live" data-live role="status"></p></section>')
@@ -193,13 +250,15 @@ def turnos():
              '<dl><dt>Zona</dt><dd data-r="zona"></dd><dt>Motivo</dt><dd data-r="motivo"></dd><dt>Profesional</dt><dd data-r="prof"></dd><dt>Día y hora</dt><dd data-r="cuando"></dd></dl></aside>' % ilus)
     return (head("Pedir turno | Centro Ribera (ejemplo)", "Recorrido de turnos simulado de Centro Ribera, un negocio ficticio. No se reserva ningún turno real.")
             + top("turnos") + '<main id="contenido">\n<section class="ph"><div class="w"><h1>Pedí tu turno.</h1>'
-              '<p class="lead">Cuatro pasos. Es una simulación: no se reserva ningún turno real ni se envía ningún dato.</p></div></section>\n'
+              '<p class="lead">Cuatro pasos. Es una simulación: no se reserva ningún turno real ni se envía ningún dato.</p><noscript><p class="demo-n">Esta simulación necesita JavaScript para funcionar.</p></noscript></div></section>\n'
               '<div class="w tw" data-turnos><div>%s%s%s%s%s%s</div>%s</div>\n' % (prog, s0, s1, s2, s3, done, aside)
             + '<script type="application/json" id="datos">%s</script>\n</main>\n' % json.dumps(datos, ensure_ascii=False) + foot(fix=False))
 
 
 if __name__ == "__main__":
-    for name, fn in (("index.html", home), ("servicios.html", servicios), ("turnos.html", turnos)):
+    import sys
+    hero = os.environ.get("HERO", "B")
+    for name, fn in (("index.html", lambda: home(hero)), ("servicios.html", servicios), ("turnos.html", turnos)) + ((("index-a.html", lambda: home("A")), ("index-b.html", lambda: home("B"))) if os.environ.get("VARIANTES") else ()):
         with open(os.path.join(OUT, name), "w", encoding="utf-8", newline="\n") as f:
             f.write(fn())
         print(name, os.path.getsize(os.path.join(OUT, name)))

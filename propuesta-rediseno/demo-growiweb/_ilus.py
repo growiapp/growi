@@ -38,7 +38,7 @@ def _far(p, pts):
     return min(math.hypot(p[0] - q[0], p[1] - q[1]) for q in pts)
 
 
-def arc(J, ref, mov, R=48, label_extra=20, avoid=()):
+def arc(J, ref, mov, R=48, label_extra=20, avoid=(), label_at=None):
     """Arco medido en la articulación J entre la dirección ref y la dirección mov."""
     a1 = math.atan2(ref[1], ref[0])
     a2 = math.atan2(mov[1], mov[0])
@@ -68,9 +68,11 @@ def arc(J, ref, mov, R=48, label_extra=20, avoid=()):
             sc = _far(c, list(avoid) + [J]) if avoid else rr
             if sc > best:
                 best, lp = sc, (c[0], c[1] + 5)
+    if label_at:
+        lp = (J[0] + label_at[0], J[1] + label_at[1])
     out.append('<text class="lbl" x="%s" y="%s" text-anchor="middle">%d°</text>' % (f(lp[0]), f(lp[1]), round(deg)))
     out.append('<circle class="joint" cx="%s" cy="%s" r="7.5"/>' % (f(J[0]), f(J[1])))
-    return "".join(out), round(deg), lp
+    return "".join(out), round(deg), lp, math.degrees(d)
 
 
 def head(S, bto, tilt=0):
@@ -88,33 +90,43 @@ def figure(ax, bs, bt, bto, ua, fa, foot_pt=None, extra_back="", extra_front="",
     Wr = add(E, dn(fa, L_FARM))
     toe = (ax + 26, G - 6)
     heel = (ax - 8, G - 6)
-    parts = [extra_back]
+    tp = [("back", extra_back)]
     if legs:
-        parts.append('<path class="ground" d="M-300 %d H700"/>' % G)
+        tp.append(("ground", '<path class="ground" d="M-300 %d H700"/>' % G))
     if far_leg and legs:
         fbs, fbt, dx = far_leg
         A2 = (ax + dx, G - 14)
         K2 = add(A2, up(fbs, L_SHANK))
         H2 = add(K2, up(fbt, L_THIGH))
-        parts.append(seg((A2[0] - 8, G - 6), (A2[0] + 26, G - 6), "far", 9))
-        parts.append(seg(A2, K2, "far", 12))
-        parts.append(seg(K2, H2, "far", 14))
+        tp.append(("far_leg", seg((A2[0] - 8, G - 6), (A2[0] + 26, G - 6), "far", 9) + seg(A2, K2, "far", 12) + seg(K2, H2, "far", 14)))
     if far_arm:
         fua, ffa = far_arm
         E2 = add(S, dn(fua, L_UARM))
         W2 = add(E2, dn(ffa, L_FARM))
-        parts.append(seg(S, E2, "far", 10))
-        parts.append(seg(E2, W2, "far", 9))
+        tp.append(("far_arm", seg(S, E2, "far", 10) + seg(E2, W2, "far", 9)))
     if legs:
-        parts.append(seg(heel, toe, "body", 9))
-        parts.append(seg(A, K, "body", 12))
-        parts.append(seg(K, Hh, "body", 14))
-    parts.append(seg(Hh, S, "body", 22))
-    parts.append(seg(S, E, "body", 10))
-    parts.append(seg(E, Wr, "body", 9))
-    parts.append(head(S, bto, head_tilt))
-    parts.append(extra_front)
-    return dict(A=A, K=K, H=Hh, S=S, E=E, W=Wr, toe=toe, heel=heel, HEAD=add(S, up(bto + head_tilt, L_NECK))), "".join(parts)
+        tp.append(("foot", seg(heel, toe, "body", 9)))
+        tp.append(("shank", seg(A, K, "body", 12)))
+        tp.append(("thigh", seg(K, Hh, "body", 14)))
+    tp.append(("torso", seg(Hh, S, "body", 22)))
+    tp.append(("uarm", seg(S, E, "body", 10)))
+    tp.append(("farm", seg(E, Wr, "body", 9)))
+    tp.append(("head", head(S, bto, head_tilt)))
+    tp.append(("front", extra_front))
+    P = dict(A=A, K=K, H=Hh, S=S, E=E, W=Wr, toe=toe, heel=heel, HEAD=add(S, up(bto + head_tilt, L_NECK)))
+    return P, "".join(x for _, x in tp), tp
+
+
+def compose(tp, moving, pivot, rot, inner=None):
+    """Agrupa las partes que se mueven en <g class="mv"> con pivote y rotación de inicio (grados).
+    inner=(tags, pivot, rot) anida otro grupo para compensar el giro (p. ej. el tronco no gira con la pierna)."""
+    used = set(moving) | (set(inner[0]) if inner else set())
+    st = "".join(x for t, x in tp if t not in used)
+    mv = "".join(x for t, x in tp if t in moving)
+    if inner:
+        itags, ip, ir = inner
+        mv += '<g class="mv" data-pivot="%s" data-rot="%s">%s</g>' % (pt(ip), f(ir), "".join(x for t, x in tp if t in itags))
+    return st + '<g class="mv" data-pivot="%s" data-rot="%s">%s</g>' % (pt(pivot), f(rot), mv)
 
 
 def skel(P):
@@ -152,20 +164,22 @@ ILUS = {}
 INFO = {}
 
 # 1. Hombro: elevación del brazo
-P, body = figure(150, 0, 0, 0, 150, 150, far_arm=(150, 150), legs=False)
-ar, deg, lp = arc(P["S"], sub(P["H"], P["S"]), sub(P["E"], P["S"]), R=54, avoid=up_pts(P))
+P, body, tp = figure(150, 0, 0, 0, 150, 150, far_arm=(150, 150), legs=False)
+ar, deg, lp, sd = arc(P["S"], sub(P["H"], P["S"]), sub(P["E"], P["S"]), R=54, avoid=up_pts(P))
+body = compose(tp, {"uarm", "farm", "far_arm"}, P["S"], -sd)
 ILUS["hombro"] = svg(fit(body + ar, up_pts(P) + [lp, (P["S"][0] + 75, P["S"][1])], ground=False), "Figura de perfil con el brazo elevado y un arco que mide 150 grados en el hombro")
 INFO["hombro"] = ("Hombro", "Elevación del brazo", deg)
 
 # 2. Espalda: flexión del tronco
-P, body = figure(120, 0, 0, 55, 12, 12, head_tilt=8, far_leg=(0, 0, -14), far_arm=(20, 20))
-ar, deg, lp = arc(P["H"], (0, -1), sub(P["S"], P["H"]), R=56, avoid=skel(P))
+P, body, tp = figure(120, 0, 0, 55, 12, 12, head_tilt=8, far_leg=(0, 0, -14), far_arm=(20, 20))
+ar, deg, lp, sd = arc(P["H"], (0, -1), sub(P["S"], P["H"]), R=56, avoid=skel(P))
+body = compose(tp, {"torso", "uarm", "farm", "far_arm", "head"}, P["H"], -sd)
 ILUS["espalda"] = svg(fit(body + ar, skel(P) + [lp, (P["H"][0] - 70, P["H"][1])]), "Figura de perfil con el tronco inclinado y un arco que mide 55 grados en la cadera")
 INFO["espalda"] = ("Espalda", "Flexión del tronco", deg)
 
 # 3. Cadera: sentadilla
-P, body = figure(165, 32, -76, 36, 85, 85, far_arm=(80, 80))
-ar, deg, lp = arc(P["H"], sub(P["H"], P["S"]), sub(P["K"], P["H"]), R=40, avoid=skel(P))
+P, body, tp = figure(165, 32, -76, 36, 85, 85, far_arm=(80, 80))
+ar, deg, lp, sd = arc(P["H"], sub(P["H"], P["S"]), sub(P["K"], P["H"]), R=40, avoid=skel(P))
 ILUS["cadera"] = svg(fit(body + ar, skel(P) + [lp, (P["H"][0] - 70, P["H"][1] + 40)]), "Figura de perfil en sentadilla con un arco que mide la flexión de cadera")
 INFO["cadera"] = ("Cadera", "Flexión en sentadilla", deg)
 
@@ -182,29 +196,31 @@ bench = '<path class="ground" d="M70 %d H%s"/><path class="ground" d="M82 %d V%d
     Hh[1] + 15, f(K[0] + 12), Hh[1] + 15, G, f(K[0] - 6), Hh[1] + 15, G)
 toe = add(Ank, up(120, 24))
 toe2 = add(Ank2, up(100, 22))
-parts = [bench, '<path class="ground" d="M-300 %d H700"/>' % G,
-         seg(K2, Ank2, "far", 12), seg(Ank2, toe2, "far", 9), seg(Hh, K2, "far", 14),
-         seg(Hh, K, "body", 14), seg(K, Ank, "body", 12), seg(Ank, toe, "body", 9),
-         seg(Hh, S, "body", 22), seg(S, E, "body", 10), seg(E, Wr, "body", 9), head(S, -4)]
+static = "".join([bench, '<path class="ground" d="M-300 %d H700"/>' % G,
+         seg(K2, Ank2, "far", 12), seg(Ank2, toe2, "far", 9), seg(Hh, K2, "far", 14), seg(Hh, K, "body", 14),
+         seg(Hh, S, "body", 22), seg(S, E, "body", 10), seg(E, Wr, "body", 9), head(S, -4)])
 sk = [Hh, K, Ank, S, E, Wr, toe, add(S, up(-4, L_NECK))]
-ar, deg, lp = arc(K, sub(K, Hh), sub(Ank, K), R=46, avoid=sk)
-ILUS["rodilla"] = svg(fit("".join(parts) + ar, sk + [lp, (70, Hh[1] + 15), (K[0] + 60, K[1])]), "Figura sentada extendiendo la rodilla con un arco que mide la flexión")
+ar, deg, lp, sd = arc(K, sub(K, Hh), sub(Ank, K), R=46, avoid=sk)
+mover = '<g class="mv" data-pivot="%s" data-rot="%s">%s</g>' % (pt(K), f(-sd), seg(K, Ank, "body", 12) + seg(Ank, toe, "body", 9))
+ILUS["rodilla"] = svg(fit(static + mover + ar, sk + [lp, (70, Hh[1] + 15), (K[0] + 60, K[1])]), "Figura sentada extendiendo la rodilla con un arco que mide la flexión")
 INFO["rodilla"] = ("Rodilla", "Extensión sentado", deg)
 
 # 5. Tobillo: dorsiflexión contra la pared
 ax = 118
-P, _x = figure(ax, 38, -22, 12, 80, 80)
+P, _x, _tp = figure(ax, 38, -22, 12, 80, 80)
 wall = '<path class="ground" d="M%s %s V%d"/>' % (f(P["W"][0] + 10), f(P["S"][1] - 20), G)
-P, body = figure(ax, 38, -22, 12, 80, 80, extra_back=wall, far_leg=(30, -20, -22))
+P, body, tp = figure(ax, 38, -22, 12, 80, 80, extra_back=wall, far_leg=(30, -20, -22))
 sh = norm(sub(P["K"], P["A"]))
 neutral = (-sh[1], sh[0])
-ar, deg, lp = arc(P["A"], neutral, (1, 0), R=44, avoid=skel(P))
+ar, deg, lp, sd = arc(P["A"], neutral, (1, 0), R=44, avoid=skel(P), label_at=(84, -8))
+body = compose(tp, {"shank", "thigh"}, P["A"], -38, inner=({"torso", "uarm", "farm", "far_arm", "head"}, P["H"], 38))
 ILUS["tobillo"] = svg(fit(body + ar, skel(P) + [lp, (P["W"][0] + 10, P["S"][1]), (P["A"][0] + 60, P["A"][1] + 30)]), "Figura apoyada en una pared con la rodilla adelantada y un arco que mide la flexión del tobillo")
 INFO["tobillo"] = ("Tobillo y pie", "Flexión dorsal contra la pared", deg)
 
 # 6. Codo: flexión
-P, body = figure(150, 0, 0, 0, 4, 140, far_arm=(10, 12), legs=False)
-ar, deg, lp = arc(P["E"], sub(P["E"], P["S"]), sub(P["W"], P["E"]), R=40, avoid=up_pts(P))
+P, body, tp = figure(150, 0, 0, 0, 4, 140, far_arm=(10, 12), legs=False)
+ar, deg, lp, sd = arc(P["E"], sub(P["E"], P["S"]), sub(P["W"], P["E"]), R=40, avoid=up_pts(P))
+body = compose(tp, {"farm"}, P["E"], -sd)
 ILUS["codo"] = svg(fit(body + ar, up_pts(P) + [lp, (P["E"][0] + 70, P["E"][1])], ground=False), "Figura de pie con el codo flexionado y un arco que mide la flexión")
 INFO["codo"] = ("Codo y mano", "Flexión del codo", deg)
 

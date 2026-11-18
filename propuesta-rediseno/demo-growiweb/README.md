@@ -1,32 +1,45 @@
 # Demo GrowiWeb: Centro Ribera (negocio ficticio)
 
-Prototipo local para mostrar el nivel de GrowiWeb «Institucional con turnos». No está publicado, es `noindex` y no toca producción.
+Prototipo local, `noindex`, sin cambios en producción. Parte del commit `67cb3a9` y suma el refinamiento artístico y de movimiento.
 
 ## Cómo abrirla
 Desde la raíz del repo: `python -m http.server 8801` y abrir
-`http://localhost:8801/propuesta-rediseno/demo-growiweb/centro-ribera/index.html`
-(también `servicios.html` y `turnos.html`). Funciona con rutas relativas, sin dependencias y sin pedidos externos.
+`http://localhost:8801/propuesta-rediseno/demo-growiweb/centro-ribera/index.html` (también `servicios.html` y `turnos.html`).
 
-## Qué incluye
-- **Home:** selector de la zona que te molesta (mapa corporal + botones), figura con arco medido, motivos de consulta frecuentes con enlace al turno, primera consulta en tres pasos, servicios, equipo ficticio, cobertura, preguntas y cierre.
-- **Servicios:** cinco servicios (para quién y duración) y qué se mide en cada zona.
-- **Turnos (simulado):** motivo, profesional, día y horario (mañana y tarde), datos con validación, mensaje de WhatsApp de ejemplo. No se reserva ni se envía nada.
-- **Identidad «Movimiento medido»:** arco de goniómetro como marca, ilustraciones y guía visual. Tipografías propias alojadas (ver `centro-ribera/FUENTES.md`). Un acento (coral) y un sistema de radios.
+**Movimiento:** si tu sistema tiene «reducir animaciones» activado, la página lo respeta y muestra todo en su estado final. El botón «Activar animaciones» de la franja superior lo habilita (se guarda en el navegador).
 
-## Archivos
-`centro-ribera/` (sitio), `_ilus.py` (genera las seis ilustraciones por cinemática), `_construir.py` (genera las tres páginas), `referencias/` (capturas y notas), `centro-ribera/evidencia/` (capturas renderizadas y de pruebas).
+## Qué cambió
+- **Hero con fotografía editorial (variante B, elegida):** imagen generada con IA (sin personas, ver `centro-ribera/assets/img/ORIGEN.md`) convertida a AVIF/WebP. Sobre la foto, un arco coral sale del goniómetro fotografiado y mide un ángulo (0° a 55°). Tres marcadores rotulados (evaluación, readaptación, traumatología) abren el servicio de cada lugar.
+- **Movimiento con propósito (tres intervenciones):**
+  1. *Medir:* en el hero y en cada figura del selector el miembro recorre su rango mientras arco y número crecen. Botón «Repetir el movimiento». En Servicios, cada zona mide al entrar en pantalla.
+  2. *Narrar el proceso:* en «Así es la primera consulta», «Medimos» mide el arco y «Armamos el plan» suma la meta acordada (línea punteada).
+  3. *Feedback del turnero:* entrada de cada paso, resaltado del dato que cambió en el resumen y figura de la zona elegida midiendo.
+- **Textos:** instrucción del selector corporal, mensajes y confirmación revisados con `natural-writing` (modo auditoría).
+- **Correcciones de las críticas independientes:** contraste de la bajada sobre la foto, aro de foco de los marcadores, tarjeta sobre el marcador en móvil, `localStorage` bloqueado, versión sin JavaScript, barra fija móvil, estado de «flash» del resumen, nombre accesible de la marca.
 
-## Verificado (2026-11-17)
-- Lighthouse móvil (3 páginas): Accesibilidad 100, Buenas prácticas 100. SEO 63 por el `noindex` intencional (único fallo: «página bloqueada para indexación»).
-- Rendimiento móvil emulado (CPU 4x, 4G rápida), home: LCP 459 ms, CLS 0,00. TTFB de localhost: en hosting real será mayor.
-- Peso por página: HTML 19 a 25 KB, CSS 18 KB, JS 11 KB, fuentes 51 KB. Cero pedidos externos.
-- Contraste medido sobre el render: 0 fallas (pares de 4,90 a 14,11). Sin desborde horizontal en 390, 768 y 1440. Sin áreas táctiles menores a 44 px fuera de enlaces dentro de texto.
-- Recorrido de turnos probado con éxito y con casos de borde (vacíos, teléfono corto y largo, HTML en campos, parámetros inválidos incluido `__proto__`). Sin errores de consola.
-- Crítica independiente (dos evaluaciones aisladas, protocolo de `impeccable critique`): corregidos los defectos objetivos encontrados.
+## Decisión A contra B
+Capturas en `centro-ribera/evidencia/variantes/`. B gana en escritorio por lugar, credibilidad e identidad (el arco nace de un objeto real de la foto). En móvil la foto dejó de ser una franja chica (más alta) y la tarjeta del marcador pasó a mostrarse debajo de la imagen. La crítica visual independiente señaló que la foto sola sigue siendo genérica y que el pictograma de las figuras desentona con ella: ver «Defectos que persisten».
 
-## Límites declarados
-- Sin prueba en teléfono real ni con lector de pantalla.
-- El detector de Impeccable corrió en modo degradado (sin hallazgos; es un piso, no una garantía).
-- Las ilustraciones son diagramas técnicos coherentes, no ilustración artística. Un juego de seis piezas hechas por un ilustrador subiría el techo visual (no bloquea la demo).
-- Pendiente de invocación manual (no se ejecutaron): `find-animation-opportunities`, `animate`, `review-animations`. El movimiento es mínimo y está justificado (retroalimentación y cambio de estado), con `prefers-reduced-motion` respetado.
-- Tema solo claro. El tema oscuro no se implementó.
+## Verificado (2026-11-18)
+- Lighthouse (home escritorio y móvil; servicios y turnos en móvil): Accesibilidad 100, Buenas prácticas 100. SEO 66 por el `noindex` intencional (único fallo).
+- Rendimiento móvil emulado (CPU 4x, 4G rápida), home con la foto: LCP 624 ms, CLS 0,00. Foto servida en AVIF (56 KB en escritorio, 22 KB en móvil). El primer byte es de localhost.
+- Contraste del texto sobre la foto, peor caso muestreado en seis anchos: titular 5,4:1 o más; bajada 5,2:1 o más.
+- Marcadores a 0 px de diferencia de los objetos que señalan en 1440, 1200, 1024 y 390; teclado (Tab, Enter, Espacio, Escape) y `aria-expanded` correctos.
+- Movimiento: estados 0, 0,5 y 1 coherentes en hero y figuras (sin restos de `transform`); 10 cambios rápidos de zona sin estados rotos; modo reducido sin animaciones; sin errores ni advertencias de consola en tres páginas y cuatro modos.
+- Recorrido de turnos completo por teclado y casos de borde (incluido `?zona=__proto__`).
+- Dos críticas independientes (visual por imágenes y funcional en navegador) más la de la iteración anterior. Evidencia: `centro-ribera/evidencia/` (antes/después, fotogramas de movimiento, variantes A y B, capturas de estados).
+
+## Defectos que persisten
+- **Fluidez real sin medir:** los navegadores automatizados limitan `requestAnimationFrame` a 1 cuadro por segundo. El movimiento se verificó por estados deterministas y fotogramas (`evidencia/movimiento*.png`), no por fps.
+- **Foto genérica:** sala vacía, sin personas ni gesto de atención. No transmite trato humano.
+- **Figuras:** pictogramas rígidos de otro lenguaje que la foto. La cadera solo anima arco y número (la sentadilla no se mueve).
+- **Marcadores de la foto:** se leen mejor rotulados, pero siguen siendo superpuestos y no hacen parte de la imagen.
+- **Móvil:** los marcadores no tienen rótulo (se ven solo al abrir la tarjeta) y el arco es pequeño.
+- Sin prueba en teléfono real, Safari, Firefox ni lector de pantalla.
+
+## Recurso externo que subiría el techo
+Una serie de seis imágenes de la misma sala (una por zona: hombro, espalda, cadera, rodilla, tobillo y codo) con una persona realizando el movimiento y el goniómetro a la vista, sobre fondo claro, para apoyar encima el arco coral y reemplazar los pictogramas. Alternativa: seis siluetas ilustradas con volumen real, de un mismo ilustrador. No se generó porque las herramientas de imagen no están disponibles dentro de Claude Code.
+
+## Pendiente de invocación manual
+`find-animation-opportunities`, `animate` y `review-animations` son de invocación manual y no se ejecutaron. Comandos (el prefijo se verificó solo en las dos skills ya usadas; si alguno no responde, usá el nombre que muestra el menú de `/`):
+`/anthropic-skills:find-animation-opportunities`, `/anthropic-skills:animate`, `/anthropic-skills:review-animations`.
