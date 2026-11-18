@@ -459,3 +459,15 @@ body.menu-open{overflow:hidden}
 /* r2c: minimo de 12 px en rotulos y leyendas */
 .ribbon,.pill,.stamp,.msg small,.sheet-h,.cmb-card small{font-size:12px}
 .t-lines li.soon .v{font-size:12px}
+
+/* r2d: rubros sin desborde a 320 px */
+.rubros a{min-width:0;overflow-wrap:anywhere}@media(max-width:360px){.rubros a{font-size:1rem;padding-right:10px}.rubros a+a{padding-left:12px}}
+
+/* r2d: vista de escritorio mas grande y legible */
+.wp-scale,.wp-scale iframe{width:960px}.wp-scale iframe{height:640px}
+@media(min-width:1001px){.xp-pan:has(.wprev){grid-template-columns:minmax(0,.5fr) minmax(0,1.5fr)}.ph-g:has(.wprev){grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}}
+
+/* r2d ajustes tras la revision */
+.wp-scale,.wp-scale iframe{width:860px}.wp-scale iframe{height:600px}
+@media(min-width:1001px){.ph-g:has(.wprev) h1{font-size:clamp(2.4rem,4.2vw,4rem)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

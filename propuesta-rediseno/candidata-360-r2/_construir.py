@@ -162,7 +162,7 @@ def home():
             '<h1 id="h1">Tu negocio, <mark class="sweep">andando</mark>.</h1></div><div><p class="sub">Armamos y dejamos funcionando tu sistema de gestión, tu sitio web y tus automatizaciones. Precio y fecha estimada de entrega, por escrito, antes de empezar.</p>'
             '<div class="cta-row">%s<a class="btn o" href="#producto">Ver cómo funciona ↓</a></div></div></div></section>\n'
             % btn("Hola Growi, quiero conocer más sobre sus soluciones.", "home-hero-whatsapp", "Contanos tu negocio"))
-    tabs = tab("app", "01", "GrowiApp", "Llevar el negocio", True) + tab("web", "02", "GrowiWeb", "Que te encuentren", False) + tab("flow", "03", "GrowiFlow", "Que los avisos salgan solos", False) + tab("combo", "04", "Combo", "Sitio y sistema juntos", False)
+    tabs = tab("app", "01", "GrowiApp", "Llevar el negocio", True) + tab("web", "02", "GrowiWeb", "Que te encuentren", False) + tab("flow", "03", "GrowiFlow", "Tareas repetitivas, a medida", False) + tab("combo", "04", "Combo", "Sitio y sistema juntos", False)
     d = lambda usd, extra="": '<span data-price="%s">$</span>%s' % (usd, extra)
     p_app = panel("app", True, "Ventas, caja, stock y turnos en una sola pantalla, desde el celular.",
                   ["Cierre de caja automático: el número está solo", "Control de stock con alertas, antes de quedarte sin nada", "Agenda de turnos y reservas: reemplazás el cuaderno"],
@@ -176,7 +176,7 @@ def home():
                   ["Precio y alcance por escrito, antes de empezar", "Revisiones incluidas según el plan", "7 días de ajustes sin cargo desde la entrega"],
                   "desde %s, pago único · dominio y alojamiento aparte" % d(200),
                   '<a class="btn k sm" href="web/" data-track="home-xp-web">Ver GrowiWeb →</a>', web_stage(""))
-    p_flow = panel("flow", False, "Que lo repetitivo se haga solo.",
+    p_flow = panel("flow", False, "Menos tareas repetitivas, armadas a medida.",
                    ["Las consultas de un formulario se anotan en una planilla; WhatsApp e Instagram se definen caso por caso", "El aviso del turno sale solo, por mail o por WhatsApp (este último con requisitos de Meta)", "Un resumen de tus ventas por mail o WhatsApp"],
                    ["Lo armamos nosotros y lo dejamos andando", "No hace falta tener GrowiApp ni GrowiWeb", "7 días de ajustes sin cargo desde la entrega"],
                    "pago único · pedidos y consultas desde %s, reportes y recordatorios %s" % (d(79), d(89)),
@@ -212,7 +212,7 @@ def home():
                '<label class="opt"><input type="checkbox" name="linea" value="app"><span class="box"><span class="tick" aria-hidden="true">✓</span><span><span class="n">Llevar mi negocio</span><span class="d">GrowiApp · ventas, caja, stock y turnos</span></span><span class="p">desde <span data-price="15" data-price-short>$</span>/mes</span></span></label>'
                '<label class="opt"><input type="checkbox" name="linea" value="web"><span class="box"><span class="tick" aria-hidden="true">✓</span><span><span class="n">Tener un sitio web</span><span class="d">GrowiWeb · te encuentran y te consultan</span></span><span class="p">desde <span data-price="200" data-price-short>$</span></span></span></label>'
                '<div class="sub-opt" data-websub hidden role="group" aria-label="Tipo de sitio"><label><input type="radio" name="webtipo" value="l" checked><span>Una página (landing)</span></label><label><input type="radio" name="webtipo" value="i"><span>Sitio con varias secciones</span></label></div>'
-               '<label class="opt"><input type="checkbox" name="linea" value="flow"><span class="box"><span class="tick" aria-hidden="true">✓</span><span><span class="n">Que los avisos salgan solos</span><span class="d">GrowiFlow · pedidos, reportes y recordatorios</span></span><span class="p">desde <span data-price="79" data-price-short>$</span></span></span></label>'
+               '<label class="opt"><input type="checkbox" name="linea" value="flow"><span class="box"><span class="tick" aria-hidden="true">✓</span><span><span class="n">Tareas repetitivas, a medida</span><span class="d">GrowiFlow · pedidos, reportes y recordatorios</span></span><span class="p">desde <span data-price="79" data-price-short>$</span></span></span></label>'
                '<div class="sub-opt" data-flowsub hidden role="group" aria-label="Paquete de GrowiFlow"><label><input type="radio" name="flowtipo" value="p" checked><span>Pedidos y consultas</span></label><label><input type="radio" name="flowtipo" value="r"><span>Reportes</span></label><label><input type="radio" name="flowtipo" value="a"><span>Recordatorios</span></label></div>'
                '<label class="opt"><input type="checkbox" name="linea" value="inv"><span class="box"><span class="tick" aria-hidden="true">✓</span><span><span class="n">Invitar a un evento</span><span class="d">Invitaciones digitales a medida</span></span><span class="p">con presupuesto</span></span></label>'
                '</fieldset></form><div class="print" data-print aria-live="off"></div>'

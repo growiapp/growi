@@ -129,13 +129,16 @@
   function webInit() {
     var w = $("[data-wprev]"); if (!w || w.__i) return; w.__i = 1;
     var fr = $("iframe", w), view = $(".wp-view", w), sc = $(".wp-scale", w), dev = "d";
+    var DW = 860, DH = 600; /* ancho de diseño de la vista de escritorio */
     var fit = function () {
       var W = view.clientWidth, s;
-      if (dev === "d") { s = W / 1040; sc.style.transform = "scale(" + s + ")"; sc.style.left = "0"; sc.style.top = "0"; view.style.height = Math.round(700 * s) + "px"; }
-      else { s = Math.min(1, (W - 24) / 390); sc.style.transform = "scale(" + s + ")"; sc.style.left = Math.round((W - 390 * s) / 2) + "px"; sc.style.top = "12px"; view.style.height = Math.round(780 * s + 24) + "px"; }
+      if (dev === "d") { fr.style.height = ""; s = W / DW; sc.style.transform = "scale(" + s + ")"; sc.style.left = "0"; sc.style.top = "0"; view.style.height = Math.round(DH * s) + "px"; }
+      else { var H = Math.min(780, Math.max(480, window.innerHeight - 170)); fr.style.height = H + "px"; /* más bajo que la pantalla: queda margen para seguir desplazando la página */ s = Math.min(1, (W - 24) / 390); sc.style.transform = "scale(" + s + ")"; sc.style.left = Math.round((W - 390 * s) / 2) + "px"; sc.style.top = "12px"; view.style.height = Math.round(H * s + 24) + "px"; }
     };
     fr.src = fr.getAttribute("data-src"); fit();
-    var mb = $("[data-dev=m]", w); if (mb) setTimeout(function () { mb.click(); }, 0); /* vista de celular por defecto: tamaño nativo, legible */
+    /* escritorio ancho: vista de escritorio grande por defecto (?vista=a conserva la anterior, solo para comparar); resto: celular a tamaño nativo */
+    var mb = $("[data-dev=m]", w), wide = window.matchMedia("(min-width:1001px)").matches && !/[?&]vista=a/.test(location.search);
+    if (mb && !wide) setTimeout(function () { mb.click(); }, 0);
     var op = $("[data-open]", w);
     if (window.ResizeObserver) new ResizeObserver(fit).observe(view); else window.addEventListener("resize", fit);
     $$("[data-demo]", w).forEach(function (b) { b.addEventListener("click", function () { fr.src = fr.getAttribute("data-base") + b.getAttribute("data-demo") + "/index.html"; if (op) op.href = fr.src; $$("[data-demo]", w).forEach(function (x) { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", String(x === b)); }); }); });
