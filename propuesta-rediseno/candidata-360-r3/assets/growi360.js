@@ -211,5 +211,60 @@
     $$("[data-demo]", w).forEach(function (b) { b.addEventListener("click", function () { fr.src = fr.getAttribute("data-base") + b.getAttribute("data-demo") + "/index.html"; if (op) op.href = fr.src; $$("[data-demo]", w).forEach(function (x) { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", String(x === b)); }); }); });
     $$("[data-dev]", w).forEach(function (b) { b.addEventListener("click", function () { dev = b.getAttribute("data-dev"); view.classList.toggle("m", dev === "m"); fit(); $$("[data-dev]", w).forEach(function (x) { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", String(x === b)); }); }); });
   }
+  /* pestañas de planes (GrowiWeb): flechas, Inicio y Fin, como pide el patrón de pestañas */
+  $$('.pick[role="tablist"]').forEach(function (tl) {
+    var tabs = $$('[role="tab"]', tl);
+    var select = function (n) {
+      tabs.forEach(function (x) {
+        var on = x === n; x.setAttribute("aria-selected", String(on)); x.tabIndex = on ? 0 : -1;
+        var p = document.getElementById(x.getAttribute("data-panel")); if (p) { p.hidden = !on; if (on) p.dispatchEvent(new Event("growi:panel")); }
+      });
+      /* los carruseles de planes arrancan en el recomendado al mostrarse */
+      var g = document.getElementById(n.getAttribute("data-panel")), r = g && $(".ribbon", g);
+      if (g && r && window.matchMedia("(max-width:720px)").matches) { var t = r.closest(".ticket"); g.scrollLeft = t.offsetLeft - (g.clientWidth - t.offsetWidth) / 2; }
+    };
+    tabs.forEach(function (t, i) {
+      t.addEventListener("click", function () { select(t); });
+      t.addEventListener("keydown", function (e) {
+        var k = { ArrowRight: 1, ArrowLeft: -1 }[e.key], n;
+        if (k) n = tabs[(i + k + tabs.length) % tabs.length]; else if (e.key === "Home") n = tabs[0]; else if (e.key === "End") n = tabs[tabs.length - 1]; else return;
+        select(n); n.focus(); e.preventDefault();
+      });
+    });
+  });
+
+  /* demo de GrowiApp: el póster del rubro se retira cuando la demo real termina de cargar */
+  $$(".appwrap").forEach(function (w) {
+    var f = $("iframe", w); if (!f) return;
+    var m = /rubro=([a-z]+)/.exec(f.getAttribute("src") || ""); if (m && m[1] !== "cafeteria") w.classList.add("pr-" + m[1]);
+    f.addEventListener("load", function () { w.classList.add("ready"); });
+    try { if (f.contentDocument.readyState === "complete" && f.contentWindow.location.href !== "about:blank") w.classList.add("ready"); } catch (e) {}
+  });
+
+  /* escaparate de GrowiWeb: dos vistas del mismo sitio real; el póster liviano se retira apenas carga la demo */
+  $$("[data-wsc]").forEach(function (w) {
+    var views = $$(".wsc-view", w), base = w.getAttribute("data-base"), op = $("[data-wopen]", w);
+    var fit = function () {
+      views.forEach(function (v) {
+        var dw = +v.getAttribute("data-w"), dh = +v.getAttribute("data-h"), s = v.clientWidth / dw, f = $("iframe", v);
+        f.style.width = dw + "px"; f.style.height = dh + "px"; f.style.transform = "scale(" + s + ")"; v.style.height = Math.round(dh * s) + "px";
+      });
+    };
+    views.forEach(function (v) { var f = $("iframe", v); f.addEventListener("load", function () { v.classList.add("ready"); }); });
+    var started = false;
+    /* solo se carga lo que se ve: la vista de escritorio no se descarga en pantallas chicas */
+    var start = function () { started = true; views.forEach(function (v) { var f = $("iframe", v); if (v.offsetParent && !f.src) f.src = f.getAttribute("data-src"); }); };
+    var fit0 = fit; fit = function () { fit0(); if (started) start(); };
+    fit(); if (window.ResizeObserver) new ResizeObserver(fit).observe(w); else window.addEventListener("resize", fit);
+    if (IO) { var o = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { o.disconnect(); start(); } }, { rootMargin: "300px" }); o.observe(w); } else start();
+    $$("[data-wdemo]", w).forEach(function (b) {
+      b.addEventListener("click", function () {
+        var d = b.getAttribute("data-wdemo"), ribera = d === "centro-ribera";
+        views.forEach(function (v) { var f = $("iframe", v); v.classList.toggle("nop", !ribera); v.classList.remove("ready"); f.src = base + d + "/index.html"; });
+        if (op) op.href = base + d + "/index.html";
+        $$("[data-wdemo]", w).forEach(function (x) { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", String(x === b)); });
+      });
+    });
+  });
   if ($("[data-wprev]") && !xt.length) webInit(); /* páginas de línea: vista previa activa al cargar */
 })();

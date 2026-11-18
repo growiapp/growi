@@ -26,17 +26,17 @@ def home():
     hero = ('<section class="hero2" data-sticky-hide aria-labelledby="h1"><div class="w hero2-g"><div><p class="eyebrow">Sistema, sitio web y automatizaciones para negocios de Argentina</p>'
             '<h1 id="h1">Tu negocio, <mark class="sweep">andando</mark>.</h1></div><div><p class="sub">Armamos y dejamos funcionando lo que tu negocio necesita: ordenar las ventas, que te encuentren o dejar de hacer tareas a mano. Precio y fecha estimada de entrega, por escrito, antes de empezar.</p>'
             '<div class="cta-row">%s<a class="btn o" href="#necesidad">¿Qué necesitás resolver? ↓</a></div>'
-            '<a class="hero-proof" href="#caso"><img src="assets/img/colocafe-logo.png" alt="" width="44" height="44"><span><b>Caso real · Colo Café</b>Sistema de gestión armado para su cafetería.</span></a></div></div></section>\n'
+            '<p class="hero-l1">Hoy solo recibimos consultas por WhatsApp: todavía no se contrata ni se paga.</p><a class="hero-proof" href="#caso"><img src="assets/img/colocafe-logo.png" alt="" width="44" height="44"><span><b>Caso real · Colo Café</b>Sistema de gestión armado para su cafetería.</span></a></div></div></section>\n'
             % btn("Hola Growi, quiero conocer más sobre sus soluciones.", "home-hero-whatsapp", "Contanos tu negocio"))
     tabs = (tab("app", "01", "Ordenar mi negocio", "Ventas, caja, stock y turnos", True) + tab("web", "02", "Que me encuentren", "Un sitio que trae consultas", False)
             + tab("flow", "03", "Dejar de hacerlo a mano", "Avisos, reportes y pedidos", False) + tab("combo", "04", "Las dos cosas juntas", "Sitio y sistema", False))
     p_app = panel("app", True, "GrowiApp", "Ventas, caja, stock y turnos en una sola pantalla, desde el celular.",
                   ["Cada venta registrada al momento y el cierre de caja armado solo", "Stock con alertas, antes de quedarte sin nada", "Agenda de turnos y reservas: reemplazás el cuaderno"],
-                  ["Lo armamos con los datos de tu negocio", "1 hora de capacitación en vivo", "7 días de garantía y sin permanencia"],
+                  ["Lo armamos con los datos de tu negocio", "1 hora de capacitación en vivo", "Garantía prevista de 7 días y sin permanencia"],
                   "desde %s/mes + %s de puesta en marcha" % (P(15, True), P(49, True)),
                   '<a class="btn k sm" href="%s" data-track="home-xp-app">Ver GrowiApp →</a>' % pg.u("app/"),
                   '<div class="appwrap"><iframe class="appdemo" src="%sdemos/app.html" title="Demo interactiva de GrowiApp: elegí tu rubro y mirá el panel" height="760" loading="lazy"></iframe></div>'
-                  '<p class="cap">Demo real de GrowiApp, con datos ilustrativos. Elegí un rubro y los datos cambian.</p>' % rel)
+                  '<p class="cap">Demo interactiva de GrowiApp, con datos ilustrativos. Elegí un rubro y los datos cambian.</p>' % rel)
     p_web = panel("web", False, "GrowiWeb", "Un sitio que presenta tu negocio y facilita las consultas.",
                   ["Muestra lo que hacés y deja pedir turno o consultar", "Lo dejamos publicado: vos no tocás nada técnico", "Plantilla adaptada a tu rubro o diseño a medida"],
                   ["Precio y alcance por escrito, antes de empezar", "Revisiones incluidas según el plan", "7 días de ajustes sin cargo desde la entrega"],

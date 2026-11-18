@@ -14,7 +14,8 @@ Necesita un servidor local (los marcos con las demos no cargan con doble clic en
 - `index.html`: home. «¿Qué necesitás resolver?» (selector por necesidad con demos), caso Colo Café, banda de Invitaciones, armador de consulta.
 - `app/` (GrowiApp) y `app/cafeterias/`, `app/peluquerias/`, `app/talleres/`, `app/retail/`.
 - `web/` (GrowiWeb), `flow/` (GrowiFlow), `combo/`, `invitaciones/`.
-- `revision/index.html`: qué cambió, antes y después, motion, pruebas, crítica independiente, Git y recomendación.
+- `revision/index.html`: qué cambió en R3.1, antes y después, pruebas, skills, crítica independiente y dictamen.
+- `revision/pricing.html`: recomendación de pricing (no aplicada), con supuestos y escenarios de margen.
 
 ## Qué contiene
 

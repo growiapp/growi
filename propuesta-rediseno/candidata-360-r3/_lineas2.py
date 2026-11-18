@@ -7,11 +7,12 @@ from _lineas import l1_faq, ph
 def web():
     pg = Pg("web/"); rel = pg.rel
     msg = "Hola Growi, quiero un presupuesto para un sitio web.\n\nMi rubro:\nQué quiero que haga quien entra (llamar, reservar, comprar):"
-    hero = ('<section class="ph" data-sticky-hide aria-labelledby="h1"><div class="w ph-g"><div>%s<h1 id="h1">Un sitio que presenta tu negocio y <mark class="sweep">facilita las consultas</mark>.</h1>'
-            '<p class="sub">Diseñamos y desarrollamos landing pages y sitios institucionales. Los dejamos publicados: vos no tocás nada técnico, y sabés cuánto sale antes de empezar.</p>'
-            '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">%s<a class="btn o" href="#planes">Ver planes ↓</a></div>'
-            '<ul class="proof"><li><span>Precio y alcance por escrito antes de empezar</span></li><li><span>Dominio y alojamiento los pagás vos, aparte</span></li></ul></div><div id="demo">%s</div></div></section>\n'
-            % (ph(pg, "GrowiWeb"), btn(msg, "web-hero-whatsapp", "Pedir presupuesto"), web_stage(rel)))
+    hero = ('<section class="ph ph-wide" data-sticky-hide aria-labelledby="h1"><div class="w"><div class="ph-top"><div>%s<h1 id="h1">Un sitio que presenta tu negocio y <mark class="sweep">facilita las consultas</mark>.</h1></div>'
+            '<div><p class="sub">Landing pages y sitios institucionales, publicados por nosotros. Vos no tocás nada técnico y sabés cuánto sale antes de empezar.</p>'
+            '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:22px">%s<a class="btn o" href="#planes">Ver planes ↓</a></div>'
+            '<ul class="proof"><li><span>Landing desde %s · sitio institucional desde %s, pago único · precios previstos: hoy solo consultas</span></li><li><span>Dominio y alojamiento los pagás vos, aparte</span></li></ul></div></div>'
+            '<div id="demo" class="demo-wide">%s</div></div></section>\n'
+            % (ph(pg, "GrowiWeb"), btn(msg, "web-hero-whatsapp", "Pedir presupuesto"), P(200, True), P(550, True), web_showcase(rel)))
     def cta(plan): return btn("Hola Growi, quiero un presupuesto para el plan %s de GrowiWeb.\n\nMi rubro:" % plan, "web-pricing-whatsapp", "Consultar por el plan %s" % plan, "wide")
     def tk(code, name, sub, lines, usd, fine, ribbon=""): return ticket(code, name, sub, lines, ("Pago único", money(usd)), fine, cta(name), ribbon)
     ent = "Entrega: fecha estimada en el presupuesto. Dominio y alojamiento no incluidos."
@@ -26,7 +27,7 @@ def web():
               '<div class="pick" role="tablist" aria-label="Tipo de sitio"><button type="button" role="tab" data-panel="p-landing" aria-selected="true"><b>Una página para que te contacten</b><span>Landing page · desde %s</span></button>'
               '<button type="button" role="tab" data-panel="p-inst" aria-selected="false" tabindex="-1"><b>Un sitio completo con varias secciones</b><span>Sitio institucional · desde %s</span></button></div>'
               '<div class="tk-tools">%s</div>%s%s'
-              '<p class="note" style="max-width:86ch;margin-top:34px">El plazo de entrega se define según el plan, el alcance y los materiales necesarios; te confirmamos una fecha estimada en el presupuesto, antes de iniciar el proyecto. El dominio y el alojamiento no están incluidos: los contratás y pagás vos, aparte, y te recomendamos cuáles. Todos los planes tienen 7 días de ajustes sin cargo desde la entrega si algo no quedó como esperabas. %s</p></div></section>\n'
+              '<p class="note" style="max-width:86ch;margin-top:34px">El plazo de entrega se define según el plan, el alcance y los materiales necesarios; te confirmamos una fecha estimada en el presupuesto, antes de iniciar el proyecto. El dominio y el alojamiento no están incluidos: los contratás y pagás vos, aparte, y te recomendamos cuáles. Está previsto que todos los planes tengan 7 días de ajustes sin cargo desde la entrega si algo no quedó como esperabas. %s</p></div></section>\n'
               % (P(200, True), P(550, True), cur_toggle(), lp, ins, E(L1_PRECIOS)))
     ex = [("Redacción completa desde cero", 69), ("Formulario que guarda cada consulta en una planilla", 59), ("Medición de visitas y de anuncios (Google y Meta) configurada", 39), ("Ronda adicional de revisiones", 29)]
     extras = ('<section class="sec" aria-labelledby="h-ex"><div class="w"><div class="faq-g"><div><p class="eyebrow">Extras</p><h2 id="h-ex">Sumá lo que tu proyecto necesita.</h2></div>'
@@ -50,9 +51,10 @@ def flow():
     msg = "Hola Growi, quiero consultar por una automatización para mi negocio.\n\nQué tarea repito todos los días:"
     hero = ('<section class="ph ph-wide" data-sticky-hide aria-labelledby="h1"><div class="w"><div class="ph-top"><div>%s<h1 id="h1">Las tareas que repetís todos los días, <mark class="sweep">armadas a medida</mark>.</h1></div>'
             '<div><p class="sub">Avisos de turno, resúmenes de ventas y consultas en orden: lo armamos a medida de tu negocio y lo probamos con vos antes de dejarlo andando.</p>'
-            '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:24px">%s<a class="btn o" href="#paquetes">Ver paquetes ↓</a></div></div></div>'
+            '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:24px">%s<a class="btn o" href="#paquetes">Ver paquetes ↓</a></div>'
+            '<ul class="proof"><li><span>Desde %s, pago único · precios previstos: hoy solo consultas</span></li></ul></div></div>'
             '<div id="demo" class="demo-wide">%s</div></div></section>\n'
-            % (ph(pg, "GrowiFlow"), btn(msg, "flow-hero-whatsapp", "Contanos qué querés automatizar"), flow_demo(False)))
+            % (ph(pg, "GrowiFlow"), btn(msg, "flow-hero-whatsapp", "Contanos qué querés automatizar"), P(79, True), flow_demo(False)))
     def cta(txt, track, label): return btn(txt, track, label, "wide")
     m = "Hola Growi, quiero consultar por %s de GrowiFlow."
     ven = "Sin mensualidad."
@@ -67,9 +69,9 @@ def flow():
     t_bot = ticket("Próximamente", "Bot de WhatsApp", "Para las preguntas de siempre.", ["~Responde horarios, dirección y las preguntas frecuentes", "~Lo que no sabe, te lo pasa a vos"],
                    ("Puesta en marcha", '<strong class="t-num">%s <small>+ %s/mes</small></strong>' % (P(149), P(25, True))),
                    "Todavía no está disponible: depende de una aprobación de Meta y no hay fecha. Los mensajes los cobra Meta aparte, a cargo del cliente.", '<p class="soon-n"><a class="tl" href="%s%s" target="_blank" rel="noopener noreferrer" data-track="flow-bot-aviso-whatsapp">Avisame cuando esté disponible</a></p>' % (WA, quote("Hola Growi, avisenme cuando esté disponible el bot de WhatsApp de GrowiFlow.")), "", 'id="bot"')
-    paq = ('<section class="sec tint" id="paquetes" aria-labelledby="h-pq"><div class="w"><p class="eyebrow">Paquetes</p><h2 id="h-pq">Elegí qué querés dejar de hacer a mano.</h2><p class="lead">Cada paquete se contrata solo, con precio cerrado: lo armamos, lo probamos con vos y te enseñamos a usarlo. Si ya sos cliente de GrowiApp o GrowiWeb, tenés 10%% de descuento en cualquier paquete.</p><p class="l1n">Hoy solo recibimos consultas: todavía no se contrata ni se paga.</p>'
+    paq = ('<section class="sec tint" id="paquetes" aria-labelledby="h-pq"><div class="w"><p class="eyebrow">Paquetes</p><h2 id="h-pq">Elegí qué querés dejar de hacer a mano.</h2><p class="lead">Cada paquete es independiente y tiene precio cerrado: lo armamos, lo probamos con vos y te enseñamos a usarlo. Quien ya sea cliente de GrowiApp o GrowiWeb tendrá 10%% de descuento en cualquier paquete cuando se abra la contratación.</p><p class="l1n">Hoy solo recibimos consultas: todavía no se contrata ni se paga.</p>'
            '<div class="tk-tools">%s</div><div class="tickets">%s%s%s</div><div class="tickets two" style="margin-top:34px">%s%s</div>'
-           '<p class="note" style="max-width:86ch;margin-top:34px">Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. Las automatizaciones a medida se confirman en un presupuesto por escrito antes de empezar. No incluye el costo de los mensajes de WhatsApp, que cobra Meta, ni el de la inteligencia artificial, donde aplique: se pagan aparte. Están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta). El pago lo coordinamos por WhatsApp. Un ajuste posterior, en cualquier paquete, sale __AJ__ por sesión.</p></div></section>\n'
+           '<p class="note" style="max-width:86ch;margin-top:34px">Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. Las automatizaciones a medida se confirman en un presupuesto por escrito antes de empezar. No incluye el costo de los mensajes de WhatsApp, que cobra Meta, ni el de la inteligencia artificial, donde aplique: se pagan aparte. Están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta). Un ajuste posterior, en cualquier paquete, sale __AJ__ por sesión.</p></div></section>\n'
            % (cur_toggle(), t_rep, t_rec, t_ped, t_med, t_bot))
     paq = paq.replace('__AJ__', P(29))
     pasos = [("01", "Nos contás cómo lo hacés hoy", "Por WhatsApp, sin formularios. Qué tarea te come tiempo, con qué la hacés y cada cuánto."), ("02", "Lo armamos y lo probamos con vos", "Vos no tocás nada técnico. Antes de dejarlo andando lo vemos juntos con tus datos reales."), ("03", "Queda funcionando", "Y si algo falla o querés cambiarlo, hablás por WhatsApp con el mismo equipo que lo armó.")]
@@ -89,11 +91,11 @@ def combo():
     hero = ('<section class="ph ph-wide" data-sticky-hide aria-labelledby="h1"><div class="w"><div class="ph-top"><div>%s<h1 id="h1">Tu negocio, en internet y ordenado, <mark class="sweep">con un solo equipo</mark>.</h1></div>'
             '<div><p class="sub">Te armamos el sitio web y el sistema para llevar ventas, caja, stock y turnos, todo junto. Lo arma el mismo equipo y, por hacerlo junto, el sitio sale 10%% menos.</p>'
             '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:24px">%s<a class="btn o" href="#precios">Ver precios ↓</a></div>'
-            '<ul class="proof"><li><span>Sitio desde %s, pago único + %s por mes del sistema</span></li><li><span>10%% de descuento en el sitio · Puesta en marcha del sistema sin cargo</span></li></ul></div></div>'
+            '<ul class="proof"><li><span>Sitio desde %s, pago único + %s por mes del sistema · precios previstos: hoy solo consultas</span></li><li><span>10%% de descuento en el sitio · Puesta en marcha del sistema sin cargo</span></li></ul></div></div>'
             '<div id="demo" class="demo-wide">%s</div></div></section>\n'
             % (ph(pg, "Combo"), btn(msg, "combo-hero-whatsapp", "Consultar por el combo"), P(180, True), P(15, True), combo_journey(rel)))
     por = [("Un solo relevamiento", "En una charla contás tu negocio una vez, y con eso armamos el sitio y el sistema. No le explicás lo mismo a dos equipos."), ("Un solo arranque", "Una sola espera y una sola puesta en marcha. La del sistema va sin cargo cuando lo contratás junto con el sitio."), ("El mismo WhatsApp para todo", "Si algo falla, hablás con el mismo equipo que armó todo, sin que te deriven de un lado a otro.")]
-    pq = ('<section class="sec" id="juntos" aria-labelledby="h-j"><div class="w"><p class="eyebrow">Por qué juntos</p><h2 id="h-j">Armar todo de a partes sale más caro y más lento.</h2><ul class="feat">%s</ul></div></section>\n'
+    pq = ('<section class="sec" id="juntos" aria-labelledby="h-j"><div class="w"><p class="eyebrow">Por qué juntos</p><h2 id="h-j">Sitio y sistema: una charla, un arranque, un equipo.</h2><ul class="feat">%s</ul></div></section>\n'
           % "".join("<li><div><b>%s</b><span>%s</span></div></li>" % (E(a), E(b)) for a, b in por))
     def tc(code, name, sub, lines, usd, suelto, pre):
         return ticket(code, name, sub, lines, ("Sitio, pago único", money(usd)), "Suelto el sitio sale %s. Más %s por mes del sistema (GrowiApp Start). Puesta en marcha del sistema sin cargo (sola sale %s). %s" % (P(suelto), P(15), P(49), "El dominio y el alojamiento los pagás vos, aparte."),
@@ -102,7 +104,7 @@ def combo():
     t2 = tc("Combo 02", "Combo Institucional", "Un sitio completo, más tu sistema.", ["Sitio completo con varias secciones: quiénes son, servicios, contacto y mapa", "GrowiApp Start: ventas, caja, stock, turnos y clientes", "Puesta en marcha del sistema sin cargo", "La charla inicial sirve para las dos cosas"], 495, 550, "")
     precios = ('<section class="sec tint" id="precios" aria-labelledby="h-pr"><div class="w"><p class="eyebrow">Dos ejemplos de combo</p><h2 id="h-pr">Con el plan de entrada de cada línea.</h2><p class="lead">El 10%% de descuento se aplica a cualquier plan de GrowiWeb que combines con GrowiApp. <a class="tl" href="%s">Ver todos los planes de GrowiWeb</a></p><p class="l1n">Hoy solo recibimos consultas: todavía no se contrata ni se paga.</p>'
                '<div class="tk-tools">%s</div><div class="tickets two">%s%s</div>'
-               '<p class="note" style="max-width:86ch;margin-top:34px">%s El abono mensual de GrowiApp es el mismo que si lo contratás solo, sin permanencia. La fecha estimada de entrega del sitio va en el presupuesto y la del sistema se confirma por escrito antes de empezar. Garantía de 7 días: si en los 7 días desde que te entregamos el sitio no funciona como te prometimos, te devolvemos el 100%% del pago único del sitio (el precio del combo, ya con el 10%% de descuento).</p></div></section>\n'
+               '<p class="note" style="max-width:86ch;margin-top:34px">%s El abono mensual de GrowiApp es el mismo que si lo contratás solo, sin permanencia. La fecha estimada de entrega del sitio va en el presupuesto y la del sistema se confirma por escrito antes de empezar. Garantía prevista de 7 días: si en los 7 días desde que te entregamos el sitio no funciona como te prometimos, te devolveríamos el 100%% del pago único del sitio (el precio del combo, ya con el 10%% de descuento).</p></div></section>\n'
                % (pg.u("web/") + "#planes", cur_toggle(), t1, t2, E(L1_PRECIOS)))
     faqp = l1_faq("combo", [0, 1, 2, 3, 4, 5])
     pre = ('<section class="sec" id="preguntas" aria-labelledby="h-faq"><div class="w faq-g"><div><p class="eyebrow">Preguntas</p><h2 id="h-faq">Dudas sobre el combo.</h2></div>%s</div></section>\n' % faq(faqp))
@@ -119,7 +121,7 @@ def invitaciones():
             '<h1 id="h1">Tu celebración, en una invitación que <mark class="sweep">se abre como un regalo</mark>.</h1>'
             '<p class="sub">Invitaciones digitales diseñadas a medida para casamientos, cumpleaños, quinceañeras, eventos de empresa y cualquier otra celebración. Se comparten con un enlace.</p>'
             '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">%s<a class="btn o" href="#perfiles">Mirá cómo se personaliza ↓</a></div>'
-            '<ul class="proof"><li><span>Con presupuesto y alcance por escrito, sin precio de lista</span></li><li><span>Los invitados confirman por WhatsApp: llega a tu teléfono</span></li></ul></div>'
+            '<ul class="proof"><li><span>Con presupuesto y alcance por escrito, sin precio de lista · hoy solo consultas</span></li><li><span>Los invitados confirman por WhatsApp: llega a tu teléfono</span></li></ul></div>'
             '<div id="demo">%s<p class="cap">Invitaciones de muestra con datos ficticios. Abrilas y recorrelas: cada una se cuenta de otra manera (capítulos, tarjetas o agenda por bloques).</p></div></div></section>\n'
             % (pg.u(""), btn(msg, "inv-hero-whatsapp", "Pedir presupuesto"), inv_frame(rel, "exp", "Invitaciones de muestra: elegí un casamiento, un cumpleaños o un evento de empresa", 700)))
     perf = ('<section class="sec invs" id="perfiles" aria-labelledby="h-pf"><div class="w"><p class="eyebrow">Personalización avanzada, a medida</p><h2 id="h-pf">Cuando tus invitados no viven el día de la misma manera.</h2>'

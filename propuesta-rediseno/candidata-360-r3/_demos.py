@@ -53,10 +53,10 @@ def flow_demo(compact=False):
 def combo_journey(rel):
     return ('<div class="cj" data-fd data-beats="4" data-ms="2100"><div class="fd-top"><p class="cj-biz">Un mismo negocio: <b>Centro Ribera</b>, un centro de kinesiología</p><span class="fd-sim">Demostración · datos ficticios</span></div>'
             '<div class="cj-stage">'
-            '<figure class="cj-s" data-b="1"><div class="cj-win"><i></i><i></i><i></i><span>Su sitio · GrowiWeb</span></div><div class="cj-img"><img src="%sassets/img/ribera-d.webp" width="1000" height="625" alt="Sitio de muestra de Centro Ribera con el botón Pedir turno." loading="lazy"><span class="ring" aria-hidden="true"></span></div><figcaption><b>1.</b> Un paciente encuentra el sitio y toca «Pedir turno».</figcaption></figure>'
+            '<figure class="cj-s cj-ph" data-b="1"><p class="cj-tag">Su sitio · GrowiWeb</p><div class="cj-phone"><div class="cj-img"><img src="%sassets/img/ribera-m.webp" width="390" height="800" alt="Sitio de muestra de Centro Ribera en el celular: el paciente elige la zona que le molesta." loading="lazy"><span class="ring" aria-hidden="true"></span></div></div><figcaption><b>1.</b> Un paciente encuentra el sitio, elige la zona que le molesta y pide turno.</figcaption></figure>'
             '<div class="cj-bridge" data-b="2"><span class="cj-pill">WhatsApp</span><div class="cj-msg">Hola, quiero turno para el sábado a la mañana.</div><p><b>2.</b> La consulta llega por WhatsApp, como hoy. Es el puente entre el sitio y la gestión.</p></div>'
-            '<figure class="cj-s" data-b="3"><div class="cj-win"><i></i><i></i><i></i><span>Su gestión · GrowiApp</span></div><div class="cj-img"><img src="%sassets/img/combo-app.webp" width="1000" height="567" alt="Panel de GrowiApp con el negocio de muestra Centro Ribera." loading="lazy">'
-            '<div class="cj-card c3" data-b="3"><small>Agenda · sábado 11:15</small><b>Julián · Primera consulta</b></div><div class="cj-card c4" data-b="4"><small>Venta registrada</small><b>Consulta inicial · %s</b></div></div>'
+            '<figure class="cj-s cj-ph" data-b="3"><p class="cj-tag">Su gestión · GrowiApp</p><div class="cj-phone"><div class="cj-img"><img src="%sassets/img/combo-app-m.webp" width="390" height="688" alt="Panel de GrowiApp en el celular con el negocio de muestra Centro Ribera." loading="lazy">'
+            '</div></div><div class="cj-chips"><div class="cj-chip" data-b="3"><small>Agenda · sábado 11:15</small><b>Julián · Primera consulta</b></div><div class="cj-chip" data-b="4"><small>Venta registrada</small><b>Consulta inicial · %s</b></div></div>'
             '<figcaption><b>3.</b> El centro la carga en la agenda. <b data-b="4">4.</b> <span data-b="4">Se atiende, registra la venta y el cierre de caja se arma solo.</span></figcaption></figure></div>'
             '<div class="fd-ctl"><button type="button" class="btn k sm" data-play>Ver el recorrido</button><p class="fd-beat" aria-live="off" data-beat-label></p></div></div>'
             % (rel, rel, "$21.000"))
@@ -68,6 +68,19 @@ def web_stage(rel):
             '<a class="btn k sm wp-open" data-open href="%sdemos/web/centro-ribera/index.html" target="_blank" rel="noopener">Abrir la demo completa ↗</a></div>'
             '<div class="wp-view"><div class="wp-scale"><iframe title="Sitio de muestra de Growi (contenido ficticio)" data-base="%sdemos/web/" data-src="%sdemos/web/centro-ribera/index.html" width="1280" height="820"></iframe></div></div>'
             '<p class="cap">Sitio de muestra con contenido ficticio. Elegí una zona del cuerpo, pedí un turno y recorré las secciones.</p></div>' % (rel, rel, rel))
+
+# ------------------------------------------------------------ GrowiWeb: escaparate con el sitio de muestra real (escritorio + celular, ambos en vivo)
+def web_showcase(rel):
+    base = rel + "demos/web/"
+    def vista(cls, w, h, src, poster):
+        return ('<div class="wsc-view %s" data-w="%d" data-h="%d"><img class="poster" src="%sassets/img/%s" alt="" width="%d" height="%d"><iframe title="Sitio de muestra de Growi: contenido ficticio" data-src="%s" tabindex="-1"></iframe></div>'
+                % (cls, w, h, rel, poster, w, h, src))
+    return ('<div class="wsc" data-wsc data-base="%s"><div class="wp-tools"><div class="seg" role="group" aria-label="Sitio de muestra"><button type="button" class="active" data-wdemo="centro-ribera" aria-pressed="true">Centro Ribera · consultorio</button><button type="button" data-wdemo="ceramica" aria-pressed="false">Taller de cerámica</button></div>'
+            '<a class="btn k sm wp-open" data-wopen href="%scentro-ribera/index.html" target="_blank" rel="noopener">Abrir la demo completa ↗</a></div>'
+            '<div class="wsc-stage"><div class="wsc-browser"><div class="cj-win"><i></i><i></i><i></i><span>Sitio de muestra · escritorio</span></div>%s</div>'
+            '<div class="wsc-phone">%s</div></div>'
+            '<p class="cap">Sitio de muestra con contenido ficticio, funcionando: elegí una zona del cuerpo y pedí un turno. Es una muestra del nivel de diseño que buscamos.</p></div>'
+            % (base, base, vista("d", 1100, 690, base + "centro-ribera/index.html", "ribera-d.webp"), vista("m", 390, 780, base + "centro-ribera/index.html", "ribera-m.webp")))
 
 # ------------------------------------------------------------ Invitaciones: demos en marco propio (iframe con los recursos reales)
 def inv_frame(rel, vista, titulo, alto):
