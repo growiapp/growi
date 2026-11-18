@@ -1,0 +1,28 @@
+# Growi 360° · candidata R3 · paquete de revisión
+
+Local y no publicada. Nada de esto está en producción. Growi sigue en modalidad L1: solo recibe consultas, sin contratación ni pagos.
+
+## Cómo abrirla
+
+Necesita un servidor local (los marcos con las demos no cargan con doble clic en todos los navegadores).
+
+- Windows: doble clic en `servir.bat` y se abre http://localhost:8800/
+- O desde esta carpeta: `python -m http.server 8800` y abrir http://localhost:8800/
+
+## Recorrido
+
+- `index.html`: home. «¿Qué necesitás resolver?» (selector por necesidad con demos), caso Colo Café, banda de Invitaciones, armador de consulta.
+- `app/` (GrowiApp) y `app/cafeterias/`, `app/peluquerias/`, `app/talleres/`, `app/retail/`.
+- `web/` (GrowiWeb), `flow/` (GrowiFlow), `combo/`, `invitaciones/`.
+- `revision/index.html`: qué cambió, antes y después, motion, pruebas, crítica independiente, Git y recomendación.
+
+## Qué contiene
+
+- `assets/` (estilos, script, tipografías e imágenes), `vendor/` (compartidos del sitio y recursos de las demos), `demos/` (GrowiApp, Centro Ribera, taller de cerámica e Invitaciones). Todo está dentro de esta carpeta.
+- Los enlaces a términos y privacidad apuntan al sitio publicado (https://growi.ar). Todo lo demás es local.
+- Los botones de WhatsApp abren wa.me con el mensaje armado. No se envía nada solo.
+
+## Regenerar
+
+- `python _construir.py` regenera todas las páginas y la demo de Invitaciones (Python 3, sin dependencias).
+- `python _construir.py --release CARPETA` genera la versión indexable (canonical, datos estructurados, analítica y enlaces absolutos) en otra carpeta, solo para verificarla. No publica nada.
