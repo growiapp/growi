@@ -79,7 +79,7 @@ def web_showcase(rel):
             '<a class="btn k sm wp-open" data-wopen href="%scentro-ribera/index.html" target="_blank" rel="noopener">Abrir la demo completa ↗</a></div>'
             '<div class="wsc-stage"><div class="wsc-browser"><div class="cj-win"><i></i><i></i><i></i><span>Sitio de muestra · escritorio</span></div>%s</div>'
             '<div class="wsc-phone">%s</div></div>'
-            '<p class="cap">Sitio de muestra con contenido ficticio, funcionando: elegí una zona del cuerpo y pedí un turno. Es una muestra del nivel de diseño que buscamos.</p></div>'
+            '<p class="cap" data-wcap data-c-centro-ribera="Sitio de muestra con contenido ficticio, funcionando: elegí una zona del cuerpo y pedí un turno. Es una muestra del nivel de diseño que buscamos." data-c-ceramica="Sitio de muestra con contenido ficticio, funcionando: recorré las clases, qué incluye y las preguntas. Los botones de reserva son de demostración y no reservan nada.">Sitio de muestra con contenido ficticio, funcionando: elegí una zona del cuerpo y pedí un turno. Es una muestra del nivel de diseño que buscamos.</p></div>'
             % (base, base, vista("d", 1100, 690, base + "centro-ribera/index.html", "ribera-d.webp"), vista("m", 390, 780, base + "centro-ribera/index.html", "ribera-m.webp")))
 
 # ------------------------------------------------------------ Invitaciones: demos en marco propio (iframe con los recursos reales)

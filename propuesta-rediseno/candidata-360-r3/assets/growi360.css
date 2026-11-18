@@ -656,7 +656,8 @@ body.menu-open{overflow:hidden}
   .ph .proof{margin-top:12px}.ph .proof li:nth-child(n+2){display:none}
   .ph-g{gap:22px}.ph-wide .ph-top{gap:14px;margin-bottom:18px}
   .sec{padding:64px 0}
-  .hero2{padding:22px 0 14px}.hero2-g{gap:14px}.hero2 .cta-row .btn.o,.hero-proof{display:none}
+  .hero2{padding:22px 0 14px}.hero2-g{gap:14px}.hero2 .cta-row .btn.o{display:none}
+  .hero-proof{margin-top:12px;gap:10px;font-size:.9rem;line-height:1.3}.hero-proof img{width:34px;height:34px;padding:3px}
   .hero2 h1{font-size:clamp(2.4rem,7.4vw,3.6rem)}.hero2 .sub{max-width:54ch}
 }
 @media(max-width:720px){
@@ -680,6 +681,10 @@ body.menu-open{overflow:hidden}
 /* escaparate de GrowiWeb: sitio de muestra real en navegador y teléfono */
 /* Combo: las tres pantallas se ven siempre (atenuadas) y se encienden en orden; las marcas de agenda y venta van debajo, sin tapar la pantalla */
 .js-fd .cj-s[data-b]:not(.on),.js-fd .cj-bridge[data-b]:not(.on){opacity:.32;transform:none}
+/* GrowiFlow: las columnas futuras también se ven atenuadas (no ocupan un hueco invisible) y se encienden en orden; sin cambio de layout */
+.js-fd .fd-col[data-b]:not(.on),.js-fd .fd-benef[data-b]:not(.on),.js-fd .fd-proc[data-b]:not(.on){opacity:.32;transform:none}
+.js-fd .fd-proc:not(.on) li{opacity:1;transform:none}
+.app-open{margin:0 0 10px;text-align:right}
 .cj-chips{display:grid;gap:8px;margin-top:12px}
 .cj-chip{background:#fff;border:2px solid var(--verde);border-radius:8px;padding:8px 12px;display:grid;gap:2px}
 .cj-chip small{font:500 12px var(--mono);color:var(--gris)}.cj-chip b{font:700 .95rem/1.2 var(--epi)}
@@ -689,7 +694,6 @@ body.menu-open{overflow:hidden}
 /* demos embebidas: foco visible al llegar con teclado */
 iframe:focus-visible{outline:3px solid var(--verde);outline-offset:2px}
 .hero-l1{font:600 13px/1.4 var(--mono);color:var(--verde-d);margin-top:14px;max-width:46ch}
-@media(max-width:720px){.hero-proof{display:none}}
 .wsc .wp-tools{margin-bottom:16px}
 .wsc-stage{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:34px;align-items:start}
 .wsc-browser{border:1.5px solid var(--tinta);border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 36px 70px -36px rgba(12,12,12,.5)}
@@ -701,7 +705,7 @@ iframe:focus-visible{outline:3px solid var(--verde);outline-offset:2px}
 .wsc-view .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:opacity .35s var(--ease)}
 .wsc-view.ready .poster,.wsc-view.nop .poster{opacity:0;pointer-events:none}
 .wsc-phone .wsc-view{border-radius:28px}
-@media(max-width:1000px){.wsc-browser{display:none}.wsc-stage{grid-template-columns:minmax(0,1fr)!important;justify-items:center}}
+@media(max-width:1199px){.wsc-phone{width:min(408px,100%)}.wsc-browser{display:none}.wsc-stage{grid-template-columns:minmax(0,1fr)!important;justify-items:center}} /* hasta 1199 px el escritorio quedaría por debajo del 65 % de escala: se muestra solo el celular a tamaño real */
 
 .chooser{color:var(--tinta)}
 .caso3 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.caso3 .chips span{font:600 13px var(--mono);border:1.5px solid var(--tinta);border-radius:99px;padding:5px 12px;background:#fff}

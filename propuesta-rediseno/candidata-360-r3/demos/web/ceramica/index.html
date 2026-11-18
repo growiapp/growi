@@ -16,10 +16,10 @@
 <a class="skip" href="#contenido">Saltar al contenido</a>
 <div class="demo-top" role="note">
   <span><strong>Concepto visual de Growi</strong> · contenido ficticio. No es un cliente ni un sitio publicado.</span>
-  <span class="links"><a href="#sobre-la-demo">Sobre este concepto</a><a href="https://growi.ar/web/#trabajos">← Volver a GrowiWeb</a></span>
+  <span class="links"><a href="#sobre-la-demo">Sobre este concepto</a><a href="../../../web/#demo" target="_top" data-vuelta>← Volver a GrowiWeb</a></span>
 </div>
 
-<header class="c-head" style="position:sticky;top:var(--demo-h,0px);z-index:50;background:rgba(251,243,234,.94);backdrop-filter:blur(8px)"><div class="c-wrap"><a class="c-brand" href="#contenido">Barro &amp; Fuego</a><nav aria-label="Principal"><a href="#clases">Las clases</a><a href="#incluye">Qué incluye</a><a href="#preguntas">Preguntas</a></nav><a class="c-btn" href="#sobre-la-demo" style="min-height:44px;padding:0 18px;font-size:14px">Reservar mi lugar</a></div></header>
+<header class="c-head" style="position:sticky;top:var(--demo-h,0px);z-index:50;background:rgba(251,243,234,.94);backdrop-filter:blur(8px)"><div class="c-wrap"><a class="c-brand" href="#contenido">Barro &amp; Fuego</a><nav aria-label="Principal"><a href="#clases">Las clases</a><a href="#incluye">Qué incluye</a><a href="#preguntas">Preguntas</a></nav><a class="c-btn" href="#sobre-la-demo" style="min-height:44px;padding:0 18px;font-size:14px">Reservar · demo</a></div></header>
 
 <main id="contenido">
   <section class="c-hero"><div class="c-wrap">
@@ -27,7 +27,7 @@
       <div class="c-eye">Taller de cerámica · grupos chicos</div>
       <h1>Tu primera pieza, en cuatro clases.</h1>
       <p class="lead">Sin experiencia previa y con los materiales incluidos. Elegís el día que te queda cómodo y empezás.</p>
-      <a class="c-btn" href="#sobre-la-demo">Reservar mi lugar por WhatsApp</a>
+      <a class="c-btn" href="#sobre-la-demo">Reservar mi lugar (demostración)</a>
       <ul class="c-facts"><li><b>4 clases</b><span>de 2 horas</span></li><li><b>Materiales</b><span>incluidos</span></li><li><b>Horno</b><span>y esmaltado</span></li></ul>
     </div>
     <div class="c-art" aria-hidden="true">
@@ -69,7 +69,7 @@
     </div>
   </div></section>
 
-  <section class="c-cta"><div class="c-wrap"><h2>Empezá con tu primera pieza</h2><p>Escribinos y reservá tu lugar en el próximo grupo.</p><a class="c-btn" href="#sobre-la-demo">Reservar mi lugar por WhatsApp</a></div></section>
+  <section class="c-cta"><div class="c-wrap"><h2>Empezá con tu primera pieza</h2><p>Así se vería el cierre de la página: un botón claro para reservar el lugar en el próximo grupo.</p><a class="c-btn" href="#sobre-la-demo">Reservar mi lugar (demostración)</a></div></section>
 </main>
 
 <footer class="c-foot"><div class="c-wrap"><span>© Barro &amp; Fuego (concepto)</span></div></footer>
@@ -77,14 +77,16 @@
 <section class="demo-note" id="sobre-la-demo" aria-labelledby="sld-t">
   <div class="in">
     <h2 id="sld-t">Esto es un concepto de Growi</h2>
-    <p>Es una propuesta visual de cómo podría verse una landing page comercial. El taller, las clases y los datos son ficticios, y el botón «Reservar mi lugar» no reserva nada ni envía mensajes.</p>
+    <p>Es una propuesta visual de cómo podría verse una landing page comercial. El taller, las clases y los datos son ficticios, y los botones de reserva solo llevan a esta explicación: no reservan nada ni envían mensajes.</p>
     <p>Si querés una landing page como esta para tu proyecto, escribinos y te pasamos el precio y el alcance por escrito antes de empezar.</p>
     <div class="acts">
       <a class="b" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20vi%20el%20concepto%20de%20landing%20page%20del%20taller%20de%20cer%C3%A1mica%20y%20quiero%20algo%20as%C3%AD%20para%20mi%20proyecto.%0A%0AMi%20rubro%3A%0AQu%C3%A9%20quiero%20que%20haga%20quien%20entra%20%28llamar%2C%20reservar%2C%20comprar%29%3A" target="_blank" rel="noopener noreferrer" data-track="demo-ceramica-whatsapp">Quiero algo así</a>
-      <a class="b o" href="https://growi.ar/web/#trabajos">Volver a GrowiWeb</a>
+      <a class="b o" href="../../../web/#demo" target="_top" data-vuelta>Volver a GrowiWeb</a>
     </div>
   </div>
 </section>
 <script src="../demo.js"></script>
+<script>/* en el sitio publicado esta demo vive en /web/demos/ceramica/: el regreso a GrowiWeb sale de la ruta real */
+if (/^\/web\/demos\//.test(location.pathname)) document.querySelectorAll("[data-vuelta]").forEach(function (a) { a.setAttribute("href", "/web/#demo"); });</script>
 </body>
 </html>

@@ -145,7 +145,7 @@
     else {
       show(1); /* antes de reproducir se ve la tarea de partida, no un bloque vacío */
       if (play) play.addEventListener("click", run);
-      if (IO) { var o = new IntersectionObserver(function (en) { if (en[0].isIntersecting && c.offsetParent && !c.__played) { c.__played = 1; o.disconnect(); run(); } }, { threshold: 0.45 }); o.observe(c); }
+      if (IO) { var o = new IntersectionObserver(function (en) { if (en[0].isIntersecting && c.offsetParent && !c.__played) { c.__played = 1; o.disconnect(); run(); } }, { threshold: 0, rootMargin: "0px 0px -30% 0px" }); o.observe(c); } /* dispara cuando el borde superior entra en el 70 % superior: no depende de la altura del bloque */
       else show(beats);
     }
     $$('input[type="radio"]', c).forEach(function (r) {
@@ -179,6 +179,14 @@
     });
   }
 
+  /* acceso directo a la demo completa de GrowiApp (misma demo, pantalla propia) */
+  $$("iframe.appdemo").forEach(function (f) {
+    var w = f.closest(".appwrap"); if (!w || !w.parentNode || w.previousElementSibling && w.previousElementSibling.classList.contains("app-open")) return;
+    var p = document.createElement("p"); p.className = "app-open";
+    p.innerHTML = '<a class="btn k sm" target="_blank" rel="noopener">Abrir la demo completa ↗</a>';
+    p.firstChild.href = f.getAttribute("src"); w.parentNode.insertBefore(p, w);
+  });
+
   /* marcos de demostración: GrowiApp e Invitaciones avisan su alto (sin scroll anidado) */
   window.addEventListener("message", function (e) {
     var d = e.data; if (!d || !d.growiDemo) return;
@@ -186,7 +194,9 @@
       $$("iframe.appdemo").forEach(function (f) {
         if (f.contentWindow !== e.source) return;
         /* alto controlado: nunca más alto que la pantalla, así queda margen para seguir desplazando la página */
-        var cap = Math.max(520, Math.min(780, window.innerHeight - 150)), h = Math.min(d.h, cap);
+        /* en móvil el marco toma todo su alto: un solo scroll (el de la página), sin desplazamiento anidado */
+        var narrow = window.matchMedia("(max-width:720px)").matches;
+        var cap = narrow ? d.h : Math.max(520, Math.min(780, window.innerHeight - 150)), h = Math.min(d.h, cap);
         f.setAttribute("scrolling", d.h > h + 6 ? "yes" : "no");
         if (Math.abs(h - (parseInt(f.style.height, 10) || 0)) > 6) f.style.height = h + "px";
       });
@@ -262,6 +272,7 @@
         var d = b.getAttribute("data-wdemo"), ribera = d === "centro-ribera";
         views.forEach(function (v) { var f = $("iframe", v); v.classList.toggle("nop", !ribera); v.classList.remove("ready"); f.src = base + d + "/index.html"; });
         if (op) op.href = base + d + "/index.html";
+        var cp = $("[data-wcap]", w); if (cp) cp.textContent = cp.getAttribute("data-c-" + d) || cp.textContent;
         $$("[data-wdemo]", w).forEach(function (x) { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", String(x === b)); });
       });
     });
