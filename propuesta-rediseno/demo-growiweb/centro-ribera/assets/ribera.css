@@ -201,6 +201,9 @@ footer .aviso{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);
 .ring-k .big{stroke-width:2.4;opacity:.9}
 .mo .rg{transition:left .6s var(--ease),top .6s var(--ease)}
 .mo .rg.go svg{animation:ringin .7s var(--ease)}
+.mo .rg.kb{transition:none}
+.mo [data-done]:not([hidden]){animation:stepin .3s var(--ease) both}
+@keyframes peek{from{opacity:.55}to{opacity:1}}
 @keyframes ringin{from{transform:scale(.55) rotate(-40deg);opacity:.2}to{transform:none;opacity:1}}
 .hero-p{grid-area:p}
 .zp{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px}
@@ -372,6 +375,7 @@ footer .aviso{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);
   .hist{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:36px 0 0;padding:0 var(--g) 6px;scrollbar-width:none;overscroll-behavior-x:contain}
   .hist::-webkit-scrollbar{display:none}
   .hs,.hs:nth-child(2),.hs:nth-child(3){flex:0 0 78%;scroll-snap-align:center;margin-top:0;background:rgba(255,255,255,.07);border-radius:var(--r);padding:16px}
+  .mo .hs{animation:peek linear both;animation-timeline:view(inline);animation-range:entry 0% entry 100%}
   .hs .n{font-size:2.6rem;margin-bottom:12px}
   .hs .n::after{display:none}
   .hs figure{margin-bottom:16px}

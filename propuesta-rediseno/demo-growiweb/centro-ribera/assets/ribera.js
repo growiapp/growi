@@ -25,8 +25,13 @@
       var r = $('input[value="' + z + '"]', sel), pt = r && r.parentNode;
       if (!pt) return;
       ringEl.setAttribute("style", pt.getAttribute("style"));
-      if (anim && !reduce) { ringEl.classList.remove("go"); void ringEl.offsetWidth; ringEl.classList.add("go"); }
+      ringEl.classList.toggle("kb", !!kb);
+      if (anim && !reduce && !kb) { ringEl.classList.remove("go"); void ringEl.offsetWidth; ringEl.classList.add("go"); }
     };
+    /* con teclado (flechas en ráfaga) el aro salta sin animar */
+    var kb = false;
+    sel.addEventListener("keydown", function () { kb = true; });
+    sel.addEventListener("pointerdown", function () { kb = false; });
     sel.addEventListener("change", function (e) {
       if (e.target.name !== "zona") return;
       show(e.target.value, true);
