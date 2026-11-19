@@ -1,0 +1,137 @@
+/* Growi 360° R3.5: cierre de dirección visual. Capa sobre growi33.css. */
+
+/* ---------- tema claro de las demostraciones (GrowiApp, GrowiFlow, Combo): lo que falta se ve, no se oscurece ---------- */
+.mg.lt{background:#f3f0e8;color:var(--tinta);border:1.5px solid var(--linea)}
+.lt .mg-pick{color:var(--gris)}
+.lt .mg-chip span{border-color:var(--linea);background:transparent;color:var(--gris);min-height:44px;font-weight:600}
+.lt .mg-chip input:checked+span{background:#fff;color:var(--tinta);border-color:var(--tinta);box-shadow:0 0 0 1px var(--tinta)}
+.lt .mg-chip input:focus-visible+span{outline-color:var(--verde)}
+.lt .mg-dots i{background:#c4cbc6}.lt .mg-dots .on i{background:var(--verde)}.lt .mg-dots button:focus-visible,.lt .mg-pp:focus-visible{outline-color:var(--verde)}
+.lt .mg-pp{border-color:var(--tinta);color:var(--tinta)}
+@media(hover:hover) and (pointer:fine){.lt .mg-pp:hover{background:rgba(0,0,0,.06)}}
+.lt .mg-prog{background:rgba(0,0,0,.1)}.lt .mg-prog i{background:var(--verde)}
+.lt .mg-steps{color:var(--tinta)}
+.lt .ap-note,.lt .cj3-biz{color:var(--gris)}.lt .cj3-biz b{color:var(--tinta)}
+.lt .fl-h{color:var(--gris)}
+.lt .fl-n{background:rgba(0,0,0,.1);color:var(--tinta)}.lt .fl-c.on .fl-n{background:var(--verde);color:#fff}
+.lt .fl-card{border:1.5px solid var(--linea)}
+.lt.js-mg .fl-c.now .fl-card{box-shadow:0 0 0 3px var(--verde),0 18px 36px -20px rgba(0,0,0,.35)}
+.lt .fl-ar{background:#cfd5d0}.lt .fl-ar::after{border-color:#9aa59f}.lt .fl-ar i{background:var(--verde)}.lt .fl-ar.on::after{border-color:var(--verde)}
+.lt .fl-end{border-top-color:var(--linea)}
+.lt .fl-hum{background:#fff;color:var(--tinta);border:1.5px solid var(--linea)}.lt .fl-hum .mg-ic{color:var(--verde)}
+.lt .fl-benef{color:#fff;background:var(--verde);padding:12px 16px;border-radius:12px;text-align:left}
+.lt.js-mg [data-b]:not(.on),.lt.js-mg .fl-proc li{opacity:.62}
+.lt.js-mg [data-b].on,.lt.js-mg .fl-3.on .fl-proc li{opacity:1}
+.lt .fl-ar:not(.on){opacity:1}
+
+/* ---------- GrowiFlow: de la tarea a mano al resultado ---------- */
+.fl3 .fl-row{grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr) 28px minmax(0,1.1fr) 28px minmax(0,1.35fr)}
+.fl3 .fl-task{background:#ebe6d9;border:1.5px dashed #9a9484}
+.fl3 .fl-trig{background:#e2efe6}
+.fl3 .fl-end{align-items:stretch}.fl3 .fl-end .fl-benef{flex:1 1 320px}
+.fl3 .mg-top{margin-bottom:16px}
+.fl3 .mg-pick span{font-size:12px}
+@container (max-width:900px){.fl3 .fl-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container (max-width:560px){.fl3 .fl-row{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- Combo: un plano protagonista por vez ---------- */
+.cj4-stage{display:grid;grid-template-columns:minmax(0,270px) minmax(0,1fr);gap:clamp(20px,5vw,64px);align-items:center;min-height:430px}
+.cj4-ph{position:relative;width:min(100%,250px);justify-self:center;aspect-ratio:390/780;transition:opacity .5s var(--ease)}
+.cj4-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;border:6px solid #141a17;border-radius:30px;background:#fff;box-shadow:0 28px 50px -26px rgba(0,0,0,.55);transition:opacity .5s var(--ease)}
+.cj4-ph .b{opacity:0}
+.cj4[data-beat="4"] .cj4-ph .a,.cj4[data-beat="5"] .cj4-ph .a{opacity:0}
+.cj4[data-beat="4"] .cj4-ph .b,.cj4[data-beat="5"] .cj4-ph .b{opacity:1}
+.cj4.js-mg[data-beat="3"] .cj4-ph{opacity:.4}
+.cj4-pls{display:grid;min-width:0}
+.cj4-pl{grid-area:1/1;display:grid;gap:14px;align-content:center;justify-items:start;min-width:0}
+.cj4.js-mg .cj4-pl{opacity:0;transform:translateY(10px);transition:opacity .45s var(--ease),transform .45s var(--ease);pointer-events:none}
+.cj4.js-mg .cj4-pl.now{opacity:1;transform:none}
+.cj4.js-mg .cj4-pl:not(.now){opacity:0}
+.cj4:not(.js-mg) .cj4-pl{grid-area:auto;margin-bottom:22px}
+.cj4-rol span{display:inline-block;font:700 12px var(--mono);text-transform:uppercase;letter-spacing:.07em;padding:6px 12px;border-radius:99px}
+.r-v .cj4-rol span,.cj4-rail .r-v i{background:#dcebe1;color:var(--verde-d)}
+.r-p .cj4-rol span,.cj4-rail .r-p i{background:var(--marcador);color:#0c0c0c}
+.r-h .cj4-rol span,.cj4-rail .r-h i{background:var(--verde);color:#fff}
+.cj4-big{margin:0;font:800 clamp(1.6rem,3.2vw,2.6rem)/1.12 var(--epi);letter-spacing:-.03em;max-width:20ch}
+.cj4-sm{margin:0;font:600 .98rem/1.4 var(--epi);color:var(--gris)}
+.cj4-wa{background:#dcf8c6;color:#0c0c0c;border-radius:18px 18px 18px 4px;padding:18px 22px;font:600 clamp(1.15rem,2.2vw,1.55rem)/1.35 var(--epi);display:grid;gap:6px;max-width:26ch}
+.cj4-wa span{font:700 12px var(--mono);text-transform:uppercase;color:#3d6b52;letter-spacing:.04em}
+.cj4-hum{background:#fff;border:1.5px solid var(--linea);border-radius:16px;padding:18px 22px;display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:center;max-width:34ch}
+.cj4-hum .mg-ic{width:38px;height:38px;color:var(--verde)}.cj4-hum p{margin:0;font:500 clamp(1.1rem,2vw,1.35rem)/1.4 var(--epi)}
+.cj4-chip{background:#fff;border:1.5px solid var(--linea);border-left:6px solid var(--verde);border-radius:14px;padding:16px 22px;display:grid;gap:4px}
+.cj4-chip small{font:600 13px var(--mono);color:var(--gris)}.cj4-chip b{font:800 clamp(1.3rem,2.6vw,1.9rem)/1.2 var(--epi);letter-spacing:-.02em}
+.cj4-rail{list-style:none;margin:22px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.cj4-rail li{display:flex;gap:8px;align-items:center;min-width:0;font:700 .92rem var(--epi);padding:6px 8px 6px 6px;border-radius:99px;border:1.5px solid var(--linea);background:#fff}
+.cj4-rail i{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;font:800 12px var(--epi);font-style:normal;flex:none}
+.cj4-rail b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cj4.js-mg .cj4-rail li.now{border-color:var(--tinta);box-shadow:0 0 0 2px var(--tinta)}
+.cj4 .mg-caps{display:none}.cj4 .mg-bar{grid-template-columns:auto}.cj4 .mg-ctl{justify-content:space-between}
+@container (max-width:720px){
+  .cj4-stage{grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:start;min-height:0}
+  .cj4-ph{width:112px}.cj4-ph img{border-width:4px;border-radius:18px}
+  .cj4-big{font-size:1.2rem}.cj4-wa{font-size:1.02rem;padding:12px 14px}.cj4-hum{grid-template-columns:28px 1fr;padding:12px 14px;gap:10px}.cj4-hum .mg-ic{width:26px;height:26px}.cj4-hum p{font-size:1rem}.cj4-chip{padding:12px 14px}.cj4-chip b{font-size:1.15rem}
+  .cj4-pls{min-height:190px}.cj4-rail{grid-template-columns:repeat(5,auto);justify-content:space-between}.cj4-rail b{display:none}.cj4-rail li{padding:5px}.cj4-rail li.now b{display:none}
+  .mg.cj4 .mg-bar{order:0;margin:16px 0 0;padding:0;border:0}.cj4 .mg-top{order:-3}
+}
+
+/* ---------- GrowiApp: interfaz real + hilo de causa y efecto ---------- */
+.ah-stage{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(16px,2.4vw,30px);align-items:start}
+.ah-win{border-radius:14px;overflow:hidden;border:1.5px solid var(--tinta);background:#fff;box-shadow:0 34px 60px -36px rgba(0,0,0,.55)}
+.wt-chrome{display:flex;gap:6px;align-items:center;padding:0 12px;height:30px;background:#e6e8e4;border-bottom:1px solid #d2d6d0}
+.wt-chrome i{width:9px;height:9px;border-radius:50%;background:#bcc2bb;flex:none}
+.wt-chrome span{margin-left:10px;font:600 12px var(--mono);color:#4a4f4a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ah-fr{position:relative;overflow:hidden;background:#fff url(img/poster-app-cafeteria.webp) left top/cover no-repeat;aspect-ratio:1000/600}
+.ah-fr iframe{position:absolute;left:0;top:0;width:100%;height:100%;border:0;transform-origin:0 0;pointer-events:none;background:#fff;opacity:0;transition:opacity .3s var(--ease)}
+.ah.ready .ah-fr iframe{opacity:1}
+.ah-led{display:grid;gap:12px}
+.ah-st .fl-h small{margin-left:auto;font:500 12px var(--mono);text-transform:none;letter-spacing:0;color:var(--gris);text-align:right}
+.ah-st .fl-card{padding:14px}
+.ah-end{margin-top:2px;padding-top:12px;display:grid;gap:10px;justify-content:stretch}.ah-end .fl-benef{text-align:left}
+.ah-end .fl-hum{justify-self:start}
+@container (max-width:900px){.ah-stage{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:720px){.fl3 .mg-top{display:contents}.fl3 .mg-tag{order:-3;justify-self:start;margin-bottom:12px}.fl3 .mg-pick{order:6;margin-top:16px;padding-top:14px;border-top:1px solid var(--linea)}.fl3 .mg-chip span{min-height:44px}}
+@container (max-width:560px){
+  .ah .mg-top{margin-bottom:10px}
+  .js-mg.ah .ah-led>[data-b]:not(.now){display:none}
+  :root:not(.mo) .js-mg.ah .ah-led>[data-b]:not(.now){display:grid}
+  .js-mg.ah .ah-led{min-height:150px;align-content:start}
+}
+
+/* ---------- GrowiWeb: un sitio terminado, no un iframe ---------- */
+@media(min-width:1100px){.wt-stage{grid-template-columns:minmax(0,1fr) 230px;padding:clamp(16px,3vw,36px) clamp(16px,3vw,36px) clamp(26px,3.4vw,44px)}}
+.wt-desk{border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 36px 70px -24px rgba(0,0,0,.65)}
+.wt-view.d{aspect-ratio:1040/650;border-radius:0;box-shadow:none}
+.wt-desk .wt-chrome{background:#e9ebe7}
+.wt-phone{margin-left:-26px}
+@media(max-width:1099px){.wt-phone{margin-left:0}}
+
+/* ---------- Invitaciones: personalización sobre la fotografía, con el titular y la bajada en dos columnas ---------- */
+.invs .w{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:8px clamp(24px,5vw,72px);align-items:end}
+.invs .w>.eyebrow{grid-column:1/-1;margin-bottom:6px}
+.invs .w>h2{grid-column:1;margin:0;max-width:18ch}
+.invs .w>.lead{grid-column:2;margin:0 0 6px}
+.invs .w>.invf{grid-column:1/-1;margin-top:28px;border-radius:28px;padding:clamp(16px,3vw,34px);background:#e7dcc8 url(img/inv-mesa.webp) center/cover;isolation:isolate}
+@media(max-width:760px){.invs .w{display:block}.invs .w>.invf{padding:12px;border-radius:20px;margin-top:20px}}
+
+/* ---------- Home: producto reconocible en el primer pantallazo, y Colo Café con más presencia ---------- */
+.h2-note{font-size:12px;color:#fff;background:rgba(10,16,14,.7);padding:4px 10px;border-radius:99px}
+@media(max-width:1000px){
+  .hero2 .hero2-g{display:flex;flex-direction:column;align-items:stretch;gap:0}
+  .hero2 .h2-copy{display:contents}
+  .hero2 .hero-l1{order:1}
+  .h2-art{display:block;order:2;aspect-ratio:auto;height:clamp(250px,58vw,400px);margin-top:16px;border-radius:22px}
+  .hero2 .hero-proof{order:3;margin-top:16px}
+  .h2-ph.a{left:6%;bottom:-12%;width:min(36%,190px)}.h2-ph.b{right:6%;top:9%;width:min(34%,180px)}
+  .h2-chip{left:12px;top:12px;font-size:12px;padding:6px 10px}
+  .h2-note{left:12px;right:auto;bottom:10px;max-width:calc(100% - 24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+@media(max-width:600px){.hero2 h1{margin-bottom:0}.hero2 .sub{margin-top:12px}.hero2 .cta-row{margin-top:16px}.hero2 .hero-l1{margin-top:10px}}
+.caso3{background:var(--tinta);color:#fff;border:0;padding:clamp(40px,6vw,72px) 0}
+.caso3 .eyebrow{color:var(--marcador)}.caso3 h2{color:#fff}.caso3 .lead{color:#d9e0db}
+.caso3-logo img{border-color:#fff;width:132px;height:132px}
+.caso3 blockquote{color:#fff;font-size:clamp(1.25rem,2.3vw,1.75rem);line-height:1.4;max-width:46ch;border-left-color:var(--marcador)}
+.caso3 .cite{color:#c9d3cc;font-size:13px}
+.caso3 .chips span{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.caso3 .btn{background:#fff;color:var(--tinta);border-color:#fff}
+@media(max-width:760px){.caso3-logo img{width:88px;height:88px}}
+.caso3+.xp{padding-top:clamp(40px,5vw,64px)}

@@ -25,11 +25,11 @@ def panel(i, activo, kick, h, bullets, empezas, precio, ctas, stage):
 def home():
     pg = Pg(""); rel = pg.rel
     hero = ('<section class="hero2" data-sticky-hide aria-labelledby="h1"><div class="w hero2-g"><div class="h2-copy"><p class="eyebrow">Sistema, sitio web y automatizaciones para negocios de Argentina</p>'
-            '<h1 id="h1">Tu negocio, <mark class="sweep">andando</mark>.</h1><p class="sub">Armamos y dejamos funcionando lo que tu negocio necesita: ordenar las ventas, que te encuentren o dejar de hacer tareas a mano. Precio y fecha estimada de entrega, por escrito, antes de empezar.</p>'
+            '<h1 id="h1">Tu negocio, <mark class="sweep">andando</mark>.</h1><p class="sub">Armamos y dejamos funcionando lo que tu negocio necesita: ordenar las ventas, que te encuentren o dejar de hacer tareas a mano. Precio y fecha estimada, por escrito, antes de empezar.</p>'
             '<div class="cta-row">%s<a class="btn o" href="#necesidad">Ver cómo funciona ↓</a></div>'
             '<p class="hero-l1">Hoy solo recibimos consultas por WhatsApp: todavía no se contrata ni se paga.</p><a class="hero-proof" href="#caso"><img src="assets/img/colocafe-logo.png" alt="" width="44" height="44"><span><b>Caso real · Colo Café</b>Sistema de gestión armado para su cafetería.</span></a></div>'
             '<div class="h2-art" aria-hidden="true"><img class="h2-bg" src="assets/img/ribera-sala.webp" alt="" width="1600" height="900" fetchpriority="high"><span class="h2-chip">Sitio · Sistema · Automatizaciones</span>'
-            '<figure class="h2-ph a"><img src="assets/img/ribera-m.webp" alt="" width="390" height="800"></figure><figure class="h2-ph b"><img src="assets/img/combo-app-m.webp" alt="" width="390" height="688"></figure><span class="h2-note">Ambientación ilustrativa</span></div></div></section>\n'
+            '<figure class="h2-ph a"><img src="assets/img/ribera-m.webp" alt="" width="390" height="800"></figure><figure class="h2-ph b"><img src="assets/img/combo-app-m.webp" alt="" width="390" height="688"></figure><span class="h2-note">Ejemplos con datos ficticios · foto ilustrativa</span></div></div></section>\n'
             % btn("Hola Growi, quiero conocer más sobre sus soluciones.", "home-hero-whatsapp", "Contanos tu negocio"))
     tabs = (tab("app", "01", "Ordenar mi negocio", "Ventas, caja, stock y turnos", True) + tab("web", "02", "Que me encuentren", "Un sitio que trae consultas", False)
             + tab("flow", "03", "Dejar de hacerlo a mano", "Avisos, reportes y pedidos", False) + tab("combo", "04", "Las dos cosas juntas", "Sitio y sistema", False))
@@ -43,7 +43,7 @@ def home():
                   ["Muestra lo que hacés y deja pedir turno o consultar", "Lo dejamos publicado: vos no tocás nada técnico", "Plantilla adaptada a tu rubro o diseño a medida"],
                   ["Precio y alcance por escrito, antes de empezar", "Revisiones incluidas según el plan", "7 días de ajustes sin cargo desde la entrega"],
                   "desde %s, pago único · dominio y alojamiento aparte" % P(200, True),
-                  '<a class="btn k sm" href="%s" data-track="home-xp-web">Ver GrowiWeb →</a>' % pg.u("web/"), web_stage(rel))
+                  '<a class="btn k sm" href="%s" data-track="home-xp-web">Ver GrowiWeb →</a>' % pg.u("web/"), web_showcase(rel))
     p_flow = panel("flow", False, "GrowiFlow", "Menos tareas repetitivas, armadas a medida.",
                    ["Avisos de turno, resúmenes y consultas en orden, sin que lo hagas vos", "Lo armamos a medida de tu negocio y lo probamos con vos", "Si algo no se puede automatizar, te lo decimos antes de empezar"],
                    ["Nos contás qué tarea te come tiempo", "No hace falta tener GrowiApp ni GrowiWeb", "7 días de ajustes sin cargo desde la entrega"],
@@ -85,5 +85,5 @@ def home():
     cie = cierre("Contanos qué negocio tenés.", "Te recomendamos una solución y te pasamos precio y fecha estimada de entrega por WhatsApp, de lunes a sábado de 9 a 19 hs.",
                  btn("Hola Growi, quiero que me recomienden qué me conviene.\n\nMi rubro:\nQué quiero resolver:", "home-final-whatsapp", "Contanos tu negocio"))
     return (head(pg, "Growi: sistema, sitio web y automatizaciones para negocios de Argentina", "Ordená tu negocio, conseguí que te encuentren y dejá de hacer tareas a mano. Mirá cómo funciona y pedí precio y fecha por escrito.", l1ld="", faqs=HOME_FAQ)
-            + header(pg, "") + '<main id="contenido">\n' + hero + necesidad + caso + eventos + empezar + pre + cie + '</main>\n'
+            + header(pg, "") + '<main id="contenido">\n' + hero + caso + necesidad + eventos + empezar + pre + cie + '</main>\n'
             + footer(pg, "Hola Growi, quiero conocer más sobre sus soluciones.", "home"))

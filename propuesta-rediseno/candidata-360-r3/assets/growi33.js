@@ -27,6 +27,7 @@
       dots.forEach(function (d) { var b = +d.getAttribute("data-dot"); d.classList.toggle("on", b <= i); if (b === i) d.setAttribute("aria-current", "step"); else d.removeAttribute("aria-current"); });
       if (bar) bar.style.transform = "scaleX(" + (i / n) + ")";
       c.setAttribute("data-beat", i);
+      try { c.dispatchEvent(new CustomEvent("mgbeat", { detail: i })); } catch (e) {}
     };
     var ui = function () { setPP(pp, done ? "replay" : paused ? "play" : "pause"); };
     var tick = function () {
@@ -125,9 +126,9 @@
     var opener = 0;
     var sel = function (i, auto) {
       cur = i; if (inner[i]) inner[i].click(); clearTimeout(opener);
-      if (auto && !reduce) opener = setTimeout(function () { var d = D(), o = d && $("[data-inv-open]", d); if (o && !paused) o.click(); }, 2600); /* la apertura animada de cada invitación */
+      if (auto && !reduce) opener = setTimeout(function () { var d = D(), o = d && $("[data-inv-open]", d); if (o && !paused) o.click(); }, 4200); /* la apertura animada de cada invitación */
       btns.forEach(function (x, j) { x.classList.toggle("on", j === i); x.setAttribute("aria-pressed", String(j === i)); }); };
-    var tick = function () { clearTimeout(timer); if (!vis || paused || reduce || !built) return; timer = setTimeout(function () { sel((cur + 1) % inner.length, true); tick(); }, 11000); };
+    var tick = function () { clearTimeout(timer); if (!vis || paused || reduce || !built) return; timer = setTimeout(function () { sel((cur + 1) % inner.length, true); tick(); }, 13500); };
     var build = function () {
       var d = D(); if (!d || built || !d.body) return; inner = $$("[data-event-picker] .exp", d); if (!inner.length) return; built = true;
       var st = d.createElement("style"); st.textContent = ".demo-picker{display:none!important}.demo-reset{background:none!important;border:0!important;box-shadow:none!important;text-decoration:underline;font-size:13px!important;min-height:44px;padding:0 8px!important}"; d.head.appendChild(st);
@@ -164,29 +165,35 @@
       if (v.__m) return v.__m;
       var f = $("iframe", v), d = doc(v), win = f.contentWindow; if (!d || !d.documentElement) return null;
       var heads = [];
-      $$("main h2, h2", d).forEach(function (h) { var tx = h.textContent.trim(); if (tx) heads.push({ y: h.getBoundingClientRect().top + win.scrollY, t: tx }); });
+      $$("section", d).forEach(function (s) { var h = $("h1, h2", s), tx = h && h.textContent.trim(); if (tx) heads.push({ y: h.getBoundingClientRect().top + win.scrollY, t: tx }); });
       return (v.__m = { max: Math.max(0, d.documentElement.scrollHeight - (+v.getAttribute("data-h"))), heads: heads });
     };
     views.forEach(function (v) {
       var f = $("iframe", v);
       f.addEventListener("load", function () {
         v.classList.add("ready"); v.__m = null;
+        try { $$("img[loading=lazy]", f.contentDocument).forEach(function (im) { im.loading = "eager"; }); } catch (e) {} /* el recorrido salta de sección: las imágenes ya tienen que estar cargadas */
         try { var win = f.contentWindow; if (win.ResizeObserver) new win.ResizeObserver(function () { v.__m = null; }).observe(win.document.documentElement); } catch (e) {}
       });
     });
     var run = function () {
       cancelAnimationFrame(raf); if (!vis || paused || mode !== "tour" || reduce) return;
-      var t0 = 0, cycle = 16000, lastSec = -1e9;
+      /* recorrido por secciones: se desliza hasta el comienzo de cada una y se queda leyéndola (nunca un titular cortado en la pausa) */
+      var t0 = 0, S = 3000, lastSec = -1e9;
+      var wp = function (m) { return m.W || (m.W = m.heads.map(function (h, i) { return { y: i ? Math.min(m.max, Math.max(0, h.y - 120)) : 0, t: h.t }; })); };
       var step = function (ts) {
         if (!vis || paused || mode !== "tour") return;
-        if (!t0) t0 = ts; var t = ((ts - t0) % cycle) / cycle; /* 0..1: baja 0-.7, espera .7-.8, vuelve .8-1 */
-        var p = t < 0.7 ? ease(t / 0.7) : t < 0.8 ? 1 : 1 - ease((t - 0.8) / 0.2);
+        if (!t0) t0 = ts;
         var upd = ts - lastSec >= 250; if (upd) lastSec = ts; /* el rótulo de sección se actualiza a ~4 Hz */
-        views.forEach(function (v, vi) {
-          if (!v.offsetParent) return; var m = measure(v); if (!m) return;
-          var q = vi ? Math.min(1, Math.max(0, p * 1.1 - 0.05)) : p, y = Math.round(m.max * q);
-          try { $("iframe", v).contentWindow.scrollTo(0, y); } catch (e) {}
-          if (!vi && sec && upd) { var cur = "", yy = m.max * q + 220; m.heads.forEach(function (h) { if (h.y <= yy) cur = h.t; }); if (cur && sec.textContent !== cur) sec.textContent = cur; }
+        var drove = false;
+        views.forEach(function (v) {
+          if (!v.offsetParent) return; var m = measure(v); if (!m || m.heads.length < 2) return;
+          var W = wp(m), K = W.length, tt = (ts - t0) % ((K + 1) * S), seg = Math.floor(tt / S), u = (tt - seg * S) / S;
+          var g = seg === 0 ? 0 : ease(Math.min(1, u / 0.3)); /* 0: quieto en el comienzo; luego 30% de deslizamiento y 70% de lectura */
+          var a = seg === 0 || seg === K ? W[seg === 0 ? 0 : K - 1].y : W[seg - 1].y, b = seg === K || seg === 0 ? W[0].y : W[seg].y;
+          if (seg === 0) a = b;
+          try { $("iframe", v).contentWindow.scrollTo(0, Math.round(a + (b - a) * g)); } catch (e) {}
+          if (sec && upd && !drove) { drove = true; var i = seg === 0 ? 0 : seg === K ? (g > 0.4 ? 0 : K - 1) : (g > 0.4 ? seg : seg - 1); if (sec.textContent !== W[i].t) sec.textContent = W[i].t; }
         });
         raf = requestAnimationFrame(step);
       };
