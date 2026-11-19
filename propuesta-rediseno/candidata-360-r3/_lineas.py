@@ -1,7 +1,7 @@
 # Páginas de línea R3. Los precios (USD) y las condiciones comerciales son los vigentes; cambia la experiencia y se recorta la repetición.
 from _lib import *
 from _demos import *
-from _r33 import app_tour
+from _r33 import app_tour, app_sim
 import re, io, json
 
 def l1_faq(path, idx):
@@ -24,8 +24,10 @@ def app():
             '<p class="sub">Registrás ventas, controlás el stock, llevás los turnos y cerrás la caja desde el celular. Lo armamos con los datos de tu negocio y te confirmamos una fecha estimada de entrega antes de empezar.</p>'
             '<div class="cta-row" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">%s<a class="btn o" href="#precios">Ver precios ↓</a></div>'
             '<ul class="proof"><li><span>Desde %s por mes + %s de puesta en marcha, una sola vez · precios previstos: hoy solo consultas</span></li><li><span>Garantía prevista de 7 días · Sin permanencia</span></li></ul></div>'
-            '<div id="demo">%s<p class="cap">Demo de GrowiApp con datos ilustrativos.</p></div></div></section>\n'
-            % (ph(pg, "GrowiApp"), btn(msg_demo, "app-hero-demo-whatsapp", "Solicitar una demo de 20 minutos"), P(15, True), P(49, True), app_tour(rel, "cafeteria")))
+            '<div id="demo">%s</div></div></section>\n'
+            % (ph(pg, "GrowiApp"), btn(msg_demo, "app-hero-demo-whatsapp", "Solicitar una demo de 20 minutos"), P(15, True), P(49, True), app_sim(rel)))
+    real = ('<section class="sec real" id="interfaz" aria-labelledby="h-real"><div class="w"><p class="eyebrow">La interfaz real</p><h2 id="h-real">Así se ve GrowiApp por dentro.</h2>'
+            '<div class="real-stage" style="--bg:url(%sassets/img/cafeteria-sala.webp);--bg-m:url(%sassets/img/cafeteria-sala-m.webp)">%s<p class="cap">Demo con datos de ejemplo. Fotografía de ambientación ilustrativa, generada con IA.</p></div></div></section>\n' % (rel, rel, app_tour(rel, "cafeteria")))
     items =[("Cada venta registrada al momento", "para saber cuánto ganaste, por producto y por hora"), ("Cierre de caja automático", "sin hacer cuentas al final del día: el número está solo"),
              ("Control de stock con alertas", "te avisa cuando un producto está por agotarse, antes de quedarte sin nada"), ("Agenda de turnos y reservas", "reemplazás el cuaderno por una agenda digital que nunca se pierde"),
              ("Ficha de clientes", "historial, preferencias y frecuencia de visita de cada cliente"), ("Reportes y todos los medios de pago", "efectivo, Mercado Pago y transferencias en un mismo registro, con reportes por día y producto")]
@@ -54,8 +56,8 @@ def app():
     pre = ('<section class="sec" id="preguntas" aria-labelledby="h-faq"><div class="w faq-g"><div><p class="eyebrow">Preguntas</p><h2 id="h-faq">Lo que todos preguntan antes de empezar.</h2></div>%s</div></section>\n' % faq(faqp))
     cie = cierre("¿Querés ver cómo quedaría para tu negocio?", "Pedí una demo de 20 minutos armada con tu rubro. Coordinamos día y horario según disponibilidad.", btn(msg_demo, "app-final-demo-whatsapp", "Solicitar una demo de 20 minutos"))
     return (head(pg, "GrowiApp: sistema de gestión para comercios | Growi", "Ventas, caja, stock, turnos y clientes en una sola pantalla, desde el celular. Desde USD 15 por mes. Probá la demo con tu rubro.", "og-app.png", l1ld="app", faqs=faqp)
-            + header(pg, "app") + subnav([("demo", "Demo"), ("incluye", "Qué incluye"), ("rubros", "Por rubro"), ("precios", "Precios"), ("preguntas", "Preguntas")], "app")
-            + '<main id="contenido">\n' + hero + inc + rub + caso_cafe(rel, pg.u("app/cafeterias/")) + precios + flow + pre + cie + otras(pg, "app") + '</main>\n'
+            + header(pg, "app") + subnav([("demo", "Cómo funciona"), ("interfaz", "La interfaz"), ("incluye", "Qué incluye"), ("rubros", "Por rubro"), ("precios", "Precios"), ("preguntas", "Preguntas")], "app")
+            + '<main id="contenido">\n' + hero + real + inc + rub + caso_cafe(rel, pg.u("app/cafeterias/")) + precios + flow + pre + cie + otras(pg, "app") + '</main>\n'
             + footer(pg, "Hola Growi, quiero consultar por GrowiApp.\n\nMi rubro:\nCuántas personas lo usarían:", "app"))
 
 # ================================================================== RUBROS DE GROWIAPP

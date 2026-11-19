@@ -22,7 +22,7 @@
     c.classList.add("js-mg");
     var show = function (i) {
       k = i;
-      $$("[data-b]", c).forEach(function (e) { var b = +e.getAttribute("data-b"); e.classList.toggle("on", b <= i); e.classList.toggle("now", b === i); });
+      $$("[data-b]", c).forEach(function (e) { var b = +e.getAttribute("data-b"); var bn = e.getAttribute("data-bn"); e.classList.toggle("on", b <= i); e.classList.toggle("now", b === i || (bn && (" " + bn + " ").indexOf(" " + i + " ") > -1)); });
       $$("[data-cap-b]", c).forEach(function (e) { e.classList.toggle("now", +e.getAttribute("data-cap-b") === i); });
       dots.forEach(function (d) { var b = +d.getAttribute("data-dot"); d.classList.toggle("on", b <= i); if (b === i) d.setAttribute("aria-current", "step"); else d.removeAttribute("aria-current"); });
       if (bar) bar.style.transform = "scaleX(" + (i / n) + ")";

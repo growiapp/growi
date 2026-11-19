@@ -19,6 +19,8 @@
 .mg-dots button:focus-visible{outline:3px solid var(--marcador);outline-offset:-2px;border-radius:6px}
 .mg-pp{appearance:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1.5px solid rgba(255,255,255,.4);border-radius:99px;background:transparent;color:#fff;font:700 13px var(--epi);cursor:pointer}
 .mg-pp svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}.mg-pp[data-state=play] svg path{fill:currentColor}
+.mg-pp span{display:none}.mg-pp{padding:0 12px;min-width:44px;justify-content:center}.mg-pp[data-state=replay] span{display:inline}
+.mg-chip span{min-height:40px;font-size:12.5px}
 .mg-pp:hover{background:rgba(255,255,255,.12)}.mg-pp:focus-visible{outline:3px solid var(--marcador);outline-offset:2px}
 .mg-prog{grid-column:1/-1;height:3px;background:rgba(255,255,255,.14);border-radius:3px;overflow:hidden}
 .mg-prog i{display:block;height:100%;background:var(--marcador);transform-origin:0 50%;transform:scaleX(.2);transition:transform .6s var(--ease)}
@@ -112,9 +114,39 @@
 .at .mg-dots i{background:#9aa59f}.at .mg-dots .on i{background:var(--verde)}
 .at-tag{justify-self:start;margin-bottom:10px;display:inline-block}
 .ph-wide .ph-top{align-items:start}
-@media(max-width:720px){.wt-pick{order:-3}.wt-bar{order:-2}.ig-card.on small{display:block}}
+@media(max-width:720px){.ig-card.on small{display:block}
+  .wt-pick{flex-wrap:nowrap;gap:8px}.wt-pick button{flex:1 1 0;min-width:0;padding:6px 10px;min-height:48px}.wt-pick button img{display:none}.wt-pick b{font-size:.92rem}.wt-pick small{font-size:12px}
+  .wt-stage{padding:16px 16px 28px}}
+/* ---------- GrowiApp: causa y efecto ---------- */
+.ap-card{gap:10px}.ap-r{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font:500 .95rem/1.3 var(--epi)}.ap-r b{font:800 1rem var(--epi)}
+.ap-tot{border-top:1.5px solid #0c0c0c;padding-top:8px;margin-top:2px}.ap-tot b{font-size:1.15rem}
+.ap-v{display:inline-flex;gap:8px;align-items:baseline;font:800 1rem var(--epi)}.ap-v em{display:none;font-style:normal;color:var(--verde-d)}
+.fl-c.on .ap-v em{display:inline}.fl-c.on .ap-v s{text-decoration:line-through;font-weight:500;opacity:.55}.fl-c:not(.on) .ap-v s{text-decoration:none}
+.mg:not(.js-mg) .ap-v em,:root:not(.mo) .ap-v em{display:inline}:root:not(.mo) .ap-v s{text-decoration:line-through;font-weight:500;opacity:.55}
+.ap-note{margin:12px 0 0;font:500 12.5px/1.4 var(--epi);color:#aebbb4}
+.ap-row .fl-end{margin-top:14px}
+.fl-row.ap-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 14px}.fl-row.ap-row .fl-ar{display:none}
+.ap-r{flex-wrap:wrap}.ap-card{padding:14px}
+@media(max-width:600px){.fl-row.ap-row{grid-template-columns:minmax(0,1fr)}}
+.real-stage{border-radius:26px;padding:clamp(16px,4vw,52px);background:#d9c9a8 var(--bg) center/cover;position:relative;isolation:isolate;overflow:hidden}
+.real-stage::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,18,10,.18),rgba(24,18,10,.5));z-index:-1}
+.real-stage .at-bar{background:#fff;border-radius:16px;padding:14px 18px;margin-top:14px}
+.real-stage .at-tag{margin-bottom:12px}
+@media(max-width:720px){.real-stage{background-image:var(--bg-m)}}
+.at-open{display:none}.at.is-explore .at-open{display:inline-flex}
+/* móvil: se muestra el paso en curso (compacto y sin huecos); con movimiento reducido o sin JS se ve todo */
+@media(max-width:600px){
+  .js-mg:not(.is-static) .fl-row>.fl-c:not(.now),.js-mg .fl-row>.fl-end:not(.now),.js-mg .fl-row>.fl-ar{display:none}
+  :root:not(.mo) .js-mg .fl-row>.fl-c:not(.now),:root:not(.mo) .js-mg .fl-row>.fl-end:not(.now){display:grid}
+  .js-mg .cj3-s:not(.now),.js-mg .cj3-mid>[data-b]:not(.now){display:none}
+  :root:not(.mo) .js-mg .cj3-s:not(.now),:root:not(.mo) .js-mg .cj3-mid>[data-b]:not(.now){display:grid}
+  .js-mg .cj3-s.now{display:grid}
+  .js-mg .cj3-stage{min-height:300px;align-content:start}
+  .js-mg .fl-row{min-height:230px;align-content:start}
+}
 /* ---------- Invitaciones: galería de estilos ---------- */
-.ig{display:grid;gap:12px;justify-items:center}.ig .invf{width:100%}
+.ig{display:grid;gap:12px;justify-items:center;border-radius:28px;padding:clamp(18px,3vw,34px);background:#e7dcc8 url(img/inv-mesa.webp) center/cover;isolation:isolate}
+.ig .invf{width:100%}.ig-card{background:rgba(255,255,255,.92)}
 .ig-pick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;max-width:660px}
 .ig-card{appearance:none;text-align:left;font-family:inherit;color:var(--tinta);background:#fff;border:1.5px solid var(--linea);border-radius:14px;padding:12px 14px;display:grid;gap:4px;align-content:start;cursor:pointer;min-height:44px;transition:border-color .2s,box-shadow .2s,transform .2s}
 .ig-card b{font:800 .98rem/1.2 var(--epi)}.ig-card small{font:500 12.5px/1.35 var(--epi);color:var(--gris)}
@@ -131,7 +163,11 @@
 .wt-pick button.on{border-color:var(--tinta);box-shadow:0 0 0 2px var(--tinta)}.wt-pick button:focus-visible{outline:3px solid var(--verde);outline-offset:2px}
 .wt-stage{position:relative;border-radius:24px;overflow:hidden;padding:clamp(18px,4vw,48px) clamp(18px,4vw,48px) clamp(24px,4vw,56px);display:grid;grid-template-columns:minmax(0,1fr) 250px;align-items:center;background:#10202a var(--bg) center/cover;isolation:isolate}
 .wt-stage::before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,rgba(9,19,26,.82),rgba(9,19,26,.35) 60%,rgba(9,19,26,.55));z-index:-1}
-.wt[data-site=ceramica] .wt-stage{background:linear-gradient(135deg,#6b3f2e,#b9784f 58%,#e9c9a6)}.wt[data-site=ceramica] .wt-stage::before{background:none}
+.wt[data-site=ceramica] .wt-stage{background:#d8b99a var(--bgc) center/cover}.wt[data-site=ceramica] .wt-stage::before{background:linear-gradient(105deg,rgba(40,22,12,.08),rgba(40,22,12,.28))}
+@media(max-width:720px){.wt[data-site=ceramica] .wt-stage{background-image:var(--bgcm)}}
+.wt-link{appearance:none;background:none;border:0;padding:0 4px;font:700 14px var(--epi);color:var(--tinta);text-decoration:underline;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center;cursor:pointer}
+.wt-link:hover{color:var(--verde-d)}.wt-link:focus-visible{outline:3px solid var(--verde);outline-offset:2px;border-radius:4px}
+.wt .wt-link.at-back{display:none}.wt.is-explore .wt-link.at-back{display:inline-flex}.wt.is-explore [data-wt-explore]{display:none}
 .wt-view{position:relative;overflow:hidden;background:#fff;width:100%}
 .wt-view.d{aspect-ratio:1100/690;border-radius:12px;box-shadow:0 36px 70px -24px rgba(0,0,0,.65)}
 .wt-view.m{aspect-ratio:390/780;border-radius:28px;border:7px solid #0f1210;box-shadow:0 36px 70px -24px rgba(0,0,0,.7)}
@@ -147,7 +183,6 @@
 .wt .mg-pp{border-color:var(--tinta);color:var(--tinta)}.wt .mg-pp:hover{background:rgba(0,0,0,.06)}
 .wt .at-back{display:none}.wt.is-explore .at-back{display:inline-flex}.wt.is-explore [data-wt-explore],.wt.is-explore [data-mg-ctl]{display:none}
 @media(max-width:1099px){.wt-desk{display:none}.wt-stage{grid-template-columns:minmax(0,1fr);justify-items:center;padding-bottom:34px}.wt-phone{margin:0;width:min(340px,100%)}}
-@media(max-width:600px){.wt-pick button{flex:1 1 100%}}
 
 /* ---------- Home: hero con imagen editorial y producto, selector y caso integrados ---------- */
 .hero2 .hero2-g{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);align-items:center;gap:clamp(28px,4.5vw,72px)}
@@ -161,7 +196,7 @@
 .h2-ph.a{left:7%;bottom:-8%;width:36%;transform:rotate(-3deg)}.h2-ph.b{right:8%;top:8%;width:32%;transform:rotate(3deg)}
 .h2-chip{position:absolute;left:20px;top:20px;z-index:3;font:700 12px var(--mono);text-transform:uppercase;letter-spacing:.07em;background:var(--marcador);color:#0c0c0c;padding:7px 12px;border-radius:99px}
 .h2-note{position:absolute;right:16px;bottom:12px;z-index:3;font:500 12px var(--mono);color:rgba(255,255,255,.8)}
-@media(max-width:1000px){.h2-art{display:none}}
+@media(max-width:1000px){.h2-art{display:none}.hero2 .hero2-g{grid-template-columns:minmax(0,1fr)}.hero2 .h2-copy .sub{max-width:none}}
 .xp-title{font-size:clamp(1.8rem,3.2vw,2.5rem)!important;margin-bottom:18px}
 .xp-tabs b{font-size:1.08rem}
 .caso3{padding:48px 0}

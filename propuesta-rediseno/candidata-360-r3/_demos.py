@@ -22,7 +22,7 @@ _BOLT = '<svg class="fd-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 
 def _res(kind):
     if kind == "msg":
         return ('<div class="fd-card fd-phone"><p class="fd-k">Lo que recibe tu cliente</p><div class="fd-bub"><b>Hola Julián</b>, te recordamos tu turno de mañana: sábado a las 11:15 en Centro Ribera.</div>'
-                '<p class="fd-note">El canal (mail o WhatsApp) se define al armarlo.</p></div>')
+                '<p class="fd-note">Por mail o, con una cuenta habilitada por Meta, por WhatsApp.</p></div>')
     if kind == "sheet":
         return ('<div class="fd-card"><p class="fd-k">Lo que ves en tu planilla</p><div class="fd-sheet"><span class="h">Quién</span><span class="h">Qué</span><span class="h">Estado</span>'
                 '<span>Marta</span><span>Control</span><span>Atendida</span><span class="new">Julián</span><span class="new">Turno sábado</span><span class="new"><i>Nueva</i></span></div>'

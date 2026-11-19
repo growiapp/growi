@@ -60,10 +60,37 @@ def combo_journey(rel):
             '<div class="cj3-mid"><div class="cj3-wa" data-b="2"><p class="cj3-tag">2 · Llega por WhatsApp</p><div class="cj3-msg"><span>Paciente</span>Hola, quiero turno para el sábado a la mañana.</div></div>'
             '<div class="cj3-hum" data-b="3"><p class="cj3-tag">3 · Interviene una persona</p><div class="cj3-card">%s<p><b>Alguien del centro</b> lee la consulta, confirma el horario y lo carga.</p></div></div></div>'
             '<div class="fl-ar cj3-ar" data-b="4" aria-hidden="true"><i></i></div>'
-            '<figure class="cj3-s cj3-app" data-b="4"><p class="cj3-tag">4 · Su gestión · GrowiApp</p><div class="cj3-phone"><img src="%sassets/img/combo-app-m.webp" width="390" height="688" alt="Panel de GrowiApp en el celular con el negocio de muestra Centro Ribera." loading="lazy"></div>'
+            '<figure class="cj3-s cj3-app" data-b="4" data-bn="4 5"><p class="cj3-tag">4 · Su gestión · GrowiApp</p><div class="cj3-phone"><img src="%sassets/img/combo-app-m.webp" width="390" height="688" alt="Panel de GrowiApp en el celular con el negocio de muestra Centro Ribera." loading="lazy"></div>'
             '<div class="cj3-chips"><div class="cj3-chip" data-b="4"><small>Agenda · sábado 11:15</small><b>Julián · Primera consulta</b></div><div class="cj3-chip" data-b="5"><small>Venta registrada</small><b>Consulta inicial · $21.000</b></div></div></figure>'
             '</div><div class="mg-bar"><div class="mg-caps" aria-live="off">%s</div>%s<span class="mg-prog" aria-hidden="true"><i data-mg-bar></i></span></div><ol class="mg-steps">%s</ol></div>'
             % (rel, rel, I_PERSON, rel, caps, _controls(5), alt))
+
+# ------------------------------------------------------------ GrowiApp: causa y efecto de una venta (simulación con datos de ejemplo, cifras consistentes)
+# Venta: 2 flat white x $3.900 + 1 medialuna x $1.700 = $9.500. Caja y reportes parten de las cifras de la demo real (ingresos $184.500, saldo $147.600, 47 operaciones).
+AP_CAPS = ["Se registra una venta en el mostrador.", "El dinero entra a la caja del día.", "Baja el stock de lo que se vendió.", "Los reportes se actualizan.", "Una sola carga y todo queda al día."]
+
+def _ap(a, b):
+    return '<span class="ap-v"><s>%s</s><em>%s</em></span>' % (a, b)
+
+def app_sim(rel="", compact=False):
+    def fila(k, v): return '<div class="ap-r"><span>%s</span>%s</div>' % (k, v)
+    venta = ('<div class="fl-card ap-card"><div class="ap-r"><span>2 × Flat white</span><b>$7.800</b></div><div class="ap-r"><span>1 × Medialuna</span><b>$1.700</b></div>'
+             '<div class="ap-r ap-tot"><span>Total</span><b>$9.500</b></div></div>')
+    caja = '<div class="fl-card ap-card">%s%s</div>' % (fila("Ingresos de hoy", _ap("$184.500", "$194.000")), fila("Saldo estimado", _ap("$147.600", "$157.100")))
+    stock = '<div class="fl-card ap-card">%s%s</div>' % (fila("Leche entera", _ap("18,0 L", "17,6 L")), fila("Medialunas", _ap("24 u.", "23 u.")))
+    rep = '<div class="fl-card ap-card">%s%s</div>' % (fila("Operaciones de hoy", _ap("47", "48")), fila("Flat white vendidos", _ap("31", "33")))
+    cols = [("1", "Venta", venta), ("2", "Caja", caja), ("3", "Stock", stock), ("4", "Reportes", rep)]
+    row = ""
+    for i, (n, t, c) in enumerate(cols):
+        if i: row += '<div class="fl-ar" data-b="%d" aria-hidden="true"><i></i></div>' % (i + 1)
+        row += '<div class="fl-c" data-b="%d"><p class="fl-h"><span class="fl-n">%s</span>%s</p>%s</div>' % (i + 1, n, t, c)
+    row += '<div class="fl-end" data-b="5"><p class="fl-hum">%sVos solo registrás la venta.</p><p class="fl-benef">El cierre de caja deja de ser cuentas al final del día.</p></div>' % I_PERSON
+    caps = "".join('<p data-cap-b="%d">%s</p>' % (i + 1, E(c)) for i, c in enumerate(AP_CAPS))
+    alt = "".join("<li>%s</li>" % E(c) for c in AP_CAPS)
+    return ('<div class="mg ap3%s" data-mg data-beats="5" data-ms="2600"><div class="mg-top"><span class="mg-tag">Simulación · datos de ejemplo</span></div>'
+            '<div class="mg-scenes"><div class="fl-row ap-row">%s</div></div><div class="mg-bar"><div class="mg-caps" aria-live="off">%s</div>%s<span class="mg-prog" aria-hidden="true"><i data-mg-bar></i></span></div>'
+            '<p class="ap-note">Cómo se conectan las ventas, el stock y la caja se define al armar el sistema.</p><ol class="mg-steps">%s</ol></div>'
+            % (" is-compact" if compact else "", row, caps, _controls(5), alt))
 
 # ------------------------------------------------------------ GrowiApp: recorrido de la interfaz real + exploración como modo secundario
 APP_RUB = [("cafeteria", "Cafetería"), ("peluqueria", "Peluquería"), ("taller", "Taller"), ("consultorio", "Consultorio")]
@@ -99,10 +126,10 @@ def web_showcase(rel):
                    % (k, E(d), "on" if i == 0 else "", "true" if i == 0 else "false", rel, im, n, s) for i, (k, n, s, im, d) in enumerate(WT_SITES))
     def vista(cls, w, h, poster):
         return ('<div class="wt-view %s" data-w="%d" data-h="%d"><img class="poster" src="%sassets/img/%s" alt="" width="%d" height="%d"><iframe title="Sitio de muestra de Growi: contenido ficticio" data-src="%scentro-ribera/index.html" tabindex="-1"></iframe></div>' % (cls, w, h, rel, poster, w, h, base))
-    return ('<div class="wt" data-wt data-site="centro-ribera" data-base="%s" style="--bg:url(%sassets/img/ribera-sala.webp)"><div class="wt-pick" role="group" aria-label="Sitio de muestra">%s</div>'
+    return ('<div class="wt" data-wt data-site="centro-ribera" data-base="%s" style="--bg:url(%sassets/img/ribera-sala.webp);--bgc:url(%sassets/img/ceramica-taller.webp);--bgcm:url(%sassets/img/ceramica-taller-m.webp)"><div class="wt-pick" role="group" aria-label="Sitio de muestra">%s</div>'
             '<div class="wt-stage"><div class="wt-desk">%s</div><div class="wt-phone">%s</div><p class="wt-sec" data-wt-sec aria-hidden="true"></p></div>'
             '<div class="wt-bar"><p class="wt-cap" data-wt-cap>%s</p><div class="wt-act"><div data-mg-ctl><button type="button" class="mg-pp" data-mg-pp data-state="pause" aria-label="Pausar"></button></div>'
-            '<button type="button" class="btn k sm" data-wt-explore>Recorrerlo vos mismo</button><button type="button" class="btn k sm at-back" data-wt-back>Volver al recorrido</button>'
-            '<a class="btn k sm wt-open" data-wt-open href="%scentro-ribera/index.html" target="_blank" rel="noopener">Abrir el sitio completo ↗</a></div></div>'
-            '<p class="cap">Sitios de muestra con contenido ficticio y funcionando. Son una muestra del nivel de diseño que buscamos.</p></div>'
-            % (base, rel, pick, vista("d", 1100, 690, "ribera-d.webp"), vista("m", 390, 780, "ribera-m.webp"), E(WT_SITES[0][4]), base))
+            '<button type="button" class="wt-link" data-wt-explore>Recorrerlo vos mismo</button><button type="button" class="wt-link at-back" data-wt-back>Volver al recorrido</button>'
+            '<a class="wt-link wt-open" data-wt-open href="%scentro-ribera/index.html" target="_blank" rel="noopener">Abrir el sitio completo ↗</a></div></div>'
+            '<p class="cap">Sitios de muestra con contenido ficticio y funcionando. Son una muestra del nivel de diseño que buscamos. Fotografías de ambientación ilustrativas, generadas con IA.</p></div>'
+            % (base, rel, rel, rel, pick, vista("d", 1100, 690, "ribera-d.webp"), vista("m", 390, 780, "ribera-m.webp"), E(WT_SITES[0][4]), base))

@@ -1,7 +1,7 @@
 # Home R3: orientación por necesidad (no por nombre de producto), prueba, eventos aparte y armador de consulta.
 from _lib import *
 from _demos import *
-from _r33 import app_tour, inv_gallery
+from _r33 import app_tour, app_sim, inv_gallery
 
 HOME_FAQ = [
  ("¿Tengo que contratar todo junto?", "No. GrowiApp, GrowiWeb y GrowiFlow se contratan por separado. Si querés sitio y sistema, el combo suma 10% de descuento en el sitio y la puesta en marcha sin cargo."),
@@ -38,7 +38,7 @@ def home():
                   ["Lo armamos con los datos de tu negocio", "1 hora de capacitación en vivo", "Garantía prevista de 7 días y sin permanencia"],
                   "desde %s/mes + %s de puesta en marcha" % (P(15, True), P(49, True)),
                   '<a class="btn k sm" href="%s" data-track="home-xp-app">Ver GrowiApp →</a>' % pg.u("app/"),
-                  app_tour(rel, "cafeteria", True) + '<p class="cap">Demo de GrowiApp con datos ilustrativos.</p>')
+                  app_sim(rel, True))
     p_web = panel("web", False, "GrowiWeb", "Un sitio que presenta tu negocio y facilita las consultas.",
                   ["Muestra lo que hacés y deja pedir turno o consultar", "Lo dejamos publicado: vos no tocás nada técnico", "Plantilla adaptada a tu rubro o diseño a medida"],
                   ["Precio y alcance por escrito, antes de empezar", "Revisiones incluidas según el plan", "7 días de ajustes sin cargo desde la entrega"],
