@@ -20,9 +20,8 @@ CFG = {"release": False}          # release=True: indexable, con analítica, enl
 
 L1_PIE = ("Growi se encuentra en etapa de lanzamiento y actualmente recibe consultas sobre sus servicios, sin aceptar contrataciones ni pagos. "
           "Los planes y precios publicados describen las propuestas previstas. Para conocer disponibilidad, alcance y condiciones, contactanos por WhatsApp o correo.")
-L1_PRECIOS = ("Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. Cada plan tiene un precio cerrado; los precios «desde» y lo a medida se confirman en un presupuesto por escrito antes de empezar. "
-              "No incluyen dominio, alojamiento ni costos de terceros (por ejemplo, comisiones de medios de pago o mensajes de WhatsApp). "
-              "Están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta).")
+L1_PRECIOS = ("Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. Precios en USD; el valor en pesos es orientativo y se actualiza con el dólar oficial (venta). "
+              "Dominio, alojamiento y costos de terceros (comisiones de medios de pago, mensajes de WhatsApp) se cotizan aparte cuando correspondan. Lo «desde» y lo a medida se confirman en un presupuesto por escrito antes de empezar.")
 
 # ---------------------------------------------------------------- precios
 def ars(usd):
@@ -113,8 +112,8 @@ def head(pg, titulo, desc, og="growi-og-1200x630.png", l1ld=None, faqs=None, cls
             '<link rel="icon" href="%sfavicon/favicon-32x32.png" type="image/png">\n'
             '<link rel="preload" href="%sassets/fonts/epilogue-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
             '<script>var d=document.documentElement,o=null;try{o=localStorage.getItem("cr_motion")}catch(e){}try{var r=matchMedia("(prefers-reduced-motion: reduce)").matches;if(o==="on"||(!r&&o!=="off"))d.classList.add("mo")}catch(e){}</script>\n'
-            '%s<link rel="stylesheet" href="%sassets/growi360.css"><link rel="stylesheet" href="%sassets/growi33.css"><link rel="stylesheet" href="%sassets/growi35.css">\n%s</head>\n<body%s>\n<a class="sr" href="#contenido">Saltar al contenido</a>\n'
-            % (robots, E(titulo), E(desc), url, E(titulo), E(desc), url, ogimg, E(titulo), E(desc), ogimg, "/" if CFG["release"] else rel, rel, pla, rel, rel, rel, lds, (' class="%s"' % cls) if cls else ""))
+            '%s<link rel="stylesheet" href="%sassets/growi360.css"><link rel="stylesheet" href="%sassets/growi33.css"><link rel="stylesheet" href="%sassets/growi35.css"><link rel="stylesheet" href="%sassets/growi36.css">\n%s</head>\n<body%s>\n<a class="sr" href="#contenido">Saltar al contenido</a>\n'
+            % (robots, E(titulo), E(desc), url, E(titulo), E(desc), url, ogimg, E(titulo), E(desc), ogimg, "/" if CFG["release"] else rel, rel, pla, rel, rel, rel, rel, lds, (' class="%s"' % cls) if cls else ""))
 
 # ---------------------------------------------------------------- navegación
 def header(pg, cur):
@@ -154,9 +153,9 @@ def footer(pg, sticky_msg, track):
             '<div><h2>Eventos y contacto</h2><ul><li><a href="%s">Invitaciones digitales</a></li><li><a href="%s%s" target="_blank" rel="noopener noreferrer" data-track="%s-footer-whatsapp">WhatsApp</a></li><li><a href="mailto:hola@growi.ar">hola@growi.ar</a></li>'
             '<li><a href="%s">Privacidad</a></li><li><a href="%s">Términos</a></li></ul></div></div>'
             '<p class="l1">%s</p>%s</div></footer>\n<div class="sticky-cta">%s</div>\n'
-            '<script src="%s"></script>\n<script src="%s"></script>\n<script src="%sassets/growi360.js" defer></script>\n<script src="%sassets/growi33.js" defer></script>\n<script src="%sassets/growi35.js" defer></script>\n</body>\n</html>\n'
+            '<script src="%s"></script>\n<script src="%s"></script>\n<script src="%sassets/growi360.js" defer></script>\n<script src="%sassets/growi33.js" defer></script>\n<script src="%sassets/growi35.js" defer></script>\n<script src="%sassets/growi36.js" defer></script>\n</body>\n</html>\n'
             % (pg.u(""), prod, rub, pg.u("invitaciones/"), WA, quote("Hola Growi, quiero conocer más sobre sus soluciones."), track, pg.legal("privacidad"), pg.legal("terminos"),
-               L1_PIE, pie, btn(sticky_msg, track + "-floating-whatsapp", "Consultar por WhatsApp", "wide"), pg.shared("shared.fx.js"), pg.shared("shared.js"), pg.rel, pg.rel, pg.rel))
+               L1_PIE, pie, btn(sticky_msg, track + "-floating-whatsapp", "Consultar por WhatsApp", "wide"), pg.shared("shared.fx.js"), pg.shared("shared.js"), pg.rel, pg.rel, pg.rel, pg.rel))
 
 # ---------------------------------------------------------------- bloques
 def faq(pares):

@@ -124,7 +124,7 @@ footer .aviso{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);
 .aside{position:sticky;top:20px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px}
 .aside h2{font:700 15px var(--txt);color:var(--ink2);margin-bottom:8px}
 .aside .fig{background:var(--white);border-radius:var(--r);padding:4px;margin-bottom:12px}
-.aside dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:15px}
+.aside dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;font-size:15px}
 .aside dt{color:var(--ink2)}.aside dd{margin:0;font-weight:600}
 .aside .vac{color:var(--ink3);font-weight:400}
 .ok-box{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px}
@@ -354,7 +354,8 @@ footer .aviso{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);
   .fixbar{display:block;position:fixed;left:0;right:0;bottom:0;background:var(--white);border-top:1px solid var(--line);padding:10px var(--g);z-index:20}
   .fixbar .btn{width:100%}
   footer .cols{grid-template-columns:1fr}
-  .tw{padding:28px var(--g) 80px}
+  .svc{grid-template-columns:minmax(0,1fr);gap:24px}.svc nav{position:static}
+  .tw{grid-template-columns:minmax(0,1fr);gap:28px;padding:28px var(--g) 80px}.aside{position:static}.aside dd{overflow-wrap:anywhere}
   /* hero móvil: titular grande, cuerpo a sangre, panel debajo */
   .hero{padding:26px 0 36px}
   .hero h1{font-size:clamp(2.6rem,13vw,3.4rem)}

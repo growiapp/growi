@@ -2,6 +2,7 @@
 from _lib import *
 from _demos import *
 from _r33 import app_tour, app_sim
+from _r36 import scene_app, hero36
 import re, io, json
 
 def l1_faq(path, idx):
@@ -19,14 +20,11 @@ def ph(pg, cur_label, parent=None):
 def app():
     pg = Pg("app/"); rel = pg.rel
     msg_demo = "Hola Growi, quiero conocer GrowiApp y coordinar una demo de 20 minutos.\n\nMi rubro:\nDías y horarios que me vienen bien:"
-    hero = ('<section class="ph ph-wide" data-sticky-hide aria-labelledby="h1"><div class="w"><div class="ph-top"><div>%s'
-            '<h1 id="h1">Tu sistema de gestión, <mark class="sweep">listo para trabajar</mark>.</h1></div>'
-            '<div><p class="sub">Registrás ventas, controlás el stock, llevás los turnos y cerrás la caja desde el celular. Lo armamos con los datos de tu negocio y te confirmamos una fecha estimada de entrega antes de empezar.</p>'
-            '<div class="cta-row" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:24px">%s<a class="btn o" href="#precios">Ver precios ↓</a></div>'
-            '<ul class="proof"><li><span>Desde %s por mes + %s de puesta en marcha, una sola vez · precios previstos: hoy solo consultas</span></li><li><span>Garantía prevista de 7 días · Sin permanencia</span></li></ul></div></div>'
-            '<div id="demo" class="demo-wide">%s</div></div></section>\n'
-            % (ph(pg, "GrowiApp"), btn(msg_demo, "app-hero-demo-whatsapp", "Solicitar una demo de 20 minutos"), P(15, True), P(49, True), app_sim(rel)))
-    real = ('<section class="sec real" id="interfaz" aria-labelledby="h-real"><div class="w"><p class="eyebrow">La demo de GrowiApp</p><h2 id="h-real">Así se ve GrowiApp por dentro.</h2>'
+    hero = hero36(pg, ph(pg, "GrowiApp"), 'Tu sistema de gestión, <mark class="sweep">listo para trabajar</mark>.',
+                  "Registrás ventas, controlás el stock, llevás los turnos y cerrás la caja desde el celular. Lo armamos con los datos de tu negocio y te confirmamos una fecha estimada de entrega antes de empezar.",
+                  btn(msg_demo, "app-hero-demo-whatsapp", "Solicitar una demo de 20 minutos") + '<a class="btn o" href="#precios">Ver precios ↓</a>',
+                  "Desde %s por mes + %s de puesta en marcha, una sola vez · Garantía prevista de 7 días · Sin permanencia" % (P(15, True), P(49, True)), scene_app(rel))
+    real = ('<section class="sec real" id="interfaz" aria-labelledby="h-real"><div class="w"><p class="eyebrow">Probala vos mismo</p><h2 id="h-real">La demo completa de GrowiApp.</h2>'
             '<div class="real-stage" style="--bg:url(%sassets/img/cafeteria-sala.webp);--bg-m:url(%sassets/img/cafeteria-sala-m.webp)">%s<p class="cap">Demo con datos de ejemplo. Fotografía de ambientación ilustrativa, generada con IA.</p></div></div></section>\n' % (rel, rel, app_tour(rel, "cafeteria")))
     items =[("Cada venta registrada al momento", "para saber cuánto ganaste, por producto y por hora"), ("Cierre de caja automático", "sin hacer cuentas al final del día: el número está solo"),
              ("Control de stock con alertas", "te avisa cuando un producto está por agotarse, antes de quedarte sin nada"), ("Agenda de turnos y reservas", "reemplazás el cuaderno por una agenda digital que nunca se pierde"),
@@ -45,7 +43,7 @@ def app():
     t3 = ticket("Plan 03", "Multi", "Para más de una sucursal.", ["Hasta 5 usuarios", "Hasta 2 sucursales", "Todo lo de Pro", "Reportes avanzados por sucursal", "WhatsApp prioritario"],
                 ("Por mes", money(49, "/mes", True)), "+ %s de puesta en marcha, una sola vez%s" % (P(249), per), cta("Multi"))
     precios = ('<section class="sec" id="precios" aria-labelledby="h-pre"><div class="w"><p class="eyebrow">Precios</p><h2 id="h-pre">Un pago de puesta en marcha y un abono mensual fijo.</h2>'
-               '<p class="lead">Lo armamos, cargamos tus datos y te enseñamos a usarlo. Lo que te decimos es lo que pagás.</p><p class="l1n">Hoy solo recibimos consultas: todavía no se contrata ni se paga.</p>'
+               '<p class="lead">Lo armamos, cargamos tus datos y te enseñamos a usarlo. Lo que te decimos es lo que pagás.</p>'
                '<div class="tk-tools">%s<div class="seg" role="group" aria-label="Período de pago"><button type="button" data-period="monthly" class="active" aria-pressed="true">Mensual</button><button type="button" data-period="annual" aria-pressed="false">Anual −15%%</button></div></div>'
                '<div class="tickets">%s%s%s</div>'
                '<p class="note" style="max-width:86ch;margin-top:34px">Todos los planes incluyen la configuración inicial hecha por nuestro equipo y 1 hora de capacitación en vivo. Garantía prevista de 7 días desde que GrowiApp queda andando: si no funciona como prometimos, te devolveríamos el 100%%de la puesta en marcha. Los descuentos no se acumulan: si te corresponde más de uno, se aplica el mejor. %s</p></div></section>\n'
@@ -108,7 +106,7 @@ def rubro(k):
     nota_demo = "Demo interactiva de GrowiApp con datos ilustrativos." + (" Se muestra con datos de ejemplo de una cafetería." if k == "retail" else "")
     hero = ('<section class="ph" data-sticky-hide aria-labelledby="h1"><div class="w ph-g"><div>%s<h1 id="h1">%s</h1><p class="sub">%s</p>'
             '<div class="cta-row" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">%s<a class="btn o" href="#precio">Ver cuánto sale ↓</a></div>'
-            '<ul class="proof"><li><span>Desde %s por mes + %s de puesta en marcha, una sola vez · precios previstos: hoy solo consultas</span></li><li><span>Garantía prevista de 7 días · Sin permanencia</span></li></ul></div>'
+            '<ul class="proof"><li><span>Desde %s por mes + %s de puesta en marcha, una sola vez</span></li><li><span>Garantía prevista de 7 días · Sin permanencia</span></li></ul></div>'
             '<div id="demo">%s<p class="cap">%s</p></div></div></section>\n'
             % (ph(pg, d["tit"].replace("GrowiApp para ", "").capitalize(), ("GrowiApp", "app/")), d["h1"], E(d["lead"]), btn(msg, "app-%s-hero-whatsapp" % k, d["cta"]), P(15, True), P(49, True), app_tour(rel, d["demo"]), nota_demo))
     pains = ('<section class="sec" id="te-suena" aria-labelledby="h-d"><div class="w"><p class="eyebrow">¿Te suena?</p><h2 id="h-d">%s</h2><ul class="feat">%s</ul></div></section>\n'
@@ -117,7 +115,7 @@ def rubro(k):
              % (d["nombre"], "".join("<li><b>%s</b><span>%s</span><em>%s</em></li>" % (E(a), E(b), E(c)) for a, b, c in d["feats"])))
     t1 = ticket("Plan Start", "GrowiApp Start", "Lo armamos, cargamos tus datos y te enseñamos a usarlo.", ["Ventas, caja y stock", "Turnos y reservas", "Ficha de clientes", "Reportes simples", "1 usuario (con varios cargando a la vez, el plan Pro trae hasta 3)", "Soporte por WhatsApp", "Sin permanencia: cancelás cuando quieras"],
                 ("Por mes", money(15, "/mes")), "+ %s de puesta en marcha, una sola vez. Garantía prevista de 7 días desde que queda andando." % P(49), btn("Hola Growi, quiero consultar por GrowiApp, plan Start.\n\nMi negocio: %s" % d["nombre"], "app-%s-pricing-whatsapp" % k, "Consultar por GrowiApp", "wide"))
-    precio = ('<section class="sec" id="precio" aria-labelledby="h-p"><div class="w precio-g"><div><p class="eyebrow">Cuánto sale</p><h2 id="h-p">Un pago único de puesta en marcha y un abono mensual fijo.</h2><p class="lead">Lo que te decimos es lo que pagás. <a href="%s#precios" class="tl">Ver todos los planes</a></p><p class="l1n">Hoy solo recibimos consultas: todavía no se contrata ni se paga.</p><div class="tk-tools">%s</div></div>'
+    precio = ('<section class="sec" id="precio" aria-labelledby="h-p"><div class="w precio-g"><div><p class="eyebrow">Cuánto sale</p><h2 id="h-p">Un pago único de puesta en marcha y un abono mensual fijo.</h2><p class="lead">Lo que te decimos es lo que pagás. <a href="%s#precios" class="tl">Ver todos los planes</a></p><div class="tk-tools">%s</div></div>'
               '<div class="tickets one">%s</div></div><div class="w"><p class="note" style="max-width:86ch;margin-top:26px">%s</p></div></section>\n' % (pg.u("app/"), cur_toggle(), t1, E(L1_PRECIOS)))
     caso = caso_cafe(rel, pg.u("app/")) if k == "cafeterias" else ""
     pre = ('<section class="sec tint" id="preguntas" aria-labelledby="h-faq"><div class="w faq-g"><div><p class="eyebrow">Antes de que preguntes</p><h2 id="h-faq">Lo que se pregunta primero.</h2></div>%s</div></section>\n' % faq(faqp))

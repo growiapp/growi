@@ -111,13 +111,13 @@ def app_tour(rel, rubro="cafeteria", lazy=False):
     if rubro == "cafeteria": src += "?rubro=cafeteria"
     pr = {"peluqueria": " pr-peluqueria", "taller": " pr-taller"}.get(rubro, "")
     pills = "".join('<button type="button" data-at-rubro="%s" class="%s" aria-pressed="%s">%s</button>' % (k, "on" if k == rubro else "", "true" if k == rubro else "false", n) for k, n in APP_RUB)
-    return ('<div class="at" data-apptour><span class="mg-tag at-tag">Demo · datos de ejemplo</span><div class="at-win appwrap%s"><iframe class="appdemo" src="%s" title="Demo de GrowiApp con datos de un negocio de ejemplo" height="640"%s tabindex="-1"></iframe></div>'
+    return ('<div class="at" data-apptour><div class="at-win appwrap%s"><iframe class="appdemo" src="%s" title="Demo de GrowiApp con datos de un negocio de ejemplo" height="640"%s tabindex="-1"></iframe></div>'
             '<div class="at-bar"><p class="at-cap" data-at-cap aria-live="off"></p>'
             '<div class="at-ctl" data-mg-ctl><div class="at-dots mg-dots" data-at-dots></div><button type="button" class="mg-pp" data-mg-pp data-state="pause" aria-label="Pausar"></button></div>'
             '<div class="at-act"><button type="button" class="btn k sm" data-at-explore>Probarla vos mismo</button><button type="button" class="btn k sm at-back" data-at-back>Volver al recorrido</button>'
             '<a class="at-open" href="%s" target="_blank" rel="noopener">Abrir en pantalla completa ↗</a></div>'
-            '<div class="at-rub" role="group" aria-label="Rubro de ejemplo"><span>Ver con otro rubro</span>%s</div></div></div>'
-            % (pr, src, ' loading="lazy"' if lazy else "", src, pills))
+            '</div></div>'
+            % (pr, src, ' loading="lazy"' if lazy else "", src))
 
 # ------------------------------------------------------------ Invitaciones: la demostración real, con una galería de estilos (casamiento, cumpleaños, empresa) que se recorre sola
 def inv_gallery(rel, titulo, alto):
