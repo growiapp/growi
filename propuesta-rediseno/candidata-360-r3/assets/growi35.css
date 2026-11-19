@@ -60,11 +60,31 @@
 .cj4-hum .mg-ic{width:38px;height:38px;color:var(--verde)}.cj4-hum p{margin:0;font:500 clamp(1.1rem,2vw,1.35rem)/1.4 var(--epi)}
 .cj4-chip{background:#fff;border:1.5px solid var(--linea);border-left:6px solid var(--verde);border-radius:14px;padding:16px 22px;display:grid;gap:4px}
 .cj4-chip small{font:600 13px var(--mono);color:var(--gris)}.cj4-chip b{font:800 clamp(1.3rem,2.6vw,1.9rem)/1.2 var(--epi);letter-spacing:-.02em}
-.cj4-rail{list-style:none;margin:22px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.cj4-rail small{display:none}
+.cj4-rail{grid-column:1/-1;list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
 .cj4-rail li{display:flex;gap:8px;align-items:center;min-width:0;font:700 .92rem var(--epi);padding:6px 8px 6px 6px;border-radius:99px;border:1.5px solid var(--linea);background:#fff}
 .cj4-rail i{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;font:800 12px var(--epi);font-style:normal;flex:none}
 .cj4-rail b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cj4.js-mg .cj4-rail li.now{border-color:var(--tinta);box-shadow:0 0 0 2px var(--tinta)}
+/* escritorio ancho: teléfono grande, plano en tipografía de portada y los cinco pasos con su actor en una columna propia */
+@container (min-width:1000px){
+  .cj4-stage{grid-template-columns:minmax(0,340px) minmax(0,1fr) 236px;gap:clamp(28px,4cqw,64px);min-height:650px}
+  .cj4-ph{width:min(100%,320px)}
+  .cj4-px{color:var(--verde-d)}
+  .cj4-ph img{border-width:7px;border-radius:38px;box-shadow:0 40px 70px -30px rgba(0,0,0,.6)}
+  .cj4-pl{gap:20px}
+  .cj4-big{font-size:clamp(2.2rem,3.6cqw,3.4rem);max-width:17ch}
+  .cj4-sm{font-size:1.1rem}
+  .cj4-wa{font-size:clamp(1.5rem,2.5cqw,2rem);padding:26px 30px;max-width:22ch;border-radius:24px 24px 24px 6px}
+  .cj4-hum{grid-template-columns:56px 1fr;padding:26px 30px;max-width:30ch}.cj4-hum .mg-ic{width:52px;height:52px}.cj4-hum p{font-size:clamp(1.4rem,2.2cqw,1.8rem)}
+  .cj4-chip{padding:24px 30px}.cj4-chip b{font-size:clamp(1.8rem,3cqw,2.5rem)}.cj4-chip small{font-size:14px}
+  .cj4-rol span{font-size:13px;padding:8px 14px}
+  .cj4-rail{grid-column:3;grid-row:1;grid-template-columns:minmax(0,1fr);margin:0;gap:10px;align-self:center}
+  .cj4-rail li{border-radius:16px;padding:12px 14px;display:grid;grid-template-columns:30px minmax(0,1fr);column-gap:12px;align-items:center}
+  .cj4-rail i{width:30px;height:30px;grid-row:1/3;font-size:14px}
+  .cj4-rail b{font-size:1.02rem}
+  .cj4-rail small{display:block;font:600 12px var(--mono);color:var(--gris);text-transform:uppercase;letter-spacing:.04em}
+}
 .cj4 .mg-caps{display:none}.cj4 .mg-bar{grid-template-columns:auto}.cj4 .mg-ctl{justify-content:space-between}
 @container (max-width:720px){
   .cj4-stage{grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:start;min-height:0}

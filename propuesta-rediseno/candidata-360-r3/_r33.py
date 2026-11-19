@@ -62,13 +62,12 @@ def combo_journey(rel):
               + pl(2, '<div class="cj4-wa"><span>Paciente · WhatsApp</span>Hola, quiero turno para el sábado a la mañana.</div><p class="cj4-sm">La consulta llega por el canal de siempre.</p>')
               + pl(3, '<div class="cj4-hum">%s<p><b>Alguien del centro</b> lee la consulta, confirma el horario y lo carga.</p></div><p class="cj4-sm">Este paso lo hace una persona.</p>' % I_PERSON)
               + pl(4, '<div class="cj4-chip"><small>Agenda · sábado 11:15</small><b>Julián · Primera consulta</b></div><p class="cj4-sm">El turno queda en la agenda de GrowiApp.</p>')
-              + pl(5, '<div class="cj4-chip"><small>Venta registrada</small><b>Consulta inicial · $21.000</b></div><p class="cj4-sm">La caja del día se arma sola.</p>'))
-    paso = "".join('<li data-b="%d" class="r-%s"><i>%d</i><b>%s</b></li>' % (i + 1, r, i + 1, t) for i, (t, r) in enumerate([("Sitio", "v"), ("WhatsApp", "v"), ("Persona", "p"), ("Agenda", "h"), ("Caja", "h")]))
+              + pl(5, '<div class="cj4-chip"><small>Venta registrada</small><b>Consulta inicial</b><b class="cj4-px">$21.000</b></div><p class="cj4-sm">La caja del día se arma sola.</p>'))
+    paso = "".join('<li data-b="%d" class="r-%s"><i>%d</i><b>%s</b><small>%s</small></li>' % (i + 1, r, i + 1, t, s) for i, (t, r, s) in enumerate([("Sitio", "v", "Visitante"), ("WhatsApp", "v", "Visitante"), ("Persona", "p", "Persona del centro"), ("Agenda", "h", "Herramienta"), ("Caja", "h", "Herramienta")]))
     return ('<div class="mg lt cj4" data-mg data-beats="5" data-ms="2600"><div class="mg-top"><span class="mg-tag">Demostración · datos ficticios</span><span class="cj3-biz">Un mismo negocio: <b>Centro Ribera</b>, kinesiología</span></div>'
             '<div class="cj4-stage"><div class="cj4-ph"><img class="a" src="%sassets/img/ribera-m.webp" width="390" height="800" alt="Sitio de muestra de Centro Ribera en el celular: el paciente elige la zona que le molesta." loading="lazy">'
             '<img class="b" src="%sassets/img/combo-app-m.webp" width="390" height="688" alt="Panel de GrowiApp en el celular con el negocio de muestra Centro Ribera." loading="lazy"></div>'
-            '<div class="cj4-pls">%s</div></div>'
-            '<ol class="cj4-rail" aria-hidden="true">%s</ol>'
+            '<div class="cj4-pls">%s</div><ol class="cj4-rail" aria-hidden="true">%s</ol></div>'
             '<div class="mg-bar"><div class="mg-caps" aria-live="off">%s</div>%s<span class="mg-prog" aria-hidden="true"><i data-mg-bar></i></span></div>'
             '<p class="ap-note">Demostración conceptual: el pedido llega por WhatsApp y una persona lo carga en la agenda. No mostramos ninguna conexión automática entre el sitio y la agenda.</p>'
             '<ol class="mg-steps">%s</ol></div>'
@@ -89,7 +88,7 @@ def app_sim(rel="", compact=False):
              '<div class="ap-r ap-tot"><span>Total</span><b>$9.500</b></div></div>')
     resumen = '<div class="fl-card ap-card">%s%s%s</div>' % (fila("Ventas hoy", _ap("$184.500", "$194.000")), fila("Transacciones", _ap("47", "48")), fila("Caja estimada", _ap("$147.600", "$157.100")))
     stock = '<div class="fl-card ap-card">%s%s</div>' % (fila("Leche entera", _ap("18,0 L", "17,6 L")), fila("Medialunas", _ap("24 u.", "23 u.")))
-    cols = [("1", "Se registra la venta", venta, "Mostrador"), ("2", "Se actualiza el Resumen", resumen, "Interfaz real · cifras simuladas"), ("3", "Baja el stock", stock, "Ejemplo de stock")]
+    cols = [("1", "Se registra la venta", venta, "Mostrador"), ("2", "Se actualiza el Resumen", resumen, "Demo · cifras simuladas"), ("3", "Baja el stock", stock, "Ejemplo ficticio")]
     led = ""
     for i, (n, t, c, s) in enumerate(cols):
         led += '<div class="fl-c ah-st" data-b="%d"><p class="fl-h"><span class="fl-n">%s</span>%s<small>%s</small></p>%s</div>' % (i + 1, n, t, s, c)
@@ -97,11 +96,11 @@ def app_sim(rel="", compact=False):
     caps = "".join('<p data-cap-b="%d">%s</p>' % (i + 1, E(c)) for i, c in enumerate(AP_CAPS))
     alt = "".join("<li>%s</li>" % E(c) for c in AP_CAPS)
     src = "%sdemos/app.html?rubro=cafeteria" % rel
-    return ('<div class="mg lt ah%s" data-mg data-ah data-beats="4" data-ms="3000"><div class="mg-top"><span class="mg-tag">Simulación · datos de ejemplo</span><span class="cj3-biz">GrowiApp, interfaz real · Café Central</span></div>'
-            '<div class="ah-stage"><div class="ah-win"><div class="wt-chrome" aria-hidden="true"><i></i><i></i><i></i><span>growi.ar/dashboard</span></div><div class="ah-fr" data-ah-fr><iframe src="%s" title="Interfaz real de GrowiApp con datos de ejemplo" tabindex="-1"></iframe></div></div>'
+    return ('<div class="mg lt ah%s" data-mg data-ah data-beats="4" data-ms="3000"><div class="mg-top"><span class="mg-tag">Simulación · datos de ejemplo</span><span class="cj3-biz">Demo de GrowiApp · negocio de ejemplo: <b>Café Central</b></span></div>'
+            '<div class="ah-stage"><div class="ah-win"><div class="wt-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Demo de GrowiApp · datos de ejemplo</span></div><div class="ah-fr" data-ah-fr><iframe src="%s" title="Demo de GrowiApp con datos de ejemplo" tabindex="-1"></iframe></div></div>'
             '<div class="ah-led">%s</div></div>'
             '<div class="mg-bar"><div class="mg-caps" aria-live="off">%s</div>%s<span class="mg-prog" aria-hidden="true"><i data-mg-bar></i></span></div>'
-            '<p class="ap-note">Las cifras que cambian son de ejemplo. La demo real es una maqueta sin cálculo; cómo se conectan las ventas, el stock y la caja se define al armar el sistema.</p><ol class="mg-steps">%s</ol></div>'
+            '<p class="ap-note">Los números que cambian son una simulación con datos de ejemplo. Esta demo no registra ventas ni calcula caja o stock; cómo se conectan se define al armar el sistema.</p><ol class="mg-steps">%s</ol></div>'
             % (" is-compact" if compact else "", src, led, caps, _controls(4), alt))
 
 # ------------------------------------------------------------ GrowiApp: recorrido de la interfaz real + exploración como modo secundario
