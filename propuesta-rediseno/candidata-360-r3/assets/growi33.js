@@ -158,20 +158,35 @@
     var loadVisible = function () { views.forEach(function (v) { var f = $("iframe", v); if (v.offsetParent && !f.getAttribute("src")) f.src = f.getAttribute("data-src"); }); };
     var fitAll = fit; fit = function () { fitAll(); if (started) loadVisible(); };
     fit(); if (window.ResizeObserver) new ResizeObserver(fit).observe(w); else window.addEventListener("resize", fit);
-    views.forEach(function (v) { $("iframe", v).addEventListener("load", function () { v.classList.add("ready"); }); });
     var doc = function (v) { try { return $("iframe", v).contentDocument; } catch (e) { return null; } };
+    /* mediciones en cache por sitio: se rehacen solo si el contenido del iframe cambia de tamaño (carga, imágenes, tipografías) */
+    var measure = function (v) {
+      if (v.__m) return v.__m;
+      var f = $("iframe", v), d = doc(v), win = f.contentWindow; if (!d || !d.documentElement) return null;
+      var heads = [];
+      $$("main h2, h2", d).forEach(function (h) { var tx = h.textContent.trim(); if (tx) heads.push({ y: h.getBoundingClientRect().top + win.scrollY, t: tx }); });
+      return (v.__m = { max: Math.max(0, d.documentElement.scrollHeight - (+v.getAttribute("data-h"))), heads: heads });
+    };
+    views.forEach(function (v) {
+      var f = $("iframe", v);
+      f.addEventListener("load", function () {
+        v.classList.add("ready"); v.__m = null;
+        try { var win = f.contentWindow; if (win.ResizeObserver) new win.ResizeObserver(function () { v.__m = null; }).observe(win.document.documentElement); } catch (e) {}
+      });
+    });
     var run = function () {
       cancelAnimationFrame(raf); if (!vis || paused || mode !== "tour" || reduce) return;
-      var t0 = 0, phase = 0, cycle = 16000;
+      var t0 = 0, cycle = 16000, lastSec = -1e9;
       var step = function (ts) {
         if (!vis || paused || mode !== "tour") return;
         if (!t0) t0 = ts; var t = ((ts - t0) % cycle) / cycle; /* 0..1: baja 0-.7, espera .7-.8, vuelve .8-1 */
         var p = t < 0.7 ? ease(t / 0.7) : t < 0.8 ? 1 : 1 - ease((t - 0.8) / 0.2);
+        var upd = ts - lastSec >= 250; if (upd) lastSec = ts; /* el rótulo de sección se actualiza a ~4 Hz */
         views.forEach(function (v, vi) {
-          if (!v.offsetParent) return; var d = doc(v), win = $("iframe", v).contentWindow; if (!d || !d.documentElement) return;
-          var max = Math.max(0, d.documentElement.scrollHeight - (+v.getAttribute("data-h")));
-          var q = vi ? Math.min(1, Math.max(0, p * 1.1 - 0.05)) : p; try { win.scrollTo(0, Math.round(max * q)); } catch (e) {}
-          if (!vi && sec) { var hs = $$("main h2, h2", d), cur = "", y = max * q + 220; hs.forEach(function (h) { if (h.getBoundingClientRect().top + win.scrollY <= y && h.textContent.trim()) cur = h.textContent.trim(); }); if (cur && sec.textContent !== cur) sec.textContent = cur; }
+          if (!v.offsetParent) return; var m = measure(v); if (!m) return;
+          var q = vi ? Math.min(1, Math.max(0, p * 1.1 - 0.05)) : p, y = Math.round(m.max * q);
+          try { $("iframe", v).contentWindow.scrollTo(0, y); } catch (e) {}
+          if (!vi && sec && upd) { var cur = "", yy = m.max * q + 220; m.heads.forEach(function (h) { if (h.y <= yy) cur = h.t; }); if (cur && sec.textContent !== cur) sec.textContent = cur; }
         });
         raf = requestAnimationFrame(step);
       };
