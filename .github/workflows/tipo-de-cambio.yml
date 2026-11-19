@@ -36,12 +36,17 @@ jobs:
           git commit -am "Actualizar tipo de cambio (dólar oficial venta)"
           git push
           echo "changed=true" >> "$GITHUB_OUTPUT"
-      # Un push hecho con GITHUB_TOKEN no dispara otros workflows: hay que pedir el deploy a mano.
-      - name: Publicar el sitio
-        if: steps.commit.outputs.changed == 'true'
+      # El primer release R3 requiere autorizacion y despliegue manual. Solo despues
+      # habilitar la variable de repositorio GROWI_AUTO_FX_DEPLOY=true.
+      # workflow_dispatch si dispara otro workflow aun usando GITHUB_TOKEN.
+      - name: Publicar precios actualizados
+        if: steps.commit.outputs.changed == 'true' && vars.GROWI_AUTO_FX_DEPLOY == 'true'
         run: gh workflow run static.yml --ref main
         env:
           GH_TOKEN: ${{ github.token }}
+      - name: Avisar si la publicacion automatica sigue desactivada
+        if: steps.commit.outputs.changed == 'true' && vars.GROWI_AUTO_FX_DEPLOY != 'true'
+        run: echo '::notice::Precios guardados en main; Pages no se despacho. Tras el primer release manual, habilitar GROWI_AUTO_FX_DEPLOY=true.'
       # Si la API está caída o devuelve algo raro, el sitio sigue con el último valor guardado en shared.fx.js.
       # Para que nadie se entere tarde, se abre un issue (uno solo, no uno por semana).
       - name: Avisar si falló
