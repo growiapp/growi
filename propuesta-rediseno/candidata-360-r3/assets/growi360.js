@@ -194,10 +194,9 @@
       $$("iframe.appdemo").forEach(function (f) {
         if (f.contentWindow !== e.source) return;
         /* alto controlado: nunca más alto que la pantalla, así queda margen para seguir desplazando la página */
-        /* en móvil el marco toma todo su alto: un solo scroll (el de la página), sin desplazamiento anidado */
-        var narrow = window.matchMedia("(max-width:720px)").matches;
-        var cap = narrow ? d.h : Math.max(520, Math.min(780, window.innerHeight - 150)), h = Math.min(d.h, cap);
-        f.setAttribute("scrolling", d.h > h + 6 ? "yes" : "no");
+        /* el marco toma el alto real de su contenido en todos los anchos: un solo scroll (el de la página), sin desplazamiento anidado */
+        var h = d.h;
+        f.setAttribute("scrolling", "no");
         if (Math.abs(h - (parseInt(f.style.height, 10) || 0)) > 6) f.style.height = h + "px";
       });
     }
