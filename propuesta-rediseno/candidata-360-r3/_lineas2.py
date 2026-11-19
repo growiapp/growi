@@ -4,6 +4,36 @@ from _demos import *
 from _r33 import inv_gallery
 from _lineas import l1_faq, ph
 
+
+def flow_ld():
+    """Oferta de R3.5: los canales condicionados no se heredan del L1."""
+    def oferta(nombre, usd, descripcion):
+        d = {"@type": "Offer", "name": nombre, "price": str(usd),
+             "priceCurrency": "USD", "description": descripcion,
+             "availability": "https://schema.org/OutOfStock"}  # L1: hoy solo consultas.
+        return d
+
+    servicio = {
+        "@context": "https://schema.org", "@type": "Service", "name": "GrowiFlow",
+        "serviceType": "Automatizaciones para negocios", "url": "https://growi.ar/flow/",
+        "description": "Reportes, recordatorios y organización de pedidos y consultas configurados a medida. Los envíos por WhatsApp requieren una cuenta habilitada por Meta; las integraciones con WhatsApp e Instagram se evalúan según la cuenta del cliente. El bot de WhatsApp aún no está disponible. Actualmente solo se reciben consultas, sin contrataciones ni pagos.",
+        "areaServed": {"@type": "Country", "name": "Argentina"},
+        "provider": {"@type": "Organization", "name": "Growi", "url": "https://growi.ar/"},
+        "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Paquetes GrowiFlow", "itemListElement": [
+            oferta("Reportes", 89, "Resumen semanal o mensual armado a partir de una planilla o datos de GrowiApp, con inteligencia artificial. Se envía por correo o, con una cuenta habilitada por Meta, por WhatsApp. Costo de inteligencia artificial aparte cuando aplique."),
+            oferta("Recordatorios", 89, "Avisos de turnos, vencimientos o pagos pendientes a partir de una planilla. Se envían por correo o, con una cuenta habilitada por Meta, por WhatsApp."),
+            oferta("Pedidos y consultas", 79, "Las consultas de un formulario se registran en una planilla y generan un aviso por correo. La integración de WhatsApp e Instagram se evalúa según la cuenta del cliente."),
+            oferta("Automatización a medida", 190, "Precio desde USD 190; factibilidad, alcance y precio final se confirman por escrito antes de empezar."),
+            oferta("Sesión de ajuste", 29, "Ajuste posterior a la entrega de una automatización existente."),
+            oferta("Bot de WhatsApp para preguntas frecuentes", 25, "Próximamente, sin fecha: requiere aprobación de Meta. Puesta en marcha prevista de USD 149 y mensajes de Meta aparte. Todavía no disponible."),
+        ]},
+    }
+    migas = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Growi", "item": "https://growi.ar/"},
+        {"@type": "ListItem", "position": 2, "name": "GrowiFlow", "item": "https://growi.ar/flow/"},
+    ]}
+    return [json.dumps(d, ensure_ascii=False) for d in (servicio, migas)]
+
 # ================================================================== GROWIWEB
 def web():
     pg = Pg("web/"); rel = pg.rel
@@ -81,7 +111,7 @@ def flow():
     faqp = l1_faq("flow", [0, 1, 6, 7, 8, 9]) + [("¿Qué necesito para los Reportes?", "Los datos tienen que estar en algún lado: en GrowiApp o en una planilla donde ya lleves tus ventas o turnos. Cómo se conectan se define al armarlo, antes de empezar.")]
     pre = ('<section class="sec tint" id="preguntas" aria-labelledby="h-faq"><div class="w faq-g"><div><p class="eyebrow">Preguntas</p><h2 id="h-faq">Antes de escribirnos.</h2></div>%s</div></section>\n' % faq(faqp))
     cie = cierre("Contanos qué tarea querés sacarte de encima.", "Te decimos si se puede automatizar y cuánto sale, por escrito, antes de empezar. De lunes a sábado, de 9 a 19 hs.", btn(msg, "flow-final-whatsapp", "Contanos qué querés automatizar"))
-    return (head(pg, "GrowiFlow: automatizaciones para tu negocio | Growi", "Avisos de turno, reportes y consultas en orden, armados a medida de tu negocio. Desde USD 79, pago único. Mirá cómo funciona.", "og-flow.png", l1ld="flow", faqs=faqp)
+    return (head(pg, "GrowiFlow: automatizaciones para tu negocio | Growi", "Avisos de turno, reportes y consultas en orden, armados a medida de tu negocio. Desde USD 79, pago único. Mirá cómo funciona.", "og-flow.png", faqs=faqp, ld_override=flow_ld())
             + header(pg, "flow") + subnav([("demo", "Cómo funciona"), ("paquetes", "Paquetes"), ("como", "Cómo lo armamos"), ("preguntas", "Preguntas")], "flow")
             + '<main id="contenido">\n' + hero + paq + como + pre + cie + otras(pg, "flow") + '</main>\n' + footer(pg, msg, "flow"))
 

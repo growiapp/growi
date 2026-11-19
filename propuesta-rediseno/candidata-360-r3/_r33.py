@@ -137,10 +137,10 @@ def web_showcase(rel):
                    % (k, E(d), "on" if i == 0 else "", "true" if i == 0 else "false", rel, im, n, s) for i, (k, n, s, im, d) in enumerate(WT_SITES))
     def vista(cls, w, h, poster):
         return ('<div class="wt-view %s" data-w="%d" data-h="%d"><img class="poster" src="%sassets/img/%s" alt="" width="%d" height="%d"><iframe title="Sitio de muestra de Growi: contenido ficticio" data-src="%scentro-ribera/index.html" tabindex="-1"></iframe></div>' % (cls, w, h, rel, poster, w, h, base))
-    return ('<div class="wt" data-wt data-site="centro-ribera" data-base="%s" style="--bg:url(img/ribera-sala.webp);--bgc:url(img/ceramica-taller.webp);--bgcm:url(img/ceramica-taller-m.webp)"><div class="wt-pick" role="group" aria-label="Sitio de muestra">%s</div>'
+    return ('<div class="wt" data-wt data-site="centro-ribera" data-base="%s" style="--bg:url(%sassets/img/ribera-sala.webp);--bgc:url(%sassets/img/ceramica-taller.webp);--bgcm:url(%sassets/img/ceramica-taller-m.webp)"><div class="wt-pick" role="group" aria-label="Sitio de muestra">%s</div>'
             '<div class="wt-stage"><div class="wt-desk"><div class="wt-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Sitio de muestra · contenido ficticio</span></div>%s</div><div class="wt-phone">%s</div><p class="wt-sec" data-wt-sec aria-hidden="true"></p></div>'
             '<div class="wt-bar"><p class="wt-cap" data-wt-cap>%s</p><div class="wt-act"><div data-mg-ctl><button type="button" class="mg-pp" data-mg-pp data-state="pause" aria-label="Pausar"></button></div>'
             '<button type="button" class="wt-link" data-wt-explore>Recorrerlo vos mismo</button><button type="button" class="wt-link at-back" data-wt-back>Volver al recorrido</button>'
             '<a class="wt-link wt-open" data-wt-open href="%scentro-ribera/index.html" target="_blank" rel="noopener">Abrir el sitio completo ↗</a></div></div>'
             '<p class="cap">Sitios de muestra con contenido ficticio y funcionando. Son una muestra del nivel de diseño que buscamos. Fotografías de ambientación ilustrativas, generadas con IA.</p></div>'
-            % (base, pick, vista("d", 1040, 650, "ribera-d.webp"), vista("m", 390, 780, "ribera-m.webp"), E(WT_SITES[0][4]), base))
+            % (base, rel, rel, rel, pick, vista("d", 1040, 650, "ribera-d.webp"), vista("m", 390, 780, "ribera-m.webp"), E(WT_SITES[0][4]), base))

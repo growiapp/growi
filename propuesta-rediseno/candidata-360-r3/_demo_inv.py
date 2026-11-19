@@ -4,7 +4,7 @@ import io, os, re, re
 OUT = os.path.dirname(os.path.abspath(__file__))
 L1 = os.path.normpath(os.path.join(OUT, "..", "..", "invitaciones", "index.html"))
 
-def build():
+def build(dest=OUT):
     s = io.open(L1, encoding="utf-8").read()
     def sec(i):
         a = s.index('id="%s"' % i); a = s.rfind("<section", 0, a); b = s.index("</section>", a) + len("</section>")
@@ -52,8 +52,8 @@ def build():
             '\n<script src="../vendor/enlaces.js"></script><script src="../vendor/invitaciones.js"></script>\n'
             '<script>(function(){function h(){try{parent.postMessage({growiDemo:"inv",v:document.documentElement.getAttribute("data-v"),h:Math.ceil(document.body.scrollHeight)},"*")}catch(e){}}'
             'window.addEventListener("load",h);window.addEventListener("resize",h);if(window.ResizeObserver)new ResizeObserver(h).observe(document.body);setTimeout(h,400)})()</script>\n</body></html>\n')
-    os.makedirs(os.path.join(OUT, "demos"), exist_ok=True)
-    io.open(os.path.join(OUT, "demos", "invitaciones.html"), "w", encoding="utf-8", newline="\n").write(html)
+    os.makedirs(os.path.join(dest, "demos"), exist_ok=True)
+    io.open(os.path.join(dest, "demos", "invitaciones.html"), "w", encoding="utf-8", newline="\n").write(html)
     return len(html)
 
 if __name__ == "__main__":

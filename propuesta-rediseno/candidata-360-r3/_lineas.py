@@ -27,7 +27,7 @@ def app():
             '<div id="demo" class="demo-wide">%s</div></div></section>\n'
             % (ph(pg, "GrowiApp"), btn(msg_demo, "app-hero-demo-whatsapp", "Solicitar una demo de 20 minutos"), P(15, True), P(49, True), app_sim(rel)))
     real = ('<section class="sec real" id="interfaz" aria-labelledby="h-real"><div class="w"><p class="eyebrow">La demo de GrowiApp</p><h2 id="h-real">Así se ve GrowiApp por dentro.</h2>'
-            '<div class="real-stage" style="--bg:url(img/cafeteria-sala.webp);--bg-m:url(img/cafeteria-sala-m.webp)">%s<p class="cap">Demo con datos de ejemplo. Fotografía de ambientación ilustrativa, generada con IA.</p></div></div></section>\n' % app_tour(rel, "cafeteria"))
+            '<div class="real-stage" style="--bg:url(%sassets/img/cafeteria-sala.webp);--bg-m:url(%sassets/img/cafeteria-sala-m.webp)">%s<p class="cap">Demo con datos de ejemplo. Fotografía de ambientación ilustrativa, generada con IA.</p></div></div></section>\n' % (rel, rel, app_tour(rel, "cafeteria")))
     items =[("Cada venta registrada al momento", "para saber cuánto ganaste, por producto y por hora"), ("Cierre de caja automático", "sin hacer cuentas al final del día: el número está solo"),
              ("Control de stock con alertas", "te avisa cuando un producto está por agotarse, antes de quedarte sin nada"), ("Agenda de turnos y reservas", "reemplazás el cuaderno por una agenda digital que nunca se pierde"),
              ("Ficha de clientes", "historial, preferencias y frecuencia de visita de cada cliente"), ("Reportes y todos los medios de pago", "efectivo, Mercado Pago y transferencias en un mismo registro, con reportes por día y producto")]

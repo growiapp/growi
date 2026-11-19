@@ -31,7 +31,7 @@ se edita el número en USD y se corre `node .github/scripts/actualizar-cambio.mj
 
 ## Deploy
 
-GitHub Pages en `growi.ar`. Cada push a `main` publica automáticamente.
+GitHub Pages en `growi.ar`. El workflow `static.yml` ensambla y valida `_site` desde una selección explícita de páginas R3 y L1; solo sube ese directorio. Un push a `main` no inicia una publicación. La ejecución manual del workflow, o el despacho que hace el workflow semanal de tipo de cambio después de una actualización efectiva, sí la inicia. No ejecutar el workflow para una candidata sin aprobación de publicación.
 
 ## Marca
 

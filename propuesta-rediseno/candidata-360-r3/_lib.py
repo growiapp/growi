@@ -1,12 +1,21 @@
 # Componentes compartidos de la candidata Growi 360° R3.
 # Precios: USD es la fuente de verdad (data-price). El texto ARS estático se calcula como el workflow del tipo de cambio.
-import os, html, json, re, io
+import os, html, json, re, io, math
 from urllib.parse import quote
 OUT = os.path.dirname(os.path.abspath(__file__))
 L1ROOT = os.path.normpath(os.path.join(OUT, "..", ".."))
 E = html.escape
 WA = "https://wa.me/5491170593877?text="
-FX = 1535
+def _fx_vigente():
+    """La cotización publicada vive únicamente en shared.fx.js de la raíz."""
+    path = os.path.join(L1ROOT, "shared.fx.js")
+    match = re.search(r"venta:\s*([\d.]+)", io.open(path, encoding="utf-8").read())
+    if not match or float(match.group(1)) <= 0 or not math.isfinite(float(match.group(1))):
+        raise ValueError("Cotización inválida en %s" % path)
+    return float(match.group(1))
+
+
+FX = _fx_vigente()
 CFG = {"release": False}          # release=True: indexable, con analítica, enlaces absolutos y recursos compartidos de la raíz
 
 L1_PIE = ("Growi se encuentra en etapa de lanzamiento y actualmente recibe consultas sobre sus servicios, sin aceptar contrataciones ni pagos. "
@@ -18,7 +27,8 @@ L1_PRECIOS = ("Planes y precios previstos: todavía no se aceptan contrataciones
 # ---------------------------------------------------------------- precios
 def ars(usd):
     v = usd * FX; paso = 1000 if v >= 100000 else 100
-    n = int(round(v / paso) * paso)
+    # Math.round de JavaScript para importes no negativos, incluidos los .5.
+    n = int(math.floor(v / paso + 0.5) * paso)
     return "$" + "{:,}".format(n).replace(",", ".")
 
 def P(usd, short=False, extra=""):
@@ -88,10 +98,10 @@ def faq_ld(pares):
     d = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pares]}
     return '<script type="application/ld+json">%s</script>\n' % json.dumps(d, ensure_ascii=False)
 
-def head(pg, titulo, desc, og="growi-og-1200x630.png", l1ld=None, faqs=None, cls=""):
+def head(pg, titulo, desc, og="growi-og-1200x630.png", l1ld=None, faqs=None, cls="", ld_override=None):
     rel = pg.rel; url = "https://growi.ar/" + pg.path
     robots = '<meta name="robots" content="index, follow">' if CFG["release"] else '<meta name="robots" content="noindex, nofollow">'
-    lds = "".join('<script type="application/ld+json">%s</script>\n' % b for b in _ld_l1(l1ld)) if l1ld is not None else ""
+    lds = "".join('<script type="application/ld+json">%s</script>\n' % b for b in (ld_override if ld_override is not None else _ld_l1(l1ld))) if l1ld is not None or ld_override is not None else ""
     lds += faq_ld(faqs)
     ogimg = "https://growi.ar/png/" + og
     pla = '<script defer data-domain="growi.ar" src="https://plausible.io/js/script.js"></script>\n' if CFG["release"] else ""

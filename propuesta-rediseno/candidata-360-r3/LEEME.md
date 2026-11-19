@@ -26,4 +26,7 @@ Necesita un servidor local (los marcos con las demos no cargan con doble clic en
 ## Regenerar
 
 - `python _construir.py` regenera todas las páginas y la demo de Invitaciones (Python 3, sin dependencias).
-- `python _construir.py --release CARPETA` genera la versión indexable (canonical, datos estructurados, analítica y enlaces absolutos) en otra carpeta, solo para verificarla. No publica nada.
+- `python -B _construir.py --release CARPETA_NUEVA` ensambla y valida un paquete público R3/L1 completo en una carpeta nueva. No reescribe la candidata ni publica nada. Falla si faltan recursos o si la carpeta ya contiene archivos.
+- `python -B _construir.py --validate CARPETA` vuelve a verificar un paquete existente. Serví **esa carpeta** con `python -B -m http.server` para la prueba de navegador.
+- El paquete incluye solo las diez páginas R3, demos y recursos necesarios, las páginas L1 complementarias y legales, recursos compartidos, sitemap, robots y CNAME. Excluye `revision/`, evidencias, generadores, prototipos, respaldos y ZIP. `.github/workflows/static.yml` está preparado para publicar únicamente `_site` mediante una ejecución manual futura.
+- La cotización fuente es `shared.fx.js` en la raíz del repositorio. `vendor/shared.fx.js` es una copia de vista previa local; no entra al paquete y el actualizador semanal la sincroniza junto con los HTML de la candidata actual.

@@ -1,12 +1,7 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Publicación manual del paquete R3/L1 validado. Un push o merge no publica.
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -31,13 +26,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # lastmod del sitemap se fundamenta en el historial real
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ensamblar y validar el sitio público
+        run: |
+          python -B propuesta-rediseno/candidata-360-r3/_construir.py --release _site
+          python -B propuesta-rediseno/candidata-360-r3/_construir.py --validate _site
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
