@@ -181,7 +181,7 @@
 
   /* acceso directo a la demo completa de GrowiApp (misma demo, pantalla propia) */
   $$("iframe.appdemo").forEach(function (f) {
-    var w = f.closest(".appwrap"); if (!w || !w.parentNode || w.previousElementSibling && w.previousElementSibling.classList.contains("app-open")) return;
+    var w = f.closest(".appwrap"); if (f.closest("[data-apptour]")) return; if (!w || !w.parentNode || w.previousElementSibling && w.previousElementSibling.classList.contains("app-open")) return;
     var p = document.createElement("p"); p.className = "app-open";
     p.innerHTML = '<a class="btn k sm" target="_blank" rel="noopener">Abrir la demo completa ↗</a>';
     p.firstChild.href = f.getAttribute("src"); w.parentNode.insertBefore(p, w);
@@ -193,6 +193,7 @@
     if (d.growiDemo === "app") {
       $$("iframe.appdemo").forEach(function (f) {
         if (f.contentWindow !== e.source) return;
+        f.__h = d.h; var at = f.closest("[data-apptour]"); if (at && !at.classList.contains("is-explore")) return; /* en el recorrido el marco es una ventana fija */
         /* alto controlado: nunca más alto que la pantalla, así queda margen para seguir desplazando la página */
         /* el marco toma el alto real de su contenido en todos los anchos: un solo scroll (el de la página), sin desplazamiento anidado */
         var h = d.h;

@@ -3,7 +3,8 @@
 #      python _construir.py --release DIR -> versión indexable (canonical, analítica, enlaces absolutos) en DIR, solo para verificar
 import os, sys, io
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import _lib
+import _lib, _demos, _r33
+_demos.flow_demo, _demos.combo_journey, _demos.web_showcase = _r33.flow_demo, _r33.combo_journey, _r33.web_showcase  # R3.3: las páginas importan estas demos de _demos
 from _home import home
 from _lineas import app, rubro, RUB
 from _lineas2 import web, flow, combo, invitaciones

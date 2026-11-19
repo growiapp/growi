@@ -6,7 +6,7 @@ FLOW_SC = {
  "turnos": dict(n="Avisar los turnos", tarea="Cada día mirás la agenda y avisás uno por uno a quien tiene turno mañana.",
                 disp=("Todos los días, 9:00", "Mañana hay 3 turnos en la agenda"),
                 pasos=["Lee la agenda de mañana", "Arma un aviso por cada turno", "Lo envía a cada cliente"],
-                res="msg", benef="Menos turnos perdidos por olvido, y vos atendiendo en lugar de escribir."),
+                res="msg", benef="Los avisos salen solos, sin escribirlos uno por uno."),
  "pedidos": dict(n="Ordenar las consultas", tarea="Te llegan consultas por todos lados y las anotás a mano en una planilla.",
                  disp=("Cuando alguien completa el formulario", "Julián pide turno para el sábado"),
                  pasos=["Agrega una fila a tu planilla", "Le pone estado «Nueva»", "Te avisa que hay algo para responder"],

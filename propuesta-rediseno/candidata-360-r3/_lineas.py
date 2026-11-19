@@ -1,6 +1,7 @@
 # Páginas de línea R3. Los precios (USD) y las condiciones comerciales son los vigentes; cambia la experiencia y se recorta la repetición.
 from _lib import *
 from _demos import *
+from _r33 import app_tour
 import re, io, json
 
 def l1_faq(path, idx):
@@ -23,10 +24,9 @@ def app():
             '<p class="sub">Registrás ventas, controlás el stock, llevás los turnos y cerrás la caja desde el celular. Lo armamos con los datos de tu negocio y te confirmamos una fecha estimada de entrega antes de empezar.</p>'
             '<div class="cta-row" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">%s<a class="btn o" href="#precios">Ver precios ↓</a></div>'
             '<ul class="proof"><li><span>Desde %s por mes + %s de puesta en marcha, una sola vez · precios previstos: hoy solo consultas</span></li><li><span>Garantía prevista de 7 días · Sin permanencia</span></li></ul></div>'
-            '<div id="demo"><div class="appwrap"><iframe class="appdemo" src="%sdemos/app.html" title="Demo interactiva de GrowiApp: elegí tu rubro y mirá el panel" height="760"></iframe></div>'
-            '<p class="cap">Demo interactiva de GrowiApp con datos ilustrativos. Elegí un rubro y los datos cambian.</p></div></div></section>\n'
-            % (ph(pg, "GrowiApp"), btn(msg_demo, "app-hero-demo-whatsapp", "Solicitar una demo de 20 minutos"), P(15, True), P(49, True), rel))
-    items = [("Cada venta registrada al momento", "para saber cuánto ganaste, por producto y por hora"), ("Cierre de caja automático", "sin hacer cuentas al final del día: el número está solo"),
+            '<div id="demo">%s<p class="cap">Demo de GrowiApp con datos ilustrativos.</p></div></div></section>\n'
+            % (ph(pg, "GrowiApp"), btn(msg_demo, "app-hero-demo-whatsapp", "Solicitar una demo de 20 minutos"), P(15, True), P(49, True), app_tour(rel, "cafeteria")))
+    items =[("Cada venta registrada al momento", "para saber cuánto ganaste, por producto y por hora"), ("Cierre de caja automático", "sin hacer cuentas al final del día: el número está solo"),
              ("Control de stock con alertas", "te avisa cuando un producto está por agotarse, antes de quedarte sin nada"), ("Agenda de turnos y reservas", "reemplazás el cuaderno por una agenda digital que nunca se pierde"),
              ("Ficha de clientes", "historial, preferencias y frecuencia de visita de cada cliente"), ("Reportes y todos los medios de pago", "efectivo, Mercado Pago y transferencias en un mismo registro, con reportes por día y producto")]
     inc = ('<section class="sec" id="incluye" aria-labelledby="h-inc"><div class="w"><p class="eyebrow">Qué incluye</p><h2 id="h-inc">Todo lo que necesitás. Nada que no uses.</h2><ul class="feat">%s</ul></div></section>\n'
@@ -107,8 +107,8 @@ def rubro(k):
     hero = ('<section class="ph" data-sticky-hide aria-labelledby="h1"><div class="w ph-g"><div>%s<h1 id="h1">%s</h1><p class="sub">%s</p>'
             '<div class="cta-row" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">%s<a class="btn o" href="#precio">Ver cuánto sale ↓</a></div>'
             '<ul class="proof"><li><span>Desde %s por mes + %s de puesta en marcha, una sola vez · precios previstos: hoy solo consultas</span></li><li><span>Garantía prevista de 7 días · Sin permanencia</span></li></ul></div>'
-            '<div id="demo"><div class="appwrap"><iframe class="appdemo" src="%sdemos/app.html?rubro=%s" title="Demo interactiva de GrowiApp con datos de un negocio de ejemplo" height="760"></iframe></div><p class="cap">%s</p></div></div></section>\n'
-            % (ph(pg, d["tit"].replace("GrowiApp para ", "").capitalize(), ("GrowiApp", "app/")), d["h1"], E(d["lead"]), btn(msg, "app-%s-hero-whatsapp" % k, d["cta"]), P(15, True), P(49, True), rel, d["demo"], nota_demo))
+            '<div id="demo">%s<p class="cap">%s</p></div></div></section>\n'
+            % (ph(pg, d["tit"].replace("GrowiApp para ", "").capitalize(), ("GrowiApp", "app/")), d["h1"], E(d["lead"]), btn(msg, "app-%s-hero-whatsapp" % k, d["cta"]), P(15, True), P(49, True), app_tour(rel, d["demo"]), nota_demo))
     pains = ('<section class="sec" id="te-suena" aria-labelledby="h-d"><div class="w"><p class="eyebrow">¿Te suena?</p><h2 id="h-d">%s</h2><ul class="feat">%s</ul></div></section>\n'
              % (E(d["intro"]), "".join("<li><div><b>%s</b><span>%s</span></div></li>" % (E(a), E(b)) for a, b in d["pains"])))
     feats = ('<section class="sec tint" id="que-hace" aria-labelledby="h-f"><div class="w"><p class="eyebrow">Lo que hace por tu %s</p><h2 id="h-f">De la libreta al control real, sin cambiar cómo atendés.</h2><ul class="ben">%s</ul></div></section>\n'

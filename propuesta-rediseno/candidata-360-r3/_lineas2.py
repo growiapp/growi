@@ -1,6 +1,7 @@
 # GrowiWeb, GrowiFlow, Combo e Invitaciones (R3).
 from _lib import *
 from _demos import *
+from _r33 import inv_gallery
 from _lineas import l1_faq, ph
 
 # ================================================================== GROWIWEB
@@ -123,7 +124,7 @@ def invitaciones():
             '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:26px">%s<a class="btn o" href="#perfiles">Ver cómo se personaliza ↓</a></div>'
             '<ul class="proof"><li><span>Con presupuesto y alcance por escrito, sin precio de lista · hoy solo consultas</span></li><li><span>Una página propia, online hasta 30 días después del evento</span></li></ul></div>'
             '<div id="demo">%s<p class="cap">Invitaciones de muestra con datos ficticios. Abrilas y recorrelas: cada una se cuenta de otra manera (capítulos, tarjetas o agenda por bloques).</p></div></div></section>\n'
-            % (pg.u(""), btn(msg, "inv-hero-whatsapp", "Pedir presupuesto"), inv_frame(rel, "exp", "Invitaciones de muestra: elegí un casamiento, un cumpleaños o un evento de empresa", 700)))
+            % (pg.u(""), btn(msg, "inv-hero-whatsapp", "Pedir presupuesto"), inv_gallery(rel, "Invitaciones de muestra: un casamiento, un cumpleaños y un evento de empresa", 700)))
     perf = ('<section class="sec invs" id="perfiles" aria-labelledby="h-pf"><div class="w"><p class="eyebrow">Personalización avanzada, a medida</p><h2 id="h-pf">Cuando tus invitados no viven el día de la misma manera.</h2>'
             '<p class="lead">Elegí un invitado y mirá cómo cambia la misma invitación: la agenda, los lugares y la información que recibe. Son perfiles ficticios. Se diseña a medida y se presupuesta según el evento: no todo es posible en todos los casos, lo evaluamos con vos.</p>%s</div></section>\n'
             % inv_frame(rel, "perf", "Una misma invitación vista por tres perfiles de invitados", 720))
