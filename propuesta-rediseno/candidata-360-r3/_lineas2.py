@@ -2,7 +2,7 @@
 from _lib import *
 from _demos import *
 from _r33 import inv_gallery
-from _r36 import scene_flow, scene_combo, ex_panel, hero36
+from _r36 import scene_flow, scene_combo, scene_inv, ex_panel, hero36
 from _lineas import l1_faq, ph
 
 
@@ -99,7 +99,7 @@ def flow():
                    ("Desde", money(190)), "Es un «desde»: precio de referencia, no cerrado. Te pasamos el precio final antes de empezar.", cta("Hola Growi, quiero consultar por una automatización a medida.", "flow-pricing-whatsapp", "Contanos qué querés automatizar"), "", 'id="a-medida"')
     t_bot = ticket("Bajo consulta", "Bot de WhatsApp", "Para las preguntas de siempre.", ["~Responde horarios, dirección y las preguntas frecuentes", "~Lo que no sabe, te lo pasa a vos"],
                    ("Puesta en marcha", '<strong class="t-num">%s <small>+ %s/mes</small></strong>' % (P(149), P(25, True))),
-                   "Se consulta y se evalúa caso por caso: depende de una aprobación de Meta y todavía no hay fecha de disponibilidad. Los mensajes los cobra Meta aparte, a cargo del cliente.", btn(BOTMSG, "flow-bot-whatsapp", "Consultar por un bot de WhatsApp", "wide"), "", 'id="bot"')
+                   "Precio de referencia, a confirmar al consultar. Se evalúa caso por caso: depende de una aprobación de Meta y todavía no hay fecha de disponibilidad. Los mensajes los cobra Meta aparte, a cargo del cliente.", btn(BOTMSG, "flow-bot-whatsapp", "Consultar por un bot de WhatsApp", "wide"), "", 'id="bot"')
     paq = ('<section class="sec tint" id="paquetes" aria-labelledby="h-pq"><div class="w"><p class="eyebrow">Paquetes</p><h2 id="h-pq">Elegí qué querés dejar de hacer a mano.</h2><p class="lead">Cada paquete es independiente y tiene precio cerrado: lo armamos, lo probamos con vos y te enseñamos a usarlo. Quien ya sea cliente de GrowiApp o GrowiWeb tendrá 10%% de descuento en cualquier paquete cuando se abra la contratación.</p>'
            '<div class="tk-tools">%s</div><div class="tickets">%s%s%s</div><div class="tickets two" style="margin-top:34px">%s%s</div>'
            '<p class="note" style="max-width:86ch;margin-top:34px">Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. Las automatizaciones a medida se confirman en un presupuesto por escrito antes de empezar. No incluye el costo de los mensajes de WhatsApp, que cobra Meta, ni el de la inteligencia artificial, donde aplique: se pagan aparte. Están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta). Un ajuste posterior, en cualquier paquete, sale __AJ__ por sesión.</p></div></section>\n'
@@ -146,13 +146,13 @@ def combo():
 def invitaciones():
     pg = Pg("invitaciones/"); rel = pg.rel
     msg = "Hola Growi, quiero consultar por una invitación digital para mi evento.\n\nTipo de evento:\nFecha:"
-    hero = ('<section class="ph invh" data-sticky-hide aria-labelledby="h1"><div class="w ph-g"><div><p class="crumb"><a href="%s">Growi</a> / <span>Invitaciones digitales</span></p><p class="eyebrow">Invitaciones digitales · para tus eventos</p>'
-            '<h1 id="h1">La invitación de tu evento, <mark class="sweep">diseñada a medida</mark>.</h1>'
-            '<p class="sub">Para casamientos, cumpleaños, quinceañeras y eventos de empresa. Se comparte con un enlace y tus invitados confirman por WhatsApp.</p>'
-            '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:26px">%s<a class="btn o" href="#perfiles">Ver cómo se personaliza ↓</a></div>'
-            '<ul class="proof"><li><span>Con presupuesto y alcance por escrito, sin precio de lista</span></li><li><span>Una página propia, online hasta 30 días después del evento</span></li></ul></div>'
-            '<div id="demo">%s<p class="cap">Invitaciones de muestra con datos ficticios. Ambientación ilustrativa.</p></div></div></section>\n'
-            % (pg.u(""), btn(msg, "inv-hero-whatsapp", "Pedir presupuesto"), inv_gallery(rel, "Invitaciones de muestra: un casamiento, un cumpleaños y un evento de empresa", 700)))
+    hero = hero36(pg, ph(pg, "Invitaciones digitales"), 'La invitación de tu evento, <mark class="sweep">diseñada a medida</mark>.',
+                  "Para casamientos, cumpleaños, quinceañeras y eventos de empresa. Se comparte con un enlace y tus invitados confirman por WhatsApp.",
+                  btn(msg, "inv-hero-whatsapp", "Pedir presupuesto") + '<a class="btn o" href="#probar">Probar las invitaciones ↓</a>',
+                  "Con presupuesto y alcance por escrito, sin precio de lista. Online hasta 30 días después del evento.", scene_inv(rel))
+    probar = ('<section class="sec" id="probar" aria-labelledby="h-pb"><div class="w"><p class="eyebrow">Probalas vos mismo</p><h2 id="h-pb">Tres invitaciones de muestra, para recorrer.</h2>'
+              '<p class="lead">Tocá un estilo y desplazá la invitación como la vería un invitado. Son datos de ejemplo.</p>%s</div></section>\n'
+              % inv_gallery(rel, "Invitaciones de muestra: un casamiento, un cumpleaños y un evento de empresa", 700))
     perf = ('<section class="sec invs" id="perfiles" aria-labelledby="h-pf"><div class="w"><p class="eyebrow">Personalización avanzada, a medida</p><h2 id="h-pf">Cuando tus invitados no viven el día de la misma manera.</h2>'
             '<p class="lead">Elegí un invitado y mirá cómo cambia la misma invitación. Son perfiles ficticios; se diseña y se presupuesta a medida, y lo evaluamos con vos.</p>%s</div></section>\n'
             % inv_frame(rel, "perf", "Una misma invitación vista por tres perfiles de invitados", 720))
@@ -169,5 +169,5 @@ def invitaciones():
     neg = ('<section class="sec tint" aria-labelledby="h-n"><div class="w"><div class="band"><div><h3 id="h-n">¿Necesitás también un sitio para tu negocio?</h3><p style="margin-top:8px;max-width:60ch">El mismo equipo arma landing pages y sitios institucionales, con precio fijo y publicados por nosotros.</p></div><a class="btn o" href="%s" data-track="inv-web-link">Ver GrowiWeb →</a></div></div></section>\n' % pg.u("web/"))
     cie = cierre("Contanos qué celebrás.", "Te respondemos con el presupuesto y el alcance, por WhatsApp, de lunes a sábado de 9 a 19 hs.", btn(msg, "inv-final-whatsapp", "Pedir presupuesto"))
     return (head(pg, "Invitaciones digitales para eventos | Growi", "Invitaciones digitales a medida para casamientos, cumpleaños, quinceañeras y eventos de empresa. Probá las demos y pedí presupuesto por WhatsApp.", "growi-og-1200x630.png", l1ld="invitaciones", faqs=faqp, cls="inv-page")
-            + header(pg, "inv") + subnav([("demo", "Las invitaciones"), ("perfiles", "Personalización"), ("alcance", "Qué recibís"), ("como", "Cómo se pide"), ("preguntas", "Preguntas")], "inv")
-            + '<main id="contenido">\n' + hero + perf + inc + como + pre + neg + cie + '</main>\n' + footer(pg, msg, "inv"))
+            + header(pg, "inv") + subnav([("demo", "Las invitaciones"), ("probar", "Probalas"), ("perfiles", "Personalización"), ("alcance", "Qué recibís"), ("como", "Cómo se pide"), ("preguntas", "Preguntas")], "inv")
+            + '<main id="contenido">\n' + hero + probar + perf + inc + como + pre + neg + cie + '</main>\n' + footer(pg, msg, "inv"))
