@@ -415,3 +415,36 @@ html:not(.mo) .ex-vp img{transform:translateY(calc(var(--y1)*-1))}
 }
 .iv-g.c .iv-cov::after{content:"27";position:absolute;right:-4cqw;bottom:-10cqw;font:800 74cqw/1 var(--syne);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:.8cqw rgba(224,184,98,.4);pointer-events:none}
 @container sc (max-width:340px){.iv-idx{gap:4px}.iv-idx li{padding:9px 8px}.iv-idx b{font-size:12.5px}}
+
+/* ---------- R3.7.1 Invitaciones: transiciones coherentes + dirección de arte del cumpleaños ---------- */
+/* el mundo que sale conserva su última pantalla (confirmación) mientras el siguiente se abre encima, en vez de volver a su portada */
+.sc.js .iv-g:not(.on) .iv-l2{transform:translateY(-218cqw)}
+.sc.js .iv-g:not(.on) .iv-l3{transform:translateY(-32cqw)}
+/* una sola leyenda a la vez: la que sale desaparece enseguida y la que entra espera */
+.iv-cp{visibility:hidden;transition:opacity .12s linear,transform .12s linear,visibility 0s .12s}
+.iv-cp.now{visibility:visible;transition:opacity .5s var(--ease) .25s,transform .6s var(--ease) .25s,visibility 0s .25s}
+/* cumpleaños: póster pop, número macizo con sombra dura, globos, sticker y cintas */
+.iv-g.b .iv-cov{background:#ff5a3c;justify-content:flex-start;padding-top:15cqw}
+.iv-g.b .iv-cov::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(38,17,11,.2) 0 .9cqw,transparent 1.05cqw) 0 0/4.6cqw 4.6cqw;-webkit-mask-image:linear-gradient(200deg,#000,transparent 58%);mask-image:linear-gradient(200deg,#000,transparent 58%);pointer-events:none}
+.iv-g.b .iv-cov>*{position:relative}
+.iv-g.b .num{display:flex;justify-content:center;margin-top:20cqw;font:900 66cqw/.8 var(--epi);letter-spacing:-.06em;color:#ffd166;-webkit-text-stroke:0;text-shadow:1.6cqw 1.6cqw 0 #c2185b,3.4cqw 3.4cqw 0 #26110b}
+.iv-g.b .num span:first-child{transform:rotate(-6deg)}.iv-g.b .num span:last-child{transform:rotate(7deg) translateY(2.5cqw)}
+.iv-g.b h4{margin-top:9cqw;font:900 12.5cqw/.92 var(--epi);letter-spacing:-.05em;color:#26110b}
+.iv-g.b .d{margin-top:3cqw}
+.iv-g.b .iv-cov>.bl{position:absolute;width:15cqw;height:18.5cqw;border-radius:50% 50% 48% 48%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.7) 0 8%,transparent 9%),var(--bc);box-shadow:inset -2cqw -2cqw 0 rgba(0,0,0,.14)}
+.iv-g.b .bl::after{content:"";position:absolute;left:50%;top:100%;width:.5cqw;height:34cqw;background:rgba(38,17,11,.55)}
+.iv-g.b .bl.l1{left:7cqw;top:30cqw;--bc:#ffd166}.iv-g.b .bl.l2{right:8cqw;top:22cqw;--bc:#2a9d8f}.iv-g.b .bl.l3{right:24cqw;top:41cqw;--bc:#fff}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-2.4cqw) rotate(2deg)}}
+.iv-g.b.on .bl.l1{animation:bob 3.4s ease-in-out infinite}.iv-g.b.on .bl.l2{animation:bob 4s ease-in-out -1s infinite}.iv-g.b.on .bl.l3{animation:bob 3.7s ease-in-out -2s infinite}
+.iv-g.b .st{position:absolute;right:3cqw;top:90cqw;padding:3cqw 4cqw;background:#fff;color:#26110b;border:.8cqw solid #26110b;border-radius:3cqw;box-shadow:1.2cqw 1.2cqw 0 #26110b;font:900 6.4cqw/1 var(--epi);letter-spacing:-.02em;transform:rotate(-9deg)}
+.iv-g.b .tk{position:absolute;left:-6cqw;right:-6cqw;overflow:hidden;white-space:nowrap;padding:2.8cqw 0;font:800 4.4cqw/1 var(--epi);letter-spacing:.04em;text-transform:uppercase}
+.iv-g.b .tk.t1{bottom:30cqw;transform:rotate(-5deg);background:#26110b;color:#ffd166}
+.iv-g.b .tk.t2{bottom:16cqw;transform:rotate(3deg);background:#ffd166;color:#26110b}
+.iv-g.b .iv-prog{position:relative;background:#ffefe0}
+.iv-g.b .iv-prog::before{content:"";position:absolute;left:0;right:0;top:-3cqw;height:3cqw;background:linear-gradient(135deg,#ffefe0 25%,transparent 0) 0 0/4cqw 4cqw,linear-gradient(225deg,#ffefe0 25%,transparent 0) 0 0/4cqw 4cqw}
+.iv-g.b .iv-prog .k{display:inline-block;padding:1.6cqw 3.2cqw;border-radius:99px;background:#26110b;color:#ffd166;letter-spacing:.14em;transform:rotate(-2deg)}
+.iv-g.b .iv-prog .pr li{border-bottom:.6cqw dashed rgba(38,17,11,.45);font-size:5.4cqw}
+.iv-g.b .iv-prog .pr b{color:#c2185b}
+.iv-g.b .iv-map{background:repeating-linear-gradient(0deg,rgba(38,17,11,.1) 0 1px,transparent 1px 9cqw),repeating-linear-gradient(90deg,rgba(38,17,11,.1) 0 1px,transparent 1px 9cqw),#ffd166;border:.8cqw solid #26110b}
+.iv-g.b .iv-rsvp .q{font-size:9.4cqw;font-weight:900;letter-spacing:-.04em;transform:rotate(-2deg)}
+.iv-g.b .iv-btn{background:#ffd166;color:#26110b;border:.8cqw solid #26110b;box-shadow:1.4cqw 1.4cqw 0 #26110b}

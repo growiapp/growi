@@ -107,7 +107,8 @@ def scene_inv(rel):
         '<p class="k">Nos casamos</p><div class="arch"><i class="sun"></i><i class="h1"></i><i class="h2"></i></div><h4>Lucía <em>&amp;</em> Tomás</h4><p class="d">Sábado 20 de marzo de 2027</p><p class="p">Capilla de ejemplo · 17:00</p>',
         "El día", [("17:00", "Ceremonia"), ("19:00", "Cóctel"), ("20:00", "Cena y baile")], "Capilla de ejemplo", "Confirmar asistencia")
     b = _iv_world("b", 3,
-        '<i class="cf c1"></i><i class="cf c2"></i><i class="cf c3"></i><i class="cf c4"></i><i class="cf c5"></i><p class="k">Estás invitado</p><div class="num">30</div><h4>Los 30 de Mica</h4><p class="d">Sábado 14 de agosto · 21:00</p><p class="p">Terraza de ejemplo</p>',
+        '<i class="ht"></i><i class="bl l1"></i><i class="bl l2"></i><i class="bl l3"></i><p class="k">Estás invitado</p><div class="num"><span>3</span><span>0</span></div><h4>Los 30 de Mica</h4><p class="d">Sábado 14 de agosto · 21:00</p><p class="p">Terraza de ejemplo</p><div class="st">¡Venite!</div>'
+        '<div class="tk t1" aria-hidden="true"><span>Los 30 de Mica · 14.08 · Los 30 de Mica · 14.08 · Los 30 de Mica · 14.08</span></div><div class="tk t2" aria-hidden="true"><span>14.08 · Los 30 de Mica · 14.08 · Los 30 de Mica · 14.08 · Los 30 de Mica</span></div>',
         "La noche", [("21:00", "Brindis"), ("22:00", "Cena"), ("00:00", "Torta y baile")], "Terraza de ejemplo", "Confirmar asistencia")
     c = _iv_world("c", 6,
         '<p class="k">Cena anual</p><h4>Fin de año<br>2027</h4><div class="ln"></div><p class="d">Jueves 9 de diciembre · 20:30</p><p class="p">Salón de ejemplo</p>',
@@ -128,18 +129,18 @@ def scene_hero(rel):
     ap = ('<div class="hr-ap" data-in="3"><p class="k">Caja del día</p><b class="big" data-num="147600|168600|ars|3">$147.600</b><div class="row"><span>Consulta inicial</span><b>+ $21.000</b></div></div>')
     cap = '<div class="hr-cap"><span class="rl" data-in="1">Te encuentran</span><span class="rl" data-in="2">Te consultan</span><span class="rl" data-in="3">Queda registrado</span></div>'
     return ('<div class="sc sc-hero" data-sc data-beats="3" data-ms="2800" data-hold="4200"><div class="sc-bg" style="background-image:url(%sassets/img/ribera-sala.webp)"></div>%s%s'
-            '<div class="sc-st"><div class="hr-ph"><img src="%sassets/img/ex-ribera-m.webp" width="375" height="6701" alt="Sitio de muestra de un consultorio recorrido en el celular." fetchpriority="high"></div>%s%s%s</div></div>'
+            '<div class="sc-st"><div class="hr-ph"><img src="%sassets/img/ex-ribera-m.webp" width="375" height="6606" alt="Sitio de muestra de un consultorio recorrido en el celular." fetchpriority="high"></div>%s%s%s</div></div>'
             % (rel, CHIP, PP, rel, wa, ap, cap))
 
 # ------------------------------------------------------------ GrowiWeb: exhibición de proyectos completos
 # y de cada capítulo en la captura de página completa (px de la captura) y alto total, para dirigir la cámara por secciones
 SITES = {
  "ribera": dict(n="Centro Ribera", s="Consultorio de kinesiología", bg="#0e2f3b", acc="#ff6a4d", photo="ribera-sala.webp", href="centro-ribera/index.html",
-                d=("ex-ribera-d.webp", 1085, 5676, [0, 992, 2947, 4700]), m=("ex-ribera-m.webp", 375, 6701, [0, 1320, 2699, 5448]),
+                d=("ex-ribera-d.webp", 1085, 5560, [0, 905, 2854, 4730]), m=("ex-ribera-m.webp", 375, 6606, [0, 1246, 2624, 5373]),
                 ch=[("Entrada", "Quien llega elige la zona que le molesta y pide turno."), ("Cómo trabajan", "Cuenta cómo es la consulta antes de pedirla."),
                     ("Servicios", "Lo que hacen, claro y a mano."), ("Cierre", "Invita a elegir un horario que le quede cómodo.")]),
  "barro": dict(n="Barro &amp; Fuego", s="Taller de cerámica", bg="#2b1c14", acc="#e58a5b", photo="ceramica-taller.webp", href="ceramica/index.html",
-               d=("ex-barro-d.webp", 1085, 2589, [0, 685, 1143, 1447]), m=("ex-barro-m.webp", 375, 3726, [0, 924, 1901, 2368]),
+               d=("ex-barro-d.webp", 1085, 2550, [0, 666, 1124, 1428]), m=("ex-barro-m.webp", 375, 3649, [0, 867, 1845, 2311]),
                ch=[("Entrada", "Una primera pieza, en cuatro clases."), ("Las clases", "Qué se hace en cada una."),
                    ("Qué incluye", "Todo lo que incluye, a la vista."), ("Preguntas", "Responde las dudas antes de consultar.")]),
 }
