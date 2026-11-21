@@ -17,7 +17,8 @@ def paginas():
     return out
 
 def construir(dest):
-    _demo_inv.build(dest)
+    if not _lib.CFG.get("release"):
+        _demo_inv.build(dest)   # experiencia histórica: solo en la copia local, nunca en el release
     n = 0
     for name, fn in paginas():
         p = os.path.join(dest, name); os.makedirs(os.path.dirname(p), exist_ok=True)

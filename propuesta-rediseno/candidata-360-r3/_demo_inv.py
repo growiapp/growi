@@ -9,7 +9,7 @@ def build(dest=OUT):
     def sec(i):
         a = s.index('id="%s"' % i); a = s.rfind("<section", 0, a); b = s.index("</section>", a) + len("</section>")
         return s[a:b]
-    demo, perf = sec("demo"), sec("personalizacion")
+    demo, perf = sec("demo"), ""  # R3.8: la personalización por perfiles de invitados ya no forma parte de la experiencia comercial
     m = re.search(r"<svg[^>]*>\s*<defs>.*?</defs>\s*</svg>", s, flags=re.S)
     sprite = m.group(0) if m else ""
     # R3.5: portada con más oficio (halo, anillos finos, dunas suaves y ramas de olivo en línea); sigue las variables de color de cada tipo de evento

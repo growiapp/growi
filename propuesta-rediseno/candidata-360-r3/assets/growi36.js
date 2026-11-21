@@ -85,3 +85,24 @@
     rows.forEach(function (r) { if (r) o.observe(r); });
   }
 })();
+
+/* R3.8 Invitaciones: explorador de capacidades (pestañas con teclado; sin autoavance) */
+(function () {
+  var w = document.querySelector("[data-ic]"); if (!w) return;
+  var tabs = [].slice.call(w.querySelectorAll('[role="tab"]')), pans = [].slice.call(w.querySelectorAll('[role="tabpanel"]')), desc = w.querySelector(".ic-desc");
+  w.classList.add("ic-js");
+  function sel(i, focus) {
+    tabs.forEach(function (t, j) { var on = j === i; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; pans[j].classList.toggle("on", on); });
+    if (desc) desc.textContent = tabs[i].getAttribute("data-d") || "";
+    if (focus) tabs[i].focus();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { sel(i); });
+    t.addEventListener("keydown", function (e) {
+      var k = e.key, d = (k === "ArrowDown" || k === "ArrowRight") ? 1 : (k === "ArrowUp" || k === "ArrowLeft") ? -1 : 0;
+      if (k === "Home") { e.preventDefault(); sel(0, true); } else if (k === "End") { e.preventDefault(); sel(tabs.length - 1, true); }
+      else if (d) { e.preventDefault(); sel((i + d + tabs.length) % tabs.length, true); }
+    });
+  });
+  var r = w.querySelector("button.ic-go"); if (r) r.addEventListener("click", function () { r.closest(".ic-p").classList.toggle("sent"); });
+})();

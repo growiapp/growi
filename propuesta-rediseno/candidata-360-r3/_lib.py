@@ -18,9 +18,9 @@ def _fx_vigente():
 FX = _fx_vigente()
 CFG = {"release": False}          # release=True: indexable, con analítica, enlaces absolutos y recursos compartidos de la raíz
 
-L1_PIE = ("Growi se encuentra en etapa de lanzamiento y actualmente recibe consultas sobre sus servicios, sin aceptar contrataciones ni pagos. "
-          "Los planes y precios publicados describen las propuestas previstas. Para conocer disponibilidad, alcance y condiciones, contactanos por WhatsApp o correo.")
-L1_PRECIOS = ("Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. Precios en USD; el valor en pesos es orientativo y se actualiza con el dólar oficial (venta). "
+L1_PIE = ("Precios en USD; el valor en pesos es orientativo y se actualiza con el dólar oficial (venta). "
+          "Cada proyecto se confirma con un presupuesto por escrito antes de empezar. Para consultar disponibilidad, alcance y condiciones, escribinos por WhatsApp o correo.")
+L1_PRECIOS = ("Precios en USD; el valor en pesos es orientativo y se actualiza con el dólar oficial (venta). "
               "Dominio, alojamiento y costos de terceros (comisiones de medios de pago, mensajes de WhatsApp) se cotizan aparte cuando correspondan. Lo «desde» y lo a medida se confirman en un presupuesto por escrito antes de empezar.")
 
 # ---------------------------------------------------------------- precios
@@ -89,7 +89,7 @@ def _ld_l1(l1path):
                 return x if x["@graph"] else None
             return x
         d = limpio(d)
-        if d: out.append(json.dumps(d, ensure_ascii=False))
+        if d: out.append(json.dumps(d, ensure_ascii=False).replace("Precio fijo, fecha estimada de entrega en el presupuesto, sin sorpresas", "Precio de referencia, y alcance, importe y fecha estimada de entrega confirmados por escrito antes de empezar"))  # F3.4: modelo comercial único
     return out
 
 def faq_ld(pares):
@@ -122,10 +122,10 @@ def header(pg, cur):
     en_neg = cur in [k for k, *_ in SOL]
     menu = ('<div class="nav-g"><button type="button" class="nav-btn%s" id="navNeg" aria-expanded="false" aria-controls="navNegPanel">Para tu negocio<i aria-hidden="true"></i></button>'
             '<div class="nav-panel" id="navNegPanel" hidden>%s</div></div>' % (" is-cur" if en_neg else "", prod))
-    inv = '<a class="nav-ev" href="%s"%s>Invitaciones<small>eventos</small></a>' % (pg.u("invitaciones/"), ' aria-current="page"' if cur == "inv" else "")
+    inv = '<a class="nav-ev" href="%s"%s>Invitaciones</a>' % (pg.u("invitaciones/"), ' aria-current="page"' if cur == "inv" else "")
     mob = ('<span class="mm-g">Para tu negocio</span>' + "".join('<a href="%s"%s><span>%s<small>%s</small></span><span aria-hidden="true">→</span></a>' % (pg.u(r), ' aria-current="page"' if cur == k else "", n, d) for k, n, r, d in SOL)
            + '<span class="mm-g">Para tus eventos</span><a href="%s"%s>Invitaciones digitales<span aria-hidden="true">→</span></a>' % (pg.u("invitaciones/"), ' aria-current="page"' if cur == "inv" else ""))
-    return ('<header class="top" id="mainNav"><div class="w"><a class="logo" href="%s" aria-label="Growi, inicio">Growi<i>.</i></a>'
+    return ('<header class="top" id="mainNav"><div class="w"><a class="logo" href="%s">Growi<i>.</i></a>'
             '<nav class="nav" aria-label="Principal">%s%s</nav>%s'
             '<button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú">Menú</button></div></header>\n'
             '<div class="mobile-menu" id="mobileMenu" aria-hidden="true"><div class="mobile-menu-card"><a href="%s">Inicio<span aria-hidden="true">→</span></a>%s%s</div></div>\n'
@@ -146,9 +146,9 @@ def otras(pg, excluir, rubro_msg=None):
 def footer(pg, sticky_msg, track):
     prod = "".join('<li><a href="%s">%s</a></li>' % (pg.u(r), n) for k, n, r, d in SOL)
     rub = "".join('<li><a href="%s">%s</a></li>' % (pg.u(r), n) for n, r, t in RUBROS)
-    pie = "" if CFG["release"] else '<p class="l1" style="margin-top:14px;border:0;padding:0" data-motion>© 2026 Growi · Candidata R3, solo local (no publicada).</p>'
+    pie = "" if CFG["release"] else '<p class="l1" style="margin-top:14px;border:0;padding:0" data-motion>© 2026 Growi · Candidata R3.8, solo local (no publicada).</p>'
     if CFG["release"]: pie = '<p class="l1" style="margin-top:14px;border:0;padding:0">© 2026 Growi</p>'
-    return ('<footer class="foot"><div class="w"><div class="cols"><div><a class="logo" href="%s" aria-label="Growi, inicio">Growi<i>.</i></a><p style="margin-top:14px;max-width:30ch">Crecé con tu negocio.</p></div>'
+    return ('<footer class="foot"><div class="w"><div class="cols"><div><a class="logo" href="%s">Growi<i>.</i></a><p style="margin-top:14px;max-width:30ch">Crecé con tu negocio.</p></div>'
             '<div><h2>Para tu negocio</h2><ul>%s</ul></div><div><h2>GrowiApp por rubro</h2><ul>%s</ul></div>'
             '<div><h2>Eventos y contacto</h2><ul><li><a href="%s">Invitaciones digitales</a></li><li><a href="%s%s" target="_blank" rel="noopener noreferrer" data-track="%s-footer-whatsapp">WhatsApp</a></li><li><a href="mailto:hola@growi.ar">hola@growi.ar</a></li>'
             '<li><a href="%s">Privacidad</a></li><li><a href="%s">Términos</a></li></ul></div></div>'
@@ -168,7 +168,6 @@ def ticket(codigo, titulo, sub, lineas, total_html, fine, cta, ribbon="", extra_
             '<p class="t-sub">%s</p><ul class="t-lines">%s</ul><div class="t-total"><span class="t-lbl">%s</span>%s</div><p class="t-fine">%s</p>%s</article>'
             % (extra_attr, rb, E(codigo), E(titulo), E(sub), ls, total_html[0], total_html[1], fine, cta))
 
-L1N = '<p class="l1n">Hoy solo recibimos consultas: todavía no se contrata ni se paga.</p>'
 
 def cur_toggle():
     return '<div class="cur" role="group" aria-label="Moneda"><button type="button" id="btnARS" class="active" aria-pressed="true">ARS</button><button type="button" id="btnUSD" aria-pressed="false">USD</button></div>'

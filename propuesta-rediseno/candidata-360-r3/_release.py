@@ -21,8 +21,12 @@ ROOT_DIRS = ("favicon", "fonts", "png", "web/demos")
 CANDIDATE_DIRS = ("assets", "demos", "vendor")
 SUFFIXES = {".html", ".css", ".js", ".json", ".xml", ".ico", ".png",
             ".jpg", ".jpeg", ".webp", ".avif", ".svg", ".woff2", ".mp4", ".txt"}
+# F3.1: demos retiradas del paquete publicable. Siguen en el repositorio (recuperables): para volver a publicarlas, quitarlas de esta lista y agregarlas a DEMOS.
+# demos/app.html: tablero genérico («Probalo según tu rubro») que ninguna página enlaza ya; las páginas de GrowiApp muestran las sandboxes de Cafetería y Peluquería.
+# F4.2.2: demos/invitaciones.html es la experiencia anterior de Invitaciones (iframe del L1); la línea vigente es invitaciones/index.html. Sigue en el repositorio local y se sigue generando fuera del release.
+RETIRADOS = ("demos/app.html", "demos/invitaciones.html")
 DEMOS = (
-    "demos/app.html", "demos/invitaciones.html", "demos/web/ceramica/index.html",
+    "demos/web/ceramica/index.html",
     "demos/web/centro-ribera/index.html", "demos/web/centro-ribera/servicios.html",
     "demos/web/centro-ribera/turnos.html", "web/demos/ceramica/index.html",
     "web/demos/kinesiologia/index.html",
@@ -52,6 +56,8 @@ def _copy_tree(base, rel, dest):
             continue  # Docs, fuentes de trabajo, ZIP y evidencias no son públicos.
         if path.as_posix() in ("demos/invitaciones.html", "vendor/shared.fx.js", "vendor/shared.js"):
             continue  # La demo se genera; el paquete usa shared.fx.js y shared.js de raíz.
+        if path.as_posix() in RETIRADOS:
+            continue  # F3.1: queda en el repositorio, pero no se publica (ver RETIRADOS).
         _copy_file(p, dest / path)
 
 
@@ -194,6 +200,8 @@ def validar(folder, paginas):
                 errors.append("Icono de manifest faltante: " + icon["src"])
     except (ValueError, KeyError) as exc:
         errors.append("Manifest inválido: %s" % exc)
+    if (dest / "demos/invitaciones.html").exists():
+        errors.append("La experiencia histórica de Invitaciones no debe estar en el paquete vigente")
     if (dest / "vendor/shared.fx.js").exists():
         errors.append("Copia de cotización innecesaria en el paquete")
     if errors:
@@ -215,11 +223,6 @@ def release(folder, paginas, construir, lib):
         _copy_tree(ROOT, route, dest)
     for route in CANDIDATE_DIRS:
         _copy_tree(HERE, route, dest)
-    # La demo de GrowiApp usa el FX y el comportamiento compartido publicados.
-    app_demo = dest / "demos/app.html"
-    app_demo.write_text(app_demo.read_text(encoding="utf-8")
-                        .replace("../vendor/shared.fx.js", "../shared.fx.js")
-                        .replace("../vendor/shared.js", "../shared.js"), encoding="utf-8")
     (dest / ".nojekyll").write_text("", encoding="utf-8")
     lib.CFG["release"] = True
     construir(dest)

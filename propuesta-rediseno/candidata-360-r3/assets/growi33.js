@@ -95,8 +95,8 @@
     var restart = function () { done = false; paused = false; go(0); ui(); tick(); };
     var setMode = function (m) {
       mode = m; w.classList.toggle("is-explore", m === "explore");
-      if (m === "explore") { clearTimeout(timer); hideSel(false); f.setAttribute("scrolling", "no"); if (f.__h) f.style.height = f.__h + "px"; }
-      else { f.style.height = ""; hideSel(true); restart(); }
+      if (m === "explore") { clearTimeout(timer); hideSel(false); f.setAttribute("scrolling", "no"); if (f.__h) f.style.height = f.__h + "px"; f.tabIndex = 0; f.focus({ preventScroll: true }); }
+      else { f.tabIndex = -1; f.style.height = ""; hideSel(true); restart(); if (explore) explore.focus({ preventScroll: true }); }
     };
     f.addEventListener("load", function () { ready = true; w.classList.add("ready"); hideSel(mode === "tour"); if (reduce) go(0); else if (started || vis) { started = true; restart(); } });
     try { if (f.contentDocument && f.contentDocument.readyState === "complete" && f.contentWindow.location.href !== "about:blank") { ready = true; w.classList.add("ready"); hideSel(true); } } catch (e) {}

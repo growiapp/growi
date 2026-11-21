@@ -180,10 +180,10 @@
     }
     setOpen(false);
 
-    open.addEventListener('click', function () {
+    open.addEventListener('click', function (ev) {
       setOpen(true);
       var heading = inv.querySelector('[data-inv-first]');
-      if (heading) { heading.setAttribute('tabindex', '-1'); setTimeout(function () { heading.focus({ preventScroll: true }); }, 700); }
+      if (heading && ev.isTrusted) { heading.setAttribute('tabindex', '-1'); setTimeout(function () { heading.focus({ preventScroll: true }); }, 700); }
     });
 
     // El botón de confirmación se crea con cada experiencia: se delega el clic. Muestra u oculta la vista previa del mensaje.

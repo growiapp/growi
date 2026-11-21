@@ -76,7 +76,8 @@
   // Las páginas con lógica extra (planes de /app) escuchan el evento 'growi:currency'.
   function applyCurrency(c) {
     c = c === 'USD' ? 'USD' : 'ARS';
-    store.set('growi_currency', c);
+    // solo las páginas con selector o precios guardan la preferencia; el resto (p. ej. Invitaciones) no escribe nada
+    if (document.getElementById('btnARS') || document.querySelector('[data-price]')) store.set('growi_currency', c);
     document.documentElement.dataset.currency = c;
     document.querySelectorAll('[data-price]').forEach(el => {
       el.textContent = formatPrice(Number(el.dataset.price), c, el.hasAttribute('data-price-short'));

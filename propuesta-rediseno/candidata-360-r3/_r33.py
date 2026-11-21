@@ -97,7 +97,7 @@ def app_sim(rel="", compact=False):
     alt = "".join("<li>%s</li>" % E(c) for c in AP_CAPS)
     src = "%sdemos/app.html?rubro=cafeteria" % rel
     return ('<div class="mg lt ah%s" data-mg data-ah data-beats="4" data-ms="3000"><div class="mg-top"><span class="mg-tag">Simulación · datos de ejemplo</span><span class="cj3-biz">Demo de GrowiApp · negocio de ejemplo: <b>Café Central</b></span></div>'
-            '<div class="ah-stage"><div class="ah-win"><div class="wt-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Demo de GrowiApp · datos de ejemplo</span></div><div class="ah-fr" data-ah-fr><iframe src="%s" title="Demo de GrowiApp con datos de ejemplo" tabindex="-1"></iframe></div></div>'
+            '<div class="ah-stage"><div class="ah-win"><div class="wt-chrome" aria-hidden="true"><i></i><i></i><i></i><span>GrowiApp</span></div><div class="ah-fr" data-ah-fr><iframe src="%s" title="Demo de GrowiApp con datos de ejemplo" tabindex="-1"></iframe></div></div>'
             '<div class="ah-led">%s</div></div>'
             '<div class="mg-bar"><div class="mg-caps" aria-live="off">%s</div>%s<span class="mg-prog" aria-hidden="true"><i data-mg-bar></i></span></div>'
             '<p class="ap-note">Los números que cambian son una simulación con datos de ejemplo. Esta demo no registra ventas ni calcula caja o stock; cómo se conectan se define al armar el sistema.</p><ol class="mg-steps">%s</ol></div>'
@@ -138,7 +138,7 @@ def web_showcase(rel):
     def vista(cls, w, h, poster):
         return ('<div class="wt-view %s" data-w="%d" data-h="%d"><img class="poster" src="%sassets/img/%s" alt="" width="%d" height="%d"><iframe title="Sitio de muestra de Growi: contenido ficticio" data-src="%scentro-ribera/index.html" tabindex="-1"></iframe></div>' % (cls, w, h, rel, poster, w, h, base))
     return ('<div class="wt" data-wt data-site="centro-ribera" data-base="%s" style="--bg:url(%sassets/img/ribera-sala.webp);--bgc:url(%sassets/img/ceramica-taller.webp);--bgcm:url(%sassets/img/ceramica-taller-m.webp)"><div class="wt-pick" role="group" aria-label="Sitio de muestra">%s</div>'
-            '<div class="wt-stage"><div class="wt-desk"><div class="wt-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Sitio de muestra · contenido ficticio</span></div>%s</div><div class="wt-phone">%s</div><p class="wt-sec" data-wt-sec aria-hidden="true"></p></div>'
+            '<div class="wt-stage"><div class="wt-desk"><div class="wt-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Sitio de muestra</span></div>%s</div><div class="wt-phone">%s</div><p class="wt-sec" data-wt-sec aria-hidden="true"></p></div>'
             '<div class="wt-bar"><p class="wt-cap" data-wt-cap>%s</p><div class="wt-act"><div data-mg-ctl><button type="button" class="mg-pp" data-mg-pp data-state="pause" aria-label="Pausar"></button></div>'
             '<button type="button" class="wt-link" data-wt-explore>Recorrerlo vos mismo</button><button type="button" class="wt-link at-back" data-wt-back>Volver al recorrido</button>'
             '<a class="wt-link wt-open" data-wt-open href="%scentro-ribera/index.html" target="_blank" rel="noopener">Abrir el sitio completo ↗</a></div></div>'
