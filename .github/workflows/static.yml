@@ -1,8 +1,19 @@
-# Publicación manual del paquete R3/L1 validado. Un push o merge no publica.
+# Publicación manual. Un push o merge no publica.
+#   fuente = release         → paquete R3/L1 validado, armado desde la rama que se despacha (siempre main: el entorno github-pages solo admite main).
+#   fuente = respaldo-pre-r3 → RECUPERACIÓN: el sitio que estaba publicado antes de R3, desde un commit fijo y verificado contra
+#                              .github/recuperacion/pre-r3.sha256. No revierte nada en el repositorio y no restaura workflows viejos.
 name: Deploy static content to Pages
 
 on:
   workflow_dispatch:
+    inputs:
+      fuente:
+        description: "release = sitio R3 actual · respaldo-pre-r3 = recuperación (sitio publicado antes de R3)"
+        type: choice
+        options:
+          - release
+          - respaldo-pre-r3
+        default: release
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -29,12 +40,19 @@ jobs:
         with:
           fetch-depth: 0 # lastmod del sitemap se fundamenta en el historial real
       - uses: actions/setup-python@v5
+        if: inputs.fuente != 'respaldo-pre-r3'
         with:
           python-version: '3.12'
       - name: Ensamblar y validar el sitio público
+        if: inputs.fuente != 'respaldo-pre-r3'
         run: |
           python -B propuesta-rediseno/candidata-360-r3/_construir.py --release _site
           python -B propuesta-rediseno/candidata-360-r3/_construir.py --validate _site
+      - name: Ensamblar el paquete de recuperación (sitio anterior a R3)
+        if: inputs.fuente == 'respaldo-pre-r3'
+        run: bash .github/scripts/empaquetar-respaldo.sh 7a2130cdb8bab5df1aa9a0a24cd1b2bf90443600 _site
+      - name: Resumen
+        run: echo "Fuente publicada ${{ inputs.fuente || 'release' }} desde $GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

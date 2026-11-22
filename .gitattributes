@@ -1,2 +1,8 @@
-# Los textos OFL oficiales se conservan literalmente, incluidos sus espacios finales (línea 21): no se reportan en `git diff --check`.
-OFL-*.txt whitespace=-trailing-space
+# Política de finales de línea (solo para lo que debe ser idéntico byte a byte o lo consume herramienta Linux; el resto sigue la configuración de cada equipo).
+# Textos de licencia OFL: se conservan literalmente (LF y espacio final de la línea 21), también en un checkout de Windows con autocrlf.
+OFL-*.txt text eol=lf whitespace=-trailing-space
+# Scripts y manifiestos que ejecuta GitHub Actions en Linux: un CR final rompe `bash` y `sha256sum -c`.
+*.sh text eol=lf
+.github/recuperacion/*.sha256 text eol=lf
+# Fuentes binarias: nunca se convierten.
+*.woff2 binary
