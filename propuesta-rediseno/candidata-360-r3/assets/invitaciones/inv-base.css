@@ -33,3 +33,5 @@
   .ix-tz-cum,.ix-tz-emp{aspect-ratio:auto;min-height:220px;padding:18px}
   .ix-tz-30{font-size:5.6rem}.ix-tz-t{font-size:1.35rem}.ix-tz-n2 b{font-size:3.2rem}.ix-tz-t2{font-size:1.15rem}
 }
+/* por debajo de 360 px no entran dos tarjetas lado a lado sin recortar su contenido (mínimo 133 + 172 px + separación): pasan a una sola columna */
+@media (max-width:359px){.ix-tz{grid-template-columns:minmax(0,1fr)}.ix-tz-cas{grid-column:auto;min-height:260px}.ix-tz-cum,.ix-tz-emp{min-height:200px}}

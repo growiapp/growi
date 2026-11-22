@@ -286,3 +286,11 @@ test('Invitaciones F4.2.3: la píldora de la portada de cumpleaños dice «Hasta
   assert.equal(h.includes('Traé ganas'), false);
   assert.equal(/\.ix-csk\{[^}]*text-transform/.test(leer('assets/invitaciones/inv.css')), false);   // capitalización inicial, sin versales
 });
+
+test('F6.1: el Home (teaser de Invitaciones) pasa a una columna por debajo de 360 px para no desbordar a 320 px', () => {
+  const base = leer('assets/invitaciones/inv-base.css');
+  assert.ok(base.includes('@media (max-width:359px){.ix-tz{grid-template-columns:minmax(0,1fr)}.ix-tz-cas{grid-column:auto;'));
+  // la grilla de dos columnas del teaser sigue por encima de 360 px y no se oculta nada con overflow global
+  assert.ok(/@media \(max-width:860px\)\{[^}]*\.ix-tz\{grid-template-columns:1fr 1fr/.test(base));
+  assert.equal(/overflow-x:\s*hidden/.test(base), false);
+});
