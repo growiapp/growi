@@ -1,0 +1,2 @@
+# Los textos OFL oficiales se conservan literalmente, incluidos sus espacios finales (línea 21): no se reportan en `git diff --check`.
+OFL-*.txt whitespace=-trailing-space
