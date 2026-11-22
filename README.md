@@ -31,7 +31,7 @@ se edita el número en USD y se corre `node .github/scripts/actualizar-cambio.mj
 
 ## Deploy
 
-GitHub Pages en `growi.ar`. Cada push a `main` publica automáticamente.
+GitHub Pages en `growi.ar`. El workflow `static.yml` ensambla y valida `_site` desde una selección explícita de páginas R3 y L1; solo sube ese directorio. Un push a `main` no inicia una publicación. La primera publicación de R3 requiere ejecutar `static.yml` manualmente con aprobación del propietario. Tras comprobar esa publicación, habilitar la variable de repositorio `GROWI_AUTO_FX_DEPLOY=true` para que el workflow semanal despache `static.yml` cuando guarde una nueva cotización. Sin esa variable, los precios se actualizan en `main` pero no en Pages; el workflow deja un aviso. No ejecutar el workflow para una candidata sin aprobación de publicación.
 
 ## Marca
 

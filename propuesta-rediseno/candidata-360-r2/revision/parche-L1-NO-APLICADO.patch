@@ -1,0 +1,169 @@
+diff --git a/app/cafeterias/index.html b/app/cafeterias/index.html
+index d73f407..30c8e27 100644
+--- a/app/cafeterias/index.html
++++ b/app/cafeterias/index.html
+@@ -200,14 +200,7 @@
+ <section class="section section-dark">
+   <div class="container">
+     <div class="testimonial-block">
+-      <span class="eyebrow">Caso real</span>
+-      <img class="case-logo" src="/png/colocafe-logo.png" width="88" height="88" alt="Logo de Colo Café" loading="lazy" decoding="async">
+-      <p class="testimonial-title reveal">Colo Café</p>
+-      <p class="case-desc reveal">Sistema de gestión armado para su cafetería: caja, comandas, stock y gastos.</p>
+-      <blockquote class="testimonial-quote reveal">
+-        «Necesitábamos ordenar ventas, reservas y caja sin depender de planillas. Growi nos ayudó a tener una operación más clara y fácil de seguir.»
+-      </blockquote>
+-      <p class="testimonial-attr">Rodrigo — Dueño de Colo Café</p>
++      <!-- caso Colo Café retirado hasta contar con autorización escrita -->
+     </div>
+   </div>
+ </section>
+diff --git a/app/index.html b/app/index.html
+index db8e849..941deb3 100644
+--- a/app/index.html
++++ b/app/index.html
+@@ -893,7 +893,7 @@
+   <div class="container">
+     <div class="trust-block reveal">
+       <h2>Tus datos ya están en GrowiApp. Que te lleguen solos.</h2>
+-      <p>Con los Reportes automáticos de GrowiFlow recibís por WhatsApp o mail un resumen de tus ventas y turnos, con lo importante ya marcado: qué se vendió más, qué bajó y qué conviene mirar. Como tus datos ya están cargados en GrowiApp, se activa directo, sin planillas ni pasos extra. Sale <span data-price="89">$137.000 ARS</span>, pago único y sin mensualidad, y por ser cliente de GrowiApp tenés 10% de descuento.</p>
++      <p>Con los Reportes automáticos de GrowiFlow recibís por mail (o por WhatsApp, si tu cuenta lo permite) un resumen de tus ventas y turnos, con lo importante ya marcado: qué se vendió más, qué bajó y qué conviene mirar. Como tus datos ya están cargados en GrowiApp, lo armamos a partir de ellos, sin planillas ni pasos extra. Sale <span data-price="89">$137.000 ARS</span>, pago único y sin mensualidad, y por ser cliente de GrowiApp tenés 10% de descuento.</p>
+       <a href="/flow/#reportes" class="btn btn-primary">Ver Reportes automáticos</a>
+       <p style="margin:18px auto 0;font-size:14px"><a href="/flow/" class="text-link">Ver todo GrowiFlow: recordatorios, pedidos en orden y más</a></p>
+     </div>
+diff --git a/flow/index.html b/flow/index.html
+index 5d44db0..4812bc9 100644
+--- a/flow/index.html
++++ b/flow/index.html
+@@ -10,7 +10,7 @@
+ <meta property="og:type" content="website">
+ <meta property="og:locale" content="es_AR">
+ <meta property="og:site_name" content="Growi">
+-<meta property="og:title" content="GrowiFlow | Lo que hacés a mano todos los días, que se haga solo">
++<meta property="og:title" content="GrowiFlow | Las tareas que repetís todos los días, armadas a medida">
+ <meta property="og:description" content="Recordatorios, reportes y pedidos en orden, sin que tengas que acordarte. Se contrata solo, con precio cerrado.">
+ <meta property="og:url" content="https://growi.ar/flow/">
+ <meta property="og:image" content="https://growi.ar/png/og-flow.png">
+@@ -20,7 +20,7 @@
+ <meta property="og:image:height" content="630">
+ <meta property="og:image:alt" content="Growi: automatizaciones para tu negocio">
+ <meta name="twitter:card" content="summary_large_image">
+-<meta name="twitter:title" content="GrowiFlow | Lo que hacés a mano todos los días, que se haga solo">
++<meta name="twitter:title" content="GrowiFlow | Las tareas que repetís todos los días, armadas a medida">
+ <meta name="twitter:description" content="Recordatorios, reportes y pedidos en orden, sin que tengas que acordarte. Se contrata solo, con precio cerrado.">
+ <meta name="twitter:image" content="https://growi.ar/png/og-flow.png">
+ <meta name="theme-color" content="#0C0C0C">
+@@ -84,7 +84,7 @@
+         "name": "Pedidos y consultas en orden",
+         "priceCurrency": "USD",
+         "price": "79",
+-        "description": "Lo que llega por WhatsApp, Instagram o un formulario se anota solo en una planilla, con aviso al entrar algo nuevo. Pago único de USD 79, sin mensualidad, con 7 días de ajustes sin cargo.",
++        "description": "Los pedidos y consultas de tu formulario quedan anotados en una planilla, con aviso por mail. Lo de WhatsApp e Instagram se define según tu cuenta. Pago único de USD 79, sin mensualidad, con 7 días de ajustes sin cargo.",
+         "priceSpecification": {
+           "@type": "PriceSpecification",
+           "price": "79",
+@@ -178,7 +178,7 @@
+       "name": "¿Necesito tener GrowiApp para contratar Reportes?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+-        "text": "Si ya usás GrowiApp: Tus ventas y turnos ya están cargados, así que se activa directo. Si no usás GrowiApp: Funciona solo si ya llevás tus ventas o turnos en una planilla. Sin eso no tenemos de dónde sacar los datos, y preferimos decírtelo antes que venderte algo que no va a andar. Si hoy anotás todo en un cuaderno, primero conviene ordenar eso, y te podemos ayudar."
++        "text": "Si ya usás GrowiApp: Tus ventas y turnos ya están cargados, así que los armamos a partir de ellos. Si no usás GrowiApp: Funciona solo si ya llevás tus ventas o turnos en una planilla. Sin eso no tenemos de dónde sacar los datos, y preferimos decírtelo antes que venderte algo que no va a andar. Si hoy anotás todo en un cuaderno, primero conviene ordenar eso, y te podemos ayudar."
+       }
+     },
+     {
+@@ -283,8 +283,8 @@
+ <!-- Hero -->
+ <section class="hero-landing" data-sticky-hide>
+   <div class="container">
+-    <h1 class="h1-stack"><span class="eyebrow">Automatizaciones para tu negocio</span> <span class="section-title">Lo que hacés a mano todos los días, <span class="accent">que se haga solo</span>.</span></h1>
+-    <p class="section-lead hero-lead">El aviso del turno le llega solo a tu cliente, sin que nadie se acuerde de mandarlo. Lo mismo con el resumen de ventas y con los pedidos que entran por WhatsApp. Lo armamos nosotros y lo dejamos andando. No hace falta tener GrowiApp ni GrowiWeb.</p>
++    <h1 class="h1-stack"><span class="eyebrow">Automatizaciones para tu negocio</span> <span class="section-title">Lo que hacés a mano todos los días, <span class="accent">armadas a medida</span>.</span></h1>
++    <p class="section-lead hero-lead">El aviso del turno le sale solo a tu cliente, sin que nadie se acuerde de mandarlo. Lo mismo con el resumen de ventas y con los pedidos que entran por tu formulario. Lo armamos a medida de tu negocio y lo probamos con vos antes de dejarlo andando. No hace falta tener GrowiApp ni GrowiWeb.</p>
+     <div class="hero-actions">
+       <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiFlow.%0A%0AQu%C3%A9+tarea+quiero+dejar+de+hacer+a+mano%3A" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer" data-track="flow-hero-whatsapp">Hablar por WhatsApp</a>
+     </div>
+@@ -368,10 +368,10 @@
+         <p class="plan-alt">Lo pagás una vez y queda tuyo, andando. Lo armamos a medida de tu negocio: te decimos el plazo al confirmar.</p>
+         <div class="plan-divider"></div>
+         <ul class="plan-features">
+-          <li class="plan-feat"><span class="pfd"></span><span>No perdés un turno por olvido: el aviso le llega solo al cliente</span></li>
++          <li class="plan-feat"><span class="pfd"></span><span>Menos turnos perdidos por olvido: el aviso le sale solo al cliente</span></li>
+           <li class="plan-feat"><span class="pfd"></span><span>También para vencimientos y pagos pendientes</span></li>
+-          <li class="plan-feat"><span class="pfd"></span><span>Sale por WhatsApp o por mail, sin que nadie tenga que acordarse</span></li>
+-          <li class="plan-feat"><span class="pfd"></span><span>Toma los datos de la planilla o el calendario que ya usás</span></li>
++          <li class="plan-feat"><span class="pfd"></span><span>Sale por mail o, con una cuenta habilitada por Meta, por WhatsApp</span></li>
++          <li class="plan-feat"><span class="pfd"></span><span>Toma los datos de la planilla que ya usás (el calendario, según el caso)</span></li>
+           <li class="plan-feat"><span class="pfd"></span><span>7 días de ajustes sin cargo desde la entrega si algo no quedó como esperabas</span></li>
+           <li class="plan-feat"><span class="pfd"></span><span>¿Necesitás un ajuste más adelante? Una sesión sale <span data-price="29">$44.500 ARS</span></span></li>
+         </ul>
+@@ -385,10 +385,10 @@
+         <p class="plan-alt">Lo pagás una vez y queda tuyo, andando.</p>
+         <div class="plan-divider"></div>
+         <ul class="plan-features">
+-          <li class="plan-feat"><span class="pfd"></span><span>Ningún pedido se te pierde en el chat</span></li>
+-          <li class="plan-feat"><span class="pfd"></span><span>Lo que entra por WhatsApp, Instagram o un formulario se anota solo en una planilla</span></li>
+-          <li class="plan-feat"><span class="pfd"></span><span>Te avisa apenas entra algo nuevo</span></li>
+-          <li class="plan-feat"><span class="pfd"></span><span>Ves de un vistazo qué contestaste y qué falta</span></li>
++          <li class="plan-feat"><span class="pfd"></span><span>Tus pedidos y consultas quedan anotados en una planilla</span></li>
++          <li class="plan-feat"><span class="pfd"></span><span>Lo que entra por tu formulario se anota solo en una planilla. WhatsApp e Instagram: lo vemos según tu cuenta</span></li>
++          <li class="plan-feat"><span class="pfd"></span><span>Te avisa por mail apenas entra algo nuevo</span></li>
++          <li class="plan-feat"><span class="pfd"></span><span>Marcás en la planilla qué contestaste y ves de un vistazo qué falta</span></li>
+           <li class="plan-feat"><span class="pfd"></span><span>7 días de ajustes sin cargo desde la entrega si algo no quedó como esperabas</span></li>
+           <li class="plan-feat"><span class="pfd"></span><span>¿Necesitás un ajuste más adelante? Una sesión sale <span data-price="29">$44.500 ARS</span></span></li>
+         </ul>
+@@ -450,7 +450,7 @@
+       </div>
+       <div class="card step-card reveal">
+         <div class="step-num">Paso 03</div>
+-        <h3 class="step-title">Queda andando solo</h3>
++        <h3 class="step-title">Queda funcionando</h3>
+         <p class="step-desc">Y si algo falla o querés cambiarlo, hablás por WhatsApp con el mismo equipo que lo armó.</p>
+       </div>
+     </div>
+@@ -487,7 +487,7 @@
+   <div class="container">
+     <div class="trust-block reveal">
+       <h2>Se contrata solo. Y se lleva bien con lo demás.</h2>
+-      <p>No necesitás GrowiApp ni GrowiWeb para usar GrowiFlow. Pero si ya tenés GrowiApp, los reportes se activan directo con los datos que ya cargaste. Y si ya sos cliente de cualquiera de los dos, cualquier paquete te sale 10% menos.</p>
++      <p>No necesitás GrowiApp ni GrowiWeb para usar GrowiFlow. Pero si ya tenés GrowiApp, armamos los reportes con los datos que ya cargaste. Y si ya sos cliente de cualquiera de los dos, cualquier paquete te sale 10% menos.</p>
+       <div class="rubro-links" style="margin-top:0">
+         <a href="/app/">Ver GrowiApp, el sistema de gestión</a>
+         <a href="/web/">Ver GrowiWeb, los sitios web</a>
+@@ -511,7 +511,7 @@
+       </details>
+       <details id="faq-reportes">
+         <summary>¿Necesito tener GrowiApp para contratar Reportes?<i class="faq-icon" aria-hidden="true">+</i></summary>
+-        <div class="faq-body"><strong>Si ya usás GrowiApp:</strong> Tus ventas y turnos ya están cargados, así que se activa directo. <br><br><strong>Si no usás GrowiApp:</strong> Funciona solo si ya llevás tus ventas o turnos en una planilla. Sin eso no tenemos de dónde sacar los datos, y preferimos decírtelo antes que venderte algo que no va a andar. Si hoy anotás todo en un cuaderno, primero conviene ordenar eso, y te podemos ayudar.</div>
++        <div class="faq-body"><strong>Si ya usás GrowiApp:</strong> Tus ventas y turnos ya están cargados, así que los armamos a partir de ellos. <br><br><strong>Si no usás GrowiApp:</strong> Funciona solo si ya llevás tus ventas o turnos en una planilla. Sin eso no tenemos de dónde sacar los datos, y preferimos decírtelo antes que venderte algo que no va a andar. Si hoy anotás todo en un cuaderno, primero conviene ordenar eso, y te podemos ayudar.</div>
+       </details>
+       <details>
+         <summary>¿Necesito saber algo técnico para que funcione la IA de los reportes?<i class="faq-icon" aria-hidden="true">+</i></summary>
+diff --git a/index.html b/index.html
+index 5ebab71..f9ae711 100644
+--- a/index.html
++++ b/index.html
+@@ -334,7 +334,7 @@
+         <div class="product-tag">Automatizaciones</div>
+         <h3>GrowiFlow: que lo repetitivo se haga solo</h3>
+         <div class="product-price">Reportes o recordatorios por <span data-price="89">$137.000 ARS</span>, pago único</div>
+-        <p>Los avisos a tus clientes salen solos y el resumen de ventas te llega armado. Los pedidos que entran por WhatsApp quedan anotados. Se contrata solo, sin necesidad de tener lo demás.</p>
++        <p>Los avisos a tus clientes salen solos y el resumen de ventas te llega armado. Los pedidos que entran por tu formulario quedan anotados en una planilla. Se contrata solo, sin necesidad de tener lo demás.</p>
+         <a href="/flow/" class="btn btn-primary" data-track="home-card-flow">Ver GrowiFlow →</a>
+       </div>
+ 
+@@ -384,14 +384,7 @@
+ <section class="section section-dark">
+   <div class="container">
+     <div class="testimonial-block">
+-      <span class="eyebrow">Caso real</span>
+-      <img class="case-logo" src="/png/colocafe-logo.png" width="88" height="88" alt="Logo de Colo Café" loading="lazy" decoding="async">
+-      <p class="testimonial-title reveal">Colo Café</p>
+-      <p class="case-desc reveal">Sistema de gestión armado para su cafetería: caja, comandas, stock y gastos.</p>
+-      <blockquote class="testimonial-quote reveal">
+-        «Necesitábamos ordenar ventas, reservas y caja sin depender de planillas. Growi nos ayudó a tener una operación más clara y fácil de seguir.»
+-      </blockquote>
+-      <p class="testimonial-attr">Rodrigo — Dueño de Colo Café</p>
++      <!-- caso Colo Café retirado hasta contar con autorización escrita -->
+       <div class="testimonial-cta">
+         <a href="/app/" class="btn btn-white">Ver cómo funciona GrowiApp →</a>
+       </div>

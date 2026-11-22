@@ -1,0 +1,37 @@
+/* Invitaciones · base compartida (F4.2): fuentes de cada evento y teaser del Home.
+   Se carga en /invitaciones/ y, solo para el teaser, en el Home. Prefijo ix- para no chocar con las demás líneas.
+   Las fuentes se descargan solo cuando una regla las usa (font-display:swap). */
+@font-face{font-family:"Instrument Serif";src:url("../fonts/instrument-serif-latin.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Instrument Serif";src:url("../fonts/instrument-serif-italic-latin.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Fraunces";src:url("../fonts/fraunces-ix.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Fraunces";src:url("../fonts/fraunces-italic-ix.woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:"Schibsted Grotesk";src:url("../fonts/schibsted-grotesk-ix.woff2") format("woff2");font-weight:400 800;font-style:normal;font-display:swap}
+:root{--ix-serif:"Instrument Serif","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--ix-fra:"Fraunces",Georgia,"Times New Roman",serif;--ix-sch:"Schibsted Grotesk","Epilogue",system-ui,sans-serif;
+  --ix-epi:"Epilogue",system-ui,-apple-system,"Segoe UI",sans-serif;--ix-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;--ix-syne:"Syne","Epilogue",system-ui,sans-serif}
+.ix-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- teaser del Home: tres portadas, cada una con la voz de su evento (no son teléfonos) ---------- */
+.ix-tz{position:relative;display:grid;grid-template-columns:1.05fr 1fr 1.25fr;gap:0;align-items:end;min-height:400px}
+.ix-tz-c{position:relative;box-shadow:0 30px 46px -30px rgba(40,25,5,.55)}
+.ix-tz-cas{z-index:2;aspect-ratio:3/4;padding:30px 24px;display:flex;flex-direction:column;background:linear-gradient(180deg,rgba(246,240,228,0) 0,#f6f0e4 62%),url("../img/inv-mesa.webp") 50% 20%/cover;color:#2a211b;margin-right:-22px}
+.ix-tz-l{font:600 11px/1.2 var(--ix-epi);letter-spacing:.22em;text-transform:uppercase;color:#6b3f2d;margin:auto 0 10px}
+.ix-tz-n{font:400 clamp(2rem,3.1vw,2.7rem)/.92 var(--ix-serif);margin:0 0 14px}.ix-tz-n span{display:block;font-style:italic;padding-left:.5em}
+.ix-tz-d{font:500 14px/1.45 var(--ix-epi);color:#4a3f36;margin:0}
+.ix-tz-cum{z-index:3;aspect-ratio:4/5.3;padding:22px 22px 24px;display:flex;flex-direction:column;background:linear-gradient(176deg,#b8566e,#7a3475 55%,#2a1d55);color:#fff;margin-bottom:-14px}
+.ix-tz-30{font:900 clamp(5.4rem,10vw,8rem)/.74 var(--ix-fra);letter-spacing:-.05em;margin:6px 0 0 -4px}
+.ix-tz-t{font:400 clamp(1.5rem,2.4vw,2rem)/.98 var(--ix-fra);margin:auto 0 8px}.ix-tz-t i{font-style:normal;font-weight:300}
+.ix-tz-d2{font:500 13.5px/1.4 var(--ix-epi);margin:0}
+.ix-tz-emp{z-index:1;aspect-ratio:5/4.4;padding:24px 26px;display:flex;flex-direction:column;background:#ece9e1;color:#15171a;font-family:var(--ix-sch);margin-left:-22px;padding-left:48px}
+.ix-tz-l2{font:400 11.5px/1.3 var(--ix-mono);letter-spacing:.12em;text-transform:uppercase;margin:0 0 14px}
+.ix-tz-n2{display:inline-flex;align-items:flex-end;gap:10px;align-self:flex-start;background:#cbdd3f;padding:12px 16px 10px;margin:0}
+.ix-tz-n2 b{font:800 clamp(3.4rem,6vw,5rem)/.8 var(--ix-sch);letter-spacing:-.06em}.ix-tz-n2 span{font:600 15px/1.1 var(--ix-sch);padding-bottom:3px}
+.ix-tz-t2{font:700 clamp(1.4rem,2.2vw,1.8rem)/1 var(--ix-sch);letter-spacing:-.03em;margin:auto 0 0}
+@media (max-width:860px){
+  .ix-tz{grid-template-columns:1fr 1fr;grid-template-rows:auto auto;min-height:0;gap:12px;margin-top:10px}
+  .ix-tz-c{box-shadow:0 18px 30px -22px rgba(40,25,5,.55);margin:0}
+  .ix-tz-cas{grid-column:1/-1;aspect-ratio:auto;min-height:290px;padding:26px 22px}
+  .ix-tz-cum,.ix-tz-emp{aspect-ratio:auto;min-height:220px;padding:18px}
+  .ix-tz-30{font-size:5.6rem}.ix-tz-t{font-size:1.35rem}.ix-tz-n2 b{font-size:3.2rem}.ix-tz-t2{font-size:1.15rem}
+}
+/* por debajo de 360 px no entran dos tarjetas lado a lado sin recortar su contenido (mínimo 133 + 172 px + separación): pasan a una sola columna */
+@media (max-width:359px){.ix-tz{grid-template-columns:minmax(0,1fr)}.ix-tz-cas{grid-column:auto;min-height:260px}.ix-tz-cum,.ix-tz-emp{min-height:200px}}

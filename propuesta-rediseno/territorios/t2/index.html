@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Growi · Territorio 2, Hilo (prototipo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="t2.css">
+</head>
+<body>
+<a href="#contenido" class="sr">Saltar al contenido</a>
+<header class="top"><div class="w">
+  <a class="brand" href="./" aria-label="Growi: inicio">Growi<i>.</i></a>
+  <nav class="mainnav" data-nav aria-label="Principal"><a href="#recorrido">GrowiApp</a><a href="#recorrido">GrowiWeb</a><a href="#recorrido">GrowiFlow</a><a href="#armar">Combo</a><a href="#armar">Invitaciones</a></nav>
+  <a class="btn p" href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+m%C3%A1s.%0A%0A(ref%3A+territorio-2-nav)" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  <button class="menu" data-menu aria-expanded="false" aria-label="Abrir menú">Menú</button>
+</div></header>
+
+<main id="contenido">
+<section class="hero"><div class="w">
+  <h1>Alguien te busca.<br><em>Tu negocio responde.</em></h1>
+  <div class="hero-r">
+    <p>Seguí un turno de punta a punta: el sitio donde te encuentran, el sistema donde queda anotado y el aviso que sale solo. Cinco líneas que trabajan juntas, armadas con vos.</p>
+    <p class="hp">GrowiApp desde <b data-usd="15"></b> por mes · GrowiWeb desde <b data-usd="200"></b> · GrowiFlow desde <b data-usd="79"></b> · Invitaciones a medida. Precios de referencia: todavía no se aceptan contrataciones ni pagos.</p>
+    <p class="acts"><a class="btn p" href="#recorrido">Seguir un turno ↓</a><a class="btn" href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+que+me+recomienden+qu%C3%A9+me+conviene.%0A%0AMi+rubro%3A%0AQu%C3%A9+quiero+resolver%3A%0A%0A(ref%3A+territorio-2-hero)" target="_blank" rel="noopener noreferrer">Contanos tu negocio</a></p>
+  </div>
+</div></section>
+
+<section class="rec" id="recorrido" aria-label="Un turno de punta a punta"><div class="w">
+  <div class="rec-h"><h2>Un turno, de punta a punta.</h2><p class="mono">Ejemplo con un consultorio ficticio. Elegí un paso o seguí bajando.</p></div>
+  <div class="rec-grid">
+    <ol class="steps" data-steps></ol>
+    <div class="stage" data-stage aria-live="polite"><div class="stage-h"><span class="tag" data-stag></span><span class="mono" data-scount></span></div><div class="stage-b" data-sbody></div><div class="stage-f"><button type="button" class="btn" data-prev>← Anterior</button><button type="button" class="btn p" data-next>Siguiente →</button></div></div>
+  </div>
+</div></section>
+
+<section class="armar" id="armar"><div class="w">
+  <h2>Armá tu recorrido.</h2>
+  <p class="lead">Elegí qué parte necesitás y mirá cuánto cuesta para empezar. Si juntás sitio y sistema, el sitio sale 10% menos y la puesta en marcha del sistema no se cobra.</p>
+  <div class="arm" data-arm>
+    <fieldset><legend>1 · Para que te encuentren</legend><div class="opts">
+      <label><input type="radio" name="web" value="0" checked><span>Todavía no</span></label>
+      <label><input type="radio" name="web" value="200"><span>Landing Express<small>1 página, 4 secciones</small></span></label>
+      <label><input type="radio" name="web" value="299"><span>Landing Pro<small>6 secciones, a tu marca</small></span></label>
+      <label><input type="radio" name="web" value="449"><span>Landing Performance<small>8 secciones, a medida</small></span></label>
+      <label><input type="radio" name="web" value="550"><span>Institucional Base<small>varias páginas</small></span></label>
+    </div></fieldset>
+    <fieldset><legend>2 · Para ordenar el día</legend><div class="opts">
+      <label><input type="radio" name="app" value="0" checked><span>Todavía no</span></label>
+      <label><input type="radio" name="app" value="Start"><span>GrowiApp Start<small>1 usuario, 1 sucursal</small></span></label>
+      <label><input type="radio" name="app" value="Pro"><span>GrowiApp Pro<small>hasta 3 usuarios</small></span></label>
+      <label><input type="radio" name="app" value="Multi"><span>GrowiApp Multi<small>5 usuarios, 2 sucursales</small></span></label>
+    </div></fieldset>
+    <fieldset><legend>3 · Para que salga solo</legend><div class="opts">
+      <label><input type="radio" name="flow" value="0" checked><span>Todavía no</span></label>
+      <label><input type="radio" name="flow" value="89|Recordatorios"><span>Recordatorios<small>aviso de turnos y vencimientos</small></span></label>
+      <label><input type="radio" name="flow" value="89|Reportes"><span>Reportes<small>resumen semanal o mensual</small></span></label>
+      <label><input type="radio" name="flow" value="79|Pedidos"><span>Pedidos<small>consultas anotadas solas</small></span></label>
+    </div></fieldset>
+    <fieldset><legend>4 · Para un evento</legend><div class="opts">
+      <label><input type="radio" name="inv" value="0" checked><span>No por ahora</span></label>
+      <label><input type="radio" name="inv" value="1"><span>Invitación digital<small>a medida, con presupuesto por escrito</small></span></label>
+    </div></fieldset>
+    <aside class="bill" aria-live="polite">
+      <div class="bh"><b>Tu recorrido</b><div class="cur" role="group" aria-label="Moneda"><button type="button" data-cur="ARS" aria-pressed="true">ARS</button><button type="button" data-cur="USD" aria-pressed="false">USD</button></div></div>
+      <ul class="bl" data-lines></ul>
+      <div class="bt"><span>Para empezar</span><b data-total></b></div>
+      <p class="bm" data-monthly></p>
+      <p class="bs" data-save hidden></p>
+      <a class="btn p wide" data-wa href="#" target="_blank" rel="noopener noreferrer">Consultar este recorrido</a>
+      <p class="bn">Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. Fijados en dólares; el valor en pesos es una referencia que se actualiza con el dólar oficial (venta). No incluyen dominio, alojamiento ni costos de terceros. El total suma los importes redondeados que se muestran.</p>
+    </aside>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="w">
+  <div><a class="brand" href="./">Growi<i>.</i></a><p>Crecé con tu negocio.</p></div>
+  <div class="fl"><a href="/app/">GrowiApp (sitio actual)</a><a href="/web/">GrowiWeb (sitio actual)</a><a href="/flow/">GrowiFlow (sitio actual)</a><a href="/combo/">Combo (sitio actual)</a><a href="/invitaciones/">Invitaciones (sitio actual)</a></div>
+  <div class="fl"><a href="https://wa.me/5491170593877" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:hola@growi.ar">hola@growi.ar</a><a href="/privacidad/">Privacidad</a><a href="/terminos/">Términos</a></div>
+  <p class="aviso">Growi se encuentra en etapa de lanzamiento y actualmente recibe consultas sobre sus servicios, sin aceptar contrataciones ni pagos. Los planes y precios publicados describen las propuestas previstas. Para conocer disponibilidad, alcance y condiciones, contactanos por WhatsApp o correo.</p>
+</div></footer>
+<a class="wa-float" href="https://wa.me/5491170593877?text=Hola+Growi.%0A%0A(ref%3A+territorio-2-flotante)" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">WA</a>
+<div class="proto" aria-hidden="true">Territorio 2 · prototipo local</div>
+<script src="/shared.fx.js"></script><script src="../precios.js"></script><script src="t2.js"></script>
+</body></html>

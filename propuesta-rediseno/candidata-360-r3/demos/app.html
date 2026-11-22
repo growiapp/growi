@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow">
+<title>Demo de GrowiApp (extraída de la página vigente)</title>
+<link rel="stylesheet" href="../vendor/shared.css">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+/* ---- Dashboard mockup styles ---- */
+.hero-mockup{width:min(1080px,100%);margin:36px auto 0;border-radius:34px;background:#fcfcfb;border:1px solid rgba(12,12,12,.10);box-shadow:0 38px 120px rgba(12,12,12,.14);overflow:hidden;text-align:left;position:relative;scroll-margin-top:96px;contain:layout paint}
+.mockup-bar{height:54px;display:flex;align-items:center;gap:8px;padding:0 18px;border-bottom:1px solid var(--line)}
+.dot-r,.dot-y,.dot-g{width:11px;height:11px;border-radius:50%}
+.dot-r{background:#ef6a5f}.dot-y{background:#f4be4f}.dot-g{background:#61c554}
+.mockup-url{margin-left:12px;height:28px;display:flex;align-items:center;justify-content:center;min-width:220px;padding:0 18px;border-radius:var(--r-pill);background:rgba(12,12,12,.055);font-size:12px;color:rgba(12,12,12,.45)}
+.mockup-pause{margin-left:auto;min-height:32px;padding:0 14px;border:1px solid var(--line2);border-radius:var(--r-pill);background:#fff;color:var(--ink2);font:inherit;font-size:12px;font-weight:var(--fw-bold);cursor:pointer;position:relative;transition:background .18s var(--ease-out),transform .14s var(--ease-out)}
+.mockup-pause::after{content:"";position:absolute;inset:-6px 0}
+.mockup-pause:active{transform:scale(.97)}
+.mockup-body{padding:16px}
+.dash-inner{display:grid;grid-template-columns:236px 1fr;min-height:454px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);background:#fff}
+.dash-sidebar{padding:28px 22px;background:#0C0C0C;color:#fff;display:flex;flex-direction:column;gap:8px}
+.dash-logo-frame{width:150px;height:42px;margin:0 0 22px 2px;display:flex;align-items:center;overflow:visible}
+.dash-logo-text{font-family:var(--syne);font-size:22px;font-weight:var(--fw-title);color:#fff;letter-spacing:-.04em}
+.dash-logo-text .dot{color:var(--accent)}
+.mockup-business{padding:0 10px 12px;margin-top:-18px;font-size:12px;font-weight:var(--fw-semi);color:var(--on-dark-3);line-height:1.3}
+.dash-nav-item{appearance:none;border:0;background:transparent;width:100%;text-align:left;font-family:inherit;border-radius:var(--r-sm);padding:13px 14px;font-size:13px;font-weight:var(--fw-semi);color:var(--on-dark-3);cursor:pointer;transition:background .18s var(--ease-out),color .18s var(--ease-out),transform .14s var(--ease-out)}
+.dash-nav-item:hover{background:rgba(255,255,255,.075);color:rgba(255,255,255,.82)}
+.dash-nav-item.active{background:rgba(255,255,255,.14);color:#fff}
+.dash-nav-item:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.dash-main{padding:26px;background:linear-gradient(180deg,#fff 0%,#fbfbfa 100%);position:relative;overflow:hidden;min-width:0;display:flex;flex-direction:column;min-height:454px}
+.mockup-mobile-business{display:none;padding:14px 14px 0;background:#fff;font-size:12px;font-weight:var(--fw-bold);color:var(--accent2)}
+.dash-stage{position:relative;flex:1;min-height:356px;display:grid}
+.dash-header-row{display:flex;justify-content:space-between;gap:20px;margin-bottom:13px}
+.dash-title{font-size:24px;font-weight:var(--fw-title);letter-spacing:-.05em;line-height:1.02}
+.dash-subtitle{margin-top:5px;font-size:13px;line-height:1.38;color:var(--ink3);max-width:560px}
+.dash-date{height:30px;padding:0 11px;border-radius:var(--r-pill);background:var(--accentL);color:var(--accent2);font-size:11px;font-weight:var(--fw-semi);display:flex;align-items:center;white-space:nowrap;flex-shrink:0}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi-card{padding:12px 13px;border-radius:var(--r-md);background:#fff;border:1px solid var(--line);min-height:78px}
+.kpi-label{font-size:10px;font-weight:var(--fw-semi);text-transform:uppercase;letter-spacing:.055em;color:var(--ink3);margin-bottom:6px}
+.kpi-val{font-size:21px;font-weight:var(--fw-title);letter-spacing:-.045em;line-height:1}
+.green{color:var(--accent)}
+.kpi-sub{font-size:11px;color:var(--ink3);margin-top:5px;line-height:1.22}
+.mockup-panels{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr);gap:12px;margin-top:12px}
+.panel-card{padding:13px 14px;border-radius:var(--r-md);background:linear-gradient(180deg,#fff 0%,#fbfbfa 100%);border:1px solid var(--line);min-height:138px;overflow:hidden}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;font-size:13px;font-weight:var(--fw-bold);color:var(--ink)}
+.panel-note{font-size:11px;font-weight:var(--fw-semi);color:var(--ink3);text-transform:uppercase;letter-spacing:.05em}
+.orders-list,.payment-list,.schedule-list{display:flex;flex-direction:column;gap:10px}
+.order-item{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:var(--r-md);background:var(--off);border:1px solid rgba(12,12,12,.06)}
+.order-title{font-size:13px;font-weight:var(--fw-semi);line-height:1.35;color:var(--ink)}
+.order-meta{font-size:11px;color:var(--ink3);margin-top:4px}
+.order-price{font-size:15px;font-weight:var(--fw-title);line-height:1;color:var(--ink);white-space:nowrap}
+.payment-row{display:grid;grid-template-columns:76px 1fr auto;align-items:center;gap:10px;font-size:12px;color:var(--ink2)}
+.payment-row strong{font-size:12px;white-space:nowrap}
+.progress{height:10px;border-radius:var(--r-pill);background:rgba(12,12,12,.06);overflow:hidden}
+.progress span{display:block;height:100%;width:var(--w);border-radius:inherit;background:linear-gradient(90deg,var(--accent),#2A865D);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease-out)}
+.dash-screen.active .progress span{transform:none}
+.schedule-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:var(--r-md);background:#fff;border:1px solid var(--line)}
+.schedule-time{font-size:12px;font-weight:var(--fw-title);color:var(--accent2)}
+.status-pill{display:inline-flex;align-items:center;justify-content:center;height:28px;padding:0 10px;border-radius:var(--r-pill);background:rgba(26,107,71,.10);color:var(--accent2);font-size:11px;font-weight:var(--fw-bold);white-space:nowrap}
+.status-pill.neutral{background:rgba(12,12,12,.06);color:var(--ink2)}
+.curated-bars{height:94px;display:flex;align-items:flex-end;gap:13px;padding:4px 4px 0}
+.curated-bars>div{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;min-width:0}
+.curated-bars span{display:block;width:100%;max-width:28px;border-radius:var(--r-pill);background:linear-gradient(180deg,var(--accent),var(--accent2))}
+.curated-bars span.muted{background:#B8C9BF;box-shadow:none}
+.curated-bars span.dark{background:var(--ink);box-shadow:0 8px 18px rgba(12,12,12,.10)}
+.curated-bars em{font-style:normal;font-size:10px;color:var(--ink3);font-weight:var(--fw-semi);white-space:nowrap}
+.curated-bars.compact{height:98px;gap:12px}
+.insight-list{display:grid;gap:9px}
+.insight-list div{padding:10px 11px;border-radius:var(--r-sm);background:var(--off);border:1px solid rgba(12,12,12,.06);font-size:12px;line-height:1.25;color:var(--ink2)}
+.insight-list strong{color:var(--ink)}
+.mockup-mobile-tabs{display:none;padding:12px 12px 0;background:#fff;border-bottom:1px solid rgba(12,12,12,.06);overflow-x:auto;-webkit-overflow-scrolling:touch;gap:8px;scrollbar-width:none;width:100%;max-width:100%;overflow-y:hidden}
+.mockup-mobile-tabs::-webkit-scrollbar{display:none}
+.mobile-demo-tab{flex:0 0 auto;height:44px;padding:0 14px;border:1px solid var(--line);border-radius:var(--r-pill);background:#fff;color:var(--ink2);font:inherit;font-size:12px;font-weight:var(--fw-bold);letter-spacing:-.02em;white-space:nowrap;cursor:pointer;transition:background .18s var(--ease-out),color .18s var(--ease-out),border-color .18s var(--ease-out),transform .14s var(--ease-out)}
+.mobile-demo-tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.mobile-demo-tab:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.demo-industry-selector{max-width:760px;margin:28px auto 0;text-align:center}
+.demo-industry-title{font-family:var(--title);font-size:22px;font-weight:var(--fw-title);letter-spacing: -.02em;color:var(--ink);margin:0 0 8px}
+.demo-industry-sub{font-size:14px;color:var(--ink3);line-height:1.55;margin:0 auto 18px;max-width:560px}
+.demo-industry-buttons{display:flex;align-items:center;justify-content:center;gap:8px;overflow-x:auto;padding:4px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.demo-industry-buttons::-webkit-scrollbar{display:none}
+.demo-industry-btn{flex:0 0 auto;min-height:44px;padding:0 16px;border:1px solid var(--line2);border-radius:var(--r-pill);background:#fff;color:var(--ink2);font:inherit;font-size:13px;font-weight:var(--fw-bold);cursor:pointer;transition:background .18s var(--ease-out),border-color .18s var(--ease-out),color .18s var(--ease-out),transform .14s var(--ease-out)}
+.demo-industry-btn:hover{border-color:var(--accent);color:var(--accent2)}
+@media(hover:hover) and (pointer:fine){.demo-industry-btn:hover{transform:translateY(-1px)}}
+.demo-industry-btn:active,.mobile-demo-tab:active,.dash-nav-item:active{transform:scale(.97)}
+.demo-industry-btn.active,.demo-industry-btn[aria-pressed="true"]{background:var(--accentL);border-color:rgba(26,107,71,.28);color:var(--accent2)}
+.demo-industry-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.demo-industry-note{font-size:12px;color:var(--ink3);line-height:1.5;margin:4px auto 0;max-width:520px}
+.pricing-controls{display:flex;align-items:flex-start;justify-content:center;gap:14px 18px;flex-wrap:wrap;margin-top:24px}
+.pricing-control-group{display:flex;flex-direction:column;align-items:center;gap:8px}
+.pricing-control-label{font-size:11px;font-weight:var(--fw-bold);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.pricing-control-group .currency-toggle{margin:0}
+.billing-save-note{font-size:13px;font-weight:var(--fw-semi);color:var(--accent2);line-height:1.45;text-align:center;margin:14px auto 0}
+.plan-billing-note{font-size:12px;line-height:1.45;color:var(--ink3);margin:8px 0 14px;min-height:17px}
+.plan-card.featured .plan-billing-note{color:rgba(255,255,255,.64)}
+.plan-annual-total{font-size:12px;font-weight:var(--fw-semi);line-height:1.45;color:var(--accent2);margin:-4px 0 14px;min-height:17px}
+.plan-annual-total[hidden]{display:none}
+.plan-card.featured .plan-annual-total{color:var(--accentM)}
+.plans-compare{margin:28px auto 0;max-width:980px;border:1px solid var(--line);border-radius:var(--r-md);background:#fff;overflow:hidden}
+.plans-compare summary{min-height:54px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;cursor:pointer;font-family:var(--title);font-size:20px;font-weight:var(--fw-title);letter-spacing: -.02em;color:var(--ink);list-style:none}
+.plans-compare summary::-webkit-details-marker{display:none}
+.plans-compare summary:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+.plans-compare-body{padding:0 22px 22px}
+.plans-compare-lead{font-size:14px;color:var(--ink3);line-height:1.6;margin:0 0 18px}
+.plans-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.plans-table{width:100%;min-width:680px;border-collapse:collapse;font-size:13px;color:var(--ink2)}
+.plans-table th,.plans-table td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.plans-table th{font-size:11px;font-weight:var(--fw-title);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);background:var(--off)}
+.plans-table td:first-child{font-weight:var(--fw-semi);color:var(--ink)}
+.plans-table tr:last-child td{border-bottom:0}
+.dash-screen{display:block;grid-area:1/1;min-width:0;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px);transition:opacity .28s var(--ease-out),transform .28s var(--ease-out),visibility .28s;width:100%;overflow:hidden}
+.dash-screen.active{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+.dynamic-mockup{width:100%;overflow:hidden}
+.dynamic-mockup .dash-main{width:100%;overflow:hidden}
+@keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* Checklist */
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin-top:40px}
+.check-item{display:flex;align-items:flex-start;gap:12px;font-size:15px;line-height:1.5;color:var(--ink2)}
+.check-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accentL);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:var(--fw-title);margin-top:2px}
+/* Steps */
+/* Rubros */
+.rubros-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.rubro-card{padding:28px;border:1px solid var(--line);border-radius:var(--r-lg);background:#fff;display:flex;flex-direction:column}
+.rubro-card .text-link{margin-top:auto;padding-top:8px;align-self:flex-start;font-size:14px}
+.rubro-emoji{display:block;color:var(--accent2)}
+.rubro-card .step-number{margin-bottom:8px}
+.rubro-card h3{font-size:var(--h3-sm);font-weight:var(--fw-bold);letter-spacing:-.03em;margin-bottom:10px;color:var(--ink)}
+.rubro-card p{font-size:13px;color:var(--ink3);line-height:1.6}
+/* Check two-level */
+.check-title{display:block;font-size:15px;font-weight:var(--fw-bold);color:var(--ink);margin-bottom:3px}
+.check-sub{display:block;font-size:13px;color:var(--ink3);line-height:1.5}
+/* Responsive */
+@media(max-width:1040px){.mockup-panels{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:880px){.mockup-mobile-business{display:block}.mockup-mobile-tabs{display:flex}.dash-inner{grid-template-columns:1fr;display:block}.dash-sidebar{display:none}.dash-main{padding:18px;min-height:0}.dash-stage{min-height:0;display:block}.dash-screen{display:none;transform:none}.dash-screen.active{display:block;animation:screenIn .28s var(--ease-out)}.hero-mockup{border-radius:var(--r-lg)}.mockup-body{padding:10px}.mockup-url{display:none!important}.steps-row,.rubros-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.hero-mockup{border-radius:var(--r-lg)}.mockup-body{padding:8px}.mockup-bar{height:48px;padding:0 14px}.dash-main{padding:16px}.dash-header-row{flex-direction:column;gap:8px}.dash-date{width:max-content;white-space:normal;height:auto;min-height:32px;padding:8px 12px}.kpi-row{grid-template-columns:1fr}.kpi-card{padding:15px}.mockup-panels{gap:12px;grid-template-columns:1fr}.panel-card{padding:14px}.check-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.demo-industry-selector{text-align:left}.demo-industry-title,.demo-industry-sub,.demo-industry-note{text-align:center}.demo-industry-buttons{justify-content:flex-start;margin-left:-2px;margin-right:-2px}.pricing-controls{gap:12px}.pricing-control-group{width:100%}.pricing-control-group .currency-toggle{width:100%;justify-content:center}.plans-compare summary{font-size:18px;padding:16px 18px}.plans-compare-body{padding:0 16px 18px}}
+@media(max-width:420px){.dash-main{padding:14px}.dash-title{font-size:22px}.payment-row{grid-template-columns:1fr;gap:7px}.progress{width:100%}}
+@media(prefers-reduced-motion:reduce){.dash-screen{transition:opacity .2s linear,visibility .2s!important;transform:none!important;animation:none!important}.progress span{transition:none;transform:none}}
+</style>
+<style>html,body{background:transparent!important;margin:0;overflow-x:hidden}.demo-industry-title,.demo-industry-sub,.demo-industry-note{display:none!important}.demo-industry-selector{margin:0 0 14px!important;padding-top:6px}.hero-mockup{margin-top:0!important}.mockup-mobile-tabs{padding-bottom:16px!important}.dash-title{margin-top:4px}.section{padding:0!important;background:transparent!important}.section-off{background:transparent!important}</style>
+</head>
+<body>
+<section class="section section-off" id="demo">
+  <div class="container">
+
+    <div class="demo-industry-selector reveal" aria-label="Selector de rubro del demo">
+      <h3 class="demo-industry-title">Probalo según tu rubro</h3>
+      <p class="demo-industry-sub">Elegí tu rubro y los datos cambian.</p>
+      <div class="demo-industry-buttons" role="group" aria-label="Elegir rubro del demo">
+        <button type="button" class="demo-industry-btn active" data-rubro="cafeteria" aria-pressed="true">Cafetería</button>
+        <button type="button" class="demo-industry-btn" data-rubro="peluqueria" aria-pressed="false">Peluquería</button>
+        <button type="button" class="demo-industry-btn" data-rubro="taller" aria-pressed="false">Taller</button>
+        <button type="button" class="demo-industry-btn" data-rubro="consultorio" aria-pressed="false">Consultorio</button>
+      </div>
+      <p class="demo-industry-note">Los datos son ilustrativos. La configuración real se adapta a tu negocio.</p>
+    </div>
+
+    <div class="hero-mockup reveal">
+      <div class="mockup-bar">
+        <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div>
+        <div class="mockup-url" aria-hidden="true">Demo · datos de ejemplo</div>
+        <button type="button" class="mockup-pause" id="demoPause" aria-pressed="false" hidden>Pausar</button>
+      </div>
+      <div class="mockup-body">
+        <div class="dash-inner dynamic-mockup curated-mockup" id="growiMockup">
+          <div class="dash-sidebar">
+            <div class="dash-logo-frame">
+              <span class="dash-logo-text">Growi<span class="dot">.</span></span>
+            </div>
+            <div class="mockup-business" data-demo="business-name">Café Central</div>
+            <button type="button" class="dash-nav-item active" aria-pressed="true" data-target="resumen">Resumen</button>
+            <button type="button" class="dash-nav-item" data-target="ventas">Ventas</button>
+            <button type="button" class="dash-nav-item" data-target="clientes">Clientes</button>
+            <button type="button" class="dash-nav-item" data-target="reservas">Reservas</button>
+            <button type="button" class="dash-nav-item" data-target="caja">Caja</button>
+            <button type="button" class="dash-nav-item" data-target="reportes">Reportes</button>
+          </div>
+          <div class="dash-main">
+            <div class="mockup-mobile-business" data-demo="business-name">Café Central</div>
+            <div class="mockup-mobile-tabs" aria-label="Navegación demo Growi">
+              <button type="button" class="mobile-demo-tab active" aria-pressed="true" data-target="resumen">Resumen</button>
+              <button type="button" class="mobile-demo-tab" data-target="ventas">Ventas</button>
+              <button type="button" class="mobile-demo-tab" data-target="clientes">Clientes</button>
+              <button type="button" class="mobile-demo-tab" data-target="reservas">Reservas</button>
+              <button type="button" class="mobile-demo-tab" data-target="caja">Caja</button>
+              <button type="button" class="mobile-demo-tab" data-target="reportes">Reportes</button>
+            </div>
+            <div class="dash-stage">
+              <div class="dash-screen active" data-screen="resumen">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Resumen del día</div>
+                    <div class="dash-subtitle">Ventas, reservas, caja y actividad reciente en una vista clara.</div>
+                  </div>
+                  <div class="dash-date">Turno abierto · hoy</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Ventas hoy</div><div class="kpi-val green" data-demo="sales-today">$184.500</div><div class="kpi-sub">+12% vs ayer</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Transacciones</div><div class="kpi-val">47</div><div class="kpi-sub">Ticket <span data-demo="avg-ticket">$7.690</span></div></div>
+                  <div class="kpi-card"><div class="kpi-label">Reservas</div><div class="kpi-val" data-demo="reservations-today">18</div><div class="kpi-sub">3 por llegar</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Caja estimada</div><div class="kpi-val">$147.600</div><div class="kpi-sub">Antes de cierre</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Ventas semanales</span><span class="panel-note">Últimos 7 días</span></div>
+                    <div class="curated-bars" aria-hidden="true">
+                      <div><span style="height:46%"></span><em>Lun</em></div>
+                      <div><span style="height:64%"></span><em>Mar</em></div>
+                      <div><span class="muted" style="height:38%"></span><em>Mié</em></div>
+                      <div><span style="height:78%"></span><em>Jue</em></div>
+                      <div><span style="height:58%"></span><em>Vie</em></div>
+                      <div><span class="dark" style="height:88%"></span><em>Sáb</em></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Actividad reciente</span><span class="panel-note">En vivo</span></div>
+                    <div class="orders-list">
+                      <div class="order-item"><div><div class="order-title" data-demo="act-1">Mesa 4 · 2 flat white + tostado</div><div class="order-meta">Pago confirmado · hace 2 min</div></div><div class="order-price">$11.200</div></div>
+                      <div class="order-item"><div><div class="order-title" data-demo="act-2">Para llevar · 3 medialunas + café</div><div class="order-meta">Pedidos online · hace 8 min</div></div><div class="order-price">$8.600</div></div>
+                      <div class="order-item"><div><div class="order-title">Alerta operativa · <span data-demo="stock-alert">Leche entera</span></div><div class="order-meta">Revisar disponibilidad o seguimiento</div></div><div class="status-pill neutral">Alerta</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-screen" data-screen="ventas">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Ventas y pagos</div>
+                    <div class="dash-subtitle">Facturación, actividad, ticket promedio y medios de pago sin planillas.</div>
+                  </div>
+                  <div class="dash-date">Actualizado hace 14 seg</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Facturación</div><div class="kpi-val green">$512.300</div><div class="kpi-sub">79% del objetivo</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Operaciones</div><div class="kpi-val">138</div><div class="kpi-sub">Registradas hoy</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Ticket promedio</div><div class="kpi-val" data-demo="avg-ticket">$7.690</div><div class="kpi-sub">+7% semanal</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Medios de pago</div><div class="kpi-val">3</div><div class="kpi-sub">Ef., MP y transf.</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Canales de atención</span><span class="panel-note">Distribución</span></div>
+                    <div class="payment-list">
+                      <div class="payment-row"><span data-demo="main-channel">Mostrador</span><div class="progress" style="--w:78%"><span></span></div><strong>78%</strong></div>
+                      <div class="payment-row"><span>Atención directa</span><div class="progress" style="--w:54%"><span></span></div><strong>54%</strong></div>
+                      <div class="payment-row"><span>Pedidos online</span><div class="progress" style="--w:31%"><span></span></div><strong>31%</strong></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span data-demo="top-label">Más vendido</span><span class="panel-note">Hoy</span></div>
+                    <div class="curated-bars compact" aria-hidden="true">
+                      <div><span style="height:62%"></span><em data-demo="top-product">Flat white</em></div>
+                      <div><span style="height:78%"></span><em data-demo="top-2">Medialunas</em></div>
+                      <div><span class="muted" style="height:42%"></span><em data-demo="top-3">Tostado</em></div>
+                      <div><span class="dark" style="height:58%"></span><em data-demo="top-4">Cappuccino</em></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-screen" data-screen="clientes">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Clientes y seguimiento</div>
+                    <div class="dash-subtitle">Historial, preferencias y próximos contactos sin datos perdidos.</div>
+                  </div>
+                  <div class="dash-date"><span data-demo="active-clients">42</span> clientes activos</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Clientes activos</div><div class="kpi-val" data-demo="active-clients">42</div><div class="kpi-sub">Últimos 30 días</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Nuevos</div><div class="kpi-val green">9</div><div class="kpi-sub">Esta semana</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Frecuencia</div><div class="kpi-val">2,8</div><div class="kpi-sub">Visitas promedio</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Seguimientos</div><div class="kpi-val">8</div><div class="kpi-sub">Pendientes</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Clientes frecuentes</span><span class="panel-note">Último mes</span></div>
+                    <div class="orders-list">
+                      <div class="order-item"><div><div class="order-title">Lucía R.</div><div class="order-meta">12 visitas · Preferencia registrada</div></div><div class="status-pill">VIP</div></div>
+                      <div class="order-item"><div><div class="order-title">Martín P.</div><div class="order-meta">8 visitas · Atención previa</div></div><div class="status-pill neutral">Frecuente</div></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Grupos de clientes</span><span class="panel-note">Para actuar</span></div>
+                    <div class="payment-list">
+                      <div class="payment-row"><span>VIP</span><div class="progress" style="--w:34%"><span></span></div><strong>21</strong></div>
+                      <div class="payment-row"><span>Frecuentes</span><div class="progress" style="--w:68%"><span></span></div><strong>58</strong></div>
+                      <div class="payment-row"><span>Nuevos</span><div class="progress" style="--w:48%"><span></span></div><strong>41</strong></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-screen" data-screen="reservas">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Reservas y turnos</div>
+                    <div class="dash-subtitle">Quién viene, a qué hora y qué espacio o servicio está disponible.</div>
+                  </div>
+                  <div class="dash-date">5 confirmadas</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Reservas hoy</div><div class="kpi-val" data-demo="reservations-today">18</div><div class="kpi-sub">7 confirmadas</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Ocupación</div><div class="kpi-val green">82%</div><div class="kpi-sub">Pico 17:30</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Próxima llegada</div><div class="kpi-val">15:30</div><div class="kpi-sub" data-demo="service">Mesa para 2</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Promedio</div><div class="kpi-val">54 min</div><div class="kpi-sub">Rotación</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Próximos turnos</span><span class="panel-note">Hoy</span></div>
+                    <div class="schedule-list">
+                      <div class="schedule-item"><div class="schedule-time">15:30</div><div><strong>Florencia M.</strong><div class="order-meta"><span data-demo="service">Mesa para 2</span> · confirmado</div></div><div class="status-pill">Confirmada</div></div>
+                      <div class="schedule-item"><div class="schedule-time">16:15</div><div><strong>Tomás R.</strong><div class="order-meta">Agenda · seguimiento</div></div><div class="status-pill neutral">En camino</div></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Disponibilidad</span><span class="panel-note">Próximas 2 hs</span></div>
+                    <div class="payment-list">
+                      <div class="payment-row"><span>Turno corto</span><div class="progress" style="--w:88%"><span></span></div><strong>Libre</strong></div>
+                      <div class="payment-row"><span>Bloque medio</span><div class="progress" style="--w:42%"><span></span></div><strong>Parcial</strong></div>
+                      <div class="payment-row"><span>Atención rápida</span><div class="progress" style="--w:64%"><span></span></div><strong>Activa</strong></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-screen" data-screen="caja">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Caja y gastos</div>
+                    <div class="dash-subtitle">Ingresos, egresos y saldo del día listos para el cierre.</div>
+                  </div>
+                  <div class="dash-date">Cierre sugerido: 20:30</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Ingresos</div><div class="kpi-val green" data-demo="sales-today">$184.500</div><div class="kpi-sub">Confirmados</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Egresos</div><div class="kpi-val">$36.900</div><div class="kpi-sub">Cargados</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Saldo</div><div class="kpi-val">$147.600</div><div class="kpi-sub">Estimado</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Pagos mixtos</div><div class="kpi-val">12</div><div class="kpi-sub">Hoy</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Últimos movimientos</span><span class="panel-note">Hoy</span></div>
+                    <div class="orders-list">
+                      <div class="order-item"><div><div class="order-title" data-demo="main-expense">Insumos</div><div class="order-meta">Egreso registrado</div></div><div class="order-price">$18.000</div></div>
+                      <div class="order-item"><div><div class="order-title" data-demo="expense-2">Servicios</div><div class="order-meta">Movimiento registrado</div></div><div class="order-price">$9.500</div></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Medios de cobro</span><span class="panel-note">Distribución</span></div>
+                    <div class="payment-list">
+                      <div class="payment-row"><span>MP</span><div class="progress" style="--w:63%"><span></span></div><strong>63%</strong></div>
+                      <div class="payment-row"><span>Efectivo</span><div class="progress" style="--w:28%"><span></span></div><strong>28%</strong></div>
+                      <div class="payment-row"><span>Transf.</span><div class="progress" style="--w:9%"><span></span></div><strong>9%</strong></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-screen" data-screen="reportes">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Reportes claros</div>
+                    <div class="dash-subtitle">Indicadores simples para decidir sin armar reportes a mano.</div>
+                  </div>
+                  <div class="dash-date">Semana en curso</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Mejor día</div><div class="kpi-val">Sáb</div><div class="kpi-sub">$218.400</div></div>
+                  <div class="kpi-card"><div class="kpi-label" data-demo="top-label">Más vendido</div><div class="kpi-val" data-demo="top-product">Flat white</div><div class="kpi-sub">Actividad del día</div></div>
+                  <div class="kpi-card"><div class="kpi-label">De dónde llegan más</div><div class="kpi-val green" data-demo="main-channel">Mostrador</div><div class="kpi-sub">78%</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Margen estimado</div><div class="kpi-val" data-demo="margin">41%</div><div class="kpi-sub">Últimos 7 días</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Tendencia semanal</span><span class="panel-note">Ventas</span></div>
+                    <div class="curated-bars" aria-hidden="true">
+                      <div><span style="height:42%"></span><em>Lun</em></div>
+                      <div><span style="height:54%"></span><em>Mar</em></div>
+                      <div><span class="muted" style="height:46%"></span><em>Mié</em></div>
+                      <div><span style="height:68%"></span><em>Jue</em></div>
+                      <div><span style="height:74%"></span><em>Vie</em></div>
+                      <div><span class="dark" style="height:92%"></span><em>Sáb</em></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Lecturas rápidas</span><span class="panel-note">De un vistazo</span></div>
+                    <div class="insight-list">
+                      <div><strong>Mayor venta:</strong><span> sábado</span></div>
+                      <div><strong>Pico horario:</strong><span> 17 a 19 hs</span></div>
+                      <div><strong><span data-demo="top-label">Más vendido</span>:</strong><span data-demo="top-product"> Flat white</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="../vendor/shared.fx.js"></script>
+<script src="../vendor/shared.js"></script>
+<script>
+(function(){
+  // Currency and billing toggles
+  (function(){
+    const btnMonthly=document.getElementById('btnMonthly');
+    const btnAnnual=document.getElementById('btnAnnual');
+    let currentCurrency=document.documentElement.dataset.currency||'ARS';
+    let currentPeriod=window.growiStore.get('growi_billing_period')==='annual'?'annual':'monthly';
+
+    // El precio mensual en USD vive en data-price de cada tarjeta; anual = 15% menos.
+    function updatePlanPrices(){
+      const anual=currentPeriod==='annual';
+      document.querySelectorAll('.plan-card').forEach(card=>{
+        const el=card.querySelector('[data-plan-price]');
+        if(!el)return;
+        const usd=Number(el.dataset.price);
+        el.textContent=window.growiPrice(anual?usd*.85:usd,currentCurrency,true);
+        const total=card.querySelector('[data-annual-total]');
+        if(total){
+          total.textContent='Pagás '+window.growiPrice(usd*.85*12,currentCurrency)+' por año';
+          total.hidden=!anual;
+        }
+      });
+      const aviso=document.querySelector('.billing-save-note');
+      const avisoTxt=anual?'Estás viendo los precios con pago anual: 15% menos.':'Ahorrá 15% pagando anual.';
+      if(aviso&&aviso.textContent!==avisoTxt)aviso.textContent=avisoTxt; // aria-live lo anuncia
+      document.querySelectorAll('[data-billing-copy]').forEach(el=>{
+        el.textContent=anual?'Pagás 12 meses juntos, con 15% de ahorro.':'Pago mensual. Cancelás cuando quieras.';
+      });
+    }
+
+    function applyBillingPeriod(period,track=false){
+      currentPeriod=period==='annual'?'annual':'monthly';
+      window.growiStore.set('growi_billing_period',currentPeriod);
+      updatePlanPrices();
+      if(btnMonthly&&btnAnnual){
+        btnMonthly.classList.toggle('active',currentPeriod==='monthly');btnAnnual.classList.toggle('active',currentPeriod==='annual');
+        btnMonthly.setAttribute('aria-pressed',currentPeriod==='monthly');btnAnnual.setAttribute('aria-pressed',currentPeriod==='annual');
+      }
+      if(track&&typeof window.plausible==='function'){
+        try{window.plausible('billing_period_change',{props:{period:currentPeriod}});}catch(e){}
+      }
+    }
+
+    applyBillingPeriod(currentPeriod);
+    document.addEventListener('growi:currency',e=>{currentCurrency=e.detail;updatePlanPrices();});
+    if(btnMonthly)btnMonthly.addEventListener('click',()=>applyBillingPeriod('monthly',true));
+    if(btnAnnual)btnAnnual.addEventListener('click',()=>applyBillingPeriod('annual',true));
+  })();
+
+  const demoRubros={
+    cafeteria:{
+      negocio:'Café Central',
+      ventasHoy:'$184.500',
+      ticketPromedio:'$7.690',
+      clientesActivos:'42',
+      reservasHoy:'18',
+      productoTop:'Flat white',
+      alertaStock:'Leche entera',
+      canalPrincipal:'Mostrador',
+      gastoPrincipal:'Insumos',
+      margen:'41%',
+      act1:'Mesa 4 · 2 flat white + tostado',act2:'Para llevar · 3 medialunas + café',top2:'Medialunas',top3:'Tostado',top4:'Cappuccino',servicio:'Mesa para 2',gasto2:'Servicios',topLabel:'Más vendido'
+    },
+    peluqueria:{
+      negocio:'Estudio Bruma',
+      ventasHoy:'$236.000',
+      ticketPromedio:'$18.150',
+      clientesActivos:'64',
+      reservasHoy:'22',
+      productoTop:'Corte + brushing',
+      alertaStock:'Tintura 7.1',
+      canalPrincipal:'Turnos',
+      gastoPrincipal:'Coloración',
+      margen:'48%',
+      act1:'Color + corte · Camila S.',act2:'Turno reservado · sábado 10:30',top2:'Color',top3:'Brushing',top4:'Keratina',servicio:'Corte + brushing',gasto2:'Alquiler',topLabel:'Más pedido'
+    },
+    taller:{
+      negocio:'Taller Norte',
+      ventasHoy:'$412.000',
+      ticketPromedio:'$51.500',
+      clientesActivos:'31',
+      reservasHoy:'9',
+      productoTop:'Cambio de aceite',
+      alertaStock:'Filtro Wega',
+      canalPrincipal:'WhatsApp',
+      gastoPrincipal:'Repuestos',
+      margen:'35%',
+      act1:'Service 10.000 km · Peugeot 208',act2:'Trabajo entregado · cambio de pastillas',top2:'Alineación',top3:'Frenos',top4:'Service',servicio:'Cambio de aceite',gasto2:'Herramientas',topLabel:'Más pedido'
+    },
+    consultorio:{
+      negocio:'Consultorio Raíz',
+      ventasHoy:'$168.000',
+      ticketPromedio:'$21.000',
+      clientesActivos:'58',
+      reservasHoy:'16',
+      productoTop:'Consulta inicial',
+      alertaStock:'Bonos disponibles',
+      canalPrincipal:'Agenda',
+      gastoPrincipal:'Honorarios',
+      margen:'52%',
+      act1:'Consulta · Julieta M.',act2:'Turno reservado · jueves 16:00',top2:'Control',top3:'Seguimiento',top4:'Estudios',servicio:'Consulta inicial',gasto2:'Alquiler',topLabel:'Más solicitado'
+    }
+  };
+
+  const demoMap={
+    'business-name':'negocio',
+    'sales-today':'ventasHoy',
+    'avg-ticket':'ticketPromedio',
+    'active-clients':'clientesActivos',
+    'reservations-today':'reservasHoy',
+    'top-product':'productoTop',
+    'stock-alert':'alertaStock',
+    'main-channel':'canalPrincipal',
+    'main-expense':'gastoPrincipal',
+    'margin':'margen',
+    'act-1':'act1','act-2':'act2','top-2':'top2','top-3':'top3','top-4':'top4',
+    'service':'servicio','expense-2':'gasto2','top-label':'topLabel'
+  };
+
+  const rubroButtons=[...document.querySelectorAll('.demo-industry-btn[data-rubro]')];
+  const applyDemoRubro=(key,track=false)=>{
+    const selected=demoRubros[key]?key:'cafeteria';
+    const data=demoRubros[selected];
+    Object.entries(demoMap).forEach(([demoKey,dataKey])=>{
+      document.querySelectorAll(`[data-demo="${demoKey}"]`).forEach(el=>{el.textContent=data[dataKey];});
+    });
+    rubroButtons.forEach(btn=>{
+      const active=btn.dataset.rubro===selected;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-pressed',String(active));
+    });
+    try{localStorage.setItem('growi-demo-rubro',selected);}catch(e){}
+    if(track&&typeof window.plausible==='function'){
+      window.plausible('demo_rubro_change',{props:{rubro:selected}});
+    }
+  };
+
+  if(rubroButtons.length){
+    let savedRubro='cafeteria';
+    try{savedRubro=localStorage.getItem('growi-demo-rubro')||'cafeteria';}catch(e){}
+    // las landings por rubro enlazan al demo con ?rubro=
+    savedRubro=new URLSearchParams(location.search).get('rubro')||savedRubro;
+    applyDemoRubro(savedRubro,false);
+    rubroButtons.forEach(btn=>btn.addEventListener('click',()=>applyDemoRubro(btn.dataset.rubro,true)));
+  }
+
+  const growiMockup=document.getElementById('growiMockup');
+  if(growiMockup){
+    const screens=[...growiMockup.querySelectorAll('.dash-screen')];
+    const navItems=[...growiMockup.querySelectorAll('.dash-nav-item[data-target],.mobile-demo-tab[data-target]')];
+    let current=0;
+    let interval;
+    const showScreen=(index)=>{
+      if(index<0||index>=screens.length) return;
+      screens.forEach((s,i)=>s.classList.toggle('active',i===index));
+      navItems.forEach(item=>{const on=item.dataset.target===screens[index].dataset.screen;item.classList.toggle('active',on);item.setAttribute('aria-pressed',String(on));});
+      current=index;
+    };
+    const shouldAutoRotate=()=>window.matchMedia('(min-width:881px)').matches&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const pauseBtn=document.getElementById('demoPause');
+    let mockupInView=false;
+    let userStopped=false; // una vez que la persona elige pantalla o pausa, la rotación no vuelve sola
+    let hovering=false;
+    const stopAuto=()=>clearInterval(interval);
+    const startAuto=()=>{
+      stopAuto();
+      if(pauseBtn) pauseBtn.hidden=!shouldAutoRotate();
+      if(!userStopped&&!hovering&&shouldAutoRotate()&&mockupInView){interval=setInterval(()=>showScreen((current+1)%screens.length),4600);}
+    };
+    const setStopped=(v)=>{
+      userStopped=v;
+      if(pauseBtn){pauseBtn.textContent=v?'Reanudar':'Pausar';pauseBtn.setAttribute('aria-pressed',String(v));}
+      startAuto();
+    };
+    showScreen(0);
+    const mockupObserver=new IntersectionObserver(entries=>{
+      mockupInView=entries.some(e=>e.isIntersecting&&e.intersectionRatio>.45);
+      startAuto();
+    },{threshold:[0,.45,.75]});
+    mockupObserver.observe(growiMockup);
+    const mockupBox=growiMockup.closest('.hero-mockup')||growiMockup;
+    mockupBox.addEventListener('mouseenter',()=>{hovering=true;stopAuto();});
+    mockupBox.addEventListener('mouseleave',()=>{hovering=false;startAuto();});
+    mockupBox.addEventListener('focusin',()=>{hovering=true;stopAuto();});
+    mockupBox.addEventListener('focusout',()=>{hovering=false;startAuto();});
+    window.addEventListener('resize',startAuto);
+    if(pauseBtn) pauseBtn.addEventListener('click',()=>setStopped(!userStopped));
+    navItems.forEach(item=>{
+      const activate=()=>{
+        setStopped(true);
+        const nextIndex=screens.findIndex(s=>s.dataset.screen===item.dataset.target);
+        showScreen(nextIndex);
+      };
+      item.addEventListener('click',activate);
+    });
+  }
+})();
+</script>
+<script>(function(){function h(){try{parent.postMessage({growiDemo:"app",h:Math.ceil(document.documentElement.scrollHeight)},"*")}catch(e){}}window.addEventListener("load",h);window.addEventListener("resize",h);setInterval(h,700)})()</script>
+</body></html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Camila y Tomás · invitación de ejemplo (Growi Invitaciones)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--night:#0f1a2b;--night2:#16243a;--ivory:#f3efe6;--mute:#a9b0bd;--gold:#c8a76a;--serif:'Instrument Serif',Georgia,'Times New Roman',serif;--sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--ivory);font:400 17px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.cover{position:fixed;inset:0;z-index:20;display:grid;grid-template-columns:1fr 1fr;pointer-events:auto}
+.cover .h{background:var(--night);transition:transform 1.1s cubic-bezier(.7,0,.2,1)}.cover .h:first-child{border-right:1px solid rgba(200,167,106,.35)}
+.cover.open .h:first-child{transform:translateX(-101%)}.cover.open .h:last-child{transform:translateX(101%)}
+.cover.gone{display:none}
+.cc{position:fixed;inset:0;z-index:21;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity .5s}
+.cover.open+.cc{opacity:0;pointer-events:none}
+.cc small{font:500 12px var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.cc h1{font:400 clamp(64px,22vw,120px)/.92 var(--serif);letter-spacing:-.02em;margin:22px 0 4px}.cc h1 i{display:block;font-size:.42em;color:var(--gold);margin:6px 0}
+.cc p{font:400 15px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:18px}
+.cc button{margin-top:34px;min-height:48px;padding:0 28px;border:1px solid var(--gold);background:none;color:var(--ivory);font:500 14px var(--sans);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}.cc button:hover,.cc button:focus-visible{background:var(--gold);color:var(--night);outline:none}
+main{max-width:520px;margin:0 auto;padding:0 28px}
+section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:70px 0;border-bottom:1px solid rgba(243,239,230,.1)}
+section:last-of-type{border-bottom:0}
+.k{font:500 12px var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+h2{font:400 clamp(40px,12vw,58px)/1 var(--serif);letter-spacing:-.015em;margin-bottom:22px}h2 em{color:var(--gold)}
+.ag{list-style:none;padding:0;margin-top:10px}.ag li{display:grid;grid-template-columns:76px 1fr;gap:12px;padding:16px 0;border-top:1px solid rgba(243,239,230,.14)}.ag li:last-child{border-bottom:1px solid rgba(243,239,230,.14)}.ag b{font:400 28px var(--serif);color:var(--gold)}.ag span{font-size:17px}.ag small{display:block;color:var(--mute);font-size:14px}
+p.t{color:var(--ivory);opacity:.86;max-width:34ch}.pl{margin-top:20px}.pl b{display:block;font:400 26px var(--serif)}.pl span{color:var(--mute);font-size:15px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.btns button{min-height:48px;padding:0 24px;border:1px solid rgba(243,239,230,.4);background:none;color:var(--ivory);font:500 15px var(--sans);cursor:pointer}.btns button:hover{border-color:var(--gold)}.btns button.p{background:var(--gold);border-color:var(--gold);color:var(--night)}
+.msg{margin-top:20px;padding:14px 16px;border-left:2px solid var(--gold);background:var(--night2);font-size:15px;display:none}.msg.on{display:block}.msg small{display:block;color:var(--mute);margin-top:8px;font-size:12.5px}
+.foot{font-size:12.5px;color:var(--mute);padding:26px 0 50px;text-align:center}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="cover" data-cover aria-hidden="true"><div class="h"></div><div class="h"></div></div>
+<div class="cc" data-cc><small>Nos casamos</small><h1>Camila<i>&amp;</i>Tomás</h1><p>Sábado 20 de marzo de 2027</p><button type="button" data-open>Abrir invitación</button></div>
+<main id="m" tabindex="-1">
+  <section class="rv"><p class="k">El día</p><h2>Sábado 20 de <em>marzo</em></h2><p class="t">Los esperamos desde la ceremonia hasta el último baile.</p>
+    <ul class="ag"><li><b>17:00</b><span>Ceremonia<small>Capilla de ejemplo</small></span></li><li><b>20:00</b><span>Cena<small>Salón de ejemplo</small></span></li><li><b>22:30</b><span>Fiesta<small>Salón de ejemplo</small></span></li></ul></section>
+  <section class="rv"><p class="k">El lugar</p><h2>Dos <em>lugares</em>, un solo día</h2>
+    <div class="pl"><b>Capilla de ejemplo</b><span>Calle de Ejemplo 100</span></div><div class="pl"><b>Salón de ejemplo</b><span>Av. de Ejemplo 500</span></div>
+    <p class="t" style="margin-top:22px">Llegá 20 minutos antes de la ceremonia. Hay lugar para estacionar sobre Calle de Ejemplo.</p></section>
+  <section class="rv"><p class="k">Para tener en cuenta</p><h2>Vestimenta <em>elegante</em></h2><p class="t">Si querés hacernos un regalo, en tu respuesta te pasamos los datos.</p></section>
+  <section class="rv"><p class="k">Tu respuesta</p><h2>¿Nos <em>acompañás</em>?</h2><p class="t">Tocá una opción y se arma el mensaje para el organizador.</p>
+    <div class="btns"><button class="p" type="button" data-r="Confirmo mi asistencia">Voy</button><button type="button" data-r="No voy a poder asistir">No puedo ir</button></div>
+    <div class="msg" data-msg role="status" aria-live="polite"></div></section>
+  <p class="foot">Invitación de ejemplo de Growi · datos ficticios. En una invitación real el botón abre WhatsApp con el mensaje ya escrito.</p>
+</main>
+<script>
+(function(){
+  var c=document.querySelector('[data-cover]'),cc=document.querySelector('[data-cc]'),m=document.getElementById('m');
+  document.querySelector('[data-open]').addEventListener('click',function(){c.classList.add('open');setTimeout(function(){c.classList.add('gone');cc.style.display='none';m.focus({preventScroll:true})},1150)});
+  var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.25}):null;
+  document.querySelectorAll('.rv').forEach(function(s){io?io.observe(s):s.classList.add('in')});
+  var msg=document.querySelector('[data-msg]');
+  document.querySelectorAll('[data-r]').forEach(function(b){b.addEventListener('click',function(){msg.classList.add('on');msg.innerHTML='Hola, soy un invitado de Camila y Tomás. '+b.dataset.r+'.<small>Así llega el mensaje al organizador (demo: no se envía nada).</small>'})});
+})();
+</script>
+</body></html>

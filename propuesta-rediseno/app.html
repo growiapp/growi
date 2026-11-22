@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GrowiApp: ventas, stock, caja y turnos en una pantalla (propuesta)</title>
+<meta name="robots" content="noindex">
+<link rel="preload" href="../fonts/epilogue-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="rediseno.css">
+</head>
+<body>
+<div class="proto-bar"><b>Propuesta de rediseño</b> · prototipo local, no publicado · los importes son los vigentes</div>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Growi, inicio">Growi<i>.</i></a>
+    <nav class="nav-links" id="menu" aria-label="Principal">
+      <a href="app.html" aria-current="page">GrowiApp</a><a href="index.html#lineas">GrowiWeb</a><a href="index.html#lineas">GrowiFlow</a><a href="index.html#lineas">Combo</a><a href="index.html#lineas">Invitaciones</a>
+    </nav>
+    <a class="btn sm" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20consultar%20por%20GrowiApp." data-track="app-nav-whatsapp">Consultar por GrowiApp</a>
+    <button class="menu-btn" aria-controls="menu" aria-expanded="false">Menú</button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">GrowiApp · sistema de gestión</p>
+      <h1 style="margin-top:18px">Ventas, stock, caja y turnos <em>en una sola pantalla.</em></h1>
+      <p class="lead">Para negocios que hoy llevan todo en cuadernos, planillas y chats. Lo configuramos con tus productos y precios, te enseñamos a usarlo y seguimos por WhatsApp.</p>
+      <div class="hero-actions">
+        <a class="btn" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20consultar%20por%20GrowiApp." data-track="app-hero-whatsapp">Consultar por GrowiApp</a>
+        <a class="btn ghost" href="#precios">Ver precios</a>
+      </div>
+      <p class="hero-note">Desde USD 15 por mes + USD 49 de puesta en marcha, una sola vez. Sin permanencia.</p>
+    </div>
+    <div id="demo">
+      <div class="ui" data-tabs>
+        <div class="tabs" role="tablist" aria-label="Pantallas de ejemplo">
+          <button role="tab" aria-selected="true">Venta</button><button role="tab" aria-selected="false">Turnos</button><button role="tab" aria-selected="false">Stock</button>
+        </div>
+        <div class="pane" role="tabpanel">
+          <div class="ui-bar"><span>Nueva venta</span><span>Ejemplo</span></div>
+          <div class="ui-row"><span>Corte + brushing<small>Camila · 1 h</small></span><b class="num">$ 18.000</b></div>
+          <div class="ui-row"><span>Tintura<small>Camila · 2 h</small></span><b class="num">$ 32.500</b></div>
+          <div class="ui-row"><span>Shampoo 300 ml<small>1 unidad</small></span><b class="num">$ 9.800</b></div>
+          <div class="ui-total"><span>Total</span><span class="num">$ 60.300</span></div>
+        </div>
+        <div class="pane" role="tabpanel" hidden>
+          <div class="ui-bar"><span>Turnos de hoy</span><span>Ejemplo</span></div>
+          <div class="ui-row"><span>10:00 · Lucía Fernández<small>Corte</small></span><span class="tag">Confirmado</span></div>
+          <div class="ui-row"><span>11:30 · Mariano Ríos<small>Barba</small></span><span class="tag">Confirmado</span></div>
+          <div class="ui-row"><span>13:00 · Sofía Paz<small>Color</small></span><span class="tag" style="background:#f6e2d8;color:#7a2d0e">Sin confirmar</span></div>
+          <div class="ui-row"><span>16:30 · Hueco libre<small>45 min</small></span><span class="muted">Libre</span></div>
+        </div>
+        <div class="pane" role="tabpanel" hidden>
+          <div class="ui-bar"><span>Stock</span><span>Ejemplo</span></div>
+          <div class="ui-row"><span>Leche entera<small>mínimo 10 litros</small></span><b style="color:var(--alert)">4 L</b></div>
+          <div class="ui-row"><span>Café en grano<small>mínimo 3 kg</small></span><b>7 kg</b></div>
+          <div class="ui-row"><span>Medialunas<small>mínimo 12 unidades</small></span><b>26</b></div>
+          <div class="ui-total"><span>Productos bajo el mínimo</span><span>1</span></div>
+        </div>
+      </div>
+      <p class="cap">Pantallas de ejemplo con datos ficticios. La configuración real se adapta a tu negocio.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Para quién es</p><h2>Para el que atiende, vende y agenda todo en el mismo día.</h2></div>
+    <div class="rubros">
+      <a href="#"><b>Cafeterías y gastronomía</b><span>Ventas, caja y stock sin libreta. Reservas en el mismo lugar.</span></a>
+      <a href="#"><b>Peluquerías y estética</b><span>Agenda, clientes y cobros sin escribir turnos en un chat.</span></a>
+      <a href="#"><b>Talleres y servicios</b><span>Órdenes, turnos y repuestos ordenados por cliente.</span></a>
+      <a href="#"><b>Kioscos y comercios</b><span>Productos, ventas y reportes simples de lo que se vende y falta.</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Qué cambia</p><h2>Menos libreta, más claridad al cerrar el día.</h2></div>
+    <div class="cols">
+      <div><h3>Sabés cuánto vendiste</h3><p>La caja del día se arma sola con cada venta, por medio de pago, y cierra sin sorpresas.</p></div>
+      <div><h3>Sabés qué se te acaba</h3><p>El stock baja con cada venta y te avisa cuando un producto llega al mínimo que vos definís.</p></div>
+      <div><h3>Sabés quién viene y cuándo</h3><p>Turnos y fichas de clientes en un lugar, desde el celular, sin planillas ni papelitos.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="precios">
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Precios</p><h2>Una puesta en marcha única y un abono mensual fijo.</h2><p>Elegí un plan para ver cuánto pagás el primer mes, desde el segundo y en el primer año.</p></div>
+    <div class="cur" role="group" aria-label="Moneda"><button type="button" data-c="ARS" aria-pressed="true">ARS</button><button type="button" data-c="USD" aria-pressed="false">USD (precio fijo)</button></div>
+    <div class="cur" role="group" aria-label="Período de pago" style="margin-left:10px"><button type="button" data-p="m" aria-pressed="true">Mensual</button><button type="button" data-p="a" aria-pressed="false">Anual −15%</button></div>
+    <div class="tariff" role="radiogroup" aria-label="Planes de GrowiApp">
+      <div class="tariff-head" aria-hidden="true"><span>Plan</span><span>Para</span><span>Usuarios</span><span>Sucursales</span><span id="h-abono">Abono mensual</span><span>Puesta en marcha</span></div>
+      <label class="tariff-row"><input type="radio" name="plan" value="Start" checked><span class="pn">Start</span><span class="for">Una persona atendiendo.<small class="feats">Ventas, caja y stock · turnos y reservas · ficha de clientes · reportes simples · soporte por WhatsApp</small></span><span><span class="lbl">Usuarios</span>1</span><span><span class="lbl">Sucursales</span>1</span><span class="m" data-usd="15"><span>USD 15</span><small></small></span><span class="s" data-usd="49"><span>USD 49</span><small></small></span></label>
+      <label class="tariff-row"><input type="radio" name="plan" value="Pro"><span class="pn">Pro</span><span class="for">Equipo chico, cada uno con su acceso. <span class="tag">Recomendado si son varios</span><small class="feats">Todo lo de Start · para equipos que cargan ventas o turnos a la vez · factura electrónica ARCA: próximamente</small></span><span><span class="lbl">Usuarios</span>hasta 3</span><span><span class="lbl">Sucursales</span>1</span><span class="m" data-usd="29"><span>USD 29</span><small></small></span><span class="s" data-usd="149"><span>USD 149</span><small></small></span></label>
+      <label class="tariff-row"><input type="radio" name="plan" value="Multi"><span class="pn">Multi</span><span class="for">Más de un lugar.<small class="feats">Todo lo de Pro · hasta 2 sucursales · reportes avanzados por sucursal · WhatsApp prioritario</small></span><span><span class="lbl">Usuarios</span>hasta 5</span><span><span class="lbl">Sucursales</span>2</span><span class="m" data-usd="49"><span>USD 49</span><small></small></span><span class="s" data-usd="249"><span>USD 249</span><small></small></span></label>
+    </div>
+    <div class="calc" aria-live="polite">
+      <div id="c1"><small id="l1">Primer mes</small><b></b><em></em></div>
+      <div id="c2"><small id="l2">Desde el segundo mes</small><b></b><em></em></div>
+      <div id="c3"><small id="l3">Primer año</small><b></b><em></em></div>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+      <a class="btn" id="plan-wa" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20consultar%20por%20GrowiApp." data-track="app-precio-whatsapp">Consultar por el plan <span id="plan-name">Start</span></a>
+      <span class="muted" style="font-size:14px"><b>Garantía de 7 días</b> desde que queda andando: si no funciona como prometimos, te devolvemos el 100% de la puesta en marcha. Sin permanencia (el plan anual no tiene devolución).</span>
+    </div>
+    <ul class="notes">
+      <li>La puesta en marcha incluye la configuración inicial hecha por nosotros y 1 hora de capacitación en vivo.</li>
+      <li>El precio de cada plan es el informado. No incluye costos de terceros, como las comisiones de los medios de pago.</li>
+      <li>Todavía no emite factura electrónica: está en desarrollo y no prometemos fecha.</li>
+      <li>Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. Están fijados en dólares; el valor en pesos es una referencia que se actualiza con el dólar oficial (venta).</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap split">
+    <div class="sec-head" style="margin:0"><p class="eyebrow">Preguntas</p><h2>Antes de escribirnos.</h2></div>
+    <div class="faq">
+      <details><summary>¿Tengo que saber de computación?</summary><p>No. Está pensado para quien atiende el mostrador. Si sabés usar WhatsApp, podés usar GrowiApp, y la puesta en marcha la hacemos con vos.</p></details>
+      <details><summary>¿Cuánto tarda en estar funcionando?</summary><p>Antes de empezar te confirmamos por escrito una fecha estimada de entrega, según el alcance y la información que nos pases.</p></details>
+      <details><summary>¿Qué pasa si no me convence?</summary><p>Tenés 7 días de garantía desde que GrowiApp queda andando: si no funciona como prometimos, te devolvemos el 100% de la puesta en marcha.</p></details>
+      <details><summary>¿Hay permanencia?</summary><p>No. Hay un pago único de puesta en marcha y un abono mensual fijo. Si algún día seguís por otro lado, te llevás tus datos.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Contanos cómo llevás hoy las ventas y la caja.</h2>
+    <p>Te respondemos por WhatsApp en nuestro horario de atención: de lunes a sábado, de 9 a 19.</p>
+    <a class="btn" href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20consultar%20por%20GrowiApp." data-track="app-final-whatsapp">Consultar por GrowiApp</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="logo" href="index.html" style="display:inline;padding:0">Growi<i>.</i></a><p class="muted" style="margin:10px 0 0;max-width:34ch">Un estudio chico argentino: sistemas, sitios y automatizaciones para negocios.</p></div>
+      <div><h4>Líneas</h4><a href="app.html">GrowiApp</a><a href="index.html#lineas">GrowiWeb</a><a href="index.html#lineas">GrowiFlow</a><a href="index.html#lineas">Combo</a><a href="../invitaciones/">Invitaciones</a></div>
+      <div><h4>Contacto</h4><a href="https://wa.me/5491170593877">WhatsApp</a><a href="mailto:hola@growi.ar">hola@growi.ar</a><a href="../privacidad/">Privacidad</a><a href="../terminos/">Términos</a></div>
+    </div>
+    <p class="aviso">Growi se encuentra en etapa de lanzamiento y actualmente recibe consultas sobre sus servicios, sin aceptar contrataciones ni pagos. Los planes y precios publicados describen las propuestas previstas. Para conocer disponibilidad, alcance y condiciones, contactanos por WhatsApp o correo.</p>
+  </div>
+</footer>
+<script src="../shared.fx.js"></script>
+<script src="rediseno.js"></script>
+</body>
+</html>

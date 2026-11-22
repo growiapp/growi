@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growi: sistema de gestión y sitio web para tu negocio</title>
+<meta name="description" content="Ordená ventas, caja y turnos de tu negocio con GrowiApp, y aparecé en internet con GrowiWeb. Precios claros y soporte por WhatsApp.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0C0C0C">
+<link rel="icon" type="image/png" sizes="32x32" href="/png/appicon_32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/png/appicon_192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/png/appicon_512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/png/appicon_180.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="preload" href="/fonts/syne-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/epilogue-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/shared.css">
+<script>document.documentElement.classList.add('js')</script>
+<script defer data-domain="growi.ar" src="https://plausible.io/js/script.js"></script>
+<style>
+.hero {
+  padding: 120px 0 72px;
+  text-align: center;
+}
+.hero .h1-title {
+  display: block;
+  text-wrap: balance;
+  font-family: var(--title);
+  font-size: clamp(34px, 9.2vw, 82px);
+  font-weight: var(--fw-title);
+  letter-spacing: -.035em;
+  line-height: 1; /* Epilogue es más alta que Syne: los acentos de 'Crecé' necesitan aire */
+  color: var(--ink);
+  max-width: 940px;
+  margin: 20px auto 0;
+}
+.hero-sub {
+  font-size: clamp(16px, 1.6vw, 20px);
+  color: var(--ink2);
+  line-height: 1.55;
+  max-width: 580px;
+  margin: 24px auto 0;
+}
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+.product-card { display: flex; flex-direction: column; }
+.product-tag {
+  display: inline-flex;
+  align-self: flex-start; /* la tarjeta es flex-column: sin esto la pastilla se estira */
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  font-size: 10px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: var(--accentL);
+  color: var(--accent2);
+  margin-bottom: 14px;
+}
+.product-card h3 {
+  font-family: var(--title);
+  font-size: var(--h3-lg);
+  font-weight: var(--fw-title);
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+.product-card p {
+  font-size: 15px;
+  color: var(--ink2);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+.product-price {
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+  color: var(--accent2);
+  margin: -6px 0 18px;
+}
+.product-card .btn { align-self: flex-start; margin-top: auto; } /* las tres son pares: mismo botón, a la misma altura */
+.use-case-card { display: flex; flex-direction: column; }
+.use-case-card .text-link { align-self: flex-start; }
+.use-case-card p { margin-bottom: 10px; }
+.why-item { display: flex; flex-direction: column; gap: 10px; }
+.why-icon {
+  width: 48px; height: 48px;
+  border-radius: var(--r-sm);
+  background: var(--accentL);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent2);
+  margin-bottom: 16px;
+}
+.why-title {
+  font-family: var(--title);
+  font-size: var(--h3);
+  font-weight: var(--fw-title);
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
+.why-desc { font-size: 15px; color: var(--ink2); line-height: 1.65; }
+@media (max-width: 768px) {
+  .hero { padding: 110px 0 60px; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn { text-align: center; justify-content: center; }
+  .product-card .btn { width: 100%; justify-content: center; }
+}
+</style>
+<link rel="stylesheet" href="/propuesta-rediseno/v3/v3.css">
+</head>
+<body>
+<a href="#contenido" class="skip-link">Saltar al contenido</a>
+
+<nav id="mainNav" aria-label="Principal">
+  <div class="nav-inner">
+    <a href="/propuesta-rediseno/v3/" class="nav-brand" aria-label="Growi: inicio">Growi<span class="dot">.</span></a>
+    <ul class="nav-links" role="list">
+      <li><a href="/propuesta-rediseno/v3/app/">GrowiApp</a></li>
+      <li><a href="/propuesta-rediseno/v3/web/">GrowiWeb</a></li>
+      <li><a href="/propuesta-rediseno/v3/flow/">GrowiFlow</a></li>
+      <li><a href="/propuesta-rediseno/v3/combo/">Combo</a></li>
+      <li><a href="/propuesta-rediseno/v3/invitaciones/">Invitaciones</a></li>
+    </ul>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+m%C3%A1s+sobre+sus+soluciones." class="nav-wa" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-track="home-nav-whatsapp">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span class="wa-label">WhatsApp</span>
+    </a>
+    <button class="nav-hamburger" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación" aria-modal="true" aria-hidden="true">
+  <div class="mobile-menu-card">
+    <a href="/propuesta-rediseno/v3/app/">GrowiApp</a>
+    <a href="/propuesta-rediseno/v3/web/">GrowiWeb</a>
+    <a href="/propuesta-rediseno/v3/flow/">GrowiFlow</a>
+    <a href="/propuesta-rediseno/v3/combo/">Combo</a>
+    <a href="/propuesta-rediseno/v3/invitaciones/">Invitaciones</a>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+m%C3%A1s+sobre+sus+soluciones." class="mobile-wa mobile-menu-cta" target="_blank" rel="noopener noreferrer" data-track="home-mobile-menu-whatsapp">Hablar por WhatsApp</a>
+  </div>
+</div>
+
+<main id="contenido">
+<section class="hero" id="top">
+  <div class="container">
+    <h1 class="h1-stack"><span class="eyebrow">Para comercios y servicios de Argentina</span> <span class="h1-title">Ordená tu negocio,<br><span class="accent">mostralo y automatizalo.</span></span></h1>
+    <p class="hero-sub">Sistema de gestión, sitio web y avisos automáticos. Los armamos con vos, los dejamos andando y seguimos del otro lado del WhatsApp.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5491170593877?text=Hola%20Growi%2C%20quiero%20que%20me%20recomienden%20qu%C3%A9%20me%20conviene.%0A%0AMi%20rubro%3A%0AQu%C3%A9%20quiero%20resolver%3A%0A%0A%28ref%3A%20home-hero%29" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer" data-track="home-hero-whatsapp">Hablar por WhatsApp</a>
+      <a href="#lineas" class="btn btn-outline btn-lg">Ver las cinco líneas ↓</a>
+    </div>
+    <p class="v3-hero-note">Cada línea tiene su precio abajo, y el alcance por escrito antes de empezar.</p>
+  </div>
+</section>
+
+<section class="section" id="orientacion" style="padding-top:24px">
+  <div class="container">
+    <div class="section-header center">
+      <h2 class="section-title reveal">¿Qué te quita más tiempo hoy?</h2>
+      <p class="section-lead">Elegí la que más se parezca y te mostramos por dónde empezar.</p>
+    </div>
+    <div class="v3-picker reveal">
+      <div class="v3-picker-q" role="group" aria-label="Qué te quita más tiempo">
+        <button type="button" data-k="app" aria-pressed="true">No sé cuánto vendí ni qué stock me queda</button>
+        <button type="button" data-k="web" aria-pressed="false">Quien me busca en internet no me encuentra</button>
+        <button type="button" data-k="flow" aria-pressed="false">Me olvido de avisar turnos o de contestar pedidos</button>
+        <button type="button" data-k="combo" aria-pressed="false">Quiero el sitio y el sistema, todo junto</button>
+        <button type="button" data-k="inv" aria-pressed="false">Tengo un evento y quiero una invitación digital</button>
+      </div>
+      <div class="v3-picker-a" aria-live="polite">
+        <h3>GrowiApp</h3>
+        <p class="pp"></p>
+        <p class="price"></p>
+        <div class="acts"><a class="btn btn-primary go" href="#">Ver la línea →</a><a class="btn btn-outline wa" href="#" target="_blank" rel="noopener noreferrer" data-track="home-orientacion-whatsapp">Consultar por WhatsApp</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-off" id="lineas">
+  <div class="container">
+    <div class="section-header center">
+      <h2 class="section-title reveal">Cinco líneas, cada una con su precio.</h2>
+      <div class="currency-toggle reveal" role="group" aria-label="Seleccionar moneda" >
+        <button class="currency-btn active" id="btnARS" type="button" aria-pressed="true">ARS</button>
+        <button class="currency-btn" id="btnUSD" type="button" aria-pressed="false">USD</button>
+      </div>
+    </div>
+    <div class="v3-index">
+      <a class="v3-row reveal" href="/propuesta-rediseno/v3/app/" data-track="home-linea-app">
+        <span class="n"><small>Sistema de gestión</small>GrowiApp</span>
+        <span class="d">Ventas, caja, stock y turnos en una sola pantalla, con tus productos ya cargados.<em>Para cafeterías, peluquerías, talleres y comercios.</em></span>
+        <span class="p">Desde <span data-price="15">$23.000 ARS</span> por mes<small>+ <span data-price="49">$75.200 ARS</span> de puesta en marcha, una sola vez</small></span>
+        <span class="go">Ver GrowiApp →</span>
+      </a>
+
+      <a class="v3-row reveal" href="/propuesta-rediseno/v3/web/" data-track="home-linea-web">
+        <span class="n"><small>Presencia digital</small>GrowiWeb</span>
+        <span class="d">Un sitio publicado que explica lo que hacés y manda las consultas a tu WhatsApp.<em>Para consultorios, estudios y comercios que quieren que los encuentren.</em></span>
+        <span class="p">Desde <span data-price="200">$307.000 ARS</span><small>Pago único. Dominio y alojamiento aparte.</small></span>
+        <span class="go">Ver GrowiWeb →</span>
+      </a>
+
+      <a class="v3-row reveal" href="/propuesta-rediseno/v3/flow/" data-track="home-linea-flow">
+        <span class="n"><small>Automatizaciones</small>GrowiFlow</span>
+        <span class="d">El aviso del turno sale solo, el resumen de ventas te llega armado y los pedidos quedan anotados.<em>Se contrata solo: no hace falta tener GrowiApp ni sitio.</em></span>
+        <span class="p">Desde <span data-price="79">$121.000 ARS</span><small>Pago único, sin mensualidad.</small></span>
+        <span class="go">Ver GrowiFlow →</span>
+      </a>
+
+      <a class="v3-row reveal" href="/propuesta-rediseno/v3/combo/" data-track="home-linea-combo">
+        <span class="n"><small>Sitio + sistema</small>Combo</span>
+        <span class="d">Sitio web y GrowiApp armados juntos, en una sola conversación.<em>10% menos en el sitio y la puesta en marcha del sistema sin cargo.</em></span>
+        <span class="p">Sitio desde <span data-price="180">$276.000 ARS</span><small>+ <span data-price="15">$23.000 ARS</span> por mes del sistema</small></span>
+        <span class="go">Ver el combo →</span>
+      </a>
+
+      <a class="v3-row reveal" href="/propuesta-rediseno/v3/invitaciones/" data-track="home-linea-invitaciones">
+        <span class="n"><small>Eventos</small>Invitaciones</span>
+        <span class="d">Una invitación digital para tu evento: se comparte con un enlace y se confirma por WhatsApp.<em>Casamientos, cumpleaños, quinceañeras y eventos de empresa.</em></span>
+        <span class="p">A medida<small>Presupuesto y alcance por escrito antes de empezar.</small></span>
+        <span class="go">Ver invitaciones →</span>
+      </a>
+
+    </div>
+    <p class="plan-note">Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. Cada plan tiene un precio cerrado; los precios «desde» y lo a medida se confirman en un presupuesto por escrito antes de empezar. No incluyen dominio, alojamiento ni costos de terceros (por ejemplo, comisiones de medios de pago o mensajes de WhatsApp). Están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta).</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header center">
+      <h2 class="section-title reveal">Soluciones pensadas para comercios reales</h2>
+      <p class="section-lead">Growi está pensado para el negocio de barrio que quiere ordenar el día a día sin complicarse.</p>
+    </div>
+    <div class="use-cases-grid">
+      <div class="card use-case-card reveal">
+        <h3>Cafeterías y gastronomía</h3>
+        <p>Ventas, caja, stock y reservas en una sola pantalla para entender qué pasa cada día.</p>
+        <a href="/app/cafeterias/" class="text-link" data-track="home-rubro-cafeterias">GrowiApp para cafeterías</a>
+      </div>
+      <div class="card use-case-card reveal">
+        <h3>Servicios con turnos</h3>
+        <p>Agenda, clientes, reservas y seguimiento sin depender de mensajes sueltos o planillas.</p>
+        <a href="/app/peluquerias/" class="text-link" data-track="home-rubro-peluquerias">Para peluquerías y estética</a>
+        <a href="/app/talleres/" class="text-link" data-track="home-rubro-talleres">Para talleres y servicios</a>
+      </div>
+      <div class="card use-case-card reveal">
+        <h3>Comercios minoristas</h3>
+        <p>Productos, ventas y reportes simples para saber qué se vende y qué falta.</p>
+        <a href="/app/retail/" class="text-link" data-track="home-rubro-retail">GrowiApp para kioscos y comercios</a>
+      </div>
+    </div>
+    <div class="section-cta">
+      <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+contarles+qu%C3%A9+negocio+tengo.%0A%0AMi+rubro%3A%0AQu%C3%A9+quiero+resolver%3A" class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-track="home-use-cases-whatsapp">Contanos qué negocio tenés</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <div class="container">
+    <div class="testimonial-block">
+      <span class="eyebrow">Caso real</span>
+      <img class="case-logo" src="/png/colocafe-logo.png" width="88" height="88" alt="Logo de Colo Café" loading="lazy" decoding="async">
+      <p class="testimonial-title reveal">Colo Café</p>
+      <p class="case-desc reveal">Sistema de gestión armado para su cafetería: caja, comandas, stock y gastos.</p>
+      <blockquote class="testimonial-quote reveal">
+        «Necesitábamos ordenar ventas, reservas y caja sin depender de planillas. Growi nos ayudó a tener una operación más clara y fácil de seguir.»
+      </blockquote>
+      <p class="testimonial-attr">Rodrigo — Dueño de Colo Café</p>
+      <div class="testimonial-cta">
+        <a href="/propuesta-rediseno/v3/app/" class="btn btn-white">Ver cómo funciona GrowiApp →</a>
+      </div>
+      <div class="guarantee-block reveal" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15)">
+        <div class="guarantee-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="guarantee-text">
+          <h3 style="color:#fff">Garantía de 7 días</h3>
+          <p style="color:rgba(255,255,255,.7)">Si en los 7 días desde que GrowiApp queda andando no funciona como prometimos, te devolvemos el 100% de la puesta en marcha.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="v3-facts reveal">
+      <div><b>Atención directa</b><p>Hablás con quienes arman tu sistema o tu sitio, por WhatsApp, de lunes a sábado de 9 a 19.</p></div>
+      <div><b>Precio por escrito</b><p>Antes de empezar te pasamos el precio y una fecha estimada de entrega. Lo que es «desde» o a medida se confirma por escrito.</p></div>
+      <div><b>Sin permanencia en GrowiApp</b><p>Abono mensual: seguís solo si te sirve y tus datos son tuyos. GrowiWeb y GrowiFlow se pagan una sola vez.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="como-empezar">
+  <div class="container">
+    <h2 class="section-title title-center reveal">Empezar es escribirnos.</h2>
+    <div class="steps-row">
+      <div class="step-box reveal">
+        <div class="step-number">Paso 01</div>
+        <h3>Nos contás tu negocio</h3>
+        <p>Por WhatsApp, con tus palabras: qué vendés y qué querés resolver.</p>
+      </div>
+      <div class="step-box reveal">
+        <div class="step-number">Paso 02</div>
+        <h3>Te decimos qué te conviene</h3>
+        <p>Te recomendamos una solución y te pasamos precio y fecha estimada de entrega, antes de que decidas nada.</p>
+      </div>
+      <div class="step-box reveal">
+        <div class="step-number">Paso 03</div>
+        <h3>Lo armamos y te acompañamos</h3>
+        <p>Lo armamos nosotros, te enseñamos a usarlo y seguimos del otro lado del WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-off" id="preguntas">
+  <div class="container container-narrow">
+    <h2 class="section-title faq-title reveal">Antes de escribirnos.</h2>
+    <div class="faq-list reveal">
+      <details>
+        <summary>¿Tengo que contratar todo junto?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">No. GrowiApp, GrowiWeb y GrowiFlow se contratan por separado. Si querés sitio y sistema, el combo suma 10% de descuento en el sitio y la puesta en marcha sin cargo.</div>
+      </details>
+      <details>
+        <summary>¿Cuánto tarda?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">En GrowiApp, antes de comenzar te confirmamos por escrito una fecha estimada de entrega. En GrowiWeb, la fecha estimada va en el presupuesto, antes de iniciar el proyecto. En GrowiFlow, el plazo se define al confirmar.</div>
+      </details>
+      <details>
+        <summary>¿Hay permanencia?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">GrowiApp tiene abono mensual sin permanencia: seguís solo si te sirve, y tus datos son tuyos. GrowiWeb y GrowiFlow se pagan una sola vez.</div>
+      </details>
+      <details>
+        <summary>¿Qué incluyen los precios? ¿En qué moneda están?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Cada plan tiene un precio cerrado; los precios «desde» y lo a medida se confirman en un presupuesto por escrito antes de empezar. No incluyen dominio, alojamiento ni costos de terceros. Están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta).</div>
+      </details>
+      <details>
+        <summary>¿Emite factura electrónica?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">GrowiApp todavía no. Está en desarrollo y va a ser parte del plan Pro; no prometemos fecha. Si es imprescindible para vos, escribinos y lo conversamos.</div>
+      </details>
+      <details>
+        <summary>¿Y si se corta internet?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">En GrowiApp podés seguir cargando: los datos se sincronizan cuando vuelve la conexión.</div>
+      </details>
+      <details>
+        <summary>¿Necesito saber de tecnología?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">No. Lo armamos nosotros, te enseñamos a usarlo y el soporte es por WhatsApp.</div>
+      </details>
+      <details>
+        <summary>¿Qué pasa si no me convence?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Hay 7 días de garantía, contados desde la entrega o activación. En GrowiApp te devolvemos el 100% de la puesta en marcha si no funciona como prometimos; en GrowiWeb y en los paquetes de pago único de GrowiFlow hacemos ajustes sin cargo. Los detalles están en los Términos.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="trust-block reveal">
+      <h2>Una marca chica, con atención directa</h2>
+      <p>En Growi trabajás con personas reales, no con una plataforma anónima. Lo armamos con vos y te enseñamos a usarlo. Y después seguimos del otro lado del WhatsApp.</p>
+      <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+hablar+con+ustedes.%0A%0AMi+rubro%3A%0AQu%C3%A9+quiero+resolver%3A" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track="home-about-whatsapp">Hablar por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid footer-grid-4">
+      <div>
+        <a href="/propuesta-rediseno/v3/" class="footer-brand" aria-label="Growi: inicio">Growi<span class="dot">.</span></a>
+        <p class="footer-tagline">Crecé con tu negocio.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Productos</h3>
+        <a href="/propuesta-rediseno/v3/app/">GrowiApp</a>
+        <a href="/propuesta-rediseno/v3/web/">GrowiWeb</a>
+        <a href="/propuesta-rediseno/v3/flow/">GrowiFlow</a>
+        <a href="/propuesta-rediseno/v3/combo/">Combo sistema + web</a>
+        <a href="/propuesta-rediseno/v3/invitaciones/">Invitaciones digitales</a>
+      </div>
+      <div class="footer-col">
+        <h3>Por rubro</h3>
+        <a href="/app/cafeterias/">Cafeterías</a>
+        <a href="/app/peluquerias/">Peluquerías y estética</a>
+        <a href="/app/talleres/">Talleres y servicios</a>
+        <a href="/app/retail/">Kioscos y comercios</a>
+      </div>
+      <div class="footer-col">
+        <h3>Contacto</h3>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+m%C3%A1s+sobre+sus+soluciones." target="_blank" rel="noopener noreferrer" data-track="home-footer-whatsapp">WhatsApp</a>
+        <a href="mailto:hola@growi.ar">hola@growi.ar</a>
+        <a href="/privacidad/">Privacidad</a>
+        <a href="/terminos/">Términos</a>
+      </div>
+    </div>
+    <p class="aviso-l1">Growi se encuentra en etapa de lanzamiento y actualmente recibe consultas sobre sus servicios, sin aceptar contrataciones ni pagos. Los planes y precios publicados describen las propuestas previstas. Para conocer disponibilidad, alcance y condiciones, contactanos por WhatsApp o correo.</p>
+    <div class="footer-bottom">
+      <span>© 2026 Growi</span>
+      <span>Crecé con tu negocio.</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+m%C3%A1s+sobre+sus+soluciones." class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-track="home-floating-whatsapp">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="/shared.fx.js"></script>
+<script src="/shared.js" onerror="document.documentElement.classList.remove('js')"></script>
+<div class="proto-tag" aria-hidden="true">V3 · prototipo local · no publicado</div>
+<script src="/propuesta-rediseno/v3/v3.js" defer></script>
+</body>
+</html>

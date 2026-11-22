@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sistema de gestión para comercios, listo para trabajar | GrowiApp</title>
+<meta name="description" content="Ventas, caja, stock, turnos y clientes de tu comercio en una sola pantalla, desde el celular. Con fecha estimada de entrega antes de empezar. Desde USD 15 por mes.">
+<meta name="theme-color" content="#0C0C0C">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" sizes="32x32" href="/png/appicon_32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/png/appicon_192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/png/appicon_512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/png/appicon_180.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="preload" href="/fonts/syne-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/epilogue-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/shared.css">
+<script>document.documentElement.classList.add('js')</script>
+<script defer data-domain="growi.ar" src="https://plausible.io/js/script.js"></script>
+<style>
+/* ---- Dashboard mockup styles ---- */
+.hero-mockup{width:min(1080px,100%);margin:36px auto 0;border-radius:34px;background:#fcfcfb;border:1px solid rgba(12,12,12,.10);box-shadow:0 38px 120px rgba(12,12,12,.14);overflow:hidden;text-align:left;position:relative;scroll-margin-top:96px;contain:layout paint}
+.mockup-bar{height:54px;display:flex;align-items:center;gap:8px;padding:0 18px;border-bottom:1px solid var(--line)}
+.dot-r,.dot-y,.dot-g{width:11px;height:11px;border-radius:50%}
+.dot-r{background:#ef6a5f}.dot-y{background:#f4be4f}.dot-g{background:#61c554}
+.mockup-url{margin-left:12px;height:28px;display:flex;align-items:center;justify-content:center;min-width:220px;padding:0 18px;border-radius:var(--r-pill);background:rgba(12,12,12,.055);font-size:12px;color:rgba(12,12,12,.45)}
+.mockup-pause{margin-left:auto;min-height:32px;padding:0 14px;border:1px solid var(--line2);border-radius:var(--r-pill);background:#fff;color:var(--ink2);font:inherit;font-size:12px;font-weight:var(--fw-bold);cursor:pointer;position:relative;transition:background .18s var(--ease-out),transform .14s var(--ease-out)}
+.mockup-pause::after{content:"";position:absolute;inset:-6px 0}
+.mockup-pause:active{transform:scale(.97)}
+.mockup-body{padding:16px}
+.dash-inner{display:grid;grid-template-columns:236px 1fr;min-height:454px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);background:#fff}
+.dash-sidebar{padding:28px 22px;background:#0C0C0C;color:#fff;display:flex;flex-direction:column;gap:8px}
+.dash-logo-frame{width:150px;height:42px;margin:0 0 22px 2px;display:flex;align-items:center;overflow:visible}
+.dash-logo-text{font-family:var(--syne);font-size:22px;font-weight:var(--fw-title);color:#fff;letter-spacing:-.04em}
+.dash-logo-text .dot{color:var(--accent)}
+.mockup-business{padding:0 10px 12px;margin-top:-18px;font-size:12px;font-weight:var(--fw-semi);color:var(--on-dark-3);line-height:1.3}
+.dash-nav-item{appearance:none;border:0;background:transparent;width:100%;text-align:left;font-family:inherit;border-radius:var(--r-sm);padding:13px 14px;font-size:13px;font-weight:var(--fw-semi);color:var(--on-dark-3);cursor:pointer;transition:background .18s var(--ease-out),color .18s var(--ease-out),transform .14s var(--ease-out)}
+.dash-nav-item:hover{background:rgba(255,255,255,.075);color:rgba(255,255,255,.82)}
+.dash-nav-item.active{background:rgba(255,255,255,.14);color:#fff}
+.dash-nav-item:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.dash-main{padding:26px;background:linear-gradient(180deg,#fff 0%,#fbfbfa 100%);position:relative;overflow:hidden;min-width:0;display:flex;flex-direction:column;min-height:454px}
+.mockup-mobile-business{display:none;padding:14px 14px 0;background:#fff;font-size:12px;font-weight:var(--fw-bold);color:var(--accent2)}
+.dash-stage{position:relative;flex:1;min-height:356px;display:grid}
+.dash-header-row{display:flex;justify-content:space-between;gap:20px;margin-bottom:13px}
+.dash-title{font-size:24px;font-weight:var(--fw-title);letter-spacing:-.05em;line-height:1.02}
+.dash-subtitle{margin-top:5px;font-size:13px;line-height:1.38;color:var(--ink3);max-width:560px}
+.dash-date{height:30px;padding:0 11px;border-radius:var(--r-pill);background:var(--accentL);color:var(--accent2);font-size:11px;font-weight:var(--fw-semi);display:flex;align-items:center;white-space:nowrap;flex-shrink:0}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi-card{padding:12px 13px;border-radius:var(--r-md);background:#fff;border:1px solid var(--line);min-height:78px}
+.kpi-label{font-size:10px;font-weight:var(--fw-semi);text-transform:uppercase;letter-spacing:.055em;color:var(--ink3);margin-bottom:6px}
+.kpi-val{font-size:21px;font-weight:var(--fw-title);letter-spacing:-.045em;line-height:1}
+.green{color:var(--accent)}
+.kpi-sub{font-size:11px;color:var(--ink3);margin-top:5px;line-height:1.22}
+.mockup-panels{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr);gap:12px;margin-top:12px}
+.panel-card{padding:13px 14px;border-radius:var(--r-md);background:linear-gradient(180deg,#fff 0%,#fbfbfa 100%);border:1px solid var(--line);min-height:138px;overflow:hidden}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;font-size:13px;font-weight:var(--fw-bold);color:var(--ink)}
+.panel-note{font-size:11px;font-weight:var(--fw-semi);color:var(--ink3);text-transform:uppercase;letter-spacing:.05em}
+.orders-list,.payment-list,.schedule-list{display:flex;flex-direction:column;gap:10px}
+.order-item{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:var(--r-md);background:var(--off);border:1px solid rgba(12,12,12,.06)}
+.order-title{font-size:13px;font-weight:var(--fw-semi);line-height:1.35;color:var(--ink)}
+.order-meta{font-size:11px;color:var(--ink3);margin-top:4px}
+.order-price{font-size:15px;font-weight:var(--fw-title);line-height:1;color:var(--ink);white-space:nowrap}
+.payment-row{display:grid;grid-template-columns:76px 1fr auto;align-items:center;gap:10px;font-size:12px;color:var(--ink2)}
+.payment-row strong{font-size:12px;white-space:nowrap}
+.progress{height:10px;border-radius:var(--r-pill);background:rgba(12,12,12,.06);overflow:hidden}
+.progress span{display:block;height:100%;width:var(--w);border-radius:inherit;background:linear-gradient(90deg,var(--accent),#2A865D);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease-out)}
+.dash-screen.active .progress span{transform:none}
+.schedule-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:var(--r-md);background:#fff;border:1px solid var(--line)}
+.schedule-time{font-size:12px;font-weight:var(--fw-title);color:var(--accent2)}
+.status-pill{display:inline-flex;align-items:center;justify-content:center;height:28px;padding:0 10px;border-radius:var(--r-pill);background:rgba(26,107,71,.10);color:var(--accent2);font-size:11px;font-weight:var(--fw-bold);white-space:nowrap}
+.status-pill.neutral{background:rgba(12,12,12,.06);color:var(--ink2)}
+.curated-bars{height:94px;display:flex;align-items:flex-end;gap:13px;padding:4px 4px 0}
+.curated-bars>div{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;min-width:0}
+.curated-bars span{display:block;width:100%;max-width:28px;border-radius:var(--r-pill);background:linear-gradient(180deg,var(--accent),var(--accent2))}
+.curated-bars span.muted{background:#B8C9BF;box-shadow:none}
+.curated-bars span.dark{background:var(--ink);box-shadow:0 8px 18px rgba(12,12,12,.10)}
+.curated-bars em{font-style:normal;font-size:10px;color:var(--ink3);font-weight:var(--fw-semi);white-space:nowrap}
+.curated-bars.compact{height:98px;gap:12px}
+.insight-list{display:grid;gap:9px}
+.insight-list div{padding:10px 11px;border-radius:var(--r-sm);background:var(--off);border:1px solid rgba(12,12,12,.06);font-size:12px;line-height:1.25;color:var(--ink2)}
+.insight-list strong{color:var(--ink)}
+.mockup-mobile-tabs{display:none;padding:12px 12px 0;background:#fff;border-bottom:1px solid rgba(12,12,12,.06);overflow-x:auto;-webkit-overflow-scrolling:touch;gap:8px;scrollbar-width:none;width:100%;max-width:100%;overflow-y:hidden}
+.mockup-mobile-tabs::-webkit-scrollbar{display:none}
+.mobile-demo-tab{flex:0 0 auto;height:44px;padding:0 14px;border:1px solid var(--line);border-radius:var(--r-pill);background:#fff;color:var(--ink2);font:inherit;font-size:12px;font-weight:var(--fw-bold);letter-spacing:-.02em;white-space:nowrap;cursor:pointer;transition:background .18s var(--ease-out),color .18s var(--ease-out),border-color .18s var(--ease-out),transform .14s var(--ease-out)}
+.mobile-demo-tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.mobile-demo-tab:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.demo-industry-selector{max-width:760px;margin:28px auto 0;text-align:center}
+.demo-industry-title{font-family:var(--title);font-size:22px;font-weight:var(--fw-title);letter-spacing: -.02em;color:var(--ink);margin:0 0 8px}
+.demo-industry-sub{font-size:14px;color:var(--ink3);line-height:1.55;margin:0 auto 18px;max-width:560px}
+.demo-industry-buttons{display:flex;align-items:center;justify-content:center;gap:8px;overflow-x:auto;padding:4px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.demo-industry-buttons::-webkit-scrollbar{display:none}
+.demo-industry-btn{flex:0 0 auto;min-height:44px;padding:0 16px;border:1px solid var(--line2);border-radius:var(--r-pill);background:#fff;color:var(--ink2);font:inherit;font-size:13px;font-weight:var(--fw-bold);cursor:pointer;transition:background .18s var(--ease-out),border-color .18s var(--ease-out),color .18s var(--ease-out),transform .14s var(--ease-out)}
+.demo-industry-btn:hover{border-color:var(--accent);color:var(--accent2)}
+@media(hover:hover) and (pointer:fine){.demo-industry-btn:hover{transform:translateY(-1px)}}
+.demo-industry-btn:active,.mobile-demo-tab:active,.dash-nav-item:active{transform:scale(.97)}
+.demo-industry-btn.active,.demo-industry-btn[aria-pressed="true"]{background:var(--accentL);border-color:rgba(26,107,71,.28);color:var(--accent2)}
+.demo-industry-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.demo-industry-note{font-size:12px;color:var(--ink3);line-height:1.5;margin:4px auto 0;max-width:520px}
+.pricing-controls{display:flex;align-items:flex-start;justify-content:center;gap:14px 18px;flex-wrap:wrap;margin-top:24px}
+.pricing-control-group{display:flex;flex-direction:column;align-items:center;gap:8px}
+.pricing-control-label{font-size:11px;font-weight:var(--fw-bold);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.pricing-control-group .currency-toggle{margin:0}
+.billing-save-note{font-size:13px;font-weight:var(--fw-semi);color:var(--accent2);line-height:1.45;text-align:center;margin:14px auto 0}
+.plan-billing-note{font-size:12px;line-height:1.45;color:var(--ink3);margin:8px 0 14px;min-height:17px}
+.plan-card.featured .plan-billing-note{color:rgba(255,255,255,.64)}
+.plan-annual-total{font-size:12px;font-weight:var(--fw-semi);line-height:1.45;color:var(--accent2);margin:-4px 0 14px;min-height:17px}
+.plan-annual-total[hidden]{display:none}
+.plan-card.featured .plan-annual-total{color:var(--accentM)}
+.plans-compare{margin:28px auto 0;max-width:980px;border:1px solid var(--line);border-radius:var(--r-md);background:#fff;overflow:hidden}
+.plans-compare summary{min-height:54px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;cursor:pointer;font-family:var(--title);font-size:20px;font-weight:var(--fw-title);letter-spacing: -.02em;color:var(--ink);list-style:none}
+.plans-compare summary::-webkit-details-marker{display:none}
+.plans-compare summary:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+.plans-compare-body{padding:0 22px 22px}
+.plans-compare-lead{font-size:14px;color:var(--ink3);line-height:1.6;margin:0 0 18px}
+.plans-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.plans-table{width:100%;min-width:680px;border-collapse:collapse;font-size:13px;color:var(--ink2)}
+.plans-table th,.plans-table td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.plans-table th{font-size:11px;font-weight:var(--fw-title);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);background:var(--off)}
+.plans-table td:first-child{font-weight:var(--fw-semi);color:var(--ink)}
+.plans-table tr:last-child td{border-bottom:0}
+.dash-screen{display:block;grid-area:1/1;min-width:0;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px);transition:opacity .28s var(--ease-out),transform .28s var(--ease-out),visibility .28s;width:100%;overflow:hidden}
+.dash-screen.active{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+.dynamic-mockup{width:100%;overflow:hidden}
+.dynamic-mockup .dash-main{width:100%;overflow:hidden}
+@keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* Checklist */
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin-top:40px}
+.check-item{display:flex;align-items:flex-start;gap:12px;font-size:15px;line-height:1.5;color:var(--ink2)}
+.check-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accentL);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:var(--fw-title);margin-top:2px}
+/* Steps */
+/* Rubros */
+.rubros-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.rubro-card{padding:28px;border:1px solid var(--line);border-radius:var(--r-lg);background:#fff;display:flex;flex-direction:column}
+.rubro-card .text-link{margin-top:auto;padding-top:8px;align-self:flex-start;font-size:14px}
+.rubro-emoji{display:block;color:var(--accent2)}
+.rubro-card .step-number{margin-bottom:8px}
+.rubro-card h3{font-size:var(--h3-sm);font-weight:var(--fw-bold);letter-spacing:-.03em;margin-bottom:10px;color:var(--ink)}
+.rubro-card p{font-size:13px;color:var(--ink3);line-height:1.6}
+/* Check two-level */
+.check-title{display:block;font-size:15px;font-weight:var(--fw-bold);color:var(--ink);margin-bottom:3px}
+.check-sub{display:block;font-size:13px;color:var(--ink3);line-height:1.5}
+/* Responsive */
+@media(max-width:1040px){.mockup-panels{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:880px){.mockup-mobile-business{display:block}.mockup-mobile-tabs{display:flex}.dash-inner{grid-template-columns:1fr;display:block}.dash-sidebar{display:none}.dash-main{padding:18px;min-height:0}.dash-stage{min-height:0;display:block}.dash-screen{display:none;transform:none}.dash-screen.active{display:block;animation:screenIn .28s var(--ease-out)}.hero-mockup{border-radius:var(--r-lg)}.mockup-body{padding:10px}.mockup-url{display:none!important}.steps-row,.rubros-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.hero-mockup{border-radius:var(--r-lg)}.mockup-body{padding:8px}.mockup-bar{height:48px;padding:0 14px}.dash-main{padding:16px}.dash-header-row{flex-direction:column;gap:8px}.dash-date{width:max-content;white-space:normal;height:auto;min-height:32px;padding:8px 12px}.kpi-row{grid-template-columns:1fr}.kpi-card{padding:15px}.mockup-panels{gap:12px;grid-template-columns:1fr}.panel-card{padding:14px}.check-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.demo-industry-selector{text-align:left}.demo-industry-title,.demo-industry-sub,.demo-industry-note{text-align:center}.demo-industry-buttons{justify-content:flex-start;margin-left:-2px;margin-right:-2px}.pricing-controls{gap:12px}.pricing-control-group{width:100%}.pricing-control-group .currency-toggle{width:100%;justify-content:center}.plans-compare summary{font-size:18px;padding:16px 18px}.plans-compare-body{padding:0 16px 18px}}
+@media(max-width:420px){.dash-main{padding:14px}.dash-title{font-size:22px}.payment-row{grid-template-columns:1fr;gap:7px}.progress{width:100%}}
+@media(prefers-reduced-motion:reduce){.dash-screen{transition:opacity .2s linear,visibility .2s!important;transform:none!important;animation:none!important}.progress span{transition:none;transform:none}}
+</style>
+<link rel="stylesheet" href="/propuesta-rediseno/v3/v3.css">
+</head>
+<body>
+<a href="#contenido" class="skip-link">Saltar al contenido</a>
+
+<nav id="mainNav" aria-label="Principal">
+  <div class="nav-inner">
+    <a href="/propuesta-rediseno/v3/" class="nav-brand" aria-label="Growi: inicio">Growi<span class="dot">.</span></a>
+    <ul class="nav-links" role="list">
+      <li><a href="/propuesta-rediseno/v3/app/">GrowiApp</a></li>
+      <li><a href="/propuesta-rediseno/v3/web/">GrowiWeb</a></li>
+      <li><a href="/propuesta-rediseno/v3/flow/">GrowiFlow</a></li>
+      <li><a href="/propuesta-rediseno/v3/combo/">Combo</a></li>
+      <li><a href="/propuesta-rediseno/v3/invitaciones/">Invitaciones</a></li>
+    </ul>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiApp." class="nav-wa" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-track="app-nav-whatsapp">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span class="wa-label">WhatsApp</span>
+    </a>
+    <button class="nav-hamburger" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación" aria-modal="true" aria-hidden="true">
+  <div class="mobile-menu-card">
+    <a href="/propuesta-rediseno/v3/app/">GrowiApp</a>
+    <a href="/propuesta-rediseno/v3/web/">GrowiWeb</a>
+    <a href="/propuesta-rediseno/v3/flow/">GrowiFlow</a>
+    <a href="/propuesta-rediseno/v3/combo/">Combo</a>
+    <a href="/propuesta-rediseno/v3/invitaciones/">Invitaciones</a>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiApp." class="mobile-wa mobile-menu-cta" target="_blank" rel="noopener noreferrer" data-track="app-mobile-menu-whatsapp">Hablar por WhatsApp</a>
+  </div>
+</div>
+
+<main id="contenido">
+<!-- Hero -->
+<section class="hero-landing">
+  <div class="container">
+    <h1 class="h1-stack"><span class="eyebrow">Sistema de gestión para comercios</span> <span class="section-title" style="max-width:760px">Tu sistema, <span class="accent">listo</span><br>para empezar a trabajar.</span></h1>
+    <p class="section-lead hero-lead">Registrá ventas, controlá el stock, llevá los turnos y cerrá la caja desde el celular, sin planillas ni sistemas difíciles. Coordinamos la configuración y puesta en marcha según las necesidades de tu negocio. Antes de comenzar, te confirmamos una fecha estimada de entrega.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+GrowiApp.%0A%0AMi+rubro%3A%0ACu%C3%A1ntas+personas+lo+usar%C3%ADan%3A" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer" data-track="app-hero-whatsapp">Hablar por WhatsApp</a>
+    </div>
+    <p class="demo-cta"><a class="demo-link" href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+GrowiApp+y+coordinar+una+demo+de+20+minutos.%0A%0AMi+rubro%3A%0AD%C3%ADas+y+horarios+que+me+vienen+bien%3A" target="_blank" rel="noopener noreferrer" data-track="app-hero-demo-whatsapp">Solicitar una demo de 20 minutos</a><span class="demo-note">Coordinamos día y horario según disponibilidad.</span></p>
+    <p class="price-anchor">Desde <span data-price="15">$23.000 ARS</span> por mes + <span data-price="49">$75.200 ARS</span> de puesta en marcha, una sola vez<br>Garantía de 7 días · Sin permanencia<br>Qué incluye cada precio y qué no, más abajo.</p>
+    <div class="rubro-links">
+      <a href="#demo">Demo</a>
+      <a href="#incluye">Qué incluye</a>
+      <a href="#pricing">Precios</a>
+      <a href="#faq">Preguntas</a>
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard mockup -->
+<section class="section section-off" id="demo">
+  <div class="container">
+    <p class="eyebrow eyebrow-center">Demo interactivo</p>
+    <h2 class="section-title reveal" style="text-align:center;max-width:600px;margin:12px auto 0">Así se ve GrowiApp por dentro.</h2>
+    <p style="text-align:center;color:var(--ink3);margin-top:12px;font-size:15px">Tocá las pantallas y mirá cómo se usa en un día normal.</p>
+
+    <div class="demo-industry-selector reveal" aria-label="Selector de rubro del demo">
+      <h3 class="demo-industry-title">Probalo según tu rubro</h3>
+      <p class="demo-industry-sub">Elegí tu rubro y los datos cambian.</p>
+      <div class="demo-industry-buttons" role="group" aria-label="Elegir rubro del demo">
+        <button type="button" class="demo-industry-btn active" data-rubro="cafeteria" aria-pressed="true">Cafetería</button>
+        <button type="button" class="demo-industry-btn" data-rubro="peluqueria" aria-pressed="false">Peluquería</button>
+        <button type="button" class="demo-industry-btn" data-rubro="taller" aria-pressed="false">Taller</button>
+        <button type="button" class="demo-industry-btn" data-rubro="consultorio" aria-pressed="false">Consultorio</button>
+      </div>
+      <p class="demo-industry-note">Los datos son ilustrativos. La configuración real se adapta a tu negocio.</p>
+    </div>
+
+    <div class="hero-mockup reveal">
+      <div class="mockup-bar">
+        <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div>
+        <div class="mockup-url" aria-hidden="true">growi.ar/dashboard</div>
+        <button type="button" class="mockup-pause" id="demoPause" aria-pressed="false" hidden>Pausar</button>
+      </div>
+      <div class="mockup-body">
+        <div class="dash-inner dynamic-mockup curated-mockup" id="growiMockup">
+          <div class="dash-sidebar">
+            <div class="dash-logo-frame">
+              <span class="dash-logo-text">Growi<span class="dot">.</span></span>
+            </div>
+            <div class="mockup-business" data-demo="business-name">Café Central</div>
+            <button type="button" class="dash-nav-item active" aria-pressed="true" data-target="resumen">Resumen</button>
+            <button type="button" class="dash-nav-item" data-target="ventas">Ventas</button>
+            <button type="button" class="dash-nav-item" data-target="clientes">Clientes</button>
+            <button type="button" class="dash-nav-item" data-target="reservas">Reservas</button>
+            <button type="button" class="dash-nav-item" data-target="caja">Caja</button>
+            <button type="button" class="dash-nav-item" data-target="reportes">Reportes</button>
+          </div>
+          <div class="dash-main">
+            <div class="mockup-mobile-business" data-demo="business-name">Café Central</div>
+            <div class="mockup-mobile-tabs" aria-label="Navegación demo Growi">
+              <button type="button" class="mobile-demo-tab active" aria-pressed="true" data-target="resumen">Resumen</button>
+              <button type="button" class="mobile-demo-tab" data-target="ventas">Ventas</button>
+              <button type="button" class="mobile-demo-tab" data-target="clientes">Clientes</button>
+              <button type="button" class="mobile-demo-tab" data-target="reservas">Reservas</button>
+              <button type="button" class="mobile-demo-tab" data-target="caja">Caja</button>
+              <button type="button" class="mobile-demo-tab" data-target="reportes">Reportes</button>
+            </div>
+            <div class="dash-stage">
+              <div class="dash-screen active" data-screen="resumen">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Resumen del día</div>
+                    <div class="dash-subtitle">Ventas, reservas, caja y actividad reciente en una vista clara.</div>
+                  </div>
+                  <div class="dash-date">Turno abierto · hoy</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Ventas hoy</div><div class="kpi-val green" data-demo="sales-today">$184.500</div><div class="kpi-sub">+12% vs ayer</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Transacciones</div><div class="kpi-val">47</div><div class="kpi-sub">Ticket <span data-demo="avg-ticket">$7.690</span></div></div>
+                  <div class="kpi-card"><div class="kpi-label">Reservas</div><div class="kpi-val" data-demo="reservations-today">18</div><div class="kpi-sub">3 por llegar</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Caja estimada</div><div class="kpi-val">$147.600</div><div class="kpi-sub">Antes de cierre</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Ventas semanales</span><span class="panel-note">Últimos 7 días</span></div>
+                    <div class="curated-bars" aria-hidden="true">
+                      <div><span style="height:46%"></span><em>Lun</em></div>
+                      <div><span style="height:64%"></span><em>Mar</em></div>
+                      <div><span class="muted" style="height:38%"></span><em>Mié</em></div>
+                      <div><span style="height:78%"></span><em>Jue</em></div>
+                      <div><span style="height:58%"></span><em>Vie</em></div>
+                      <div><span class="dark" style="height:88%"></span><em>Sáb</em></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Actividad reciente</span><span class="panel-note">En vivo</span></div>
+                    <div class="orders-list">
+                      <div class="order-item"><div><div class="order-title" data-demo="act-1">Mesa 4 · 2 flat white + tostado</div><div class="order-meta">Pago confirmado · hace 2 min</div></div><div class="order-price">$11.200</div></div>
+                      <div class="order-item"><div><div class="order-title" data-demo="act-2">Para llevar · 3 medialunas + café</div><div class="order-meta">Pedidos online · hace 8 min</div></div><div class="order-price">$8.600</div></div>
+                      <div class="order-item"><div><div class="order-title">Alerta operativa · <span data-demo="stock-alert">Leche entera</span></div><div class="order-meta">Revisar disponibilidad o seguimiento</div></div><div class="status-pill neutral">Alerta</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-screen" data-screen="ventas">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Ventas y pagos</div>
+                    <div class="dash-subtitle">Facturación, actividad, ticket promedio y medios de pago sin planillas.</div>
+                  </div>
+                  <div class="dash-date">Actualizado hace 14 seg</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Facturación</div><div class="kpi-val green">$512.300</div><div class="kpi-sub">79% del objetivo</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Operaciones</div><div class="kpi-val">138</div><div class="kpi-sub">Registradas hoy</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Ticket promedio</div><div class="kpi-val" data-demo="avg-ticket">$7.690</div><div class="kpi-sub">+7% semanal</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Medios de pago</div><div class="kpi-val">3</div><div class="kpi-sub">Ef., MP y transf.</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Canales de atención</span><span class="panel-note">Distribución</span></div>
+                    <div class="payment-list">
+                      <div class="payment-row"><span data-demo="main-channel">Mostrador</span><div class="progress" style="--w:78%"><span></span></div><strong>78%</strong></div>
+                      <div class="payment-row"><span>Atención directa</span><div class="progress" style="--w:54%"><span></span></div><strong>54%</strong></div>
+                      <div class="payment-row"><span>Pedidos online</span><div class="progress" style="--w:31%"><span></span></div><strong>31%</strong></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span data-demo="top-label">Más vendido</span><span class="panel-note">Hoy</span></div>
+                    <div class="curated-bars compact" aria-hidden="true">
+                      <div><span style="height:62%"></span><em data-demo="top-product">Flat white</em></div>
+                      <div><span style="height:78%"></span><em data-demo="top-2">Medialunas</em></div>
+                      <div><span class="muted" style="height:42%"></span><em data-demo="top-3">Tostado</em></div>
+                      <div><span class="dark" style="height:58%"></span><em data-demo="top-4">Cappuccino</em></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-screen" data-screen="clientes">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Clientes y seguimiento</div>
+                    <div class="dash-subtitle">Historial, preferencias y próximos contactos sin datos perdidos.</div>
+                  </div>
+                  <div class="dash-date"><span data-demo="active-clients">42</span> clientes activos</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Clientes activos</div><div class="kpi-val" data-demo="active-clients">42</div><div class="kpi-sub">Últimos 30 días</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Nuevos</div><div class="kpi-val green">9</div><div class="kpi-sub">Esta semana</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Frecuencia</div><div class="kpi-val">2,8</div><div class="kpi-sub">Visitas promedio</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Seguimientos</div><div class="kpi-val">8</div><div class="kpi-sub">Pendientes</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Clientes frecuentes</span><span class="panel-note">Último mes</span></div>
+                    <div class="orders-list">
+                      <div class="order-item"><div><div class="order-title">Lucía R.</div><div class="order-meta">12 visitas · Preferencia registrada</div></div><div class="status-pill">VIP</div></div>
+                      <div class="order-item"><div><div class="order-title">Martín P.</div><div class="order-meta">8 visitas · Atención previa</div></div><div class="status-pill neutral">Frecuente</div></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Grupos de clientes</span><span class="panel-note">Para actuar</span></div>
+                    <div class="payment-list">
+                      <div class="payment-row"><span>VIP</span><div class="progress" style="--w:34%"><span></span></div><strong>21</strong></div>
+                      <div class="payment-row"><span>Frecuentes</span><div class="progress" style="--w:68%"><span></span></div><strong>58</strong></div>
+                      <div class="payment-row"><span>Nuevos</span><div class="progress" style="--w:48%"><span></span></div><strong>41</strong></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-screen" data-screen="reservas">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Reservas y turnos</div>
+                    <div class="dash-subtitle">Quién viene, a qué hora y qué espacio o servicio está disponible.</div>
+                  </div>
+                  <div class="dash-date">5 confirmadas</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Reservas hoy</div><div class="kpi-val" data-demo="reservations-today">18</div><div class="kpi-sub">7 confirmadas</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Ocupación</div><div class="kpi-val green">82%</div><div class="kpi-sub">Pico 17:30</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Próxima llegada</div><div class="kpi-val">15:30</div><div class="kpi-sub" data-demo="service">Mesa para 2</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Promedio</div><div class="kpi-val">54 min</div><div class="kpi-sub">Rotación</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Próximos turnos</span><span class="panel-note">Hoy</span></div>
+                    <div class="schedule-list">
+                      <div class="schedule-item"><div class="schedule-time">15:30</div><div><strong>Florencia M.</strong><div class="order-meta"><span data-demo="service">Mesa para 2</span> · confirmado</div></div><div class="status-pill">Confirmada</div></div>
+                      <div class="schedule-item"><div class="schedule-time">16:15</div><div><strong>Tomás R.</strong><div class="order-meta">Agenda · seguimiento</div></div><div class="status-pill neutral">En camino</div></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Disponibilidad</span><span class="panel-note">Próximas 2 hs</span></div>
+                    <div class="payment-list">
+                      <div class="payment-row"><span>Turno corto</span><div class="progress" style="--w:88%"><span></span></div><strong>Libre</strong></div>
+                      <div class="payment-row"><span>Bloque medio</span><div class="progress" style="--w:42%"><span></span></div><strong>Parcial</strong></div>
+                      <div class="payment-row"><span>Atención rápida</span><div class="progress" style="--w:64%"><span></span></div><strong>Activa</strong></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-screen" data-screen="caja">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Caja y gastos</div>
+                    <div class="dash-subtitle">Ingresos, egresos y saldo del día listos para el cierre.</div>
+                  </div>
+                  <div class="dash-date">Cierre sugerido: 20:30</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Ingresos</div><div class="kpi-val green" data-demo="sales-today">$184.500</div><div class="kpi-sub">Confirmados</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Egresos</div><div class="kpi-val">$36.900</div><div class="kpi-sub">Cargados</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Saldo</div><div class="kpi-val">$147.600</div><div class="kpi-sub">Estimado</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Pagos mixtos</div><div class="kpi-val">12</div><div class="kpi-sub">Hoy</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Últimos movimientos</span><span class="panel-note">Hoy</span></div>
+                    <div class="orders-list">
+                      <div class="order-item"><div><div class="order-title" data-demo="main-expense">Insumos</div><div class="order-meta">Egreso registrado</div></div><div class="order-price">$18.000</div></div>
+                      <div class="order-item"><div><div class="order-title" data-demo="expense-2">Servicios</div><div class="order-meta">Movimiento registrado</div></div><div class="order-price">$9.500</div></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Medios de cobro</span><span class="panel-note">Distribución</span></div>
+                    <div class="payment-list">
+                      <div class="payment-row"><span>MP</span><div class="progress" style="--w:63%"><span></span></div><strong>63%</strong></div>
+                      <div class="payment-row"><span>Efectivo</span><div class="progress" style="--w:28%"><span></span></div><strong>28%</strong></div>
+                      <div class="payment-row"><span>Transf.</span><div class="progress" style="--w:9%"><span></span></div><strong>9%</strong></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-screen" data-screen="reportes">
+                <div class="dash-header-row">
+                  <div>
+                    <div class="dash-title">Reportes claros</div>
+                    <div class="dash-subtitle">Indicadores simples para decidir sin armar reportes a mano.</div>
+                  </div>
+                  <div class="dash-date">Semana en curso</div>
+                </div>
+                <div class="kpi-row">
+                  <div class="kpi-card"><div class="kpi-label">Mejor día</div><div class="kpi-val">Sáb</div><div class="kpi-sub">$218.400</div></div>
+                  <div class="kpi-card"><div class="kpi-label" data-demo="top-label">Más vendido</div><div class="kpi-val" data-demo="top-product">Flat white</div><div class="kpi-sub">Actividad del día</div></div>
+                  <div class="kpi-card"><div class="kpi-label">De dónde llegan más</div><div class="kpi-val green" data-demo="main-channel">Mostrador</div><div class="kpi-sub">78%</div></div>
+                  <div class="kpi-card"><div class="kpi-label">Margen estimado</div><div class="kpi-val" data-demo="margin">41%</div><div class="kpi-sub">Últimos 7 días</div></div>
+                </div>
+                <div class="mockup-panels">
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Tendencia semanal</span><span class="panel-note">Ventas</span></div>
+                    <div class="curated-bars" aria-hidden="true">
+                      <div><span style="height:42%"></span><em>Lun</em></div>
+                      <div><span style="height:54%"></span><em>Mar</em></div>
+                      <div><span class="muted" style="height:46%"></span><em>Mié</em></div>
+                      <div><span style="height:68%"></span><em>Jue</em></div>
+                      <div><span style="height:74%"></span><em>Vie</em></div>
+                      <div><span class="dark" style="height:92%"></span><em>Sáb</em></div>
+                    </div>
+                  </div>
+                  <div class="panel-card">
+                    <div class="panel-head"><span>Lecturas rápidas</span><span class="panel-note">De un vistazo</span></div>
+                    <div class="insight-list">
+                      <div><strong>Mayor venta:</strong><span> sábado</span></div>
+                      <div><strong>Pico horario:</strong><span> 17 a 19 hs</span></div>
+                      <div><strong><span data-demo="top-label">Más vendido</span>:</strong><span data-demo="top-product"> Flat white</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cómo funciona -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title title-center reveal">Tres pasos y ya está andando.</h2>
+    <div class="steps-row">
+      <div class="step-box reveal">
+        <div class="step-number">Paso 01</div>
+        <h3>Nos contás tu negocio</h3>
+        <p>Una llamada o chat de 20 minutos. Qué vendés, cómo cobrás, cuántos son en el equipo. Sin formularios ni demos de una hora.</p>
+      </div>
+      <div class="step-box reveal">
+        <div class="step-number">Paso 02</div>
+        <h3>Lo armamos nosotros</h3>
+        <p>Cargamos tus productos, dejamos listas las partes que vas a usar y te lo entregamos andando en la fecha estimada que te confirmamos por escrito antes de empezar. Vos no tocás nada técnico.</p>
+      </div>
+      <div class="step-box reveal">
+        <div class="step-number">Paso 03</div>
+        <h3>Empezás a vender</h3>
+        <p>Una hora de capacitación en vivo, por videollamada. Y soporte por WhatsApp para lo que surja después.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Qué incluye -->
+<section class="section section-off" id="incluye">
+  <div class="container">
+    <h2 class="section-title title-center reveal">Todo lo que necesitás.<br>Nada que no uses.</h2>
+    <div class="check-grid reveal">
+      <div class="check-item">
+        <div class="check-icon" aria-hidden="true">✓</div>
+        <div><span class="check-title">Cada venta registrada al momento</span><span class="check-sub">para saber cuánto ganaste, por producto y por hora</span></div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon" aria-hidden="true">✓</div>
+        <div><span class="check-title">Cierre de caja automático</span><span class="check-sub">sin hacer cuentas al final del día: el número está solo</span></div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon" aria-hidden="true">✓</div>
+        <div><span class="check-title">Control de stock con alertas</span><span class="check-sub">te avisa cuando un producto está por agotarse, antes de quedarte sin nada</span></div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon" aria-hidden="true">✓</div>
+        <div><span class="check-title">Agenda de turnos y reservas</span><span class="check-sub">reemplazás el cuaderno por una agenda digital que nunca se pierde</span></div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon" aria-hidden="true">✓</div>
+        <div><span class="check-title">Ficha de clientes</span><span class="check-sub">historial, preferencias y frecuencia de visita de cada cliente</span></div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon" aria-hidden="true">✓</div>
+        <div><span class="check-title">Reportes por día, producto y canal de pago</span><span class="check-sub">ves qué funciona y qué no, sin necesitar un contador</span></div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon" aria-hidden="true">✓</div>
+        <div><span class="check-title">Todos los medios de pago</span><span class="check-sub">efectivo, Mercado Pago y transferencias en un mismo registro</span></div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon" aria-hidden="true">✓</div>
+        <div><span class="check-title">Acceso desde cualquier dispositivo</span><span class="check-sub">celular, tablet o computadora, donde estés</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Rubros -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title title-center reveal">Para tu tipo de negocio.</h2>
+    <p class="section-lead lead-center">Lo configuramos según cómo trabajás vos.</p>
+    <div class="rubros-grid">
+      <div class="rubro-card reveal">
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 8h10v5.5A4.5 4.5 0 0 1 10.5 18h-1A4.5 4.5 0 0 1 5 13.5V8Z"/><path d="M15 10h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M4 20h14"/><path d="M8 4.5c.8.7.8 1.4 0 2.1M12 4.5c.8.7.8 1.4 0 2.1"/></svg></span>
+        <div class="step-number">Cafeterías y gastronomía</div>
+        <h3>Cerrá el día sabiendo cuánto ganaste.</h3>
+        <p>«No sé cuánto vendí en efectivo vs. Mercado Pago.» GrowiApp separa los medios de pago y cierra la caja automáticamente.</p>
+        <a href="/app/cafeterias/" class="text-link">GrowiApp para cafeterías</a>
+      </div>
+      <div class="rubro-card reveal">
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><circle cx="6" cy="7" r="2.5"/><circle cx="6" cy="17" r="2.5"/><path d="M8.2 8.2 20 20M8.2 15.8 20 4"/></svg></span>
+        <div class="step-number">Peluquerías y estética</div>
+        <h3>Tu agenda en un solo lugar, sin turnos cruzados.</h3>
+        <p>«Los turnos se me cruzan y pierdo gente.» Agenda digital e historial de servicios en un solo lugar. ¿Querés que además los avisos de turno salgan solos? Eso lo hacen los <a href="/propuesta-rediseno/v3/flow/#recordatorios">Recordatorios de GrowiFlow</a>, que se contratan aparte.</p>
+        <a href="/app/peluquerias/" class="text-link">GrowiApp para peluquerías y estética</a>
+      </div>
+      <div class="rubro-card reveal">
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M14.7 6.3a4.6 4.6 0 0 0 5 5L10.8 20a2.4 2.4 0 0 1-3.4-3.4l8.8-8.8a4.6 4.6 0 0 1-1.5-1.5Z"/><path d="M8.2 17.2h.01"/></svg></span>
+        <div class="step-number">Talleres</div>
+        <h3>Sabés en qué está cada trabajo y qué falta cobrar.</h3>
+        <p>«No tengo forma de ver qué órdenes están pendientes.» Seguís cada trabajo desde que entra hasta que lo cobrás.</p>
+        <a href="/app/talleres/" class="text-link">GrowiApp para talleres y servicios</a>
+      </div>
+      <div class="rubro-card reveal">
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 20V6.5A2.5 2.5 0 0 1 7 4h10a2.5 2.5 0 0 1 2.5 2.5V20"/><path d="M3 20h18"/><path d="M12 8v6M9 11h6"/><path d="M8 20v-3h8v3"/></svg></span>
+        <div class="step-number">Consultorios</div>
+        <h3>Turnos sin pisarse, con la ficha de cada paciente a mano.</h3>
+        <p>«Necesito saber quién viene mañana y qué debo cobrar.» Agenda, ficha de paciente y caja en el mismo lugar.</p>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+un+consultorio+y+quiero+conocer+GrowiApp." class="text-link" target="_blank" rel="noopener noreferrer" data-track="app-rubro-consultorio-whatsapp">Consultar para mi consultorio</a>
+      </div>
+      <div class="rubro-card reveal">
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M9 3h6l1.5 4 3 13h-15l3-13L9 3Z"/><path d="M9 3c.4 2 1.4 3 3 3s2.6-1 3-3"/><path d="M7.5 7h9"/></svg></span>
+        <div class="step-number">Indumentaria</div>
+        <h3>Tu stock siempre al día, sin contar a mano.</h3>
+        <p>«No sé qué tengo, por talle y color.» Inventario actualizado con cada venta y alertas de reposición.</p>
+        <a href="/app/retail/" class="text-link">GrowiApp para comercios</a>
+      </div>
+      <div class="rubro-card reveal">
+        <span class="rubro-emoji" aria-hidden="true"><svg class="icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4 5h2l2 10h9.5l2-7H7"/><path d="M9 19.5h.01M17 19.5h.01"/><path d="M9 19.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM18 19.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg></span>
+        <div class="step-number">Kioscos y almacenes</div>
+        <h3>Cada venta anotada, sin cuaderno.</h3>
+        <p>«Anoto en un cuaderno que después no entiendo.» Ventas rápidas, stock actualizado y reporte del día en segundos.</p>
+        <a href="/app/retail/" class="text-link">GrowiApp para kioscos y almacenes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Planes y precios -->
+<section class="section section-off" id="pricing">
+  <div class="container">
+    <h2 class="section-title title-center reveal">Simple, claro y sin letra chica.</h2>
+    <p class="section-lead lead-center">Un pago único de puesta en marcha (lo armamos, cargamos tus datos y te enseñamos a usarlo) + un abono mensual fijo. Lo que te decimos es lo que pagás.</p>
+    <div class="pricing-controls">
+      <div class="pricing-control-group">
+        <span class="pricing-control-label">Moneda</span>
+        <div class="currency-toggle" role="group" aria-label="Seleccionar moneda">
+          <button class="currency-btn active" id="btnARS" type="button" aria-pressed="true">ARS</button>
+          <button class="currency-btn" id="btnUSD" type="button" aria-pressed="false">USD</button>
+        </div>
+      </div>
+      <div class="pricing-control-group">
+        <span class="pricing-control-label">Período</span>
+        <div class="currency-toggle" role="group" aria-label="Seleccionar modalidad de pago">
+          <button class="currency-btn active" id="btnMonthly" type="button" aria-pressed="true" data-period="monthly">Mensual</button>
+          <button class="currency-btn" id="btnAnnual" type="button" aria-pressed="false" data-period="annual">Anual −15%</button>
+        </div>
+      </div>
+    </div>
+    <p class="billing-save-note" aria-live="polite">Ahorrá 15% pagando anual.</p>
+    <div class="plans-grid reveal">
+      <div class="plan-card">
+        <div class="plan-name">Start</div>
+        <div class="plan-price"><span data-plan-price data-price="15" data-price-short>$23.000</span><span class="plan-period">/mes</span></div>
+        <div class="plan-setup">+ <span data-price="49">$75.200 ARS</span> de puesta en marcha, una sola vez</div>
+        <div class="plan-annual-total" data-annual-total hidden></div>
+        <div class="plan-billing-note" data-billing-copy>Pago mensual. Cancelás cuando quieras.</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feat"><span class="pfd"></span>1 usuario</li>
+          <li class="plan-feat"><span class="pfd"></span>1 sucursal</li>
+          <li class="plan-feat"><span class="pfd"></span>Ventas, caja y stock</li>
+          <li class="plan-feat"><span class="pfd"></span>Turnos y reservas</li>
+          <li class="plan-feat"><span class="pfd"></span>Ficha de clientes</li>
+          <li class="plan-feat"><span class="pfd"></span>Reportes simples</li>
+          <li class="plan-feat"><span class="pfd"></span>Soporte por WhatsApp</li>
+        </ul>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+el+plan+Start+de+GrowiApp." class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="app-pricing-whatsapp">Consultar por Start</a>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">Recomendado si son varios</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price"><span data-plan-price data-price="29" data-price-short>$44.500</span><span class="plan-period">/mes</span></div>
+        <div class="plan-setup">+ <span data-price="149">$229.000 ARS</span> de puesta en marcha, una sola vez</div>
+        <div class="plan-annual-total" data-annual-total hidden></div>
+        <div class="plan-billing-note" data-billing-copy>Pago mensual. Cancelás cuando quieras.</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feat"><span class="pfd"></span>Hasta 3 usuarios, cada uno con su acceso</li>
+          <li class="plan-feat"><span class="pfd"></span>1 sucursal</li>
+          <li class="plan-feat"><span class="pfd"></span>Todo lo de Start</li>
+          <li class="plan-feat"><span class="pfd"></span>Para equipos que cargan ventas o turnos a la vez</li>
+          <li class="plan-feat"><span class="pfd"></span>Factura electrónica ARCA: próximamente</li>
+        </ul>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+el+plan+Pro+de+GrowiApp." class="plan-btn plan-btn-fill" target="_blank" rel="noopener noreferrer" data-track="app-pricing-whatsapp">Consultar por Pro</a>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Multi</div>
+        <div class="plan-price"><span data-plan-price data-price="49" data-price-short>$75.200</span><span class="plan-period">/mes</span></div>
+        <div class="plan-setup">+ <span data-price="249">$382.000 ARS</span> de puesta en marcha, una sola vez</div>
+        <div class="plan-annual-total" data-annual-total hidden></div>
+        <div class="plan-billing-note" data-billing-copy>Pago mensual. Cancelás cuando quieras.</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feat"><span class="pfd"></span>Hasta 5 usuarios</li>
+          <li class="plan-feat"><span class="pfd"></span>Hasta 2 sucursales</li>
+          <li class="plan-feat"><span class="pfd"></span>Todo lo de Pro</li>
+          <li class="plan-feat"><span class="pfd"></span>Reportes avanzados por sucursal</li>
+          <li class="plan-feat"><span class="pfd"></span>WhatsApp prioritario</li>
+        </ul>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+consultar+por+el+plan+Multi+de+GrowiApp." class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer" data-track="app-pricing-whatsapp">Consultar por Multi</a>
+      </div>
+    </div>
+        <div class="v3-calc reveal">
+      <h3>¿Cuánto pago para empezar?</h3>
+      <p>Elegí un plan. Los importes siguen la moneda y el período que marcaste arriba.</p>
+      <div class="pick" role="radiogroup" aria-label="Plan">
+        <label><input type="radio" name="v3p" value="Start" checked><span>Start</span></label>
+        <label><input type="radio" name="v3p" value="Pro"><span>Pro</span></label>
+        <label><input type="radio" name="v3p" value="Multi"><span>Multi</span></label>
+      </div>
+      <div class="out" aria-live="polite">
+        <div id="v3c1"><small>Para empezar</small><b></b><em></em></div>
+        <div id="v3c2"><small>Después</small><b></b><em></em></div>
+        <div id="v3c3"><small>Primer año</small><b></b><em></em></div>
+      </div>
+      <p style="margin:18px 0 0"><a class="btn btn-primary wa" href="#" target="_blank" rel="noopener noreferrer" data-track="app-calculadora-whatsapp">Consultar por el plan <span class="pn">Start</span></a></p>
+    </div>
+    <details class="plans-compare reveal">
+      <summary>Compará los planes<i class="faq-icon" aria-hidden="true">+</i></summary>
+      <div class="plans-compare-body">
+        <p class="plans-compare-lead">Qué cambia entre Start, Pro y Multi.</p>
+        <div class="plans-table-wrap" tabindex="0" role="region" aria-label="Tabla comparativa de planes. En pantallas chicas se desplaza hacia los costados.">
+          <table class="plans-table">
+            <caption class="sr-only">Comparación de los planes Start, Pro y Multi de GrowiApp</caption>
+            <thead>
+              <tr>
+                <th scope="col">Funcionalidad</th>
+                <th scope="col">Start</th>
+                <th scope="col">Pro</th>
+                <th scope="col">Multi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Usuarios</td><td>1</td><td>Hasta 3</td><td>Hasta 5</td></tr>
+              <tr><td>Sucursales</td><td>1</td><td>1</td><td>Hasta 2</td></tr>
+              <tr><td>Ventas y caja</td><td>Incluido</td><td>Incluido</td><td>Incluido</td></tr>
+              <tr><td>Stock con alertas</td><td>Incluido</td><td>Incluido</td><td>Incluido</td></tr>
+              <tr><td>Turnos y reservas</td><td>Incluido</td><td>Incluido</td><td>Incluido</td></tr>
+              <tr><td>Ficha de clientes</td><td>Incluido</td><td>Incluido</td><td>Incluido</td></tr>
+              <tr><td>Reportes</td><td>Simples</td><td>Simples</td><td>Avanzados, por sucursal</td></tr>
+              <tr><td>Factura electrónica ARCA</td><td>No</td><td>Próximamente</td><td>Próximamente</td></tr>
+              <tr><td>Capacitación inicial</td><td>1 hora</td><td>1 hora</td><td>1 hora</td></tr>
+              <tr><td>Soporte por WhatsApp</td><td>Incluido</td><td>Incluido</td><td>Prioritario</td></tr>
+              <tr><td>Puesta en marcha hecha por nuestro equipo</td><td>Incluida</td><td>Incluida</td><td>Incluida</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+    <p style="font-size:13px;color:var(--ink3);line-height:1.7;margin-top:28px;text-align:center;max-width:720px;margin-left:auto;margin-right:auto">Todos los planes incluyen la configuración inicial hecha por nuestro equipo y 1 hora de capacitación en vivo. Planes y precios previstos: todavía no se aceptan contrataciones ni pagos. El precio de cada plan es el informado: abono mensual y puesta en marcha, una sola vez. No incluye costos de terceros, como las comisiones de los medios de pago. Están fijados en dólares: el valor en pesos es una referencia que se actualiza con el dólar oficial (venta). Garantía de 7 días desde que GrowiApp queda andando. Los descuentos no se acumulan: si te corresponde más de uno, se aplica el mejor.</p>
+    <div class="guarantee-block reveal">
+      <div class="guarantee-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="guarantee-text">
+        <h3>Garantía de 7 días</h3>
+        <p>Si en los 7 días desde que GrowiApp queda andando no funciona como te prometimos, te devolvemos el 100% de la puesta en marcha. Sin formularios, sin esperas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GrowiFlow: reportes -->
+<section class="section">
+  <div class="container">
+    <div class="trust-block reveal">
+      <h2>Tus datos ya están en GrowiApp. Que te lleguen solos.</h2>
+      <p>Con los Reportes automáticos de GrowiFlow recibís por WhatsApp o mail un resumen de tus ventas y turnos, con lo importante ya marcado: qué se vendió más, qué bajó y qué conviene mirar. Como tus datos ya están cargados en GrowiApp, se activa directo, sin planillas ni pasos extra. Sale <span data-price="89">$137.000 ARS</span>, pago único y sin mensualidad, y por ser cliente de GrowiApp tenés 10% de descuento.</p>
+      <a href="/propuesta-rediseno/v3/flow/#reportes" class="btn btn-primary">Ver Reportes automáticos</a>
+      <p style="margin:18px auto 0;font-size:14px"><a href="/propuesta-rediseno/v3/flow/" class="text-link">Ver todo GrowiFlow: recordatorios, pedidos en orden y más</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-off" id="faq">
+  <div class="container container-narrow">
+    <h2 class="section-title faq-title reveal">Lo que todos preguntan antes de empezar.</h2>
+    <div class="faq-list reveal">
+      <details>
+        <summary>¿Puedo ver una demo antes de empezar?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Sí. Podés pedir una demo de 20 minutos por WhatsApp. Coordinamos día y horario según disponibilidad.</div>
+      </details>
+      <details>
+        <summary>¿Necesito saber de tecnología para usarlo?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">No. Si sabés usar WhatsApp, podés usar GrowiApp. Lo configuramos nosotros y en la capacitación te mostramos todo lo que vas a usar.</div>
+      </details>
+      <details>
+        <summary>¿Necesito comprar algún equipo especial?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">No. Podés usar GrowiApp desde una computadora, tablet o celular con navegador. Si ya tenés una notebook o un teléfono con internet, alcanza para empezar.</div>
+      </details>
+      <details>
+        <summary>¿En cuánto tiempo está listo?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Depende del alcance y de la información que tengamos de tu negocio. Antes de comenzar te confirmamos por escrito una fecha estimada de entrega; la fecha considera las tareas que acordemos y, si cambia el alcance o falta información, la actualizamos con vos. Te pedimos una lista de tus productos o servicios, y nos encargamos del resto. Sin que vos toques nada técnico.</div>
+      </details>
+      <details>
+        <summary>¿Puedo cancelar cuando quiero?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Sí, cuando quieras: no hay permanencia. Si pagaste el mes, lo usás hasta que termine. El plan anual no tiene devolución: lo seguís usando hasta que se cumpla el año. Tus datos te los llevás en Excel.</div>
+      </details>
+      <details>
+        <summary>¿Qué pasa con mis datos si cancelo?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Podés llevarte todo en Excel antes o después de cancelar. Los datos son tuyos y no los usamos para nada más.</div>
+      </details>
+      <details>
+        <summary>¿Pueden pasar lo que tengo hoy en Excel?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Sí. Si tenés productos, clientes o precios en Excel, lo revisamos y lo usamos como base para la configuración inicial. Antes de pasarlo, te avisamos si el archivo necesita limpieza.</div>
+      </details>
+      <details>
+        <summary>¿Funciona sin internet?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Sí, podés seguir trabajando. Si se corta internet, seguís cargando ventas y turnos como siempre: quedan guardados en el dispositivo. Cuando vuelve la conexión, se sincronizan solos con el resto del sistema. Para el día a día, con los datos del celular alcanza.</div>
+      </details>
+      <details>
+        <summary>¿Se integra con Mercado Pago?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Podés registrar ventas cobradas por Mercado Pago y separar ese medio en caja. Si necesitás una integración automática o más específica, la revisamos según cómo trabajás.</div>
+      </details>
+      <details>
+        <summary>¿Emite factura electrónica (ARCA, ex AFIP)?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Todavía no. Está en desarrollo y va a ser parte del plan Pro. No prometemos fecha: si te interesa, escribinos y te avisamos apenas esté disponible.</div>
+      </details>
+      <details>
+        <summary>¿Qué pasa si tengo un problema a las 22 hs?<i class="faq-icon" aria-hidden="true">+</i></summary>
+        <div class="faq-body">Te respondemos por WhatsApp en nuestro horario de atención: de lunes a sábado, de 9 a 19 hs.</div>
+      </details>
+    </div>
+    <p class="faq-more">¿Te quedó alguna duda? <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+tengo+una+duda+sobre+GrowiApp." target="_blank" rel="noopener noreferrer" data-track="app-faq-whatsapp">Preguntanos por WhatsApp</a> y te respondemos en nuestro horario de atención (lunes a sábado, de 9 a 19 hs).</p>
+  </div>
+</section>
+
+<!-- CTA final -->
+<section class="section section-dark">
+  <div class="container text-center">
+    <h2 class="cta-title reveal">¿Querés ver cómo quedaría<br>para tu negocio?</h2>
+    <p class="cta-lead">Pedí una demo de 20 minutos armada con tu rubro. Coordinamos día y horario por WhatsApp, según disponibilidad.</p>
+    <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+conocer+GrowiApp+y+coordinar+una+demo+de+20+minutos.%0A%0AMi+rubro%3A%0AD%C3%ADas+y+horarios+que+me+vienen+bien%3A" class="btn btn-accent btn-lg" target="_blank" rel="noopener noreferrer" data-track="app-final-demo-whatsapp">Solicitar una demo de 20 minutos</a>
+    <p class="cta-note">Sin compromiso. La demo no es una reserva: confirmamos el horario por WhatsApp.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid footer-grid-4">
+      <div>
+        <a href="/propuesta-rediseno/v3/" class="footer-brand" aria-label="Growi: inicio">Growi<span class="dot">.</span></a>
+        <p class="footer-tagline">Crecé con tu negocio.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Productos</h3>
+        <a href="/propuesta-rediseno/v3/app/">GrowiApp</a>
+        <a href="/propuesta-rediseno/v3/web/">GrowiWeb</a>
+        <a href="/propuesta-rediseno/v3/flow/">GrowiFlow</a>
+        <a href="/propuesta-rediseno/v3/combo/">Combo sistema + web</a>
+        <a href="/propuesta-rediseno/v3/invitaciones/">Invitaciones digitales</a>
+      </div>
+      <div class="footer-col">
+        <h3>Por rubro</h3>
+        <a href="/app/cafeterias/">Cafeterías</a>
+        <a href="/app/peluquerias/">Peluquerías y estética</a>
+        <a href="/app/talleres/">Talleres y servicios</a>
+        <a href="/app/retail/">Kioscos y comercios</a>
+      </div>
+      <div class="footer-col">
+        <h3>Contacto</h3>
+        <a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiApp." target="_blank" rel="noopener noreferrer" data-track="app-footer-whatsapp">WhatsApp</a>
+        <a href="mailto:hola@growi.ar">hola@growi.ar</a>
+        <a href="/privacidad/">Privacidad</a>
+        <a href="/terminos/">Términos</a>
+      </div>
+    </div>
+    <p class="aviso-l1">Growi se encuentra en etapa de lanzamiento y actualmente recibe consultas sobre sus servicios, sin aceptar contrataciones ni pagos. Los planes y precios publicados describen las propuestas previstas. Para conocer disponibilidad, alcance y condiciones, contactanos por WhatsApp o correo.</p>
+    <div class="footer-bottom">
+      <span>© 2026 Growi</span>
+      <span>Crecé con tu negocio.</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5491170593877?text=Hola+Growi%2C+quiero+saber+m%C3%A1s+sobre+GrowiApp." class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-track="app-floating-whatsapp">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="/shared.fx.js"></script>
+<script src="/shared.js" onerror="document.documentElement.classList.remove('js')"></script>
+<script>
+(function(){
+  // Currency and billing toggles
+  (function(){
+    const btnMonthly=document.getElementById('btnMonthly');
+    const btnAnnual=document.getElementById('btnAnnual');
+    let currentCurrency=document.documentElement.dataset.currency||'ARS';
+    let currentPeriod=window.growiStore.get('growi_billing_period')==='annual'?'annual':'monthly';
+
+    // El precio mensual en USD vive en data-price de cada tarjeta; anual = 15% menos.
+    function updatePlanPrices(){
+      const anual=currentPeriod==='annual';
+      document.querySelectorAll('.plan-card').forEach(card=>{
+        const el=card.querySelector('[data-plan-price]');
+        if(!el)return;
+        const usd=Number(el.dataset.price);
+        el.textContent=window.growiPrice(anual?usd*.85:usd,currentCurrency,true);
+        const total=card.querySelector('[data-annual-total]');
+        if(total){
+          total.textContent='Pagás '+window.growiPrice(usd*.85*12,currentCurrency)+' por año';
+          total.hidden=!anual;
+        }
+      });
+      const aviso=document.querySelector('.billing-save-note');
+      const avisoTxt=anual?'Estás viendo los precios con pago anual: 15% menos.':'Ahorrá 15% pagando anual.';
+      if(aviso&&aviso.textContent!==avisoTxt)aviso.textContent=avisoTxt; // aria-live lo anuncia
+      document.querySelectorAll('[data-billing-copy]').forEach(el=>{
+        el.textContent=anual?'Pagás 12 meses juntos, con 15% de ahorro.':'Pago mensual. Cancelás cuando quieras.';
+      });
+    }
+
+    function applyBillingPeriod(period,track=false){
+      currentPeriod=period==='annual'?'annual':'monthly';
+      window.growiStore.set('growi_billing_period',currentPeriod);
+      updatePlanPrices();
+      if(btnMonthly&&btnAnnual){
+        btnMonthly.classList.toggle('active',currentPeriod==='monthly');btnAnnual.classList.toggle('active',currentPeriod==='annual');
+        btnMonthly.setAttribute('aria-pressed',currentPeriod==='monthly');btnAnnual.setAttribute('aria-pressed',currentPeriod==='annual');
+      }
+      if(track&&typeof window.plausible==='function'){
+        try{window.plausible('billing_period_change',{props:{period:currentPeriod}});}catch(e){}
+      }
+    }
+
+    applyBillingPeriod(currentPeriod);
+    document.addEventListener('growi:currency',e=>{currentCurrency=e.detail;updatePlanPrices();});
+    if(btnMonthly)btnMonthly.addEventListener('click',()=>applyBillingPeriod('monthly',true));
+    if(btnAnnual)btnAnnual.addEventListener('click',()=>applyBillingPeriod('annual',true));
+  })();
+
+  const demoRubros={
+    cafeteria:{
+      negocio:'Café Central',
+      ventasHoy:'$184.500',
+      ticketPromedio:'$7.690',
+      clientesActivos:'42',
+      reservasHoy:'18',
+      productoTop:'Flat white',
+      alertaStock:'Leche entera',
+      canalPrincipal:'Mostrador',
+      gastoPrincipal:'Insumos',
+      margen:'41%',
+      act1:'Mesa 4 · 2 flat white + tostado',act2:'Para llevar · 3 medialunas + café',top2:'Medialunas',top3:'Tostado',top4:'Cappuccino',servicio:'Mesa para 2',gasto2:'Servicios',topLabel:'Más vendido'
+    },
+    peluqueria:{
+      negocio:'Estudio Bruma',
+      ventasHoy:'$236.000',
+      ticketPromedio:'$18.150',
+      clientesActivos:'64',
+      reservasHoy:'22',
+      productoTop:'Corte + brushing',
+      alertaStock:'Tintura 7.1',
+      canalPrincipal:'Turnos',
+      gastoPrincipal:'Coloración',
+      margen:'48%',
+      act1:'Color + corte · Camila S.',act2:'Turno reservado · sábado 10:30',top2:'Color',top3:'Brushing',top4:'Keratina',servicio:'Corte + brushing',gasto2:'Alquiler',topLabel:'Más pedido'
+    },
+    taller:{
+      negocio:'Taller Norte',
+      ventasHoy:'$412.000',
+      ticketPromedio:'$51.500',
+      clientesActivos:'31',
+      reservasHoy:'9',
+      productoTop:'Cambio de aceite',
+      alertaStock:'Filtro Wega',
+      canalPrincipal:'WhatsApp',
+      gastoPrincipal:'Repuestos',
+      margen:'35%',
+      act1:'Service 10.000 km · Peugeot 208',act2:'Trabajo entregado · cambio de pastillas',top2:'Alineación',top3:'Frenos',top4:'Service',servicio:'Cambio de aceite',gasto2:'Herramientas',topLabel:'Más pedido'
+    },
+    consultorio:{
+      negocio:'Consultorio Raíz',
+      ventasHoy:'$168.000',
+      ticketPromedio:'$21.000',
+      clientesActivos:'58',
+      reservasHoy:'16',
+      productoTop:'Consulta inicial',
+      alertaStock:'Bonos disponibles',
+      canalPrincipal:'Agenda',
+      gastoPrincipal:'Honorarios',
+      margen:'52%',
+      act1:'Consulta · Julieta M.',act2:'Turno reservado · jueves 16:00',top2:'Control',top3:'Seguimiento',top4:'Estudios',servicio:'Consulta inicial',gasto2:'Alquiler',topLabel:'Más solicitado'
+    }
+  };
+
+  const demoMap={
+    'business-name':'negocio',
+    'sales-today':'ventasHoy',
+    'avg-ticket':'ticketPromedio',
+    'active-clients':'clientesActivos',
+    'reservations-today':'reservasHoy',
+    'top-product':'productoTop',
+    'stock-alert':'alertaStock',
+    'main-channel':'canalPrincipal',
+    'main-expense':'gastoPrincipal',
+    'margin':'margen',
+    'act-1':'act1','act-2':'act2','top-2':'top2','top-3':'top3','top-4':'top4',
+    'service':'servicio','expense-2':'gasto2','top-label':'topLabel'
+  };
+
+  const rubroButtons=[...document.querySelectorAll('.demo-industry-btn[data-rubro]')];
+  const applyDemoRubro=(key,track=false)=>{
+    const selected=demoRubros[key]?key:'cafeteria';
+    const data=demoRubros[selected];
+    Object.entries(demoMap).forEach(([demoKey,dataKey])=>{
+      document.querySelectorAll(`[data-demo="${demoKey}"]`).forEach(el=>{el.textContent=data[dataKey];});
+    });
+    rubroButtons.forEach(btn=>{
+      const active=btn.dataset.rubro===selected;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-pressed',String(active));
+    });
+    try{localStorage.setItem('growi-demo-rubro',selected);}catch(e){}
+    if(track&&typeof window.plausible==='function'){
+      window.plausible('demo_rubro_change',{props:{rubro:selected}});
+    }
+  };
+
+  if(rubroButtons.length){
+    let savedRubro='cafeteria';
+    try{savedRubro=localStorage.getItem('growi-demo-rubro')||'cafeteria';}catch(e){}
+    // las landings por rubro enlazan al demo con ?rubro=
+    savedRubro=new URLSearchParams(location.search).get('rubro')||savedRubro;
+    applyDemoRubro(savedRubro,false);
+    rubroButtons.forEach(btn=>btn.addEventListener('click',()=>applyDemoRubro(btn.dataset.rubro,true)));
+  }
+
+  const growiMockup=document.getElementById('growiMockup');
+  if(growiMockup){
+    const screens=[...growiMockup.querySelectorAll('.dash-screen')];
+    const navItems=[...growiMockup.querySelectorAll('.dash-nav-item[data-target],.mobile-demo-tab[data-target]')];
+    let current=0;
+    let interval;
+    const showScreen=(index)=>{
+      if(index<0||index>=screens.length) return;
+      screens.forEach((s,i)=>s.classList.toggle('active',i===index));
+      navItems.forEach(item=>{const on=item.dataset.target===screens[index].dataset.screen;item.classList.toggle('active',on);item.setAttribute('aria-pressed',String(on));});
+      current=index;
+    };
+    const shouldAutoRotate=()=>window.matchMedia('(min-width:881px)').matches&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const pauseBtn=document.getElementById('demoPause');
+    let mockupInView=false;
+    let userStopped=false; // una vez que la persona elige pantalla o pausa, la rotación no vuelve sola
+    let hovering=false;
+    const stopAuto=()=>clearInterval(interval);
+    const startAuto=()=>{
+      stopAuto();
+      if(pauseBtn) pauseBtn.hidden=!shouldAutoRotate();
+      if(!userStopped&&!hovering&&shouldAutoRotate()&&mockupInView){interval=setInterval(()=>showScreen((current+1)%screens.length),4600);}
+    };
+    const setStopped=(v)=>{
+      userStopped=v;
+      if(pauseBtn){pauseBtn.textContent=v?'Reanudar':'Pausar';pauseBtn.setAttribute('aria-pressed',String(v));}
+      startAuto();
+    };
+    showScreen(0);
+    const mockupObserver=new IntersectionObserver(entries=>{
+      mockupInView=entries.some(e=>e.isIntersecting&&e.intersectionRatio>.45);
+      startAuto();
+    },{threshold:[0,.45,.75]});
+    mockupObserver.observe(growiMockup);
+    const mockupBox=growiMockup.closest('.hero-mockup')||growiMockup;
+    mockupBox.addEventListener('mouseenter',()=>{hovering=true;stopAuto();});
+    mockupBox.addEventListener('mouseleave',()=>{hovering=false;startAuto();});
+    mockupBox.addEventListener('focusin',()=>{hovering=true;stopAuto();});
+    mockupBox.addEventListener('focusout',()=>{hovering=false;startAuto();});
+    window.addEventListener('resize',startAuto);
+    if(pauseBtn) pauseBtn.addEventListener('click',()=>setStopped(!userStopped));
+    navItems.forEach(item=>{
+      const activate=()=>{
+        setStopped(true);
+        const nextIndex=screens.findIndex(s=>s.dataset.screen===item.dataset.target);
+        showScreen(nextIndex);
+      };
+      item.addEventListener('click',activate);
+    });
+  }
+})();
+</script>
+<div class="proto-tag" aria-hidden="true">V3 · prototipo local · no publicado</div>
+<script src="/propuesta-rediseno/v3/v3.js" defer></script>
+</body>
+</html>
