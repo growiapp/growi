@@ -75,7 +75,7 @@ def _cas_portada():
 
 def _cas_chat():
     return ('<section class="ix-ly ix-l-chat" data-ly="chat" id="ix-cas-chat" aria-label="Mensaje recibido de Lucía" hidden><div class="ix-ch-h"><i class="ix-ch-av" aria-hidden="true">L</i><div><b>Lucía</b><small>en línea</small></div></div>'
-            '<div class="ix-ch-b"><p class="ix-ch-day">Hoy</p><div class="ix-ch-m"><p>Ya está la invitación. Ahí tienen todo: horarios, lugar y cómo confirmar.</p>'
+            '<div class="ix-ch-b"><p class="ix-ch-day">Hoy</p><div class="ix-ch-m"><p>¡Hola! Les compartimos la invitación a nuestro casamiento. Ahí están todos los detalles y cómo confirmar asistencia. ¡Los esperamos!</p>'
             '<button type="button" class="ix-ch-lk" data-act="abrir"><span class="ix-ch-img" aria-hidden="true"><b>Lucía &amp; Tomás</b></span>'
             '<span class="ix-ch-t"><b>Lucía &amp; Tomás se casan</b><span>Sábado 20 de marzo de 2027 · Capilla del jardín</span><em>luciaytomas.growi.ar</em></span></button><time>18:42</time></div>'
             '<p class="ix-ch-hint">Tocá el enlace para abrirla.</p></div></section>')
@@ -105,7 +105,7 @@ def _cas_ejemplo():
     c = FORMS["cas"]
     return ('<section class="ix-ly ix-l-msj ix-ej" data-ly="ejemplo" id="ix-cas-ejemplo" aria-labelledby="ix-cas-he" hidden><p class="ix-k">Así se vería</p><h3 class="ix-h" id="ix-cas-he" tabindex="-1">Tu mensaje, <i>con tu respuesta</i></h3>'
             '<p class="ix-bdg ix-bdg-m">Muestra · datos ficticios</p><div class="ix-dr"><p class="ix-drh"><span>Para %s</span><span>Muestra</span></p><p class="ix-resum">Camila Rossi · %s · 2 personas</p><p class="ix-drb" data-msg-ej></p></div>'
-            '<p class="ix-note">Son datos ficticios. Cuando completás el formulario, el mensaje se arma con lo que pusiste.</p>'
+            '<p class="ix-note">Cuando completás el formulario, el mensaje se arma con lo que pusiste.</p>'
             '<button type="button" class="ix-btn" data-go="confirmar">Completar mi respuesta</button></section>' % (c["dest"], c["si"]))
 
 def _scr(ev, label, inner, cls="", paso="portada"):
@@ -124,16 +124,17 @@ INFO_CUM = [("Vestimenta", "Cómoda: hay pista."), ("Cómo llegar", "Terraza, 4.
 
 def cumpleanos():
     stops = "".join('<button type="button" class="ix-stop%s" role="radio" aria-checked="%s" tabindex="%d" data-idx="%d"><em>%s</em>%s</button>'
-                    % (" on" if i == 1 else "", "true" if i == 1 else "false", 0 if i == 1 else -1, i, h, n) for i, (h, n, _) in enumerate(NOCHE))
+                    % (" on" if i == 0 else "", "true" if i == 0 else "false", 0 if i == 0 else -1, i, h, n) for i, (h, n, _) in enumerate(NOCHE))
     portada = ('<section class="ix-ly ix-cl-cover on" data-ly="portada" id="ix-cum-portada" aria-labelledby="ix-cum-hn"><p class="ix-ck">Cumpleaños</p><p class="ix-c30" aria-hidden="true">30</p><p class="ix-csk">Hasta las 2</p>'
                '<h3 class="ix-ct" id="ix-cum-hn" tabindex="-1">Los 30<br><i>de Mica</i></h3><p class="ix-cd">Sábado 14 de agosto<br>21:00 a 02:00 · Terraza</p>'
                '<p class="ix-cgo"><button type="button" class="ix-btn" data-go="noche">Ver cómo es la noche</button></p></section>')
     noche = ('<section class="ix-ly ix-cl-noche" data-ly="noche" id="ix-cum-noche" aria-labelledby="ix-cum-hno"><p class="ix-ck">La noche de Mica %s</p><h3 class="ix-sr" id="ix-cum-hno" tabindex="-1">La noche de Mica</h3>'
-             '<p class="ix-clock" aria-hidden="true" data-clock>22:00</p>'
+             '<button type="button" class="ix-pp" data-ix-pp hidden aria-label="Pausar el avance de la noche"><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>'
+             '<p class="ix-clock" aria-hidden="true" data-clock>21:00</p>'
              '<div class="ix-arcw" aria-hidden="true"><svg viewBox="0 0 272 132" focusable="false"><path d="M8 122 A128 100 0 0 1 264 122" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="1 6" stroke-linecap="round"/></svg><i class="ix-orb"></i></div>'
              '<div class="ix-stops" role="radiogroup" aria-label="Hora de la noche">%s</div>'
-             '<div class="ix-now" aria-live="polite"><h4 data-nt>Cena</h4><p data-nd>%s</p></div>'
-             '<div class="ix-nlk"><button type="button" class="ix-lk" data-go="info">Lo que conviene saber</button><button type="button" class="ix-lk ix-lk-b" data-go="confirmar">Confirmar asistencia <span aria-hidden="true">→</span></button></div></section>' % (_mk(), stops, NOCHE[1][2]))
+             '<div class="ix-now" aria-live="polite"><h4 data-nt>Brindis</h4><p data-nd>%s</p></div>'
+             '<div class="ix-nlk"><button type="button" class="ix-lk" data-go="info">Lo que conviene saber</button><button type="button" class="ix-lk ix-lk-b" data-go="confirmar">Confirmar asistencia <span aria-hidden="true">→</span></button></div></section>' % (_mk(), stops, NOCHE[0][2]))
     info = ('<section class="ix-ly ix-cl-info" data-ly="info" id="ix-cum-info" aria-labelledby="ix-cum-hi"><p class="ix-ck">Para tener en cuenta %s</p><h3 class="ix-ct2" id="ix-cum-hi" tabindex="-1">Lo que conviene <i>saber</i></h3>'
             '<dl class="ix-dl">%s</dl><p class="ix-cgo"><button type="button" class="ix-btn" data-go="confirmar">Confirmar asistencia</button></p><button type="button" class="ix-lk ix-lk-c" data-go="noche">Volver a la noche</button></section>'
             % (_mk(), "".join("<div><dt>%s</dt><dd>%s</dd></div>" % x for x in INFO_CUM)))
@@ -178,10 +179,10 @@ def empresa():
     return ('<div class="ix-emp-in" data-main><div class="ix-emp-top">%s%s</div>%s%s</div>%s' % (portada, jornada, conf, msg, _wa("emp")))
 
 # ---------------------------------------------------------------- secciones de la página
-ACTOS = [("Llega por WhatsApp.", "El enlace llega por WhatsApp con una vista previa propia. Un toque y la invitación se abre.", "Recibís", True, "Probalo: tocá el enlace del chat."),
-         ("El día, en una página.", "Programa, lugar y lo que conviene saber, sin preguntar por el chat.", "Explorás", True, "Probalo: abrí cualquier momento del programa."),
-         ("Confirmar lleva un minuto.", "Tu nombre, si venís y cuántos son. Si falta algo, te avisamos al lado del campo.", "Confirmás", False, "Probalo: tocá «Preparar mi mensaje» sin completar nada."),
-         ("El mensaje sale de tu WhatsApp.", "Lo ves antes de enviarlo. Hasta que no toques Enviar, no se mandó nada.", "Revisás", False, "Probalo: completá tu respuesta y mirá cómo se arma el mensaje.")]
+ACTOS = [("La enviás por WhatsApp.", "Compartís un enlace con vista previa propia. Un toque y tus invitados abren la invitación.", "La enviás", True, "Probalo: tocá el enlace del chat."),
+         ("El día, en una página.", "Tus invitados ven el programa, el lugar y lo que conviene saber, sin preguntarte por el chat.", "La abren", True, "Probalo: abrí cualquier momento del programa."),
+         ("Confirmar lleva un minuto.", "Cada invitado pone su nombre, si viene y cuántos son. Si falta algo, el aviso aparece al lado del campo.", "Confirman", False, "Probalo: tocá «Preparar mi mensaje» sin completar nada."),
+         ("Te responden por WhatsApp.", "Cada invitado revisa su mensaje y lo envía desde su propio WhatsApp. Hasta que no toca Enviar, no se mandó nada.", "Te responden", False, "Probalo: completá una respuesta y mirá cómo se arma el mensaje.")]
 
 def historia(hero_html):
     # Hero + recorrido: un único dispositivo protagonista; los cuatro actos acompañan a la pantalla (en escritorio quedan fijos junto a ella).
@@ -202,7 +203,7 @@ def historia(hero_html):
             % (hero_html, sent, items, casamiento(), steps))
 
 def cumple_seccion():
-    return ('<section class="ix-cum" id="cumple" data-t="1" data-sticky-hide aria-labelledby="h-cum"><div class="ix-cum-in"><div class="ix-cum-copy"><p class="ix-ey">Cumpleaños · Los 30 de Mica</p>'
+    return ('<section class="ix-cum" id="cumple" data-t="0" data-sticky-hide aria-labelledby="h-cum"><div class="ix-cum-in"><div class="ix-cum-copy"><p class="ix-ey">Cumpleaños · Los 30 de Mica</p>'
             '<h2 id="h-cum">La noche cambia.<br><i>La invitación también.</i></h2>'
             '<p class="ix-cum-p">Mica no manda un cartel: manda una noche. Cada parada cambia el cielo, la hora y lo que pasa, y todo lo que hay que saber queda en el mismo lugar.</p>'
             '<button type="button" class="ix-reset" data-ix-reiniciar-ev="cum" data-ix-slot data-off>Empezar de nuevo</button></div><div class="ix-cum-dev">%s</div></div></section>\n' % cumpleanos())

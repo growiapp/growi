@@ -30,6 +30,16 @@ def ph(pg, cur_label, parent=None):
     if parent: crumb += '<a href="%s">%s</a> / ' % (pg.u(parent[1]), parent[0])
     return '<p class="crumb">%s<span>%s</span></p>' % (crumb, cur_label)
 
+# F8.7: los tres planes son visibles y comparables también en los rubros. Mismas condiciones y precios que /app/.
+PLAN_START_LN = ["1 usuario", "1 sucursal", "Ventas, caja y stock", "Turnos y reservas", "Ficha de clientes", "Reportes simples", "Soporte por WhatsApp"]
+PLAN_PRO_LN = ["Hasta 3 usuarios, cada uno con su acceso", "1 sucursal", "Todo lo de Start", "~Factura electrónica ARCA: próximamente, todavía no disponible"]
+PLAN_MULTI_LN = ["Hasta 5 usuarios", "Hasta 2 sucursales", "Todo lo de Pro", "Reportes avanzados por sucursal", "WhatsApp prioritario"]
+def plan_resumen():
+    """Una fila por plan (nombre, a quién sirve y precio) que lleva al plan: se ve de un vistazo que hay tres, sin tocar nada."""
+    f = lambda i, n, d, usd: '<li><a href="#plan-%s"><b>%s</b><span>%s</span><em>%s <small>/mes</small></em></a></li>' % (i, n, d, P(usd, True))
+    return ('<ul class="pl-res" aria-label="Los tres planes de GrowiApp">%s%s%s</ul>'
+            % (f("start", "Start", "1 usuario · 1 sucursal", 15), f("pro", "Pro", "Hasta 3 usuarios · 1 sucursal", 29), f("multi", "Multi", "Hasta 5 usuarios · 2 sucursales", 49)))
+
 # ================================================================== GROWIAPP
 def app():
     pg = Pg("app/"); rel = pg.rel
@@ -52,18 +62,18 @@ def app():
            % "".join('<a href="%s" data-track="app-rubro-%s"><b>%s</b><span>%s</span><i aria-hidden="true">→</i></a>' % (pg.u(r), t, n, rub_desc[t]) for n, r, t in RUBROS))
     def cta(plan): return btn("Hola Growi, quiero consultar por GrowiApp, plan %s.\n\nMi rubro:\nCuántas personas lo usarían:" % plan, "app-pricing-whatsapp", "Consultar por el plan %s" % plan, "wide")
     per = '<br><span data-period-note>Pago mensual. Cancelás cuando quieras.</span>'
-    t1 = ticket("Plan 01", "Start", "Para empezar con una persona y una sucursal.", ["1 usuario", "1 sucursal", "Ventas, caja y stock", "Turnos y reservas", "Ficha de clientes", "Reportes simples", "Soporte por WhatsApp"],
-                ("Por mes", money(15, "/mes", True)), "+ %s de puesta en marcha, una sola vez%s" % (P(49), per), cta("Start"))
-    t2 = ticket("Plan 02", "Pro", "Para equipos que cargan ventas o turnos a la vez.", ["Hasta 3 usuarios, cada uno con su acceso", "1 sucursal", "Todo lo de Start", "~Factura electrónica ARCA: próximamente, todavía no disponible"],
-                ("Por mes", money(29, "/mes", True)), "+ %s de puesta en marcha, una sola vez%s" % (P(149), per), cta("Pro"), "Recomendado si son varios")
-    t3 = ticket("Plan 03", "Multi", "Para más de una sucursal.", ["Hasta 5 usuarios", "Hasta 2 sucursales", "Todo lo de Pro", "Reportes avanzados por sucursal", "WhatsApp prioritario"],
-                ("Por mes", money(49, "/mes", True)), "+ %s de puesta en marcha, una sola vez%s" % (P(249), per), cta("Multi"))
+    t1 = ticket("Plan 01", "Start", "Para empezar con una persona y una sucursal.", PLAN_START_LN,
+                ("Por mes", money(15, "/mes", True)), "+ %s de puesta en marcha, una sola vez%s" % (P(49), per), cta("Start"), "", 'id="plan-start"')
+    t2 = ticket("Plan 02", "Pro", "Para equipos que cargan ventas o turnos a la vez.", PLAN_PRO_LN,
+                ("Por mes", money(29, "/mes", True)), "+ %s de puesta en marcha, una sola vez%s" % (P(149), per), cta("Pro"), "Recomendado si son varios", 'id="plan-pro"')
+    t3 = ticket("Plan 03", "Multi", "Para más de una sucursal.", PLAN_MULTI_LN,
+                ("Por mes", money(49, "/mes", True)), "+ %s de puesta en marcha, una sola vez%s" % (P(249), per), cta("Multi"), "", 'id="plan-multi"')
     precios = ('<section class="sec" id="precios" data-sticky-hide aria-labelledby="h-pre"><div class="w"><p class="eyebrow">Precios</p><h2 id="h-pre">Puesta en marcha y abono mensual.</h2>'
                '<p class="lead">Un punto de partida para tu negocio. Los planes te ayudan a conocer la inversión y las funcionalidades habituales. Definimos con vos el alcance final, las adaptaciones y el presupuesto por escrito antes de empezar.</p>'
                '<div class="tk-tools">%s<div class="seg" role="group" aria-label="Período de pago"><button type="button" data-period="monthly" class="active" aria-pressed="true">Mensual</button><button type="button" data-period="annual" aria-pressed="false">Anual −15%%</button></div></div>'
-               '<div class="tickets">%s%s%s</div>'
+               '%s<div class="tickets">%s%s%s</div>'
                '<p class="note" style="max-width:86ch;margin-top:34px">Todos los planes incluyen la configuración inicial hecha por nuestro equipo y 1 hora de capacitación en vivo. Garantía prevista de 7 días desde que GrowiApp queda andando: si no funciona como prometimos, te devolveríamos el 100%% de la puesta en marcha. Los descuentos no se acumulan: si te corresponde más de uno, se aplica el mejor. %s</p></div></section>\n'
-               % (cur_toggle(), t1, t2, t3, E(L1_PRECIOS)))
+               % (cur_toggle(), plan_resumen(), t1, t2, t3, E(L1_PRECIOS)))
     flow = ('<section class="sec tint" aria-labelledby="h-fl"><div class="w"><div class="band"><div><h3 id="h-fl">¿Querés recibir un resumen de tus ventas sin armarlo vos?</h3><p style="margin-top:8px;max-width:62ch">Los Reportes de GrowiFlow arman un resumen periódico con lo importante marcado. Se arman a medida a partir de los datos que ya cargás. Sale %s, pago único, y quien ya es cliente de GrowiApp tendrá 10%% de descuento cuando se abra la contratación.</p></div>'
             '<a class="btn o" href="%s" data-track="app-flow-reportes">Ver los reportes →</a></div></div></section>\n' % (P(89), pg.u("flow/") + "#reportes"))
     faqp = l1_faq("app", [0, 1, 3, 4, 7, 9])
@@ -132,22 +142,22 @@ SBX_CSS = ('<style>'
     '.cn-txt{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;margin-top:20px}'
     '.cn-txt p{margin:0;flex:1 1 240px;max-width:36ch;font-size:clamp(1.05rem,1.5vw,1.2rem);line-height:1.35;font-weight:600}'
     '@media(max-width:720px){.cn-tab{display:none}.cn-stage{background:none;padding:0;overflow:visible;border-radius:0}.cn-stage::before{display:none}'
-    '.cn-ph{display:block;width:min(340px,100%);margin:0 auto;position:relative}.cn-ph .cn-dev{padding:0;background:#fff;box-shadow:0 22px 44px -26px rgba(12,12,12,.55),0 0 0 1px rgba(12,12,12,.12);border-radius:24px;overflow:hidden;aspect-ratio:1/1.42}'
-    '.cn-ph .cn-dev img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:0}.cn-ph::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;border-radius:0 0 24px 24px;background:linear-gradient(180deg,rgba(246,246,244,0),rgba(246,246,244,.9));pointer-events:none}'
+    '.cn-ph{display:block;width:min(340px,100%);margin:0 auto;position:relative}.cn-ph .cn-dev{padding:0;background:#fff;box-shadow:0 22px 44px -26px rgba(12,12,12,.55),0 0 0 1px rgba(12,12,12,.12);border-radius:24px;overflow:hidden}'
+    '.cn-ph .cn-dev img{width:100%;height:auto;border-radius:0}'
     '.cn-nm{display:block}.cn-txt{margin-top:16px;flex-direction:column;align-items:stretch}.cn-txt p{max-width:none;flex:none}.cn-txt .btn{width:100%;justify-content:center}}'
     '</style>')
 SBX = {
-    "cafeterias": dict(nm="Café Nogal", rub="cafetería", ruta="demos/sandbox/cafeteria/", bg="url(%sassets/img/cafeteria-sala.webp)", tablet=("cafe-nogal-tablet.webp", 1400, 958), movil=("cafe-nogal-movil.webp", 780, 1580),
+    "cafeterias": dict(nm="Café Nogal", rub="cafetería", ruta="demos/sandbox/cafeteria/", bg="url(%sassets/img/cafeteria-sala.webp)", tablet=("cafe-nogal-tablet.webp", 1400, 811), movil=("cafe-nogal-movil.webp", 780, 972),
                        frase="Registrá una venta y mirá cómo se actualizan la caja, el stock y el resumen.", cta="Explorar Café Nogal", track="app-cafeterias-sandbox",
                        nota="Los datos son ficticios y las funciones y el alcance se definen para cada proyecto. Fotografía de ambientación generada con IA."),
-    "peluquerias": dict(nm="Estudio Bruma", rub="peluquería", ruta="demos/sandbox/peluqueria/", bg="linear-gradient(135deg,#3a2159 0%,#5b2f8a 55%,#8a3d62 100%)", tablet=("bruma-tablet.webp", 1500, 1027), movil=("bruma-movil.webp", 782, 1580),
+    "peluquerias": dict(nm="Estudio Bruma", rub="peluquería", ruta="demos/sandbox/peluqueria/", bg="linear-gradient(135deg,#3a2159 0%,#5b2f8a 55%,#8a3d62 100%)", tablet=("bruma-tablet.webp", 1400, 732), movil=("bruma-movil.webp", 780, 1190),
                         frase="Agendá un turno, atendelo y cobralo: mirá cómo se actualizan la agenda y la caja.", cta="Explorar Estudio Bruma", track="app-peluquerias-sandbox",
                         nota="Los datos son ficticios y las funciones y el alcance se definen para cada proyecto."),
 }
 def sbx_hero(k, pg, rel, css=True, nota=True):
     c = SBX[k]; u = pg.u(c["ruta"]); t, m = c["tablet"], c["movil"]
     bg = c["bg"] % rel if "%s" in c["bg"] else c["bg"]
-    return ((SBX_CSS if css else '') + '<div class="cn"><p class="cn-nm"><b>%s</b> · %s, ejemplo ilustrativo</p><div class="cn-stage" style="--bg:%s">'
+    return ((SBX_CSS if css else '') + '<div class="cn"><p class="cn-nm"><b>%s</b> · %s · Demo</p><div class="cn-stage" style="--bg:%s">'
             '<a class="cn-tab" href="%s" tabindex="-1" aria-hidden="true"><span class="cn-dev"><img src="%sassets/img/%s" width="%d" height="%d" alt=""></span></a>'
             '<a class="cn-ph" href="%s" tabindex="-1" aria-hidden="true"><span class="cn-dev"><img src="%sassets/img/%s" width="%d" height="%d" alt="" loading="lazy"></span></a></div>'
             '<div class="cn-txt"><p>%s</p><a class="btn k" href="%s" data-track="%s">%s</a></div>'
@@ -217,9 +227,13 @@ def rubro(k):
     feats = ('<section class="sec tint" id="que-hace" aria-labelledby="h-f"><div class="w"><p class="eyebrow">Lo que hace por tu %s</p><h2 id="h-f">De la libreta al control real, sin cambiar cómo atendés.</h2><p class="lead">Lo que sigue son las posibilidades habituales en tu rubro; en tu proyecto armamos las que necesitás.</p><ul class="ben">%s</ul></div></section>\n'
              % (d["nombre"], "".join("<li><b>%s</b><span>%s</span><em>%s</em></li>" % (E(a), E(b), E(c)) for a, b, c in d["feats"])))
     t1 = ticket("Plan Start", "GrowiApp Start", "Lo armamos, cargamos tus datos y te enseñamos a usarlo.", ["Ventas, caja y stock", "Turnos y reservas", "Ficha de clientes", "Reportes simples", "1 usuario (con varios cargando a la vez, el plan Pro trae hasta 3)", "Soporte por WhatsApp", "Sin permanencia: cancelás cuando quieras"],
-                ("Por mes", money(15, "/mes")), "+ %s de puesta en marcha, una sola vez. Garantía prevista de 7 días desde que queda andando." % P(49), btn("Hola Growi, quiero consultar por GrowiApp, plan Start.\n\nMi negocio: %s" % d["nombre"], "app-%s-pricing-whatsapp" % k, "Consultar por GrowiApp", "wide"))
-    precio = ('<section class="sec" id="precio" data-sticky-hide aria-labelledby="h-p"><div class="w precio-g"><div><p class="eyebrow">Cuánto sale</p><h2 id="h-p">Puesta en marcha y abono mensual.</h2><p class="lead">Un punto de partida: el alcance final y el presupuesto los definimos con vos, por escrito, antes de empezar. <a href="%s#precios" class="tl">Ver todos los planes</a></p><div class="tk-tools">%s</div></div>'
-              '<div class="tickets one">%s</div></div><div class="w"><p class="note" style="max-width:86ch;margin-top:26px">%s</p></div></section>\n' % (pg.u("app/"), cur_toggle(), t1, E(L1_PRECIOS)))
+                ("Por mes", money(15, "/mes")), "+ %s de puesta en marcha, una sola vez. Garantía prevista de 7 días desde que queda andando." % P(49), btn("Hola Growi, quiero consultar por GrowiApp, plan Start.\n\nMi negocio: %s" % d["nombre"], "app-%s-pricing-whatsapp" % k, "Consultar por GrowiApp", "wide"), "", 'id="plan-start"')
+    fine_plan = lambda usd: "+ %s de puesta en marcha, una sola vez. Garantía prevista de 7 días desde que queda andando." % P(usd)
+    cta_plan = lambda plan: btn("Hola Growi, quiero consultar por GrowiApp, plan %s.\n\nMi negocio: %s" % (plan, d["nombre"]), "app-%s-pricing-whatsapp" % k, "Consultar por GrowiApp", "wide")
+    t2 = ticket("Plan Pro", "GrowiApp Pro", "Para equipos que cargan ventas o turnos a la vez.", PLAN_PRO_LN, ("Por mes", money(29, "/mes")), fine_plan(149), cta_plan("Pro"), "Recomendado si son varios", 'id="plan-pro"')
+    t3 = ticket("Plan Multi", "GrowiApp Multi", "Para más de una sucursal.", PLAN_MULTI_LN, ("Por mes", money(49, "/mes")), fine_plan(249), cta_plan("Multi"), "", 'id="plan-multi"')
+    precio = ('<section class="sec" id="precio" data-sticky-hide aria-labelledby="h-p"><div class="w"><p class="eyebrow">Cuánto sale</p><h2 id="h-p">Puesta en marcha y abono mensual.</h2><p class="lead">Un punto de partida: el alcance final y el presupuesto los definimos con vos, por escrito, antes de empezar.</p><div class="tk-tools">%s</div>'
+              '%s<div class="tickets">%s%s%s</div></div><div class="w"><p class="note" style="max-width:86ch;margin-top:26px">%s</p></div></section>\n' % (cur_toggle(), plan_resumen(), t1, t2, t3, E(L1_PRECIOS)))
     caso = caso_cafe(rel, pg.u("app/")) if k == "cafeterias" else ""
     pre = ('<section class="sec tint" id="preguntas" aria-labelledby="h-faq"><div class="w faq-g"><div><p class="eyebrow">Antes de que preguntes</p><h2 id="h-faq">Lo que se pregunta primero.</h2></div>%s</div></section>\n' % faq(faqp))
     otros = "".join('<a href="%s">%s<i aria-hidden="true">→</i></a>' % (pg.u(r), n) for n, r, t in RUBROS if t != k)

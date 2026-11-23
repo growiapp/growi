@@ -39,16 +39,16 @@ def home():
             '<a class="hero-proof2" href="#caso"><img src="assets/img/colocafe-logo.png" alt="" width="34" height="34"><span><b>Caso real: Colo Café</b> · sistema de gestión para su cafetería</span></a>%s</div>'
             '<div class="h2-art36">%s</div></div></section>\n'
             % (btn("Hola Growi, quiero conocer más sobre sus soluciones.", "home-hero-whatsapp", "Contanos tu negocio"), hero_lines(pg), scene_hero(rel)))
-    def nrow(k, kick, h, lead, bullets, precio, cta, scene, tag="Ejemplo ilustrativo · datos ficticios"):
+    def nrow(k, kick, h, lead, bullets, precio, cta, scene, tag="Demo"):
         bl = "".join("<li>%s</li>" % b for b in bullets)
-        return ('<div class="nrow" id="n-%s"><div class="nrow-t"><p class="eyebrow">%s</p><h3>%s</h3><p>%s</p><ul>%s</ul><p class="nrow-pr">%s</p>%s</div><div class="nrow-s"><p class="ej-tag">%s</p>%s</div></div>\n'
-                % (k, kick, h, lead, bl, precio, cta, tag, scene))
+        return ('<div class="nrow" id="n-%s"><div class="nrow-t"><p class="eyebrow">%s</p><h3>%s</h3><p>%s</p><ul>%s</ul><p class="nrow-pr">%s</p>%s</div><div class="nrow-s">%s%s</div></div>\n'
+                % (k, kick, h, lead, bl, precio, cta, ('<p class="ej-tag">%s</p>' % tag) if tag else "", scene))
     rows = (nrow("app", "GrowiApp", "Ordená tu negocio.", "Ventas, caja, stock y turnos en una sola pantalla, desde el celular.",
                  ["Cada venta registrada al momento y el cierre de caja sin cuentas a mano", "Stock con alertas, antes de quedarte sin nada", "Agenda de turnos y reservas: reemplazás el cuaderno"],
                  "desde %s/mes + %s de puesta en marcha" % (P(15, True), P(49, True)), '<a class="btn k" href="%s" data-track="home-xp-app">Ver GrowiApp →</a>' % pg.u("app/"), scene_app(rel))
             + nrow("web", "GrowiWeb", "Que te encuentren y te consulten.", "Un sitio que presenta tu negocio y facilita las consultas.",
                    ["Muestra lo que hacés y deja pedir turno o consultar", "Lo dejamos publicado: vos no tocás nada técnico", "Plantilla adaptada a tu rubro o diseño a medida"],
-                   "desde %s, pago único · dominio y alojamiento aparte" % P(200, True), '<a class="btn k" href="%s" data-track="home-xp-web">Ver GrowiWeb →</a>' % pg.u("web/"), ex_panel(rel, "ribera"), tag="Sitio de muestra · contenido ficticio")
+                   "desde %s, pago único · dominio y alojamiento aparte" % P(200, True), '<a class="btn k" href="%s" data-track="home-xp-web">Ver GrowiWeb →</a>' % pg.u("web/"), ex_panel(rel, "ribera"), tag="")   # el panel ya se identifica como «Sitio de muestra»
             + nrow("flow", "GrowiFlow", "Dejá de hacerlo a mano.", "Menos tareas repetitivas, armadas a medida.",
                    ["Avisos de turno, resúmenes y consultas en orden, sin que lo hagas vos", "Lo armamos a medida de tu negocio y lo probamos con vos", "Si algo no se puede automatizar, te lo decimos antes de empezar"],
                    "pago único · pedidos y consultas desde %s, reportes y recordatorios %s" % (P(79, True), P(89, True)), '<a class="btn k" href="%s" data-track="home-xp-flow">Ver GrowiFlow →</a>' % pg.u("flow/"), scene_flow())

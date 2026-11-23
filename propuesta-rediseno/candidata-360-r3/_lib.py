@@ -167,7 +167,10 @@ def faq(pares):
     return '<div class="faq">%s</div>' % "".join("<details><summary>%s</summary><p>%s</p></details>" % (E(q), E(a)) for q, a in pares)
 
 def ticket(codigo, titulo, sub, lineas, total_html, fine, cta, ribbon="", extra_attr=""):
-    ls = "".join(('<li class="soon"><span>%s</span><span class="f"></span><span class="v">pronto</span></li>' % E(l[1:])) if l.startswith("~") else ('<li><span>%s</span><span class="f"></span><span class="v ok">✓</span></li>' % E(l)) for l in lineas)
+    # «~» marca lo que todavía no está disponible («pronto»); «+» marca lo disponible con texto accesible (✓ + «Disponible»)
+    ls = "".join(('<li class="soon"><span>%s</span><span class="f"></span><span class="v">pronto</span></li>' % E(l[1:])) if l.startswith("~") else
+                 ('<li class="av"><span>%s</span><span class="f"></span><span class="v ok">✓<span class="sr-only"> Disponible</span></span></li>' % E(l[1:])) if l.startswith("+") else
+                 ('<li><span>%s</span><span class="f"></span><span class="v ok">✓</span></li>' % E(l)) for l in lineas)
     rb = '<span class="ribbon">%s</span>' % E(ribbon) if ribbon else ""
     return ('<article class="ticket print-in" %s>%s<header class="t-head"><div><span class="t-code">%s</span><h3 class="t-title">%s</h3></div></header>'
             '<p class="t-sub">%s</p><ul class="t-lines">%s</ul><div class="t-total"><span class="t-lbl">%s</span>%s</div><p class="t-fine">%s</p>%s</article>'

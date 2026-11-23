@@ -115,7 +115,9 @@ def scene_combo(rel):
 # ------------------------------------------------------------ Combo (F8.1A): del sitio a la caja, en una sola lámina clara (sin tarjetas oscuras anidadas)
 # Ilustración con datos ficticios. El paso 3 lo hace una persona del centro: no hay conexión automática entre el sitio y el sistema.
 def combo_duo(rel):
-    pasos = "".join('<li%s><i>%d</i><div><b>%s</b><span>%s</span></div></li>' % (' class="hum"' if k == 2 else "", k + 1, t, d) for k, (t, d) in enumerate(COMBO_PASOS))
+    """Demo de un mismo negocio (sitio → WhatsApp → agenda). F8.7: avanza por pasos (data-cd en growi36.js): en móvil muestra una cosa a la vez; sin JavaScript se ven las tres."""
+    pasos = "".join('<li%s><button type="button" class="cd-b" data-cd-n="%d"%s><i>%d</i><div><b>%s</b><span>%s</span></div></button></li>'
+                    % (' class="hum"' if k == 2 else "", k + 1, ' aria-current="step"' if k == 0 else "", k + 1, t, d) for k, (t, d) in enumerate(COMBO_PASOS))
     chat = ('<div class="cd-chat"><p class="cd-who"><b>Centro Ribera</b><span>WhatsApp</span></p>'
             '<div class="cd-m out">Hola, quiero turno para el sábado a la mañana.<small>10:42</small></div>'
             '<div class="cd-m in">¡Hola! Te esperamos el sábado a las 11:15.<small>10:51</small></div>'
@@ -125,11 +127,13 @@ def combo_duo(rel):
               '<ul class="ag-l" aria-hidden="true"><li><time>09:30</time><span><b>Marta</b>Control</span></li><li><time>10:15</time><span><b>Hernán</b>Rehabilitación de rodilla</span></li>'
               '<li class="nw"><time>11:15</time><span><b>Julián</b>Primera consulta</span><em>Nuevo</em></li><li><time>12:00</time><span><b>Lucía</b>Sesión de espalda</span></li></ul>'
               '<div class="ag-r" aria-hidden="true"><small>Registro administrativo</small><b>Consulta inicial · Julián</b><b class="px">$21.000</b></div></div>')
-    return (CB_AG_CSS + '<div class="cd"><p class="cd-k">Ejemplo ilustrativo · un mismo negocio, Centro Ribera (datos ficticios)</p>'
-            '<div class="cd-g"><figure class="cd-f cd-site"><div class="cd-i"><img src="%sassets/img/ribera-m.webp" width="390" height="800" alt="Sitio de muestra de Centro Ribera en el celular: el paciente elige la zona que le molesta." loading="lazy"></div>'
+    pp = ('<button type="button" class="cd-pp" data-cd-pp aria-label="Pausar animación" hidden><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>'
+          '<svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>')
+    return (CB_AG_CSS + '<div class="cd" data-cd><div class="cd-hd"><p class="cd-k">Demo · un mismo negocio, Centro Ribera</p>%s</div>'
+            '<div class="cd-g"><figure class="cd-f cd-site"><div class="cd-i"><img src="%sassets/img/ribera-zona-m.webp" width="390" height="369" alt="Sitio de muestra de Centro Ribera en el celular: la persona elige la zona que le molesta y está marcada la rodilla." loading="lazy"></div>'
             '<figcaption><b>Su sitio</b><span>GrowiWeb</span></figcaption></figure>%s'
             '<figure class="cd-f cd-gest">%s<figcaption><b>Su gestión</b><span>GrowiApp</span></figcaption></figure></div>'
-            '<ol class="cd-s">%s</ol></div>' % (rel, chat, agenda, pasos))
+            '<ol class="cd-s">%s</ol></div>' % (pp, rel, chat, agenda, pasos))
 
 # ------------------------------------------------------------ Invitaciones: tres mundos de evento en un mismo recorrido (portada → programa y lugar → confirmación)
 def _iv_prog(items):
@@ -167,29 +171,38 @@ def scene_inv(rel):
 # ------------------------------------------------------------ Home: hero «Te encuentran → Te consultan → Lo organizás» (F8.3B)
 # Ilustración con datos ficticios. Causalidad real: el sitio lleva a una consulta por WhatsApp, una persona del centro responde y el turno lo anota
 # una persona en su agenda con un botón. No hay cobros, caja ni automatizaciones. El estado lo maneja growi36.js (módulo data-hs).
-HS_PASOS = [("Te encuentran", "Una persona encuentra tu sitio y toca «Pedir turno»."), ("Te consultan", "Te escribe por WhatsApp con su consulta."),
+HS_PASOS = [("Te encuentran", "Alguien busca y entra al sitio de tu negocio."), ("Te consultan", "Toca «Pedir turno» y te escribe por WhatsApp."),
             ("Lo organizás", "Vos respondés, acordás el horario y lo anotás en tu agenda.")]
+HS_FIN = "Listo: el turno de Julián quedó confirmado a las 11:15."
 
 def scene_hero(rel):
+    # F8.8: un solo escenario de geometría fija. A = sitio (siempre el mismo marco; solo se desplaza la captura), B = lo que pasa del lado del negocio
+    # (tres capas del mismo tamaño que se funden entre sí). Nada aparece ni desaparece del flujo: el alto no depende del paso.
     pasos = "".join('<li><button type="button" class="hs-st" data-hs-s="%d"%s><span class="hs-n" aria-hidden="true">%d</span>%s</button></li>'
                     % (i + 1, ' aria-current="step"' if i == 0 else "", i + 1, n) for i, (n, _) in enumerate(HS_PASOS))
-    sitio = ('<div class="hs-scr hs-site on" data-hs-site><img src="%sassets/img/ribera-m.webp" width="390" height="800" decoding="async" '
-             'alt="Sitio de muestra de Centro Ribera: la persona elige la zona que le molesta y está marcada la rodilla.">'
-             '<div class="hs-pad"><small>Zona elegida: rodilla</small><button type="button" class="hs-cta" data-hs-cta1>Pedir turno por rodilla</button></div></div>' % rel)
-    chat = ('<div class="hs-scr hs-chat" data-hs-chat><div class="hs-wh"><i aria-hidden="true">CR</i><div><b>Centro Ribera</b><small>WhatsApp</small></div></div>'
-            '<div class="hs-msgs"><div class="hs-m out">Hola, quiero turno para el sábado a la mañana. Me molesta la rodilla al correr.<small>10:42</small></div>'
-            '<div class="hs-m in r"><span class="hs-by">Responde una persona del centro</span>Hola, Julián. Tenemos el sábado a las 11:15. ¿Te lo reservamos?<small>10:48</small></div>'
-            '<div class="hs-m out r">Sí, dale.<small>10:49</small></div></div></div>')
-    agenda = ('<div class="hs-agp" data-hs-agp><p class="hs-l">Agenda del centro · sábado</p>'
-              '<ul class="hs-slots"><li><time>10:30</time><span class="lib">Libre</span></li><li class="me" data-hs-slot><time>11:15</time><span class="lib" data-hs-slotx>Libre</span></li><li><time>12:00</time><span class="lib">Libre</span></li></ul>'
-              '<div class="hs-agf"><button type="button" class="hs-cta dark" data-hs-do>Anotar turno de Julián<i class="hs-tap" aria-hidden="true"></i></button><p data-hs-note>Lo anota una persona del centro.</p></div></div>')
-    return ('<div class="hs-w"><section class="hs" data-hs aria-label="Cómo llega un turno a tu agenda. Ejemplo ilustrativo de un centro de kinesiología, con datos ficticios.">'
+    alt = "Sitio de muestra de Centro Ribera, un consultorio de kinesiología: título «¿Qué te molesta? Empecemos por ahí», cuerpo con la zona elegida y el botón «Pedir turno por rodilla»."
+    sitio = ('<div class="hs-a"><p class="hs-l">Sitio de Centro Ribera</p><div class="hs-vp">'
+             '<img class="hs-im hs-imd" src="%sassets/img/ribera-sitio-d.webp" width="1085" height="900" alt="%s" loading="lazy" decoding="async">'
+             '<img class="hs-im hs-imm" src="%sassets/img/ribera-sitio-m.webp" width="375" height="1300" alt="%s" loading="lazy" decoding="async">'
+             '<i class="hs-tap" aria-hidden="true"></i></div></div>' % (rel, alt, rel, alt))
+    wh = '<div class="hs-wh"><i aria-hidden="true">CR</i><div><b>Centro Ribera</b><small>WhatsApp</small></div></div>'
+    m1 = '<div class="hs-m out">Hola, quiero turno para el sábado a la mañana. Me molesta la rodilla al correr.<small>10:42</small></div>'
+    m2 = '<div class="hs-m in"><span class="hs-by">Responde una persona del centro</span>Hola, Julián. Tenemos el sábado a las 11:15. ¿Te lo reservamos?<small>10:48</small></div>'
+    m3 = '<div class="hs-m out">Sí, dale.<small>10:49</small></div>'
+    busca = ('<div class="hs-ly on" data-hs-ly="1"><p class="hs-l">Búsqueda</p><div class="hs-bd hs-se"><div class="hs-q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>kinesiólogo para dolor de rodilla</div>'
+             '<div class="hs-r"><small>Sitio web</small><b>Centro Ribera · Kinesiología y rehabilitación deportiva</b><p>Tocá la zona que te molesta y mirá por qué consultan. Después pedís turno en cuatro pasos.</p></div></div></div>')
+    chat = ('<div class="hs-ly" data-hs-ly="2" inert>%s<div class="hs-bd hs-msgs">%s</div></div>' % (wh, m1))
+    fin = ('<div class="hs-ly" data-hs-ly="3" inert><div class="hs-two"><div class="hs-pane hs-ch">%s<div class="hs-bd hs-msgs">%s%s</div></div>'
+           '<div class="hs-pane hs-ag"><p class="hs-l">Agenda · sábado</p><ul class="hs-slots"><li class="hs-s1"><time>10:30</time><span class="lib">Libre</span></li>'
+           '<li class="me" data-hs-slot><time>11:15</time><span class="lib" data-hs-slotx>Libre</span></li><li class="hs-s3"><time>12:00</time><span class="lib">Libre</span></li></ul>'
+           '<p class="hs-nt" data-hs-note>Lo anota una persona del centro.</p></div></div></div>' % (wh, m2, m3))
+    return ('<div class="hs-w"><section class="hs" data-hs aria-label="Demo: cómo llega un turno a la agenda de un centro de kinesiología.">'
             '<div class="hs-bg" style="background-image:url(%sassets/img/ribera-sala.webp)" aria-hidden="true"></div>'
-            '<div class="hs-hd"><p class="hs-tag">Ejemplo ilustrativo · datos ficticios</p>'
+            '<div class="hs-hd"><p class="hs-tag">Demo</p>'
             '<button type="button" class="hs-pp" data-hs-pp aria-label="Pausar animación" hidden><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button></div>'
             '<ol class="hs-steps" aria-label="Pasos del ejemplo">%s</ol><p class="hs-cap" data-hs-cap aria-live="polite">%s</p>'
-            '<div class="hs-board" data-hs-board><div class="hs-dev"><p class="hs-l" data-hs-devl>Sitio de Centro Ribera</p>%s%s</div>%s</div></section></div>'
-            % (rel, pasos, HS_PASOS[0][1], sitio, chat, agenda))
+            '<div class="hs-board" data-hs-board>%s<div class="hs-b">%s%s%s</div></div></section></div>'
+            % (rel, pasos, HS_PASOS[0][1], sitio, busca, chat, fin))
 
 # ------------------------------------------------------------ GrowiWeb: exhibición de proyectos completos
 # y de cada capítulo en la captura de página completa (px de la captura) y alto total, para dirigir la cámara por secciones

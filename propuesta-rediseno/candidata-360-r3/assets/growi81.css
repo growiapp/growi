@@ -48,6 +48,19 @@
   .ticket .t-fine{margin-top:6px}
 }
 
+/* F8.7 · resumen de los tres planes (solo cuando se apilan): se ve de un vistazo que hay tres y cada fila lleva a su plan */
+.pl-res{display:none}
+.ticket{scroll-margin-top:84px}
+@media(max-width:960px){
+  .pl-res{display:grid;grid-template-columns:minmax(0,1fr);gap:0;list-style:none;margin:24px 0 0;padding:0;border-top:1px solid var(--linea)}
+  .pl-res a{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:1px 12px;min-height:60px;padding:9px 2px;border-bottom:1px solid var(--linea);text-decoration:none;color:var(--tinta)}
+  .pl-res b{font:800 1.05rem/1.15 var(--epi);letter-spacing:-.02em}
+  .pl-res span{grid-column:1;font:400 14px/1.3 var(--epi);color:var(--gris)}
+  .pl-res em{grid-column:2;grid-row:1/3;font:800 1.05rem/1 var(--epi);font-style:normal;letter-spacing:-.02em;white-space:nowrap}
+  .pl-res em small{font:500 .8rem var(--epi)}
+  .pl-res a:focus-visible{outline:3px solid var(--tinta);outline-offset:-3px}
+}
+
 /* ---- Estados de foco consistentes ---- */
 a:focus-visible,button:focus-visible,summary:focus-visible,.btn:focus-visible,input:focus-visible+.box{outline:3px solid var(--tinta);outline-offset:3px}
 .cierre a:focus-visible,.sec.dark a:focus-visible{outline-color:#fff}
@@ -98,6 +111,36 @@ a:focus-visible,button:focus-visible,summary:focus-visible,.btn:focus-visible,in
 .cd-s b{display:block;font:700 15px/1.25 var(--epi)}
 .cd-s span{display:block;margin-top:2px;font-size:14px;line-height:1.35;color:#3f3f3a}
 @media(min-width:721px){.cd-g{grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1fr)}.cd-gest{grid-column:auto}.cd-s{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 22px}}
+
+/* F8.7 · Combo animado: en móvil una cosa a la vez (el estado lo pone growi36.js en data-cd-s); en escritorio las tres, las que no toca atenuadas */
+.cd-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:0 0 12px}.cd-hd .cd-k{margin:0;padding-top:6px}
+.cd-i{aspect-ratio:auto}.cd-i img{display:block;height:auto;object-fit:initial}
+.cd-pp{width:44px;height:44px;flex:none;border-radius:50%;border:1.5px solid rgba(12,12,12,.5);background:#fff;color:var(--tinta);display:grid;place-items:center;cursor:pointer;padding:0}
+.cd-pp[hidden]{display:none}
+.cd-pp svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.cd-pp .pl{display:none;fill:currentColor;stroke:none}.cd-pp.is-paused .pa{display:none}.cd-pp.is-paused .pl{display:block}
+.cd-pp:focus-visible,.cd-b:focus-visible{outline:3px solid var(--tinta);outline-offset:2px}
+.cd-s li{display:block}
+.cd-b{all:unset;box-sizing:border-box;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;width:100%;min-height:48px;padding:6px 8px;border-radius:12px;cursor:pointer;transition:opacity .4s,background .4s}
+.cd-b:focus-visible{outline:3px solid var(--tinta);outline-offset:2px}
+.cd[data-cd-s] .cd-b{opacity:.55}.cd[data-cd-s] .cd-b[aria-current]{opacity:1;background:rgba(255,255,255,.75)}
+.cd-m,.cd-tag,.cd-f,.cd-chat,.cb-ag .nw,.cb-ag .ag-r{transition:opacity .5s,transform .5s}
+.cd[data-cd-s="1"] .cd-m,.cd[data-cd-s="1"] .cd-tag,.cd[data-cd-s="2"] .cd-m.in,.cd[data-cd-s="2"] .cd-tag{opacity:0;transform:translateY(6px)}
+.cd[data-cd-s]:not([data-cd-s="4"]) .cb-ag .nw,.cd[data-cd-s]:not([data-cd-s="4"]) .cb-ag .ag-r{opacity:.25}
+@media(min-width:721px){
+  .cd[data-cd-s] .cd-f,.cd[data-cd-s] .cd-chat{opacity:.38}
+  .cd[data-cd-s="1"] .cd-site,.cd[data-cd-s="2"] .cd-chat,.cd[data-cd-s="3"] .cd-chat,.cd[data-cd-s="4"] .cd-gest{opacity:1}
+}
+@media(max-width:720px){
+  .cd-g{grid-template-columns:minmax(0,1fr)}
+  .cd[data-cd-s] .cd-g{min-height:440px;align-content:center}
+  .cd[data-cd-s] .cd-site,.cd[data-cd-s] .cd-chat,.cd[data-cd-s] .cd-gest{display:none}
+  .cd[data-cd-s="1"] .cd-site{display:block}.cd[data-cd-s="2"] .cd-chat,.cd[data-cd-s="3"] .cd-chat{display:grid}.cd[data-cd-s="4"] .cd-gest{display:block}
+  .cd[data-cd-s] .cd-site,.cd[data-cd-s] .cd-chat,.cd[data-cd-s] .cd-gest{animation:cd-in .45s var(--ease) both}
+  .cd-site{max-width:340px;margin-inline:auto;width:100%}
+}
+@keyframes cd-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.cd *{animation:none!important;transition:none!important}}
 
 /* ---- GrowiFlow: paquetes de un vistazo ---- */
 .glance{width:100%;max-width:720px;margin:22px 0 4px;border-collapse:collapse;font:500 15px/1.35 var(--epi)}

@@ -333,7 +333,8 @@ fieldset[data-invalid] .ix-opt{border-width:2.5px}
   .ix-steps button:focus-visible{outline-offset:-3px}
   .ix-steps [aria-current]{background:#0c0c0c;color:#fff}
   @media (hover:hover){.ix-steps button:not([aria-current]):hover{background:rgba(12,12,12,.06)}}
-  .ix-pn{order:3;display:flex;justify-content:space-between;gap:10px;margin:14px 0 0;padding:0 20px}
+  .ix-pn{order:3;display:flex;justify-content:space-between;gap:10px;margin:14px 0 0;padding:0 20px;position:sticky;bottom:0;z-index:7}
+  .ixs:not(.ix-pn-on) .ix-pn,.ixs.ix-escribiendo .ix-pn{visibility:hidden;pointer-events:none}
   .ix-pn-b{min-height:48px;padding:0 20px;border-radius:999px;border:1.5px solid #0c0c0c;background:transparent;color:#0c0c0c;font:600 15px/1 var(--ix-epi);display:inline-flex;align-items:center;justify-content:center;gap:8px}
   .ix-pn-n{background:#0c0c0c;color:#fff;margin-left:auto}
   .ix-pn-b[disabled]{opacity:.35;cursor:default}
@@ -359,16 +360,19 @@ fieldset[data-invalid] .ix-opt{border-width:2.5px}
   .ix-h1{order:1;margin:22px var(--ixm) 16px}.ix-lead{order:2;margin:0 var(--ixm) 18px}.ix-cta{order:3;margin:0 var(--ixm) 6px}
   .ix-steps{order:4;margin-top:6px;padding:6px calc(var(--ixm) - 8px) 8px}.ix-actl{order:5;padding:6px var(--ixm) 0}.ixs .ix-dev{order:6}.ix-pn{order:7;padding:0 var(--ixm)}
   .ix-stage .ix-reset{order:8}.ix-fic{order:9;margin:10px var(--ixm) 0}
+  .ix-pn{margin-top:0;padding:12px var(--ixm) calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,#f6f6f4 74%,rgba(246,246,244,0))}
   .ix-hero .ix-cond{order:10;margin:22px var(--ixm) 12px}.ix-hero .ix-nota{order:11;margin:0 var(--ixm)}
 }
-@media (max-width:340px){.ix-steps button{font-size:12.5px;letter-spacing:-.01em}}
+@media (max-width:430px){.ix-steps button{font-size:12.5px;letter-spacing:-.01em}}
+@media (max-width:360px){.ix-steps button{white-space:normal;line-height:1.1}}
 @media (max-width:959px) and (min-height:720px){.ix-steps{position:sticky;top:69px;z-index:6}}
 @media (min-width:720px) and (max-width:959px){.ixs{--ixm:max(24px,calc((100vw - 680px)/2))}}
 @media (max-width:719px){
   .ixs .ix-dev{width:auto;height:auto;padding:0;border-radius:0;background:none;box-shadow:none;margin:12px var(--ixm) 0;align-self:stretch}
   .ix-dev:before,.ix-dev:after,.ix-isl{display:none}
   .ix-scr{--pt:28px;width:100%;height:640px;border-radius:0}
-  .ixs .ix-scr{height:auto;min-height:520px;border-radius:22px;border:1.5px solid rgba(42,33,27,.28)}
+  .ixs .ix-scr{height:auto;min-height:600px;border-radius:22px;border:1.5px solid rgba(42,33,27,.28)}
+  .ix-l-dia .ix-h{font-size:36px;margin-bottom:10px}.ix-tlb{padding:11px 0;min-height:52px}.ix-tld{padding-bottom:11px}
   .ix-js .ixs .ix-ly{position:relative;inset:auto;overflow:visible;min-height:inherit;scroll-padding:0}
   .ix-js .ixs .ix-ly.ix-out{position:absolute;inset:0;overflow:hidden}
   .ix-h1{font-size:31px}.ix-lead{font-size:16.5px;margin-bottom:14px!important}
@@ -398,3 +402,9 @@ html:not(.ix-js) .ix-dev{height:auto}
 html{scroll-padding-top:84px}
 @media (max-width:720px){html{scroll-padding-bottom:88px}}
 html:not(.ix-js) .ix-act-d{grid-template-rows:1fr}html:not(.ix-js) .ix-act-d p{opacity:1}html:not(.ix-js) .ix-act:before{transform:none}
+
+/* F8.7 · cumpleaños: pausa del avance automático de «La noche» (la muestra el script solo mientras avanza) */
+.ix-pp{position:absolute;top:calc(var(--pt) - 8px);right:20px;z-index:4;width:44px;height:44px;border-radius:50%;border:1.5px solid currentColor;background:rgba(255,255,255,.16);color:inherit;display:grid;place-items:center;padding:0}
+.ix-pp[hidden]{display:none}
+.ix-pp svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.ix-pp .pl{display:none;fill:currentColor;stroke:none}.ix-pp.is-paused .pa{display:none}.ix-pp.is-paused .pl{display:block}
