@@ -7,18 +7,6 @@ const R = join(dirname(fileURLToPath(import.meta.url)), '..');
 const leer = (p) => readFileSync(join(R, p), 'utf8').replace(/\r\n/g, '\n');
 const quitar = (h) => h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
 
-test('F8.7 Invitaciones · perspectiva de quien contrata: La enviás · La abren · Confirman · Te responden, y el mensaje inicial es de Lucía a sus invitados', () => {
-  const h = leer('invitaciones/index.html'), py = leer('_inv.py');
-  const tabs = h.slice(h.indexOf('class="ix-steps"'), h.indexOf('class="ix-pn"'));
-  assert.deepEqual([...tabs.matchAll(/data-ix-acto="\d"[^>]*>([^<]+)</g)].map((m) => m[1]), ['La enviás', 'La abren', 'Confirman', 'Te responden']);
-  assert.equal(/Recibís|Explorás|Revisás/.test(tabs), false);
-  assert.ok(h.includes('¡Hola! Les compartimos la invitación a nuestro casamiento. Ahí están todos los detalles y cómo confirmar asistencia. ¡Los esperamos!'));
-  assert.equal(h.includes('Ya está la invitación'), false);
-  assert.ok(/Cada invitado revisa su mensaje y lo envía desde su propio WhatsApp\. Hasta que no toca Enviar, no se mandó nada\./.test(h));   // el mensaje no se envía solo
-  assert.ok(/Se arma un mensaje para WhatsApp\. No se envía solo\./.test(h));
-  assert.ok(py.includes('"Te responden por WhatsApp."'));
-});
-
 test('F8.7 Invitaciones · navegación y altura: botones pegados abajo con aviso al llegar al selector, altura mínima común y sin recorte', () => {
   const css = leer('assets/invitaciones/inv.css'), js = leer('assets/invitaciones/inv-ui.js');
   assert.ok(/\.ix-pn\{[^}]*position:sticky;bottom:0/.test(css));                                  // Anterior/Siguiente quedan al alcance del pulgar
@@ -53,10 +41,10 @@ test('F8.7 Home y Combo · leyendas «Demo», imagen de Centro Ribera entera, de
     assert.equal(/Ejemplo ilustrativo|Datos ficticios|datos ficticios/.test(t.slice(t.indexOf('Demo'))), f === 'index.html' ? false : false, f);
   }
   const home = leer('index.html'), combo = leer('combo/index.html'), css36 = leer('assets/growi36.css'), js36 = leer('assets/growi36.js');
-  assert.ok(home.includes('<p class="hs-tag">Demo</p>') && (home.match(/<p class="ej-tag">Demo<\/p>/g) || []).length === 3);   // F8.7C: la fila de GrowiWeb ya se identifica como «Sitio de muestra» (sin segunda etiqueta)
+  assert.ok(home.includes('<p class="ha-tag">Demo</p>') && (home.match(/<p class="ej-tag">Demo<\/p>/g) || []).length === 3);   // F8.7C: la fila de GrowiWeb ya se identifica como «Sitio de muestra» (sin segunda etiqueta)
   const web = home.slice(home.indexOf('id="n-web"'), home.indexOf('id="n-flow"'));
   assert.ok(web.includes('Sitio de muestra') && !web.includes('ej-tag'));
-  assert.ok(home.includes('ribera-sitio-m.webp" width="375" height="1300"') && home.includes('ribera-sitio-d.webp" width="1085" height="900"') && /\.hs-im\{display:block;width:100%;height:auto/.test(css36));   // F8.8: capturas completas del sitio de Centro Ribera (escritorio y móvil), sin recorte por proporción
+  assert.ok(home.includes('ribera-sitio-m.webp" width="375" height="1300"') && /\.ha-site img\{display:block;width:100%;height:auto/.test(leer('assets/home-demo.css')));   // F8.8: capturas completas del sitio de Centro Ribera (escritorio y móvil), sin recorte por proporción
   assert.ok(combo.includes('data-cd') && combo.includes('data-cd-pp') && (combo.match(/data-cd-n="\d"/g) || []).length === 4 && combo.includes('Demo · un mismo negocio, Centro Ribera'));
   assert.ok(/data-cd-s/.test(js36) && /MS = \[3400, 3200, 3600, 4600\]/.test(js36) && /prefers-reduced-motion/.test(js36) && /Pausar animación/.test(js36));
 });

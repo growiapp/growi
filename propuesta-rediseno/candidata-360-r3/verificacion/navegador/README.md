@@ -4,8 +4,8 @@
 (las pruebas de `pruebas/` siguen siendo `node --test pruebas/*.test.mjs`). Esta carpeta no forma parte del release (`_release.py` solo copia `assets`, `demos` y `vendor`).
 Abre siempre **una pestaña propia** y la cierra al terminar: no hereda ni deja rutas, init scripts ni listeners en la pestaña desde la que se lanza.
 
-## Qué comprueba (76 verificaciones)
-- **Invitaciones**, con clics y teclas reales: casamiento (recorrido por actos, formulario, errores, borrador, WhatsApp como diálogo sin envío, corregir, reiniciar), cumpleaños y empresa.
+## Qué comprueba (66 verificaciones)
+- **Invitaciones**, con clics y teclas reales: casamiento (el módulo real dentro del diálogo «Probar la invitación completa»: formulario, errores, borrador, WhatsApp como vista previa sin envío, corregir, reiniciar, cierre con Esc), cumpleaños y empresa.
   Controla `data-paso`, capa activa, ausencia de clases de transición, `inert`, opacidad, foco y texto de los mensajes.
 - **Privacidad del RSVP:** sin almacenamiento ni cookies nuevas; ninguna respuesta (nombre ni mensaje) viaja en ningún pedido, ni por URL ni por cuerpo; sin POST (salvo el evento de analítica de Plausible) ni envío a WhatsApp;
   el único tercero admitido es `plausible.io`. **No afirma que la página no haga solicitudes a terceros:** el sitio publicado carga analítica Plausible (solo en el release; ver `_lib.py`). Los eventos de Plausible no llevan datos del RSVP.
@@ -24,7 +24,7 @@ Es un límite de la prueba, no del producto (con la rueda del mouse el acto camb
    - o el release, que es lo que se publica: `python -B _construir.py --release <carpeta-temporal>` y `python -B -m http.server 8840 -d <carpeta-temporal>`.
 2. Con el MCP de Playwright, `browser_navigate` a `<sitio>/invitaciones/index.html` (por ejemplo `http://localhost:8840/invitaciones/index.html`; publicado: `https://growi.ar/invitaciones/`). **La URL se toma de la página actual.**
 3. `browser_run_code_unsafe` con `filename` = la ruta de este script (debe estar bajo una raíz permitida del MCP) o con su contenido en `code`.
-4. Esperado: `76/76`. Cada fallo se lista como `FALLA <nombre> → <detalle>`.
+4. Esperado: `66/66`. Cada fallo se lista como `FALLA <nombre> → <detalle>`.
 Contra el sitio publicado no escribe nada: la experiencia es una muestra sin envío.
 
 ## Controles negativos (la prueba debe fallar cuando el defecto existe)
@@ -67,3 +67,16 @@ Invitaciones (casamiento) en móvil con la barra fija Anterior/Siguiente: foco p
 7. **Equivalencia móvil/escritorio:** misma historia y mismo resultado; la composición móvil se diseña para el espacio disponible (no es el escritorio comprimido).
 8. **Revisión visual obligatoria:** capturas de cada etapa en escritorio y móvil, revisadas por una persona antes de cerrar; una prueba DOM de presencia o visibilidad no alcanza.
 Los puntos 3, 4, 5 y 6 están cubiertos por `f88-hero-geometria` y por `pruebas/f83b.test.mjs`; los puntos 1, 2, 7 y 8 se verifican con la revisión de capturas.
+
+## F8.9B · demostraciones integradas (Home A e Invitaciones A)
+La Home y la página de Invitaciones usan ahora las demostraciones aprobadas en F8.9A (`assets/home-demo.*`, `assets/invitaciones/pelicula.*`, motor `assets/narrar.js`).
+Los scripts `f83b-experiencias`, `f84r-regresion`, `f87-regresion`, `f87c-invitaciones-movil` y `f88-hero-geometria` describían el hero anterior y el recorrido por actos, que ya no existen, y se retiraron.
+Su cobertura se reparte así: la animación y la geometría de las demostraciones, y el diálogo con el módulo real, se verifican con `f89b-home.playwright.js` y `f89b-invitaciones.playwright.js` (seis viewports);
+el sitio completo (desborde, menús, enlaces de WhatsApp sin envío automático, consola) con `f89b-regresion-sitio.playwright.js`; la lógica estática, con `pruebas/f89b.test.mjs`.
+No se conserva una verificación de navegador específica de Café Nogal y de los planes (la parte de estas pruebas que no dependía del hero): sus pruebas de Node (`f87.test.mjs`) siguen vigentes.
+
+### Cobertura vigente tras el cierre de F8.9B
+- `f89b-comercial.playwright.js` (97 verificaciones): cumpleaños (La noche), empresa, Combo, vistas previas de Café Nogal y Bruma (igualdad pixel a pixel con la app), los tres planes de GrowiApp (página y rubros), GrowiFlow y menú/navegación. Armado con las secciones vigentes de los scripts retirados.
+- `f89b-dinamico.playwright.js` (22 verificaciones): las demostraciones nuevas ante cambios de tamaño, movimiento reducido en caliente y salida/vuelta a la vista (lo que cubría F8.4R para el hero anterior).
+- Los CTA de WhatsApp y los menús de todas las páginas, en seis viewports, los cubre `f89b-regresion-sitio.playwright.js`.
+- La muestra de Invitaciones solo prepara el mensaje: `pruebas/f89b.test.mjs` y `invitaciones-estado.playwright.js` verifican que ningún texto promete abrir ni enviar WhatsApp y que no sale ningún pedido a WhatsApp.

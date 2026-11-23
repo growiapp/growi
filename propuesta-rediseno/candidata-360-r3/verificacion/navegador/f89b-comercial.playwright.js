@@ -1,10 +1,10 @@
-// Growi 360 · F8.7 · regresión de los hallazgos de la revisión en teléfono real (Invitaciones, cumpleaños, empresa, Home, Combo, Café Nogal, planes), con interacciones reales.
-// Uso: navegar a «<sitio>/#antes» o «<sitio>/#despues» (el fragmento solo etiqueta las capturas) y ejecutar con browser_run_code_unsafe (filename).
-// Las capturas van a CAP (fuera del repositorio). Sin dependencias. Dura ~4-5 min (el cliente MCP lo pasa a segundo plano).
+// Growi 360 · F8.9B · regresión de navegador de lo comercial que NO cambió con la integración: cumpleaños (La noche), empresa, Combo, vistas previas de Café Nogal y Bruma,
+// planes de GrowiApp, GrowiFlow, y menú/navegación. Se armó con las secciones vigentes de los scripts de F8.3B y F8.7 (retirados por describir el hero y los actos anteriores).
+// Uso: navegar a «<sitio>/#despues» y ejecutar con browser_run_code_unsafe (filename). Sin dependencias.
 async (paginaInicial) => {
   const m0 = /^(https?:\/\/[^/?#]+)\//.exec(paginaInicial.url()); if (!m0) throw new Error('Navegar primero a <sitio>/#antes|#despues');
   const TAG = (/#(\w+)/.exec(paginaInicial.url()) || [, 'x'])[1], U = m0[1], br = paginaInicial.context().browser(), res = [];
-  const CAP = 'D:/Documentos/respaldos-growi/f8-7/capturas/';
+  const CAP = 'D:/Documentos/respaldos-growi/f8-9b/capturas/comercial/';
   const T = (n, ok, d) => res.push([n, !!ok, d === undefined ? '' : String(d)]);
   const abrir = async (w, h, o, ruta) => {
     const ctx = await br.newContext(Object.assign({ viewport: { width: w, height: h }, hasTouch: true, isMobile: w < 768 }, o || {}));
@@ -15,58 +15,6 @@ async (paginaInicial) => {
   const centro = (p, sel) => ev(p, s => { const r = document.querySelector(s).getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2, r.top, r.bottom]; }, sel);
   const tocar = async (p, sel, verCon) => { const c = await centro(p, sel); const ih = await ev(p, () => innerHeight); if (c[3] > ih + 0.5 || c[2] < -0.5) return false; await p.touchscreen.tap(c[0], c[1]); await p.waitForTimeout(verCon || 1100); return true; };
   const sinDesborde = p => ev(p, () => document.documentElement.scrollWidth <= innerWidth);
-
-  // ================================================================ INVITACIONES · casamiento (A tamaños, B navegación, C perspectiva)
-  const medir = p => ev(p, () => {
-    const r = e => { const b = e.getBoundingClientRect(); return { t: +b.top.toFixed(1), b: +b.bottom.toFixed(1) }; };
-    const cab = r(document.querySelector('header.top')), sel = document.querySelector('.ix-steps'), s = r(sel), pos = getComputedStyle(sel).position, pn = document.querySelector('.ix-pn'), pr = r(pn);
-    const tab = r(document.querySelector('.ix-steps [aria-current]')), tit = r(document.querySelector('.ix-act.on .ix-act-b')), ih = innerHeight;
-    const selV = s.t >= cab.b - 0.5 && s.b <= ih + 0.5, tabV = tab.t >= cab.b - 0.5 && tab.b <= ih + 0.5, titV = tit.t >= (pos === 'sticky' ? s.b : cab.b) - 0.5 && tit.b <= ih + 0.5;
-    const pnV = getComputedStyle(pn).visibility === 'visible' && pr.t >= cab.b - 0.5 && pr.b <= ih + 0.5;
-    return { cab, s, pr, tab, tit, pos, ih, selV, tabV, titV, pnV, ok: selV && tabV && titV && pnV, act: document.querySelector('[data-ix-story]').dataset.act, texto: document.querySelector('.ix-steps [aria-current]').textContent.trim() };
-  });
-  const resumen = m => 'cabecera ..' + m.cab.b + ' · selector ' + m.s.t + '..' + m.s.b + ' (' + m.pos + ') · pestaña «' + m.texto + '» ' + m.tab.t + '..' + m.tab.b + ' · título ' + m.tit.t + '..' + m.tit.b + ' · botones ' + m.pr.t + '..' + m.pr.b + ' · ventana ' + m.ih + ' → ' + (m.ok ? 'todo visible' : 'FALTA: ' + [!m.selV && 'selector', !m.tabV && 'pestaña', !m.titV && 'título', !m.pnV && 'Anterior/Siguiente'].filter(Boolean).join(', '));
-  for (const [w, h] of [[320, 568], [390, 667], [390, 844]]) {
-    const k = w + 'x' + h; const p = await abrir(w, h, {}, '/invitaciones/');
-    // C · perspectiva narrativa
-    const lab = await ev(p, () => [...document.querySelectorAll('.ix-steps button')].map(b => b.textContent.trim() + (b.scrollWidth > b.clientWidth + 1 ? '!' : '')));
-    T('INV ' + k + ': selector «La enviás · La abren · Confirman · Te responden», sin desborde de las pestañas', lab.join('|') === 'La enviás|La abren|Confirman|Te responden', lab.join('|'));
-    const chatTxt = await ev(p, () => document.querySelector('.ix-ch-m p').textContent.trim());
-    T('INV ' + k + ': el mensaje de Lucía a sus invitados es el aprobado', chatTxt === '¡Hola! Les compartimos la invitación a nuestro casamiento. Ahí están todos los detalles y cómo confirmar asistencia. ¡Los esperamos!', chatTxt);
-    const nota = await ev(p, () => [...document.querySelectorAll('.ix-note')].map(e => e.textContent).join(' '));
-    T('INV ' + k + ': la narrativa conserva que el mensaje de WhatsApp no se envía solo', /No se env[ií]a solo/.test(nota) && /Todav[ií]a no se envi[oó]|Lo revis[aá]s y lo envi[aá]s vos/.test(await ev(p, () => document.querySelector('[data-ly=mensaje]').textContent)), nota);
-    // barra de navegación oculta antes de llegar al selector
-    T('INV ' + k + ': la barra Anterior/Siguiente aparece cuando el selector entra en la pantalla (no antes)', await ev(p, () => getComputedStyle(document.querySelector('.ix-pn')).visibility === (document.querySelector('.ix-steps').getBoundingClientRect().top < innerHeight ? 'visible' : 'hidden')));
-    await ev(p, () => { const e = document.querySelector('.ix-steps'); window.scrollTo(0, e.getBoundingClientRect().top + scrollY - 90); }); await p.waitForTimeout(900);
-    // A · alturas de la pantalla en las cuatro etapas
-    const alt = [], recort = []; for (const n of [1, 2, 3, 4]) { await ev(p, n => document.querySelector('.ix-steps [data-ix-acto="' + n + '"]').click(), n); await p.waitForTimeout(800); const r = await ev(p, () => { const s = document.querySelector('.ix-scr[data-inv=cas]'), l = [...s.querySelectorAll(':scope > [data-ly]')].filter(x => !x.hidden && x.classList.contains('on'))[0]; return [Math.round(s.getBoundingClientRect().height), l ? l.scrollHeight - l.clientHeight : 0]; }); alt.push(r[0]); recort.push(r[1]); }
-    const rango = Math.max.apply(null, alt) - Math.min.apply(null, alt);
-    T('INV ' + k + ': la pantalla mantiene su altura entre etapas (' + alt.join(' / ') + ' px; variación ' + rango + ' px)', rango <= (w <= 340 ? 60 : 12), alt.join(','));
-    T('INV ' + k + ': ninguna etapa recorta contenido', recort.every(x => x <= 1), recort.join(','));
-    // B · navegación
-    await ev(p, () => { const e = document.querySelector('.ix-steps'); window.scrollTo(0, e.getBoundingClientRect().top + scrollY - 90); }); await p.waitForTimeout(900);
-    await ev(p, () => document.querySelector('.ix-steps [data-ix-acto="4"]').click()); await p.waitForTimeout(900);
-    let ok = await tocar(p, '[data-ix-pn="-1"]'); let m = await medir(p); await p.screenshot({ path: CAP + TAG + '-f87-inv-' + k + '-4a3.png' });
-    T('INV ' + k + ': 4 → Anterior → 3: botón tocable y selector, pestaña, título y botones visibles', ok && m.ok && m.act === '3', (ok ? '' : 'botón fuera de pantalla · ') + resumen(m));
-    ok = await tocar(p, '[data-ix-pn="-1"]'); m = await medir(p); await p.screenshot({ path: CAP + TAG + '-f87-inv-' + k + '-3a2.png' });
-    T('INV ' + k + ': 3 → Anterior → 2: todo visible', ok && m.ok && m.act === '2', (ok ? '' : 'botón fuera de pantalla · ') + resumen(m));
-    await ev(p, () => document.querySelector('.ix-steps [data-ix-acto="1"]').click()); await p.waitForTimeout(900);
-    ok = await tocar(p, '[data-ix-pn="1"]'); m = await medir(p); await p.screenshot({ path: CAP + TAG + '-f87-inv-' + k + '-1s2.png' });
-    T('INV ' + k + ': 1 → Siguiente → 2: todo visible', ok && m.ok && m.act === '2', (ok ? '' : 'botón fuera de pantalla · ') + resumen(m));
-    let todo = true, det = []; for (const [sel, esp] of [['[data-ix-pn="1"]', '3'], ['[data-ix-pn="1"]', '4'], ['[data-ix-pn="-1"]', '3'], ['[data-ix-pn="-1"]', '2'], ['[data-ix-pn="-1"]', '1']]) { const t = await tocar(p, sel); m = await medir(p); const bien = t && m.ok && m.act === esp; todo = todo && bien; det.push(m.act + ':' + (bien ? 'ok' : 'FALLA')); }
-    T('INV ' + k + ': recorrido completo con Siguiente y Anterior sin perder la navegación (' + det.join(' ') + ')', todo, det.join(' '));
-    todo = true; det = []; for (const n of [4, 2, 3, 1, 4]) { const t = await tocar(p, '.ix-steps [data-ix-acto="' + n + '"]'); m = await medir(p); const bien = t && m.ok && m.act === String(n); todo = todo && bien; det.push(n + ':' + (bien ? 'ok' : 'FALLA')); }
-    T('INV ' + k + ': selección directa de pestañas (' + det.join(' ') + ')', todo, det.join(' '));
-    await ev(p, () => document.querySelector('[data-ix-pn="-1"]').focus()); await p.keyboard.press('Enter'); await p.waitForTimeout(1100); m = await medir(p);
-    T('INV ' + k + ': teclado — Anterior con Enter: todo visible', m.ok && m.act === '3', resumen(m));
-    await ev(p, () => document.querySelector('[data-ix-pn="1"]').focus()); await p.keyboard.press('Space'); await p.waitForTimeout(1100); m = await medir(p);
-    T('INV ' + k + ': teclado — Siguiente con Espacio: todo visible', m.ok && m.act === '4', resumen(m));
-    await tocar(p, '.ix-steps [data-ix-acto="3"]'); await ev(p, () => document.querySelector('#ix-cas-nombre').focus({ preventScroll: true })); await p.keyboard.type('Camila'); await p.waitForTimeout(900);
-    const y0 = await ev(p, () => scrollY); await ev(p, () => window.GrowiInvUI.cas.aVista({ tipo: 'ir' })); await p.waitForTimeout(600);
-    T('INV ' + k + ': con el foco en un campo de texto no se desplaza la página (' + y0 + ' → ' + await ev(p, () => scrollY) + ')', y0 === await ev(p, () => scrollY));
-    T('INV ' + k + ': sin errores de consola ni desborde', p._errs.length === 0 && await sinDesborde(p), p._errs.join('|'));
-    await p._ctx.close();
-  }
 
   // ================================================================ CUMPLEAÑOS · 21:00 → 22:00 → 00:00
   const noche = p => ev(p, () => ({ clock: document.querySelector('[data-clock]').textContent, nt: document.querySelector('[data-nt]').textContent, t: document.querySelector('.ix-cum').dataset.t, pp: (() => { const b = document.querySelector('[data-ix-pp]'); return b.hidden ? 'oculto' : (b.classList.contains('is-paused') ? 'pausado' : 'visible'); })(), reinicio: document.querySelector('[data-ix-reiniciar-ev=cum]').hasAttribute('data-off') ? 'oculto' : 'visible' }));
@@ -112,31 +60,6 @@ async (paginaInicial) => {
     T('EMP ' + w + ': «Confirmar asistencia» lleva al formulario', cf.t >= cf.c - 2 && cf.t < cf.ih * 0.75, JSON.stringify(cf));
     await p._ctx.close();
   }
-
-  // ================================================================ HOME · hero en movimiento también en móvil, sin recorte, sin leyendas
-  const sello = p => ev(p, () => { const r = document.querySelector('[data-hs]'); const s = document.querySelector('[data-hs-s][aria-current]'); return (s ? s.getAttribute('data-hs-s') : '?') + (document.querySelector('[data-hs-slot]').classList.contains('ok') ? 'b' : '') + (r.classList.contains('hs-press') ? 'p' : ''); });
-  const observar = async (p, ms) => { const c = []; let ult = await sello(p), t0 = Date.now(); while (Date.now() - t0 < ms) { await p.waitForTimeout(100); const s = await sello(p); if (s !== ult) { c.push(ult + '→' + s); ult = s; } } return c; };
-  const verEscena = p => ev(p, () => document.querySelector('[data-hs]').scrollIntoView({ block: 'center' }));
-  const pausa = p => ev(p, () => { const b = document.querySelector('[data-hs-pp]'); return b.hidden || getComputedStyle(b).display === 'none' ? 'oculto' : 'visible'; });
-  for (const [w, h] of [[390, 844], [320, 568]]) {
-    p = await abrir(w, h, {}, '/'); await verEscena(p); await p.waitForTimeout(500);
-    const c = await observar(p, 8000);
-    T('HOME ' + w + ': el hero se mueve solo en móvil (' + c.length + ' cambios en 8 s) y muestra el control de pausa', c.length >= 2 && await pausa(p) === 'visible', c.join(' '));
-    await p.screenshot({ path: CAP + TAG + '-f87-home-hero-' + w + '.png' });
-    await ev(p, () => window.GrowiHeroStory.go(1, false)); await p.waitForTimeout(300);
-    const im = await ev(p, () => { const i = [...document.querySelectorAll('.hs-im')].find(x => x.offsetWidth); const b = i.getBoundingClientRect(); return { w: Math.round(b.width), h: Math.round(b.height), nat: i.naturalWidth + 'x' + i.naturalHeight, nw: i.naturalWidth, nh: i.naturalHeight, tag: document.querySelector('.hs-tag').textContent.trim(), txt: document.querySelector('[data-hs]').innerText }; });
-    T('HOME ' + w + ': la captura del sitio de Centro Ribera carga y conserva su proporción (' + (im.h / im.w).toFixed(3) + '), sin deformarse', im.nw > 0 && Math.abs(im.h / im.w - im.nh / im.nw) < 0.01, JSON.stringify(im));
-    T('HOME ' + w + ': la leyenda es «Demo» y no hay «Ejemplo ilustrativo» ni «Datos ficticios» en la escena', im.tag === 'Demo' && !/ejemplo ilustrativo|datos ficticios/i.test(im.txt), im.tag);
-    await ev(p, () => document.querySelector('[data-hs-pp]').click()); const cp = await observar(p, 4500);
-    T('HOME ' + w + ': con pausa del usuario no avanza', cp.length === 0, cp.join(' '));
-    await p._ctx.close();
-  }
-  p = await abrir(1440, 900, {}, '/'); await verEscena(p); await p.waitForTimeout(500); await observar(p, 1500); await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(700); await verEscena(p);
-  const cr = await observar(p, 6500); T('HOME 1440 → 390 sin recargar: la reproducción continúa', cr.length >= 1 && await pausa(p) === 'visible', cr.join(' ')); await p._ctx.close();
-  p = await abrir(390, 844, { reducedMotion: 'reduce' }, '/'); await verEscena(p); const cm = await observar(p, 4500);
-  T('HOME 390 con movimiento reducido: no avanza y no hay control de pausa (los pasos siguen disponibles)', cm.length === 0 && await pausa(p) === 'oculto', cm.join(' ')); await p._ctx.close();
-  p = await abrir(390, 844, {}, '/'); await verEscena(p); await p.waitForTimeout(400); await ev(p, () => document.querySelector('[data-hs-s="2"]').click()); const cman = await observar(p, 5000);
-  T('HOME 390: al tocar un paso la persona toma el control (no avanza sola)', cman.length === 0 && await pausa(p) === 'oculto', cman.join(' ')); await p._ctx.close();
 
   // ================================================================ COMBO · demostración animada, una cosa a la vez en móvil
   const cdSt = p => ev(p, () => { const r = document.querySelector('.cd[data-cd]'); const vis = ['.cd-site', '.cd-chat', '.cd-gest'].filter(s => getComputedStyle(r.querySelector(s)).display !== 'none').length; const b = r.querySelector('[data-cd-pp]'); return { s: r.getAttribute('data-cd-s'), vis, pp: b.hidden ? 'oculto' : (b.classList.contains('is-paused') ? 'pausado' : 'visible'), cur: (r.querySelector('[aria-current]') || {}).textContent ? r.querySelector('[aria-current]').getAttribute('data-cd-n') : null }; });
@@ -211,5 +134,25 @@ async (paginaInicial) => {
   }
 
   const f = res.filter(r => !r[1]);
+  // ================================================== MENÚ y navegación (después de ejecutar shared.js)
+  const RUTAS = { '/': ['/', 'page'], '/app/': ['/app/', 'page'], '/web/': ['/web/', 'page'], '/flow/': ['/flow/', 'page'], '/combo/': ['/combo/', 'page'], '/invitaciones/': ['/invitaciones/', 'page'], '/app/cafeterias/': ['/app/', 'true'], '/app/peluquerias/': ['/app/', 'true'], '/app/talleres/': ['/app/', 'true'], '/app/retail/': ['/app/', 'true'] };
+  for (const [ruta, [dest, val]] of Object.entries(RUTAS)) {
+    p = await abrir(390, 844, {}, ruta);
+    const cur = await ev(p, () => [...document.querySelectorAll('.mobile-menu-card a[aria-current]')].map(a => (new URL(a.href)).pathname + '=' + a.getAttribute('aria-current')));
+    T('MENÚ ' + ruta + ': exactamente una entrada actual (' + cur.join() + ')', cur.length === 1 && cur[0] === dest + '=' + val, cur.join());
+    const nav = await ev(p, () => [...document.querySelectorAll('nav.nav a[aria-current]')].map(a => (new URL(a.href)).pathname + '=' + a.getAttribute('aria-current')));
+    T('MENÚ ' + ruta + ': navegación de escritorio coherente (' + nav.join() + ')', ruta === '/' ? nav.length === 0 : (nav.length === 1 && nav[0] === dest + '=' + val), nav.join());
+    if (ruta.split('/').length > 3) T('MENÚ ' + ruta + ': un rubro no presenta /app/ como la misma página', !(await ev(p, () => !!document.querySelector('.mobile-menu-card a[aria-current="page"], nav.nav a[aria-current="page"]'))));
+    if (ruta === '/') {
+      const b = '#menuBtn', e = async () => ev(p, () => [document.getElementById('menuBtn').textContent, document.getElementById('menuBtn').getAttribute('aria-label'), document.getElementById('menuBtn').getAttribute('aria-expanded'), document.body.classList.contains('menu-open'), document.querySelector('main').inert].join('|'));
+      T('MENÚ: cerrado dice «Menú» (Abrir menú)', await e() === 'Menú|Abrir menú|false|false|false', await e());
+      await p.tap(b); await p.waitForTimeout(400); T('MENÚ: abierto dice «Cerrar» (Cerrar menú), bloquea el fondo y su nombre contiene el texto visible', await e() === 'Cerrar|Cerrar menú|true|true|true', await e());
+      await p.tap(b); await p.waitForTimeout(400); T('MENÚ: se cierra con el mismo botón y devuelve foco y scroll', await e() === 'Menú|Abrir menú|false|false|false' && await ev(p, () => document.activeElement.id === 'menuBtn'), await e());
+      await p.tap(b); await p.waitForTimeout(300); await p.keyboard.press('Escape'); await p.waitForTimeout(300); T('MENÚ: Esc cierra y restituye el texto', await e() === 'Menú|Abrir menú|false|false|false');
+      await p.tap(b); await p.waitForTimeout(300); await p.touchscreen.tap(195, 835); await p.waitForTimeout(400); T('MENÚ: tocar el velo cierra', (await e()).startsWith('Menú|'), await e());
+      T('MENÚ: el botón cabe en 320 px sin tocar el logotipo', await (async () => { await p.setViewportSize({ width: 320, height: 568 }); await p.tap(b); await p.waitForTimeout(300); const r = await ev(p, () => { const l = document.querySelector('.logo').getBoundingClientRect(), m = document.getElementById('menuBtn').getBoundingClientRect(); return m.left > l.right + 8 && m.right <= innerWidth - 8; }); await p.tap(b); return r; })());
+    }
+    await p._ctx.close();
+  }
   return (f.length ? f.map(r => 'FALLA ' + r[0] + '\n      → ' + r[2]).join('\n') + '\n' : '') + res.filter(r => r[1]).length + '/' + res.length + ' verificaciones OK (etiqueta ' + TAG + ')';
 }

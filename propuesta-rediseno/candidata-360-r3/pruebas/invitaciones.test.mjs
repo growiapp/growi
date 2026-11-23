@@ -230,7 +230,7 @@ test('Invitaciones: accesibilidad estática (ids únicos, capas con nombre, esta
 });
 test('Invitaciones: la barra «Consultar» no tapa las experiencias (data-sticky-hide en recorrido, cumpleaños y empresa)', () => {
   const h = pagina(), css = leer('assets/invitaciones/inv.css');
-  assert.ok(h.includes('<div class="ixs" id="inicio" data-ix-story data-sticky-hide>') && h.includes('id="cumple" data-t="0" data-sticky-hide') && h.includes('data-inv="emp" data-paso="portada" data-sticky-hide'));
+  assert.ok(h.includes('<div class="ipx" id="inicio" data-sticky-hide>') && h.includes('id="cumple" data-t="0" data-sticky-hide') && h.includes('data-inv="emp" data-paso="portada" data-sticky-hide'));
   assert.ok(/html\{scroll-padding-top:\d+px\}/.test(css) && /max-width:720px\)\{html\{scroll-padding-bottom:\d+px\}\}/.test(css));
 });
 test('Home: el teaser de Invitaciones refleja la nueva experiencia y enlaza a la página', () => {
@@ -264,7 +264,7 @@ test('Invitaciones F4.2.1: una pantalla sale antes de que entre la otra (sin sup
 test('Invitaciones F4.2.3: las direcciones de ejemplo usan subdominio propio, son texto (no enlaces) y están en la lista aprobada', () => {
   const h = pagina();
   const permitidas = new Set(['luciaytomas.growi.ar', 'los30demica.growi.ar', 'encuentro2027.growi.ar']);
-  const exp = region(h, '<div class="ixs"', '<section class="ix-al"');
+  const exp = region(h, '<div class="ipx"', '<section class="ix-al"');
   const vistas = [...exp.matchAll(/(?:^|[>\s"'(])((?:[a-z0-9-]+\.)growi\.ar)(?![a-z0-9.-])/g)].map(m => m[1]);
   assert.ok(vistas.length >= 1 && vistas.every(v => permitidas.has(v)), 'subdominios: ' + vistas.join(','));
   assert.equal(/growi\.ar\/[a-z0-9-]+-[a-z0-9-]+/.test(exp), false);   // nada del estilo growi.ar/lucia-y-tomas
