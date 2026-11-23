@@ -1,9 +1,9 @@
 /* Invitaciones · página y experiencias (F4.2). Tres voces: casamiento (Instrument Serif, marfil, oliva), cumpleaños (Fraunces, cielo que cambia) y empresa (Schibsted Grotesk, papel, grafito, lima).
    Las fuentes y variables viven en inv-base.css. Reglas: sin animaciones permanentes, sin bordes punteados sobre las invitaciones, movimiento reducido respetado. */
-.ixs *,.ix-cum *,.ix-emp *,.ix-al *,.ix-pd *{box-sizing:border-box}
-.ixs :where(button,input),.ix-cum :where(button,input),.ix-emp :where(button,input){font:inherit;color:inherit}
-.ixs button,.ix-cum button,.ix-emp button{cursor:pointer}
-.ixs :focus-visible,.ix-cum :focus-visible,.ix-emp :focus-visible,.ix-al :focus-visible,.ix-pd :focus-visible{outline:3px solid #1a6b47;outline-offset:3px;border-radius:3px}
+.ixs *,.ix-cum *,.ix-emp *,.ix-al *,.ix-pd *,.ip-o *{box-sizing:border-box}
+.ixs :where(button,input),.ix-cum :where(button,input),.ix-emp :where(button,input),.ip-o :where(button,input){font:inherit;color:inherit}
+.ixs button,.ix-cum button,.ix-emp button,.ip-o button{cursor:pointer}
+.ixs :focus-visible,.ix-cum :focus-visible,.ix-emp :focus-visible,.ix-al :focus-visible,.ix-pd :focus-visible,.ip-o :focus-visible{outline:3px solid #1a6b47;outline-offset:3px;border-radius:3px}
 .ix-ey{font:400 12px/1.4 var(--ix-mono);letter-spacing:.14em;text-transform:uppercase;margin:0 0 18px}
 .ix-mk{display:inline-block;width:9px;height:9px;border:1.5px solid #a8553c;border-radius:50%;margin-left:7px;vertical-align:.06em;flex:none}
 .ix-nota{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.5;color:#5a4f46;margin:0;max-width:46ch}

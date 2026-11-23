@@ -85,6 +85,7 @@ def home():
     pre = ('<section class="sec tint" id="preguntas" aria-labelledby="h-faq"><div class="w faq-g"><div><p class="eyebrow">Antes de escribirnos</p><h2 id="h-faq">Lo que se pregunta primero.</h2></div>%s</div></section>\n' % faq(HOME_FAQ))
     cie = cierre("Contanos qué negocio tenés.", "Te recomendamos una solución y te pasamos precio y fecha estimada de entrega por WhatsApp, de lunes a sábado de 9 a 19 hs.",
                  btn("Hola Growi, quiero que me recomienden qué me conviene.\n\nMi rubro:\nQué quiero resolver:", "home-final-whatsapp", "Contanos tu negocio"))
-    return (head(pg, "Growi: gestión, sitio web y automatizaciones para negocios", "Ordená tu negocio, conseguí que te encuentren y dejá de hacer tareas a mano. Mirá ejemplos y pedí precio y fecha estimada de entrega por escrito.", l1ld="", faqs=HOME_FAQ)
+    pagina = (head(pg, "Growi: gestión, sitio web y automatizaciones para negocios", "Ordená tu negocio, conseguí que te encuentren y dejá de hacer tareas a mano. Mirá ejemplos y pedí precio y fecha estimada de entrega por escrito.", l1ld="", faqs=HOME_FAQ)
             + header(pg, "") + '<main id="contenido">\n' + hero + necesidad + caso + eventos + empezar + pre + cie + '</main>\n'
-            + footer(pg, "Hola Growi, quiero conocer más sobre sus soluciones.", "home")).replace("</head>", '<link rel="stylesheet" href="%sassets/invitaciones/inv-base.css">\n</head>' % rel, 1)
+            + footer(pg, "Hola Growi, quiero conocer más sobre sus soluciones.", "home")).replace("</head>", '<link rel="stylesheet" href="%sassets/invitaciones/inv-base.css"><link rel="stylesheet" href="%sassets/narrar.css"><link rel="stylesheet" href="%sassets/home-demo.css">\n</head>' % (rel, rel, rel), 1)
+    return pagina.replace("</body>", '<script src="%sassets/narrar.js" defer></script>\n<script src="%sassets/home-demo.js" defer></script>\n</body>' % (rel, rel), 1)

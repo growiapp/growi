@@ -1,0 +1,24 @@
+/* F8.9B · navegación narrativa (pasos numerados + pausa) de las demostraciones. Sobre fondo oscuro; .lt = fondo claro. */
+/* navegación narrativa compacta: círculos numerados; el paso actual muestra su nombre. Nada parece pestaña gigante. */
+.nar-nv{display:flex;align-items:center;gap:6px;min-height:52px}
+.nar-l{display:flex;gap:6px;flex:1;min-width:0;margin:0;padding:0;list-style:none}
+.nar-l li{display:contents}
+.nar-b{all:unset;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:8px;height:44px;min-width:44px;padding:0 12px;border-radius:999px;border:1.5px solid rgba(255,255,255,.35);color:rgba(255,255,255,.92);font:600 13px/1 var(--epi);cursor:pointer;white-space:nowrap;transition:background .3s,color .3s,flex-grow .3s var(--ease)}
+.nar-b .nar-n{font:600 13px/1 var(--mono)}
+.nar-b .nar-lb{display:none}
+.nar-b[aria-current=step]{background:#fff;color:var(--ink,#10161a);border-color:#fff;flex-grow:1}
+.nar-b[aria-current=step] .nar-lb{display:inline;overflow:hidden;text-overflow:ellipsis}
+.nar-b:focus-visible,.nar-pp:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.nar-pp{all:unset;box-sizing:border-box;flex:none;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);display:grid;place-items:center;color:#fff;cursor:pointer}
+.nar-pp[hidden]{display:none}
+.nar-pp svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.nar-pp .pl{display:none;fill:currentColor;stroke:none}.nar-pp.is-p .pa{display:none}.nar-pp.is-p .pl{display:block}
+/* versión sobre fondo claro */
+.nar-nv.lt .nar-b{border-color:rgba(16,22,26,.28);color:var(--ink,#10161a)}
+.nar-nv.lt .nar-b[aria-current=step]{background:var(--ink,#10161a);color:#fff;border-color:var(--ink,#10161a)}
+.nar-nv.lt .nar-pp{border-color:rgba(16,22,26,.4);color:var(--ink,#10161a)}
+.nar-nv.lt .nar-b:focus-visible,.nar-nv.lt .nar-pp:focus-visible{outline-color:var(--ink,#10161a)}
+@media(min-width:520px){.nar-b .nar-lb{display:inline}}
+.nar-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media(max-width:340px){.nar-nv,.nar-l{gap:4px}.nar-b{min-width:38px;padding:0 8px;font-size:12px;gap:5px}.nar-pp{width:38px}}

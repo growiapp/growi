@@ -168,41 +168,40 @@ def scene_inv(rel):
             '<div class="sc-st"><div class="iv-gr"><ul class="iv-idx">%s</ul><div class="iv-stage"><div class="iv-ph"><i class="iv-notch"></i>%s%s%s</div></div><div class="iv-caps">%s</div></div><div class="sc-foot">%s</div></div></div>'
             % (bgs, CHIP, idx, w, b, c, caps, PP))
 
-# ------------------------------------------------------------ Home: hero «Te encuentran → Te consultan → Lo organizás» (F8.3B)
-# Ilustración con datos ficticios. Causalidad real: el sitio lleva a una consulta por WhatsApp, una persona del centro responde y el turno lo anota
-# una persona en su agenda con un botón. No hay cobros, caja ni automatizaciones. El estado lo maneja growi36.js (módulo data-hs).
-HS_PASOS = [("Te encuentran", "Alguien busca y entra al sitio de tu negocio."), ("Te consultan", "Toca «Pedir turno» y te escribe por WhatsApp."),
-            ("Lo organizás", "Vos respondés, acordás el horario y lo anotás en tu agenda.")]
-HS_FIN = "Listo: el turno de Julián quedó confirmado a las 11:15."
+# ------------------------------------------------------------ Home: demostración de Centro Ribera (F8.9B; Home A aprobado en F8.9A)
+# Un celular, tres actos: Presencia → Contacto → Organización. Ilustración con datos ficticios: el sitio lleva a una consulta por WhatsApp,
+# una persona del centro responde y ella anota el turno. Sin cobros ni automatizaciones. Comportamiento: assets/home-demo.js sobre el motor assets/narrar.js.
+_HOME_DEMO = '''<div class="ha-w"><section class="ha" data-ha aria-label="Demo: cómo un sitio lleva a una consulta por WhatsApp y a un turno confirmado.">
+    <div class="ha-bg" aria-hidden="true"></div>
+    <p class="ha-tag">Demo</p>
+    <div class="ha-stg" data-stg aria-hidden="true">
+      <div class="ha-ph"><div class="ha-scr">
+        <div class="ha-site"><img src="@REL@assets/img/ribera-sitio-m.webp" width="375" height="1300" alt=""></div>
+        <i class="ha-tap"></i>
+        <div class="ha-wa"><div class="ha-wh"><i class="ha-lg"><svg viewBox="0 0 34 34" aria-hidden="true" focusable="false"><path class="ha-arc" d="M5 28 A23 23 0 0 1 28 5"/><path class="ha-body" stroke-width="3.5" d="M5 28 H27"/><circle cx="5" cy="28" r="4" fill="#0e2f3b"/></svg></i><div><b>Centro Ribera</b><small>WhatsApp</small></div></div>
+          <div class="ha-wb">
+            <div class="ha-m ha-m1 ha-out">Hola, quiero turno para el sábado a la mañana. Me molesta la rodilla.</div>
+            <div class="ha-m ha-m2 ha-in ha-dots"><b></b><b></b><b></b></div>
+            <div class="ha-m ha-m3 ha-in"><span class="ha-by">Persona del centro</span>Hola, Julián. Tenemos el sábado a las 11:15. ¿Te lo reservamos?</div>
+            <div class="ha-m ha-m4 ha-out">Sí, dale.</div>
+            <div class="ha-m ha-m2b ha-in ha-dots" aria-hidden="true"><b></b><b></b><b></b></div>
+            <div class="ha-m ha-m5 ha-in">¡Perfecto, Julián! Tu turno quedó confirmado para el sábado a las 11:15. ¡Te esperamos!</div>
+          </div>
+          <div class="ha-wi"><p data-inp></p><s data-send><svg viewBox="0 0 24 24"><path d="M3 20l18-8L3 4v6l11 2-11 2z"/></svg></s></div>
+        </div>
+      </div></div>
+      <div class="ha-dk"><p class="ha-dk-c" data-cap></p><div class="ha-dk-t"><div class="ha-dk-h"><small>Sábado</small><b>11:15</b></div><div class="ha-dk-n"><b>Julián</b><span>Primera consulta · rodilla</span><em>✓ Turno confirmado</em><p>Lo registró una persona del centro.</p></div></div></div>
+    </div>
+    <p class="nar-sr" data-sr aria-live="off"></p>
+    <nav class="nar-nv" data-nav aria-label="Pasos de la demostración"><ol class="nar-l">
+      <li><button class="nar-b" type="button" data-i="0"><span class="nar-n">1</span><span class="nar-lb">Presencia</span></button></li>
+      <li><button class="nar-b" type="button" data-i="1"><span class="nar-n">2</span><span class="nar-lb">Contacto</span></button></li>
+      <li><button class="nar-b" type="button" data-i="2"><span class="nar-n">3</span><span class="nar-lb">Organización</span></button></li></ol>
+      <button class="nar-pp" type="button" data-pp hidden aria-label="Pausar animación"><svg class="pa" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg><svg class="pl" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></button></nav>
+  </section></div>'''
 
 def scene_hero(rel):
-    # F8.8: un solo escenario de geometría fija. A = sitio (siempre el mismo marco; solo se desplaza la captura), B = lo que pasa del lado del negocio
-    # (tres capas del mismo tamaño que se funden entre sí). Nada aparece ni desaparece del flujo: el alto no depende del paso.
-    pasos = "".join('<li><button type="button" class="hs-st" data-hs-s="%d"%s><span class="hs-n" aria-hidden="true">%d</span>%s</button></li>'
-                    % (i + 1, ' aria-current="step"' if i == 0 else "", i + 1, n) for i, (n, _) in enumerate(HS_PASOS))
-    alt = "Sitio de muestra de Centro Ribera, un consultorio de kinesiología: título «¿Qué te molesta? Empecemos por ahí», cuerpo con la zona elegida y el botón «Pedir turno por rodilla»."
-    sitio = ('<div class="hs-a"><p class="hs-l">Sitio de Centro Ribera</p><div class="hs-vp">'
-             '<img class="hs-im hs-imd" src="%sassets/img/ribera-sitio-d.webp" width="1085" height="900" alt="%s" loading="lazy" decoding="async">'
-             '<img class="hs-im hs-imm" src="%sassets/img/ribera-sitio-m.webp" width="375" height="1300" alt="%s" loading="lazy" decoding="async">'
-             '<i class="hs-tap" aria-hidden="true"></i></div></div>' % (rel, alt, rel, alt))
-    wh = '<div class="hs-wh"><i aria-hidden="true">CR</i><div><b>Centro Ribera</b><small>WhatsApp</small></div></div>'
-    m1 = '<div class="hs-m out">Hola, quiero turno para el sábado a la mañana. Me molesta la rodilla al correr.<small>10:42</small></div>'
-    m2 = '<div class="hs-m in"><span class="hs-by">Responde una persona del centro</span>Hola, Julián. Tenemos el sábado a las 11:15. ¿Te lo reservamos?<small>10:48</small></div>'
-    m3 = '<div class="hs-m out">Sí, dale.<small>10:49</small></div>'
-    busca = ('<div class="hs-ly on" data-hs-ly="1"><p class="hs-l">Búsqueda</p><div class="hs-bd hs-se"><div class="hs-q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>kinesiólogo para dolor de rodilla</div>'
-             '<div class="hs-r"><small>Sitio web</small><b>Centro Ribera · Kinesiología y rehabilitación deportiva</b><p>Tocá la zona que te molesta y mirá por qué consultan. Después pedís turno en cuatro pasos.</p></div></div></div>')
-    chat = ('<div class="hs-ly" data-hs-ly="2" inert>%s<div class="hs-bd hs-msgs">%s</div></div>' % (wh, m1))
-    fin = ('<div class="hs-ly" data-hs-ly="3" inert><div class="hs-two"><div class="hs-pane hs-ch">%s<div class="hs-bd hs-msgs">%s%s</div></div>'
-           '<div class="hs-pane hs-ag"><p class="hs-l">Agenda · sábado</p><ul class="hs-slots"><li class="hs-s1"><time>10:30</time><span class="lib">Libre</span></li>'
-           '<li class="me" data-hs-slot><time>11:15</time><span class="lib" data-hs-slotx>Libre</span></li><li class="hs-s3"><time>12:00</time><span class="lib">Libre</span></li></ul>'
-           '<p class="hs-nt" data-hs-note>Lo anota una persona del centro.</p></div></div></div>' % (wh, m2, m3))
-    return ('<div class="hs-w"><section class="hs" data-hs aria-label="Demo: cómo llega un turno a la agenda de un centro de kinesiología.">'
-            '<div class="hs-bg" style="background-image:url(%sassets/img/ribera-sala.webp)" aria-hidden="true"></div>'
-            '<div class="hs-hd"><p class="hs-tag">Demo</p>'
-            '<button type="button" class="hs-pp" data-hs-pp aria-label="Pausar animación" hidden><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button></div>'
-            '<ol class="hs-steps" aria-label="Pasos del ejemplo">%s</ol><p class="hs-cap" data-hs-cap aria-live="polite">%s</p>'
-            '<div class="hs-board" data-hs-board>%s<div class="hs-b">%s%s%s</div></div></section></div>'
-            % (rel, pasos, HS_PASOS[0][1], sitio, busca, chat, fin))
+    return _HOME_DEMO.replace("@REL@", rel)
 
 # ------------------------------------------------------------ GrowiWeb: exhibición de proyectos completos
 # y de cada capítulo en la captura de página completa (px de la captura) y alto total, para dirigir la cámara por secciones

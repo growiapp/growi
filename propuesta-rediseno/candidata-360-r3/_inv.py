@@ -27,16 +27,16 @@ def _fields(ev):
             '<label class="ix-opt"><input type="radio" name="ix-%(ev)s-resp" value="si"><span>%(si)s</span></label>'
             '<label class="ix-opt"><input type="radio" name="ix-%(ev)s-resp" value="no"><span>%(no)s</span></label></div>'
             '<p class="ix-err" id="ix-%(ev)s-e-respuesta" data-err="respuesta" hidden></p></fieldset>%(pers)s'
-            '<button type="submit" class="ix-btn">Preparar mi mensaje</button>'
+            '<button type="submit" class="ix-btn">%(btn)s</button>'
             '<p class="ix-note">Se arma un mensaje para WhatsApp. No se envía solo.</p></form>'
-            % dict(ev=ev, leg=c["leg"], srl=" ix-sr" if c["sr"] else "", si=c["si"], no=c["no"], pers=pers))
+            % dict(ev=ev, leg=c["leg"], srl=" ix-sr" if c["sr"] else "", si=c["si"], no=c["no"], pers=pers, btn=c.get("btn", "Preparar mi mensaje")))
 
 def _draft(ev):
     c = FORMS[ev]
     return ('<div class="ix-dh"><p class="ix-k">Revisá</p><h3 class="ix-h" id="ix-%(ev)s-hm" tabindex="-1">Tu mensaje, <i>listo para enviar</i></h3></div><div class="ix-db">'
             '%(bdg)s<div class="ix-dr"><p class="ix-drh"><span>Para %(dest)s</span><span>Borrador</span></p><p class="ix-resum" data-resum></p><p class="ix-drb" data-msg></p>'
             '<p class="ix-drs"><i class="ix-clk" aria-hidden="true"></i><span>Todavía no se envió.</span></p></div>'
-            '<p class="ix-note">Se abre WhatsApp con este texto. Lo revisás y lo enviás vos.</p>'
+            '<p class="ix-note">En una invitación real, se abre WhatsApp con este texto y lo enviás vos. Acá es una muestra: no se envía nada.</p>'
             '<button type="button" class="ix-btn" data-act="wa">Ver cómo se abre WhatsApp</button>'
             '<button type="button" class="ix-lk ix-lk-c" data-act="editar">Cambiar mi respuesta</button></div>' % dict(ev=ev, dest=c["dest"], bdg='<p class="ix-bdg ix-bdg-r">Con tus respuestas</p>' if ev == "cas" else ""))
 
@@ -184,23 +184,56 @@ ACTOS = [("La enviás por WhatsApp.", "Compartís un enlace con vista previa pro
          ("Confirmar lleva un minuto.", "Cada invitado pone su nombre, si viene y cuántos son. Si falta algo, el aviso aparece al lado del campo.", "Confirman", False, "Probalo: tocá «Preparar mi mensaje» sin completar nada."),
          ("Te responden por WhatsApp.", "Cada invitado revisa su mensaje y lo envía desde su propio WhatsApp. Hasta que no toca Enviar, no se mandó nada.", "Te responden", False, "Probalo: completá una respuesta y mirá cómo se arma el mensaje.")]
 
-def historia(hero_html):
-    # Hero + recorrido: un único dispositivo protagonista; los cuatro actos acompañan a la pantalla (en escritorio quedan fijos junto a ella).
-    items = "".join(
-        '<li class="ix-act%s" data-n="%d"><h2 class="ix-act-h"><button type="button" class="ix-act-b" data-ix-acto="%d"%s><span class="ix-act-n">0%d</span><span class="ix-act-t">%s%s</span></button></h2>'
-        '<div class="ix-act-d"><div><p>%s</p><p class="ix-try">%s</p></div></div></li>' % (" on" if i == 0 else "", i + 1, i + 1, ' aria-current="step"' if i == 0 else "", i + 1, a[0], (" " + _mk()) if a[3] and i == 0 else "", a[1], a[4])
-        for i, a in enumerate(ACTOS))
-    sent = "".join('<i class="ix-sent" data-n="%d" aria-hidden="true"></i>' % (i + 1) for i in range(4))
-    steps = "".join('<li><button type="button" data-ix-acto="%d"%s>%s</button></li>' % (i + 1, ' aria-current="step"' if i == 0 else "", a[2]) for i, a in enumerate(ACTOS))
-    return ('<div class="ixs" id="inicio" data-ix-story data-sticky-hide>'
-            '<div class="ixs-l">%s'
-            '<section class="ix-acts" id="recorrido" data-sticky-hide aria-label="Recorrido de la invitación"><div class="ix-acts-track">%s<div class="ix-acts-pin"><ol class="ix-actl" data-ix-acts>%s</ol>'
-            '<p class="ix-fic">Invitación de ejemplo, con datos ficticios.</p></div></div></section></div>'
-            '<div class="ixs-r"><div class="ix-stage"><div class="ix-stage-bg" aria-hidden="true"></div>%s'
-            '<ol class="ix-steps" aria-label="Capítulos de la invitación">%s</ol>'
-            '<div class="ix-pn" role="group" aria-label="Cambiar de capítulo"><button type="button" class="ix-pn-b" data-ix-pn="-1"><span aria-hidden="true">←</span> Anterior</button><button type="button" class="ix-pn-b ix-pn-n" data-ix-pn="1">Siguiente <span aria-hidden="true">→</span></button></div>'
-            '<button type="button" class="ix-reset" data-ix-reiniciar hidden>Empezar de nuevo</button></div></div></div>\n'
-            % (hero_html, sent, items, casamiento(), steps))
+# ---------------------------------------------------------------- película (F8.9B; Invitaciones A aprobado en F8.9A)
+# Ilustración con datos ficticios, sin lógica de negocio: un teléfono con la historia «La enviás · La abren · Exploran · Confirman».
+# Sus textos salen de las mismas constantes que la invitación real (MOMENTOS, LUGAR, MAPA, FORMS); el mensaje que «se envía» lo arma inv-core.js al reproducirla.
+# La invitación funcional es el módulo real (casamiento(): ix-*, inv-core.js + inv-ui.js) y se abre en un diálogo con «Probar la invitación completa».
+PEL_ACTOS = [("La enviás", "Un mensaje de WhatsApp con su enlace y vista previa."), ("La abren", "La invitación se abre desde el enlace."),
+             ("Exploran", "Programa, lugar e información práctica."), ("Confirman", "Completan su asistencia y responden en el mismo chat de WhatsApp.")]
+
+def _pel_vistas():
+    c = FORMS["cas"]
+    tl = "".join('<li><button type="button" class="ip-tlb" aria-expanded="%s" tabindex="-1"><time>%s</time><span><b>%s</b><small>%s</small></span></button><div class="ip-tld"><p style="margin:0">%s</p></div></li>'
+                 % ("true" if i == 0 else "false", h, _e(n), _e(l), _e(d)) for i, (h, n, l, d) in enumerate(MOMENTOS))
+    dl = "".join("<div><dt>%s</dt><dd>%s</dd></div>" % (_e(a), _e(b)) for a, b in LUGAR)
+    return (
+        '<section class="ip-v on" data-v="portada"><div class="ip-cv"><div class="ip-pad"><p class="ip-k">Nos casamos</p><h3 class="ip-n">Lucía<span>&amp; Tomás</span></h3>'
+        '<p class="ip-d"><b>Sábado 20 de marzo de 2027</b><br>Capilla del jardín · 17:00</p><button type="button" class="ip-btn" data-go="confirmar" tabindex="-1">Confirmar asistencia</button></div></div></section>'
+        '<section class="ip-v" data-v="programa"><div class="ip-pad"><p class="ip-k">El día</p><h3 class="ip-h">Del sí <i>a la pista</i></h3><ul class="ip-tl">%s</ul></div></section>'
+        '<section class="ip-v" data-v="lugar">%s<div class="ip-pad"><p class="ip-k">El lugar</p><h3 class="ip-h">Capilla <i>del jardín</i></h3><p class="ip-k ip-k2">Para invitados</p><dl class="ip-dl">%s</dl></div></section>'
+        '<section class="ip-v" data-v="confirmar"><div class="ip-pad"><p class="ip-k">Tu respuesta</p><h3 class="ip-h">¿Nos <i>acompañás?</i></h3><form novalidate data-form tabindex="-1">'
+        '<span class="ip-fl">Tu nombre</span><input class="ip-inp" name="nombre" type="text" placeholder="Nombre y apellido" tabindex="-1" readonly>'
+        '<fieldset class="ip-fs"><legend class="ip-fl">¿Venís?</legend><div class="ip-opts"><label class="ip-opt"><input type="radio" name="ipr" value="si" tabindex="-1"><span>%s</span></label>'
+        '<label class="ip-opt"><input type="radio" name="ipr" value="no" tabindex="-1"><span>%s</span></label></div></fieldset>'
+        '<div data-pers hidden><span class="ip-fl">¿Cuántos van? <small style="text-transform:none;letter-spacing:0">hasta 5</small></span><div class="ip-st"><button type="button" tabindex="-1" aria-label="Una persona menos">−</button><output data-cant>1</output><button type="button" tabindex="-1" aria-label="Una persona más">+</button></div></div>'
+        '<button type="submit" class="ip-btn" tabindex="-1">Continuar en WhatsApp</button><p class="ip-nt">Se arma un mensaje para WhatsApp. No se envía solo.</p></form></div></section>'
+        % (tl, MAPA.replace("ix-mapa", "ip-map"), dl, _e(c["si"]), _e(c["no"])))
+
+def pelicula():
+    nav = "".join('<li><button class="nar-b" type="button" data-i="%d"><span class="nar-n">%d</span><span class="nar-lb">%s</span></button></li>' % (i, i + 1, a[0]) for i, a in enumerate(PEL_ACTOS))
+    chat = ('<div class="ip-ch"><header><i>L</i><div><b>Lucía y Tomás</b></div></header><div class="ip-bd"><div class="ip-m"><p>¡Hola! Les compartimos la invitación a nuestro casamiento. Ahí están todos los detalles y cómo confirmar asistencia. ¡Los esperamos!</p>'
+            '<span class="ip-lc" data-link><span class="ip-im"><b>Lucía &amp; Tomás</b></span><span class="ip-tx"><b>Lucía &amp; Tomás se casan</b><span>Sábado 20 de marzo de 2027 · Capilla del jardín</span><em>luciaytomas.growi.ar</em></span></span></div>'
+            '<div class="ip-m ip-out ip-rp"><p data-rpt></p><span class="ip-tk" aria-hidden="true"></span></div></div>'
+            '<div class="ip-in"><p>Mensaje</p><s data-snd-b><svg viewBox="0 0 24 24"><path d="M3 20l18-8L3 4v6l11 2-11 2z"/></svg></s></div></div>')
+    return ('<div class="ip-dem" id="recorrido"><section class="ip-film" data-ip aria-label="Demo: una invitación que se envía por WhatsApp, se abre, se confirma y se responde.">'
+            '<div class="ip-stg" data-stg aria-hidden="true"><div class="ip-scr"><div class="ip-host" data-host style="position:absolute;inset:0"><div class="ip-app ip-cmp ip-nb">%s</div></div>%s<i class="ip-ring" data-ring></i></div></div>'
+            '<p class="ip-cap" data-cap></p>'
+            '<nav class="nar-nv lt" data-nav aria-label="Pasos de la demostración"><ol class="nar-l" style="justify-content:center">%s</ol>'
+            '<button class="nar-pp" type="button" data-pp hidden aria-label="Pausar animación"><svg class="pa" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg><svg class="pl" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></button></nav>'
+            '</section><p class="ip-fic">Invitación de ejemplo, con datos ficticios. Cada invitado revisa su mensaje y lo envía desde su propio WhatsApp. Hasta que no toca Enviar, no se mandó nada.</p></div>' % (_pel_vistas(), chat, nav))
+
+def inicio(hero_html):
+    # Hero + película: un solo teléfono protagonista. En escritorio los cuatro pasos se leen a la izquierda; en móvil son los controles bajo el teléfono.
+    stp = "".join('<li><button type="button" data-i="%d"><span class="n">%d</span><span><b>%s</b><span class="d">%s</span></span></button></li>' % (i, i + 1, a[0], a[1]) for i, a in enumerate(PEL_ACTOS))
+    return ('<div class="ipx" id="inicio" data-sticky-hide><div class="ipx-l">%s<ol class="ip-stp" data-stp>%s</ol></div>'
+            '<div class="ipx-r">%s</div>'
+            '<button type="button" class="ip-try" data-ip-abrir aria-haspopup="dialog">Probar la invitación completa</button></div>\n' % (hero_html, stp, pelicula()))
+
+def dialogo():
+    # La invitación funcional (módulo real) en un diálogo; se monta con la página, oculto. «Empezar de nuevo» (data-ix-reiniciar) lo gestiona inv-ui.js.
+    return ('<div class="ip-o" data-ip-o hidden role="dialog" aria-modal="true" aria-labelledby="ip-o-t"><div class="ip-o-sh"><div class="ip-o-th"><span id="ip-o-t">Ejemplo · datos ficticios</span>'
+            '<div><button type="button" class="ix-reset" data-ix-reiniciar hidden>Empezar de nuevo</button><button type="button" data-ip-cerrar>Cerrar</button></div></div>'
+            '<div class="ip-o-bd">%s</div></div></div>\n' % casamiento())
 
 def cumple_seccion():
     return ('<section class="ix-cum" id="cumple" data-t="0" data-sticky-hide aria-labelledby="h-cum"><div class="ix-cum-in"><div class="ix-cum-copy"><p class="ix-ey">Cumpleaños · Los 30 de Mica</p>'
