@@ -292,3 +292,8 @@ button{cursor:pointer}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
+
+/* F8.1A: acción comercial contextual, fuera del núcleo de la experiencia (no lee ni modifica su estado) */
+.sbx-cta{flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0 12px;margin:0;padding:4px 16px;min-height:48px;background:rgba(255,255,255,.06);border-top:1px solid rgba(255,255,255,.14);font:500 14px/1.3 var(--epi);text-align:center}
+.sbx-cta a{display:inline-flex;align-items:center;min-height:44px;font-weight:700;color:#fff;text-underline-offset:4px}
+.sbx-cta a:focus-visible{outline:3px solid #fff;outline-offset:2px}

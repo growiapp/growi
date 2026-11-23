@@ -137,6 +137,61 @@ def _target(dest, file, value):
     return target
 
 
+class _LD(HTMLParser):
+    """Recoge el contenido de los <script type="application/ld+json"> reales. HTMLParser entrega los comentarios aparte (handle_comment):
+    una frase dentro de un comentario HTML, o un <script> dentro de un comentario, no cuenta como JSON-LD."""
+    def __init__(self):
+        super().__init__(convert_charrefs=False)
+        self.bloques, self._dentro, self._buf = [], False, []
+    def handle_starttag(self, tag, attrs):
+        if tag == "script" and (dict(attrs).get("type") or "").strip().lower() == "application/ld+json":
+            self._dentro, self._buf = True, []
+    def handle_data(self, data):
+        if self._dentro: self._buf.append(data)
+    def handle_endtag(self, tag):
+        if tag == "script" and self._dentro:
+            self.bloques.append("".join(self._buf)); self._dentro = False
+
+def ld_bloques(html):
+    parser = _LD(); parser.feed(html); parser.close()
+    return parser.bloques
+
+def ld_objetos(valor):
+    """Aplana @graph y listas: devuelve todos los objetos (dict) de un JSON-LD ya parseado."""
+    if isinstance(valor, list):
+        return [o for v in valor for o in ld_objetos(v)]
+    if not isinstance(valor, dict):
+        return []
+    graph = valor.get("@graph")
+    return [valor] + (ld_objetos(graph) if isinstance(graph, (list, dict)) else [])
+
+def _tipos(obj):
+    t = obj.get("@type")
+    return t if isinstance(t, list) else [t]
+
+FRASE_CONTRATACION = "Actualmente solo se reciben consultas, sin contrataciones ni pagos."
+FRASE_INTEGRACION = "La integración de WhatsApp e Instagram se evalúa según la cuenta del cliente."
+
+def validar_ld_growiflow(html):
+    """Valida estructuralmente el JSON-LD de GrowiFlow y devuelve la lista de errores (vacía si es correcto)."""
+    errores, objetos = [], []
+    for i, texto in enumerate(ld_bloques(html), 1):
+        try:
+            objetos += ld_objetos(json.loads(texto))
+        except json.JSONDecodeError as exc:
+            errores.append("JSON-LD inválido en flow/ (bloque %d): %s" % (i, exc))
+    servicios = [o for o in objetos if "Service" in _tipos(o) and o.get("name") == "GrowiFlow"]
+    if not servicios:
+        errores.append("JSON-LD de GrowiFlow ausente: no hay un objeto Service llamado GrowiFlow")
+        return errores
+    servicio = servicios[0]
+    descripcion = servicio.get("description")
+    if not isinstance(descripcion, str) or FRASE_CONTRATACION not in descripcion:
+        errores.append("JSON-LD de GrowiFlow sin el estado de contratación y pagos en su descripción")
+    if FRASE_INTEGRACION not in json.dumps(servicio, ensure_ascii=False):
+        errores.append("JSON-LD de GrowiFlow sin la condición de integraciones")
+    return errores
+
 def validar(folder, paginas):
     dest = Path(folder).resolve()
     if not dest.is_dir():
@@ -184,14 +239,13 @@ def validar(folder, paginas):
                                           'rel="canonical"', 'name="description"',
                                           'property="og:image"', '<title>')):
             errors.append("Metadatos de release incompletos: " + route)
-        for script in re.findall(r'<script type="application/ld\+json">(.*?)</script>', content, re.S):
-            try:
-                json.loads(script)
-            except json.JSONDecodeError as exc:
-                errors.append("JSON-LD inválido en %s: %s" % (route, exc))
-    flow = (dest / "flow/index.html").read_text(encoding="utf-8")
-    if 'La integración de WhatsApp e Instagram se evalúa según la cuenta del cliente.' not in flow:
-        errors.append("JSON-LD de GrowiFlow sin la condición de integraciones")
+        if p.suffix.lower() == ".html":
+            for script in ld_bloques(content):
+                try:
+                    json.loads(script)
+                except json.JSONDecodeError as exc:
+                    errors.append("JSON-LD inválido en %s: %s" % (route, exc))
+    errors += validar_ld_growiflow((dest / "flow/index.html").read_text(encoding="utf-8"))
     try:
         manifest = json.loads((dest / "manifest.json").read_text(encoding="utf-8"))
         for icon in manifest.get("icons", []):

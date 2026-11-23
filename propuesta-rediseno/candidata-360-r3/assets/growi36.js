@@ -106,3 +106,71 @@
   });
   var r = w.querySelector("button.ic-go"); if (r) r.addEventListener("click", function () { r.closest(".ic-p").classList.toggle("sent"); });
 })();
+
+/* Home · hero «Te encuentran → Te consultan → Lo organizás» (F8.3B, F8.4R).
+   Un estado, tres pasos. La reproducción automática existe solo si la escena tiene DISPOSICIÓN DE ESCRITORIO (ancho de la escena ≥ 520 px: el mismo umbral que
+   `@container hs (min-width:520px)` en growi36.css), el movimiento está permitido y la persona no tomó el control. Se vuelve a evaluar al cambiar el tamaño
+   de la escena (ResizeObserver) y al cambiar la preferencia de movimiento reducido: no depende del ancho inicial.
+   Decisiones de la persona: tocar un paso o un botón de la escena = manual para siempre (no vuelve a reproducirse sola); pausar se respeta al volver a escritorio.
+   El turno solo se anota con el botón «Anotar turno». */
+(function () {
+  "use strict";
+  var root = document.querySelector("[data-hs]");
+  if (!root) return;
+  var $ = function (s) { return root.querySelector(s); };
+  var steps = [].slice.call(root.querySelectorAll("[data-hs-s]"));
+  var board = $("[data-hs-board]"), cap = $("[data-hs-cap]"), pp = $("[data-hs-pp]"), doBtn = $("[data-hs-do]"), slot = $("[data-hs-slot]"), slotx = $("[data-hs-slotx]"), note = $("[data-hs-note]");
+  var site = $("[data-hs-site]"), chat = $("[data-hs-chat]"), devl = $("[data-hs-devl]"), agp = $("[data-hs-agp]");
+  var CAP = ["Una persona encuentra tu sitio y toca «Pedir turno».", "Te escribe por WhatsApp con su consulta.", "Vos respondés, acordás el horario y lo anotás en tu agenda."];
+  var MIN = 520;   // px de la escena: debe coincidir con @container hs (min-width:520px)
+  var mq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
+  var S = 1, done = false, press = false, timer = null, auto = false, paused = false, manual = false, visible = true, q = 0;
+  var SEQ = [[1, 0, 0, 2200], [2, 0, 0, 2600], [3, 0, 0, 2600], [3, 0, 1, 900], [3, 1, 0, 3600]];   // paso, anotado, pulsando, ms
+  // misma regla que el script del <head> (cr_motion manda; si no, la preferencia del sistema), pero evaluada en el momento
+  function motionOk() { var o = null; try { o = localStorage.getItem("cr_motion"); } catch (e) {} return o === "on" || (o !== "off" && !mq.matches); }
+  function wide() { return root.getBoundingClientRect().width >= MIN; }
+  function render() {
+    site.classList.toggle("on", S === 1); chat.classList.toggle("on", S >= 2);
+    devl.textContent = S === 1 ? "Sitio de Centro Ribera" : "WhatsApp de Centro Ribera";
+    board.classList.toggle("hs-b3", S === 3); root.classList.toggle("hs-press", press);
+    steps.forEach(function (b) { if (+b.getAttribute("data-hs-s") === S) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+    cap.textContent = S === 3 && done ? "Listo: el turno quedó anotado en tu agenda." : CAP[S - 1];
+    slot.classList.toggle("ok", done); slotx.className = done ? "" : "lib"; slotx.innerHTML = done ? "<b>Julián</b><small>Primera consulta · rodilla</small>" : "Libre";
+    doBtn.setAttribute("aria-disabled", done ? "true" : "false"); doBtn.firstChild.nodeValue = done ? "Turno anotado" : "Anotar turno de Julián";
+    note.textContent = done ? "Anotado por el centro, a mano." : "Lo anota una persona del centro.";
+    agp.inert = S !== 3;   // fuera del paso 3 la agenda es solo contexto: no recibe foco ni toques
+  }
+  function go(n, d) { S = n; done = !!d; press = false; render(); }
+  function clearTimer() { clearTimeout(timer); timer = null; }
+  function tick() {
+    var e = SEQ[q]; S = e[0]; done = !!e[1]; press = !!e[2]; render();
+    timer = setTimeout(function () { timer = null; q = (q + 1) % SEQ.length; tick(); }, e[3]);
+  }
+  // programa (o detiene) el temporizador según el estado actual; es idempotente: no reinicia un paso que ya está corriendo
+  function run() { if (!auto || paused || !visible || document.hidden) { clearTimer(); return; } if (timer === null) tick(); }
+  // el control de pausa y el anuncio de la leyenda siguen al modo; si el control tenía el foco y se oculta, el foco pasa al paso actual (nunca se pierde)
+  function ctl() {
+    if (!auto && document.activeElement === pp) { var cur = $("[data-hs-s][aria-current]"); if (cur) cur.focus({ preventScroll: true }); }
+    pp.hidden = !auto; cap.setAttribute("aria-live", auto ? "off" : "polite");
+    pp.classList.toggle("is-paused", paused); pp.setAttribute("aria-label", paused ? "Reproducir animación" : "Pausar animación");
+  }
+  // Fuente única de verdad: la reproducción automática es (escritorio ∧ movimiento permitido ∧ no manual). Se llama al cargar y en cada cambio relevante.
+  function sync() {
+    var debe = !manual && motionOk() && wide();
+    if (debe && !auto) { auto = true; q = 0; }                                         // vuelve a escritorio: ciclo nuevo; una pausa del usuario se conserva
+    else if (!debe && auto) { auto = false; clearTimer(); press = false; render(); }   // pasa a móvil o a movimiento reducido: se detiene y queda un estado válido
+    ctl(); run();
+  }
+  function manualStop() { manual = true; auto = false; clearTimer(); press = false; ctl(); }   // la persona toma el control
+  steps.forEach(function (b) { b.addEventListener("click", function () { manualStop(); go(+b.getAttribute("data-hs-s"), false); }); });
+  $("[data-hs-cta1]").addEventListener("click", function () { manualStop(); go(2, false); });
+  doBtn.addEventListener("click", function () { if (done) return; manualStop(); done = true; press = false; render(); });
+  pp.addEventListener("click", function () { if (!auto) return; paused = !paused; ctl(); run(); });
+  render();
+  if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; run(); }, { threshold: 0.2 }).observe(root);
+  document.addEventListener("visibilitychange", run);
+  if ("ResizeObserver" in window) new ResizeObserver(sync).observe(root); else window.addEventListener("resize", sync);   // la disposición manda, no el ancho inicial
+  if (mq.addEventListener) mq.addEventListener("change", sync); else if (mq.addListener) mq.addListener(sync);
+  sync();
+  window.GrowiHeroStory = { go: go, stop: manualStop, estado: function () { return { auto: auto, pausado: paused, manual: manual, temporizador: timer !== null, escritorio: wide(), movimiento: motionOk() }; } };   // solo para pruebas
+})();
