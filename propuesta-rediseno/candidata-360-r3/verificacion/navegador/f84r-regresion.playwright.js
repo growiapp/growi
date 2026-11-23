@@ -23,12 +23,12 @@ async (paginaInicial) => {
 
   let p = await abrir(1440, 900, {}, '/'); await p.waitForTimeout(500);
   let c0 = await observar(p, 3200); let pn = await panel(p);
-  T('HOME 1440: carga con reproducción automática y control de pausa visible (' + c0.length + ' cambios en 3,2 s)', c0.length >= 1 && pn.pp === 'visible' && pn.cols === 2, JSON.stringify(pn));
+  T('HOME 1440: carga con reproducción automática y control de pausa visible (' + c0.length + ' cambios en 3,2 s)', c0.length >= 1 && pn.pp === 'visible' && pn.cols === 1, JSON.stringify(pn));   // F8.8: el tablero es de una columna (sitio arriba, negocio abajo) en todos los anchos
   await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(700); await verEscena(p); await p.waitForTimeout(300); await p.screenshot({ path: CAP + TAG + '-home-1440a390.png' });
   const e0 = await sello(p); let c1 = await observar(p, 6500); pn = await panel(p);
-  T('HOME 1440 → 390 sin recargar: la reproducción se detiene (0 cambios en 6,5 s; estado fijo «' + e0 + '»)', c1.length === 0, c1.join(' ') + ' ' + JSON.stringify(pn));
-  T('HOME 1440 → 390: el control de pausa se oculta y la leyenda vuelve a anunciar cambios', pn.pp === 'oculto' && pn.live === 'polite', JSON.stringify(pn));
-  T('HOME 1440 → 390: no quedan temporizadores activos', pn.est === null ? false : pn.est.temporizador === false && pn.est.auto === false, JSON.stringify(pn.est));
+  T('HOME 1440 → 390 sin recargar: la reproducción continúa (F8.7: también en móvil; ' + c1.length + ' cambios en 6,5 s desde «' + e0 + '»)', c1.length >= 1, c1.join(' ') + ' ' + JSON.stringify(pn));
+  T('HOME 1440 → 390: el control de pausa sigue visible y la leyenda no anuncia cada cambio', pn.pp === 'visible' && pn.live === 'off', JSON.stringify(pn));
+  T('HOME 1440 → 390: queda un único temporizador (reproducción continua, sin duplicados)', pn.est === null ? false : pn.est.temporizador === true && pn.est.auto === true, JSON.stringify(pn.est));
   await p.setViewportSize({ width: 1440, height: 900 }); await p.waitForTimeout(700); await verEscena(p); const c2 = await observar(p, 6500); pn = await panel(p);
   T('HOME 390 → 1440 sin interacción previa: la reproducción vuelve (control visible, avanza)', c2.length >= 1 && pn.pp === 'visible', c2.join(' ') + ' ' + JSON.stringify(pn));
   // varios cambios seguidos: sin reinicios aceleros ni listeners duplicados (cada estado dura lo que debe)
@@ -40,10 +40,10 @@ async (paginaInicial) => {
   // criterio único CSS/JS en varios anchos: hay reproducción si y solo si la disposición es de escritorio
   for (const [w1, w2] of [[1280, 320], [1200, 390], [1024, 320], [900, 1440], [768, 1440]]) {
     p = await abrir(w1, 900, {}, '/'); await p.waitForTimeout(400); await verEscena(p); const a = await observar(p, 3300), pa = await panel(p);
-    const okInicio = (pa.cols === 2) === (a.length >= 1) && (pa.cols === 2) === (pa.pp === 'visible');
+    const okInicio = a.length >= 1 && pa.pp === 'visible';
     await p.setViewportSize({ width: w2, height: 800 }); await p.waitForTimeout(700); await verEscena(p); await p.waitForTimeout(300); const b = await observar(p, 3300), pb = await panel(p);
-    const okFin = (pb.cols === 2) === (b.length >= 1) && (pb.cols === 2) === (pb.pp === 'visible');
-    T('HOME ' + w1 + ' → ' + w2 + ' px sin recargar: reproducción ⇔ disposición de escritorio (inicio ' + pa.cols + ' col., fin ' + pb.cols + ' col.)', okInicio && okFin, 'inicio ' + a.length + ' cambios ' + JSON.stringify(pa) + ' · fin ' + b.length + ' cambios ' + JSON.stringify(pb));
+    const okFin = b.length >= 1 && pb.pp === 'visible';
+    T('HOME ' + w1 + ' → ' + w2 + ' px sin recargar: la reproducción sigue en cualquier disposición (F8.7; inicio ' + pa.cols + ' col., fin ' + pb.cols + ' col.)', okInicio && okFin, 'inicio ' + a.length + ' cambios ' + JSON.stringify(pa) + ' · fin ' + b.length + ' cambios ' + JSON.stringify(pb));
     await p._ctx.close();
   }
   // pausa del usuario: se respeta al volver a escritorio
@@ -55,7 +55,7 @@ async (paginaInicial) => {
   T('HOME tras reanudar con el control, vuelve a avanzar', cr.length >= 1, cr.join(' ')); await p._ctx.close();
   // pausa del usuario y cambio a móvil sin volver: no avanza
   p = await abrir(1440, 900, {}, '/'); await p.waitForTimeout(600); await p.click('[data-hs-pp]'); await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(500); await verEscena(p);
-  T('HOME pausada → 390: no hay avances automáticos', (await observar(p, 4500)).length === 0 && (await panel(p)).pp === 'oculto'); await p._ctx.close();
+  T('HOME pausada → 390: sigue en pausa (control visible «Reproducir», sin avances)', (await observar(p, 4500)).length === 0 && (await panel(p)).pp === 'visible'); await p._ctx.close();
   // interacción manual: se respeta al volver a escritorio
   p = await abrir(1440, 900, {}, '/'); await p.waitForTimeout(500); await p.click('[data-hs-s="2"]'); await p.waitForTimeout(300);
   await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(500); await p.setViewportSize({ width: 1440, height: 900 }); await p.waitForTimeout(600); await verEscena(p);
@@ -67,9 +67,9 @@ async (paginaInicial) => {
   p = await abrir(1440, 900, { hasTouch: true }, '/'); await p.waitForTimeout(2500); await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(500);
   await ev(p, () => document.querySelector('[data-hs]').scrollIntoView({ block: 'center' })); await p.waitForTimeout(900);   // scroll-behavior:smooth debe terminar antes de medir y tocar
   const cx = async sel => { const c = await ev(p, s => { const r = document.querySelector(s).getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }, sel); await p.touchscreen.tap(c[0], c[1]); };
-  await cx('[data-hs-s="3"]'); await p.waitForTimeout(300); await ev(p, () => document.querySelector('[data-hs-do]').scrollIntoView({ block: 'center' })); await p.waitForTimeout(900); await cx('[data-hs-do]'); await p.waitForTimeout(300);
+  await cx('[data-hs-s="3"]'); await p.waitForTimeout(300);
   const ya = await sello(p); const cq = await observar(p, 4500);
-  T('HOME 1440 → 390 y luego toques: «Anotar turno» registra y el estado queda fijo (sin avances posteriores)', ya === '3b' && cq.length === 0 && await ev(p, () => document.activeElement === document.querySelector('[data-hs-do]')), ya + ' ' + cq.join(' '));
+  T('HOME 1440 → 390 y luego toques: elegir el paso 3 muestra el turno confirmado y el estado queda fijo (sin avances posteriores)', ya === '3b' && cq.length === 0 && await ev(p, () => document.activeElement === document.querySelector('[data-hs-s="3"]')), ya + ' ' + cq.join(' '));
   await p._ctx.close();
   // movimiento reducido dinámico
   p = await abrir(1440, 900, {}, '/'); await p.waitForTimeout(500); await p.emulateMedia({ reducedMotion: 'reduce' }); await p.waitForTimeout(600);
@@ -114,7 +114,7 @@ async (paginaInicial) => {
     await toqueSel(p, '.ix-steps [data-ix-acto="4"]'); await ev(p, () => document.querySelector('[data-ix-pn="-1"]').focus()); await p.keyboard.press('Enter'); await p.waitForTimeout(1100); m = await medir(p);
     T('INV ' + k + ': teclado — Anterior con Enter deja todo visible y el foco en el título del capítulo', m.ok && m.act === '3' && await ev(p, () => document.activeElement.getAttribute('tabindex') === '-1' && !!document.activeElement.closest('.ix-ly')), resumen(m));
     await ev(p, () => document.querySelector('.ix-steps [data-ix-acto="2"]').focus()); await p.keyboard.press('Enter'); await p.waitForTimeout(1100); m = await medir(p);
-    T('INV ' + k + ': teclado — pestaña «Explorás» con Enter: todo visible y el foco sigue en la pestaña', m.ok && m.act === '2' && await ev(p, () => document.activeElement.getAttribute('data-ix-acto') === '2'), resumen(m));
+    T('INV ' + k + ': teclado — pestaña «La abren» con Enter: todo visible y el foco sigue en la pestaña', m.ok && m.act === '2' && await ev(p, () => document.activeElement.getAttribute('data-ix-acto') === '2'), resumen(m));
     await ev(p, () => document.querySelector('[data-ix-pn="1"]').focus()); await p.keyboard.press('Space'); await p.waitForTimeout(1100); m = await medir(p);
     T('INV ' + k + ': teclado — Siguiente con Espacio: todo visible', m.ok && m.act === '3', resumen(m));
     // no se desplaza mientras se escribe

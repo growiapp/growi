@@ -163,7 +163,7 @@ async (paginaInicial) => {
   T('cum: nace en la portada', await paso('cum') === 'portada');
   await page.locator('#ix-cum-portada [data-go=noche]').click(); await enCapa('cum', 'noche', 'noche');
   const t = () => page.evaluate(() => document.getElementById('cumple').getAttribute('data-t'));
-  T('cum: «La noche» arranca en la cena (22:00)', await paso('cum') === 'noche' && await t() === '1' && (await txt('[data-clock]')) === '22:00');
+  T('cum: «La noche» arranca en el brindis (21:00)', await paso('cum') === 'noche' && await t() === '0' && (await txt('[data-clock]')) === '21:00');   // F8.7: antes arrancaba en la cena (22:00)
   await page.locator('.ix-stop[data-idx="2"]').click(); await E('stop2', () => document.getElementById('cumple').dataset.t === '2' && document.querySelector('[data-nt]').textContent === 'Torta y baile', null);
   T('cum: tocar una parada cambia cielo, hora y detalle', await t() === '2' && (await txt('[data-clock]')) === '00:00' && (await txt('[data-nt]')) === 'Torta y baile');
   await page.keyboard.press('ArrowLeft'); await page.keyboard.press('ArrowLeft'); await E('stop0', () => document.getElementById('cumple').dataset.t === '0' && document.activeElement.dataset.idx === '0', null);

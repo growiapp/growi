@@ -87,7 +87,8 @@ test('F3.3: ninguna línea promete «precio cerrado», uso sin conexión ni Exce
 // F3.4: cada pregunta visible y de FAQPage JSON-LD conserva SU respuesta, la de su <details> en el sitio L1; sin cruces entre secciones.
 const dec = (t) => t.replace(/<[^>]+>/g, ' ').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim().replace(/ ([,.])/g, '$1');
 const parseSrc = (h) => [...h.matchAll(/<details[^>]*>\s*<summary>((?:(?!<\/summary>).)*?)<i[^>]*>(?:(?!<\/summary>).)*<\/summary>\s*<div class="faq-body">((?:(?!<\/details>).)*?)<\/div>\s*<\/details>/gs)].map((m) => [dec(m[1]), dec(m[2])]);
-const CAMBIOS_F33 = ['se acuerda en el presupuesto de tu proyecto', 'según el alcance de tu proyecto', 'coordinamos una charla de 20 minutos'];
+const CAMBIOS_F33 = ['se acuerda en el presupuesto de tu proyecto', 'según el alcance de tu proyecto', 'coordinamos una charla de 20 minutos',
+  'Los tres tienen 7 días de ajustes sin cargo, contados desde la entrega, si algo no quedó como esperabas.'];   // F8.7: el bot de WhatsApp está disponible: se quita «todavía no está en venta»
 for (const [ruta, l1, extras] of [['app', 'app', 0], ['web', 'web', 0], ['flow', 'flow', 1], ['combo', 'combo', 0], ['invitaciones', 'invitaciones', 0],
   ['app/cafeterias', 'app/cafeterias', 0], ['app/peluquerias', 'app/peluquerias', 0], ['app/talleres', 'app/talleres', 0], ['app/retail', 'app/retail', 0]]) {
   test(`F3.4: FAQ de /${ruta}/ sin cruces y con JSON-LD idéntico al visible`, () => {

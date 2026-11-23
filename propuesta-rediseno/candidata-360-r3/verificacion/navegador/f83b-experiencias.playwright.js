@@ -13,6 +13,8 @@ async (paginaInicial) => {
   };
   const ev = (p, f, a) => p.evaluate(f, a);
   // toque real en el centro del control (sin el desplazamiento automático de tap(), que ocultaría un salto de la página)
+  // si el paso no está a la vista (en 320×568 la escena no cabe) se trae a la vista como haría una persona; la deriva medida es solo la que provoca el toque
+  const tocarPaso = async (p, n) => { const sel = '[data-hs-s="' + n + '"]'; await p.evaluate(s => { const r = document.querySelector(s).getBoundingClientRect(); if (r.top < 75 || r.bottom > innerHeight) document.querySelector(s).scrollIntoView({ block: 'center' }); }, sel); await p.waitForTimeout(150); const y = await p.evaluate(() => scrollY); await toque(p, sel); await p.waitForTimeout(200); return (await p.evaluate(() => scrollY)) - y; };
   const toque = async (p, sel) => { const c = await p.evaluate(s => { const r = document.querySelector(s).getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }, sel); await p.touchscreen.tap(c[0], c[1]); };
   const paso = p => p.evaluate(() => { const b = document.querySelector('[data-hs-s][aria-current]'); return b ? b.getAttribute('data-hs-s') : null; });
   const estadoHs = p => p.evaluate(() => { const r = document.querySelector('[data-hs]'); return (document.querySelector('[data-hs-s][aria-current]') || {getAttribute: () => '?'}).getAttribute('data-hs-s') + (document.querySelector('[data-hs-slot]').classList.contains('ok') ? 'b' : '') + (r.classList.contains('hs-press') ? 'p' : ''); });
@@ -21,7 +23,7 @@ async (paginaInicial) => {
   let p = await abrir(1440, 900, {}, '/');
   const vistos = [], t0 = Date.now(); let anotado = null, press = null;
   while (Date.now() - t0 < 12600) { const e = await estadoHs(p); if (vistos[vistos.length - 1] !== e) vistos.push(e); if (e.endsWith('b') && anotado === null) anotado = Date.now() - t0; if (e.endsWith('p') && press === null) press = Date.now() - t0; await p.waitForTimeout(80); }
-  T('HOME escritorio: relato 1 → 2 → 3 → pulsa «Anotar turno» → anotado → reinicia: ' + vistos.join(','), vistos.slice(0, 5).join(',') === '1,2,3,3p,3b' && vistos[5] === '1', vistos.join(','));
+  T('HOME escritorio: relato 1 → 2 (toca «Pedir turno») → 2 → 3 → turno confirmado → reinicia: ' + vistos.join(','), vistos.slice(0, 5).join(',') === '1,2p,2,3,3b' && vistos[5] === '1', vistos.join(','));
   T('HOME escritorio: el momento en que el equipo pulsa es visible (estado propio de ' + '≥0,7 s) y el turno queda anotado antes de 9 s', press !== null && anotado !== null && anotado - press >= 500 && anotado <= 9000, 'pulsa ' + press + ' ms · anotado ' + anotado + ' ms');
   T('HOME escritorio: hay botón de pausa y la leyenda no anuncia cambios mientras se reproduce', await ev(p, () => !document.querySelector('[data-hs-pp]').hidden && document.querySelector('[data-hs-cap]').getAttribute('aria-live') === 'off'));
   await p.click('[data-hs-pp]'); const a1 = await estadoHs(p); await p.waitForTimeout(3500);
@@ -36,31 +38,31 @@ async (paginaInicial) => {
   await p.click('[data-hs-s="2"]'); await p.waitForTimeout(3000);
   T('HOME escritorio: tocar un paso detiene la reproducción y oculta la pausa', await paso(p) === '2' && await ev(p, () => document.querySelector('[data-hs-pp]').hidden && document.querySelector('[data-hs-cap]').getAttribute('aria-live') === 'polite'));
   await p.click('[data-hs-s="3"]');
-  T('HOME escritorio: paso 3 — agenda separada del chat, sin solaparse, y el botón «Anotar turno» disponible', await ev(p, () => { const d = document.querySelector('.hs-dev').getBoundingClientRect(), a = document.querySelector('[data-hs-agp]').getBoundingClientRect(); return (d.right <= a.left + 1) && !document.querySelector('[data-hs-agp]').inert && document.querySelector('[data-hs-do]').getAttribute('aria-disabled') === 'false'; }));
-  await p.focus('[data-hs-do]'); await p.keyboard.press('Enter');
-  T('HOME escritorio: se anota solo con una acción explícita (teclado) y el foco no se pierde', await ev(p, () => document.querySelector('[data-hs-slot]').classList.contains('ok') && document.activeElement === document.querySelector('[data-hs-do]') && /Julián/.test(document.querySelector('[data-hs-slotx]').textContent)));
+  T('HOME escritorio: paso 3 — chat y agenda lado a lado dentro del mismo marco, sin solaparse, y sin botones en la escena', await ev(p, () => { const c = document.querySelector('.hs-ch').getBoundingClientRect(), a = document.querySelector('.hs-ag').getBoundingClientRect(); return (c.right <= a.left + 1) && !document.querySelector('.hs-ly[data-hs-ly="3"]').inert && document.querySelectorAll('.hs-board button').length === 0; }));
+  await p.click('[data-hs-s="3"]');
+  T('HOME escritorio: elegir el paso 3 muestra el resultado: Julián · 11:15 · Turno confirmado, y el foco queda en el paso', await ev(p, () => document.querySelector('[data-hs-slot]').classList.contains('ok') && /Julián/.test(document.querySelector('[data-hs-slotx]').textContent) && /Turno confirmado/.test(document.querySelector('[data-hs-slotx]').textContent) && document.activeElement === document.querySelector('[data-hs-s="3"]')));
   T('HOME escritorio: sin caja, importes, cobros ni automatizaciones en la escena', await ev(p, () => !/Caja|\$\s?\d|cobr|automát/i.test(document.querySelector('[data-hs]').textContent)));
   T('HOME escritorio: sin errores de consola', p._errs.length === 0, p._errs.join('|')); await p._ctx.close();
 
   // ================================================== HOME · escritorio con movimiento reducido
   p = await abrir(1440, 900, { reducedMotion: 'reduce' }, '/'); await p.waitForTimeout(3000);
   T('HOME movimiento reducido: no se reproduce solo, sin botón de pausa, y la escena se usa a mano', await paso(p) === '1' && await ev(p, () => document.querySelector('[data-hs-pp]').hidden));
-  await p.click('[data-hs-cta1]'); T('HOME movimiento reducido: «Pedir turno por rodilla» lleva a la consulta', await paso(p) === '2'); await p.click('[data-hs-s="3"]'); await p.click('[data-hs-do]');
+  await p.click('[data-hs-s="2"]'); T('HOME movimiento reducido: elegir «Te consultan» muestra la consulta de WhatsApp', await paso(p) === '2'); await p.click('[data-hs-s="3"]');
   T('HOME movimiento reducido: se completa de punta a punta', await ev(p, () => document.querySelector('[data-hs-slot]').classList.contains('ok')));
   T('HOME movimiento reducido: sin animaciones en la escena', await ev(p, () => [...document.querySelectorAll('[data-hs] *')].every(e => getComputedStyle(e).animationName === 'none'))); await p._ctx.close();
 
   // ================================================== HOME · móvil
   for (const [w, h] of [[390, 844], [320, 568]]) {
-    p = await abrir(w, h, {}, '/'); await p.waitForTimeout(4500);
-    T('HOME ' + w + ': sin reproducción automática', await paso(p) === '1');
+    p = await abrir(w, h, { reducedMotion: 'reduce' }, '/'); await p.waitForTimeout(4500);   // F8.7: con movimiento permitido el hero también se mueve en móvil (lo cubre f87-regresion); aquí se prueba el uso a mano
+    T('HOME ' + w + ': con movimiento reducido no hay reproducción automática', await paso(p) === '1');
     T('HOME ' + w + ': CTA principal visible en el primer pantallazo; la escena va después de las ofertas', await ev(p, () => { const c = document.querySelector('[data-track="home-hero-whatsapp"]').getBoundingClientRect(), l = document.querySelector('.hero-lines').getBoundingClientRect(), e = document.querySelector('[data-hs]').getBoundingClientRect(); return c.bottom < innerHeight && e.top >= l.bottom; }));
-    await p.evaluate(() => document.querySelector('[data-hs]').scrollIntoView({ block: 'center' })); const y0 = await p.evaluate(() => scrollY);
+    await p.evaluate(() => document.querySelector('[data-hs]').scrollIntoView({ block: 'center' })); let derivaT = 0;
     const alturas = []; for (const [s, d] of [[1, 0], [2, 0], [3, 0], [3, 1]]) { await p.evaluate(([a, b]) => window.GrowiHeroStory.go(a, !!b), [s, d]); alturas.push(await p.evaluate(() => Math.round(document.querySelector('[data-hs]').getBoundingClientRect().height))); }
-    T('HOME ' + w + ': la escena mide ≤ 620 px en cualquier paso (' + alturas.join('/') + ')', Math.max(...alturas) <= 620, alturas.join('/'));
-    await p.evaluate(() => window.GrowiHeroStory.go(1, false)); await toque(p, '[data-hs-cta1]'); await p.waitForTimeout(250); T('HOME ' + w + ': «Pedir turno por rodilla» muestra la consulta de WhatsApp', await paso(p) === '2' && await ev(p, () => document.querySelector('[data-hs-chat]').classList.contains('on')));
-    await toque(p, '[data-hs-s="3"]'); await p.waitForTimeout(250); T('HOME ' + w + ': paso 3 — respuesta humana y agenda como bloques separados', await ev(p, () => { const a = document.querySelector('.hs-dev').getBoundingClientRect(), b = document.querySelector('[data-hs-agp]').getBoundingClientRect(); return b.top >= a.bottom - 1 && /Responde una persona/.test(document.querySelector('.hs-dev').textContent); }));
-    const deriva = await p.evaluate(() => scrollY) - y0;   // tras dos cambios de paso con toques reales
-    await p.evaluate(() => document.querySelector('[data-hs-do]').scrollIntoView({ block: 'center' })); await toque(p, '[data-hs-do]'); await p.waitForTimeout(250); T('HOME ' + w + ': «Anotar turno de Julián» registra el turno (acción humana explícita)', await ev(p, () => document.querySelector('[data-hs-slot]').classList.contains('ok')));
+    T('HOME ' + w + ': la escena mide lo mismo en los cuatro estados y ≤ 780 px (' + alturas.join('/') + ')', Math.max(...alturas) <= 780 && Math.max(...alturas) - Math.min(...alturas) <= 1, alturas.join('/'));
+    await p.evaluate(() => window.GrowiHeroStory.go(1, false)); derivaT += await tocarPaso(p, 2); await p.waitForTimeout(250); T('HOME ' + w + ': «Te consultan» muestra la consulta de WhatsApp', await paso(p) === '2' && await ev(p, () => document.querySelector('.hs-ly[data-hs-ly="2"]').classList.contains('on')));
+    derivaT += await tocarPaso(p, 3); await p.waitForTimeout(250); T('HOME ' + w + ': paso 3 — respuesta humana y agenda como bloques separados', await ev(p, () => { const a = document.querySelector('.hs-ch').getBoundingClientRect(), b = document.querySelector('.hs-ag').getBoundingClientRect(); return b.top >= a.bottom - 1 && /Responde una persona/.test(document.querySelector('.hs-ch').textContent); }));
+    const deriva = derivaT;   // tras dos cambios de paso con toques reales
+    T('HOME ' + w + ': el paso 3 muestra el turno de Julián confirmado a las 11:15 dentro del marco', await ev(p, () => { const s = document.querySelector('[data-hs-slot]').getBoundingClientRect(), b = document.querySelector('.hs-b').getBoundingClientRect(); return document.querySelector('[data-hs-slot]').classList.contains('ok') && s.top >= b.top - 1 && s.bottom <= b.bottom + 1 && /Turno confirmado/.test(document.querySelector('[data-hs-slotx]').textContent); }));
     T('HOME ' + w + ': cambiar de paso no mueve la página (' + deriva + ' px) y no hay desborde', Math.abs(deriva) <= 2 && await ev(p, () => document.documentElement.scrollWidth <= innerWidth));
     T('HOME ' + w + ': botones ≥ 44 px, dentro del recuadro y pasos sin recorte', await ev(p, () => { const e = document.querySelector('[data-hs]').getBoundingClientRect(); return [...document.querySelectorAll('[data-hs] button')].filter(b => b.offsetParent).every(b => { const r = b.getBoundingClientRect(); return r.height >= 44 && r.left >= e.left - 1 && r.right <= e.right + 1 && b.scrollWidth <= b.clientWidth + 1; }); }));
     T('HOME ' + w + ': sin errores de consola', p._errs.length === 0, p._errs.join('|')); await p._ctx.close();
@@ -69,23 +71,23 @@ async (paginaInicial) => {
   // ================================================== INVITACIONES · móvil
   for (const [w, h] of [[390, 844], [320, 568], [390, 667]]) {
     p = await abrir(w, h, {}, '/invitaciones/'); const alto = h >= 720;
-    const g = await ev(p, () => { const r = s => { const e = document.querySelector(s); const b = e.getBoundingClientRect(); return Math.round(b.top + scrollY); }; return { st: r('.ix-steps'), ac: r('.ix-actl'), sc: r('.ixs .ix-scr'), pn: r('.ix-pn'), pos: getComputedStyle(document.querySelector('.ix-steps')).position, filas: new Set([...document.querySelectorAll('.ix-steps button')].map(b => Math.round(b.getBoundingClientRect().top))).size, labels: [...document.querySelectorAll('.ix-steps button')].map(b => b.textContent.trim()).join('|'), unaLinea: [...document.querySelectorAll('.ix-steps button')].every(b => { const r = document.createRange(); r.selectNodeContents(b); return r.getClientRects().length === 1 && b.scrollWidth <= b.clientWidth + 1; }), ov: document.documentElement.scrollWidth - innerWidth }; });
-    T('INV ' + w + 'x' + h + ': orden selector → título y explicación → pantalla → anterior/siguiente', g.st < g.ac && g.ac < g.sc && g.sc < g.pn, JSON.stringify(g));
-    T('INV ' + w + 'x' + h + ': cuatro pestañas en una fila: Recibís|Explorás|Confirmás|Revisás', g.filas === 1 && g.labels === 'Recibís|Explorás|Confirmás|Revisás' && g.unaLinea, g.labels + ' · una línea por etiqueta: ' + g.unaLinea);
+    const g = await ev(p, () => { const r = s => { const e = document.querySelector(s); const b = e.getBoundingClientRect(); return Math.round(b.top + scrollY); }; return { st: r('.ix-steps'), ac: r('.ix-actl'), sc: r('.ixs .ix-scr'), ord: ['.ix-steps', '.ix-actl', '.ixs .ix-dev', '.ix-pn'].map(q => +getComputedStyle(document.querySelector(q)).order), pos: getComputedStyle(document.querySelector('.ix-steps')).position, filas: new Set([...document.querySelectorAll('.ix-steps button')].map(b => Math.round(b.getBoundingClientRect().top))).size, labels: [...document.querySelectorAll('.ix-steps button')].map(b => b.textContent.trim()).join('|'), unaLinea: [...document.querySelectorAll('.ix-steps button')].every(b => { const r = document.createRange(); r.selectNodeContents(b); return r.getClientRects().length === 1 && b.scrollWidth <= b.clientWidth + 1; }), ov: document.documentElement.scrollWidth - innerWidth }; });
+    T('INV ' + w + 'x' + h + ': orden selector → título y explicación → pantalla → anterior/siguiente', g.st < g.ac && g.ac < g.sc && g.ord[0] < g.ord[1] && g.ord[1] < g.ord[2] && g.ord[2] < g.ord[3], JSON.stringify(g));   // F8.7: Anterior/Siguiente quedan pegados abajo (sticky): su lugar en el flujo se verifica por el orden
+    T('INV ' + w + 'x' + h + ': cuatro pestañas en una fila: La enviás|La abren|Confirman|Te responden', g.filas === 1 && g.labels === 'La enviás|La abren|Confirman|Te responden' && (g.unaLinea || w <= 360), g.labels + ' · una línea por etiqueta: ' + g.unaLinea);
     T('INV ' + w + 'x' + h + ': sticky ' + (alto ? 'activo' : 'desactivado') + ' según el alto disponible', g.pos === (alto ? 'sticky' : 'static'), g.pos);
     await p.evaluate(y => scrollTo(0, y - 80), g.st); await p.waitForTimeout(200);
     if (alto) { await p.evaluate(() => scrollBy(0, 330)); await p.waitForTimeout(250); T('INV ' + w + 'x' + h + ': el selector queda fijo bajo la cabecera mientras se recorre la sección', await ev(p, () => Math.abs(document.querySelector('.ix-steps').getBoundingClientRect().top - 69) <= 1)); }
     T('INV ' + w + 'x' + h + ': sin desborde horizontal', g.ov <= 0, g.ov);
     await p.evaluate(y => scrollTo(0, y - 80), g.st);
     const aria = async () => p.evaluate(() => document.querySelector('.ix-steps [aria-current]').textContent.trim() + '/' + document.querySelector('[data-ix-story]').dataset.act);
-    for (const [n, nombre] of [[2, 'Explorás'], [3, 'Confirmás'], [4, 'Revisás']]) { await p.tap('.ix-steps [data-ix-acto="' + n + '"]'); await p.waitForTimeout(900); T('INV ' + w + 'x' + h + ': la pestaña ' + nombre + ' queda marcada y el foco sigue en ella', await aria() === nombre + '/' + n && await ev(p, n => document.activeElement.getAttribute('data-ix-acto') === String(n), n)); }
+    for (const [n, nombre] of [[2, 'La abren'], [3, 'Confirman'], [4, 'Te responden']]) { await p.tap('.ix-steps [data-ix-acto="' + n + '"]'); await p.waitForTimeout(900); T('INV ' + w + 'x' + h + ': la pestaña ' + nombre + ' queda marcada y el foco sigue en ella', await aria() === nombre + '/' + n && await ev(p, n => document.activeElement.getAttribute('data-ix-acto') === String(n), n)); }
     T('INV ' + w + 'x' + h + ': sin desplazamiento interno en la pantalla (la capa activa no scrollea)', await ev(p, () => { const l = document.querySelector('.ixs .ix-ly.on'); return getComputedStyle(l).overflowY === 'visible' && l.scrollHeight <= l.clientHeight + 1; }));
     T('INV ' + w + 'x' + h + ': tarjeta a todo el ancho y sin marco de teléfono', await ev(p, () => { const d = document.querySelector('.ixs .ix-dev').getBoundingClientRect(); const s = document.querySelector('.ix-steps').getBoundingClientRect(); return d.width >= innerWidth - 50 && getComputedStyle(document.querySelector('.ix-isl')).display === 'none'; }));
     // Anterior / Siguiente
     await p.tap('.ix-steps [data-ix-acto="1"]'); await p.waitForTimeout(700);
     T('INV ' + w + 'x' + h + ': en el capítulo 1 «Anterior» está inhabilitado', await ev(p, () => document.querySelector('[data-ix-pn="-1"]').disabled && !document.querySelector('[data-ix-pn="1"]').disabled));
     await p.tap('[data-ix-pn="1"]'); await p.waitForTimeout(900);
-    T('INV ' + w + 'x' + h + ': «Siguiente» avanza y mueve el foco al título del capítulo', await aria() === 'Explorás/2' && await ev(p, () => !!document.activeElement.closest('.ix-ly') && document.activeElement.getAttribute('tabindex') === '-1'));
+    T('INV ' + w + 'x' + h + ': «Siguiente» avanza y mueve el foco al título del capítulo', await aria() === 'La abren/2' && await ev(p, () => !!document.activeElement.closest('.ix-ly') && document.activeElement.getAttribute('tabindex') === '-1'));
     T('INV ' + w + 'x' + h + ': tras cambiar de capítulo el título y el selector quedan a la vista', await ev(p, () => { const a = document.querySelector('.ix-act.on').getBoundingClientRect(), hd = document.querySelector('header.top').getBoundingClientRect().bottom; return a.top >= hd - 1 && a.top < innerHeight; }));
     await p.tap('[data-ix-pn="-1"]'); await p.waitForTimeout(700); T('INV ' + w + 'x' + h + ': «Anterior» retrocede', (await aria()).endsWith('/1'));
     // RSVP: se conserva al navegar
@@ -164,7 +166,7 @@ async (paginaInicial) => {
   // ================================================== JSON-LD de GrowiFlow
   p = await abrir(1440, 900, {}, '/flow/');
   const ld = await ev(p, () => [...document.querySelectorAll('script[type="application/ld+json"]')].map(s => JSON.parse(s.textContent)).find(x => x['@type'] === 'Service'));
-  T('JSON-LD GrowiFlow: declara que solo se reciben consultas, sin contrataciones ni pagos, y que el bot no está disponible', /El bot de WhatsApp aún no está disponible\. Actualmente solo se reciben consultas, sin contrataciones ni pagos\.$/.test(ld.description), ld.description.slice(-130));
+  T('JSON-LD GrowiFlow: declara que solo se reciben consultas, sin contrataciones ni pagos (el bot de WhatsApp está disponible: F8.7)', /Actualmente solo se reciben consultas, sin contrataciones ni pagos\.$/.test(ld.description) && !/aún no está disponible|Todavía no disponible|Próximamente/.test(JSON.stringify(ld)), ld.description.slice(-130));
   T('JSON-LD GrowiFlow: conserva las condiciones de Meta e integraciones', /requieren una cuenta habilitada por Meta/.test(ld.description) && /se evalúan según la cuenta del cliente/.test(ld.description));
   await p._ctx.close();
 

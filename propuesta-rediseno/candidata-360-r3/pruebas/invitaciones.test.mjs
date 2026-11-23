@@ -230,7 +230,7 @@ test('Invitaciones: accesibilidad estática (ids únicos, capas con nombre, esta
 });
 test('Invitaciones: la barra «Consultar» no tapa las experiencias (data-sticky-hide en recorrido, cumpleaños y empresa)', () => {
   const h = pagina(), css = leer('assets/invitaciones/inv.css');
-  assert.ok(h.includes('<div class="ixs" id="inicio" data-ix-story data-sticky-hide>') && h.includes('id="cumple" data-t="1" data-sticky-hide') && h.includes('data-inv="emp" data-paso="portada" data-sticky-hide'));
+  assert.ok(h.includes('<div class="ixs" id="inicio" data-ix-story data-sticky-hide>') && h.includes('id="cumple" data-t="0" data-sticky-hide') && h.includes('data-inv="emp" data-paso="portada" data-sticky-hide'));
   assert.ok(/html\{scroll-padding-top:\d+px\}/.test(css) && /max-width:720px\)\{html\{scroll-padding-bottom:\d+px\}\}/.test(css));
 });
 test('Home: el teaser de Invitaciones refleja la nueva experiencia y enlaza a la página', () => {
