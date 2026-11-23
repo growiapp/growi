@@ -1047,6 +1047,9 @@ footer {
   gap: 20px;
 }
 .legal-brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-family: var(--syne);
   font-size: 22px;
   font-weight: var(--fw-title);
@@ -1056,7 +1059,10 @@ footer {
 }
 .legal-brand .dot { color: var(--accent); }
 .legal-back {
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 14px;
   font-weight: var(--fw-bold);
   color: var(--ink2);
   text-decoration: none;

@@ -1,0 +1,123 @@
+/* F8.1A · capa de refinamiento mobile-first. Se carga al final: no reescribe las capas anteriores, las corrige donde hacía falta. */
+
+/* ---- Barra fija de WhatsApp: se oculta al bajar, cuando hay un control enfocado (growi81.js) y en las secciones con CTA propio; reaparece al subir ---- */
+.sticky-cta.hid,.sticky-cta.occ{transform:translateY(110%)!important}
+.sticky-cta{box-shadow:0 -10px 24px -18px rgba(12,12,12,.35)}
+
+/* ---- Precio: lectura inmediata (sans, peso y tamaño) en lugar de gris monoespaciado ---- */
+.ph36-pr,.proof li:first-child,.nrow-pr{font:600 15px/1.45 var(--epi);color:var(--tinta);letter-spacing:0}
+.ph36-pr [data-price],.proof li:first-child [data-price],.nrow-pr [data-price]{font-weight:800;font-size:1.18em;letter-spacing:-.01em}
+.ph36-pr a{color:var(--verde-d)}
+
+/* ---- Navegación y enlaces: objetivos táctiles ≥ 44 px ---- */
+.crumb a,.tl,.foot a,.cap a,.ev-link a,.hero-proof2{display:inline-flex;align-items:center;min-height:44px}
+.foot li{margin:0}
+.wp-open,.t-fine a{min-height:44px}
+
+/* ---- Home: elección por necesidad en el primer pantallazo (solo móvil); la escena del hero queda después de las ofertas ---- */
+.hero-lines{display:none}
+@media(max-width:900px){
+  .hero-lines{display:grid;gap:0;margin:22px 0 0;border-top:1px solid var(--linea)}
+  .hero-lines a{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 12px;min-height:60px;padding:10px 2px;border-bottom:1px solid var(--linea);text-decoration:none;color:var(--tinta)}
+  .hero-lines b{font:800 1.05rem/1.15 var(--epi);letter-spacing:-.02em}
+  .hero-lines span{grid-column:1;font:400 14px/1.3 var(--epi);color:var(--gris)}
+  .hero-lines i{grid-column:2;grid-row:1/3;font-style:normal;font-size:20px}
+  .hero-lines a:focus-visible{outline:3px solid var(--tinta);outline-offset:-3px}
+  .hero-lines .ev b::after{content:"Eventos";margin-left:8px;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--verde-d);border:1px solid currentColor;border-radius:99px;padding:1px 7px;vertical-align:2px}
+}
+
+/* ---- Rubros: la promesa de entrega queda a la vista junto al precio ---- */
+.ph .proof li{font-weight:500}
+.ph .proof li:nth-child(n+2){display:grid}
+@media(max-width:720px){.ph .proof{margin-top:16px;gap:8px}}
+
+/* ---- Planes y paquetes: todos visibles y comparables en móvil (sin carrusel horizontal) ---- */
+@media(max-width:720px){
+  .tickets,.tickets.two,.tickets.one{display:grid;grid-template-columns:minmax(0,1fr);overflow:visible;scroll-snap-type:none;gap:22px;margin:26px 0 0;padding:0;max-width:none}
+  .tickets .ticket{flex:none;scroll-snap-align:none}
+  .ticket{display:flex;flex-direction:column;padding:22px 18px 26px;font-family:var(--epi);margin-bottom:12px}
+  .ticket .ribbon{position:static;align-self:flex-start;margin:0 0 10px}
+  .ticket>.t-head{order:1}.ticket>.t-sub{order:2}.ticket>.t-total{order:3}.ticket>.t-lines{order:4}.ticket>.t-fine{order:5}.ticket>.btn{order:6}
+  .ticket .t-total{flex-wrap:wrap;margin-top:14px;padding:12px 0 14px;border-top:0;border-bottom:1.5px dashed rgba(12,12,12,.35)}
+  .ticket .t-lbl{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--gris)}
+  .ticket .t-num{font:800 1.9rem/1 var(--epi);letter-spacing:-.04em}
+  .ticket .t-num small{font:500 .9rem var(--epi)}
+  .ticket .t-lines{font-family:var(--epi);font-size:15px;line-height:1.35;padding:14px 0 6px;gap:8px}
+  .ticket .t-lines .f{display:none}
+  .ticket .t-lines li{justify-content:space-between}
+  .ticket .t-fine{margin-top:6px}
+}
+
+/* ---- Estados de foco consistentes ---- */
+a:focus-visible,button:focus-visible,summary:focus-visible,.btn:focus-visible,input:focus-visible+.box{outline:3px solid var(--tinta);outline-offset:3px}
+.cierre a:focus-visible,.sec.dark a:focus-visible{outline-color:#fff}
+
+/* botones con texto largo: dos líneas legibles y centradas */
+.btn{line-height:1.25}
+@media(max-width:720px){.ticket .btn{justify-content:center;text-align:center}}
+.btn.sm,.btn.k.sm,.btn.o.sm{min-height:44px}
+
+/* ---- Home: relato y ejemplos ilustrativos separados del caso real ---- */
+.need-lead{margin:14px 0 0;max-width:60ch;font-size:1.08rem;line-height:1.45;color:#2b2b28}
+.ej-tag{margin:0 0 10px;font:600 12px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--gris)}
+.caso4-in{border-left:6px solid var(--verde)}
+.caso4 .eyebrow{color:var(--verde-d);font-weight:700}
+
+/* ---- Escenas animadas: a ancho completo en móvil (sin tarjeta oscura flotando dentro de la página) ---- */
+@media(max-width:860px){
+  .nrow-s .sc,.ph36-scene>.sc{border-radius:0;margin-inline:calc(var(--g)*-1);box-shadow:none}
+  .nrow{padding:34px 0}
+  .ex-m{width:min(68cqw,290px);--ph:calc(min(68cqw,290px) * 800 / 390 - 12px)}
+  .ex-art{--mw:min(68cqw,290px)}
+  .ex-open{display:flex;align-items:center;justify-content:center;min-height:44px;margin-top:18px;padding:0 18px;border:1.5px solid rgba(255,255,255,.6);border-radius:99px;text-decoration:none}
+}
+
+/* ---- Combo: del sitio a la caja en una lámina clara ---- */
+.cd{padding:16px;border-radius:22px;background:#eaf0ed;border:1px solid var(--linea);color:var(--tinta)}
+.cd-k{margin:0 0 14px;font:600 12px/1.3 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--gris)}
+.cd-g{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:14px;align-items:start}
+.cd-f{margin:0}
+.cd-i{border-radius:18px;overflow:hidden;aspect-ratio:3/5.2;background:#fff;box-shadow:0 18px 34px -22px rgba(12,12,12,.5),0 0 0 1px rgba(12,12,12,.1)}
+.cd-i img{width:100%;height:100%;object-fit:cover;object-position:top}
+.cd-f figcaption{margin-top:10px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.cd-f b{font:800 1.05rem/1.1 var(--epi);letter-spacing:-.02em}
+.cd-f span{font:600 13px var(--mono);color:var(--verde-d)}
+.cd-chat{display:grid;gap:8px;align-content:start;padding:12px;border-radius:18px;background:#e7ddc9;box-shadow:0 0 0 1px rgba(12,12,12,.08)}
+.cd-who{display:flex;justify-content:space-between;gap:6px;margin:0;font-size:13px}.cd-who span{font:600 11px var(--mono);color:var(--verde-d)}
+.cd-m{max-width:92%;padding:8px 10px;border-radius:12px;font-size:14px;line-height:1.3;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.1)}
+.cd-m.out{justify-self:end;background:#d9fdd3}
+.cd-m small{display:block;margin-top:2px;text-align:right;font-size:11px;opacity:.6}
+.cd-tag{display:flex;gap:6px;align-items:flex-start;margin:2px 0 0;font:600 13px/1.3 var(--epi);color:var(--verde-d)}
+.cd-tag svg{flex:none;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
+.cd-gest{grid-column:1/-1}
+.cd-ag{border-radius:18px;overflow:hidden;box-shadow:0 18px 34px -22px rgba(12,12,12,.5),0 0 0 1px rgba(12,12,12,.1)}
+.cd-s{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:12px}
+.cd-s li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start}
+.cd-s i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--tinta);color:#fff;font:700 13px var(--epi);font-style:normal}
+.cd-s .hum i{background:var(--marcador);color:var(--tinta)}
+.cd-s b{display:block;font:700 15px/1.25 var(--epi)}
+.cd-s span{display:block;margin-top:2px;font-size:14px;line-height:1.35;color:#3f3f3a}
+@media(min-width:721px){.cd-g{grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1fr)}.cd-gest{grid-column:auto}.cd-s{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 22px}}
+
+/* ---- GrowiFlow: paquetes de un vistazo ---- */
+.glance{width:100%;max-width:720px;margin:22px 0 4px;border-collapse:collapse;font:500 15px/1.35 var(--epi)}
+.glance th{padding:8px 0;border-bottom:2px solid var(--tinta);text-align:left;font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--gris)}
+.glance td{padding:0;border-bottom:1px solid var(--linea)}
+.glance td:first-child a{display:flex;align-items:center;min-height:48px;font-weight:700;text-decoration:none}
+.glance td:last-child,.glance th:last-child{text-align:right;padding-left:12px;white-space:nowrap}
+.glance td:first-child a:hover{text-decoration:underline}
+
+/* pie: rótulos de columna sin encabezado semántico (el pie no es una sección de contenido) */
+.foot .fh{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--gris);margin:0 0 12px}
+
+/* ---- Lectura mínima: ningún texto de las escenas por debajo de 12 px ---- */
+.sc .k,.ex-k,.ix-tz-l,.ix-tz-l2{font-size:12px}
+.cd .cd-who span,.cd .cd-m small{font-size:12px}
+.cd .cb-ag .ag-l time,.cd .cb-ag .ag-l span{font-size:12.5px}
+.cd .cb-ag .ag-l em,.cd .cb-ag .ag-r small{font-size:12px}
+
+/* ---- Encabezados largos de rubro: escala móvil legible (siguen siendo H2) ---- */
+@media(max-width:720px){#te-suena h2,#que-hace h2{font-size:clamp(1.7rem,7.4vw,2.3rem);line-height:1.04}}
+
+/* Home: en móvil la elección por línea ya está en el primer pantallazo; el atajo de anclas repetía lo mismo */
+@media(max-width:900px){.need-nav{display:none}}

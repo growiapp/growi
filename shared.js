@@ -22,7 +22,8 @@
     const href = a.getAttribute('href');
     if (href.startsWith('/') && href !== '/' && here.startsWith(href.replace(/\/*$/, '/'))) {
       a.classList.add('active');
-      a.setAttribute('aria-current', 'page');
+      // «page» solo en la página exacta; en una subpágina (p. ej. /app/cafeterias/) el enlace de la línea es la sección actual
+      if (!a.hasAttribute('aria-current')) a.setAttribute('aria-current', here === href.replace(/\/*$/, '/') ? 'page' : 'true');
     }
   });
 
@@ -43,6 +44,8 @@
       mobileMenu.setAttribute('aria-hidden', String(!open));
       menuBtn.setAttribute('aria-expanded', String(open));
       menuBtn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      // el texto visible dice lo que hace el botón (en las páginas con botón de ícono no se toca)
+      if (menuBtn.classList.contains('menu-btn')) menuBtn.textContent = open ? 'Cerrar' : 'Menú';
       document.body.classList.toggle('menu-open', open);
     };
     setMenu(false);

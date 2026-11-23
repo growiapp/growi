@@ -294,3 +294,9 @@ test('F6.1: el Home (teaser de Invitaciones) pasa a una columna por debajo de 36
   assert.ok(/@media \(max-width:860px\)\{[^}]*\.ix-tz\{grid-template-columns:1fr 1fr/.test(base));
   assert.equal(/overflow-x:\s*hidden/.test(base), false);
 });
+test('F8.1B: el hero de Invitaciones no tiene el enlace «Ver el recorrido completo» ni estilos huérfanos', () => {
+  const h = pagina(), css = leer('assets/invitaciones/inv.css');
+  assert.equal(/Ver el recorrido completo|ix-ln2/.test(h + css), false);
+  assert.equal(/<p class="ix-cta">(?:(?!<\/p>).)*<a [^>]*>(?:(?!<\/p>).)*<a /s.test(h), false);   // un solo CTA en el hero
+  assert.ok(h.includes('id="recorrido"') && h.includes('href="#recorrido"'));   // la subnavegación sigue llevando a la experiencia
+});

@@ -112,24 +112,29 @@ def head(pg, titulo, desc, og="growi-og-1200x630.png", l1ld=None, faqs=None, cls
             '<link rel="icon" href="%sfavicon/favicon-32x32.png" type="image/png">\n'
             '<link rel="preload" href="%sassets/fonts/epilogue-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
             '<script>var d=document.documentElement,o=null;try{o=localStorage.getItem("cr_motion")}catch(e){}try{var r=matchMedia("(prefers-reduced-motion: reduce)").matches;if(o==="on"||(!r&&o!=="off"))d.classList.add("mo")}catch(e){}</script>\n'
-            '%s<link rel="stylesheet" href="%sassets/growi360.css"><link rel="stylesheet" href="%sassets/growi33.css"><link rel="stylesheet" href="%sassets/growi35.css"><link rel="stylesheet" href="%sassets/growi36.css">\n%s</head>\n<body%s>\n<a class="sr" href="#contenido">Saltar al contenido</a>\n'
-            % (robots, E(titulo), E(desc), url, E(titulo), E(desc), url, ogimg, E(titulo), E(desc), ogimg, "/" if CFG["release"] else rel, rel, pla, rel, rel, rel, rel, lds, (' class="%s"' % cls) if cls else ""))
+            '%s<link rel="stylesheet" href="%sassets/growi360.css"><link rel="stylesheet" href="%sassets/growi33.css"><link rel="stylesheet" href="%sassets/growi35.css"><link rel="stylesheet" href="%sassets/growi36.css"><link rel="stylesheet" href="%sassets/growi81.css">\n%s</head>\n<body%s>\n<a class="sr" href="#contenido">Saltar al contenido</a>\n'
+            % (robots, E(titulo), E(desc), url, E(titulo), E(desc), url, ogimg, E(titulo), E(desc), ogimg, "/" if CFG["release"] else rel, rel, pla, rel, rel, rel, rel, rel, lds, (' class="%s"' % cls) if cls else ""))
 
 # ---------------------------------------------------------------- navegación
+def _cur(pg, cur, k, r):
+    """aria-current correcto: «page» solo en la página exacta; «true» (sección) en subpáginas de esa línea, p. ej. los rubros de GrowiApp."""
+    if cur != k: return ""
+    return ' aria-current="page"' if pg.path == r else ' aria-current="true"'
+
 def header(pg, cur):
     # Navegación global = por audiencia: «Para tu negocio» (menú con las cuatro soluciones), «Invitaciones» (eventos) y Consultar.
-    prod = "".join('<a href="%s"%s><b>%s</b><span>%s</span></a>' % (pg.u(r), ' aria-current="page"' if cur == k else "", n, d) for k, n, r, d in SOL)
+    prod = "".join('<a href="%s"%s><b>%s</b><span>%s</span></a>' % (pg.u(r), _cur(pg, cur, k, r), n, d) for k, n, r, d in SOL)
     en_neg = cur in [k for k, *_ in SOL]
     menu = ('<div class="nav-g"><button type="button" class="nav-btn%s" id="navNeg" aria-expanded="false" aria-controls="navNegPanel">Para tu negocio<i aria-hidden="true"></i></button>'
             '<div class="nav-panel" id="navNegPanel" hidden>%s</div></div>' % (" is-cur" if en_neg else "", prod))
-    inv = '<a class="nav-ev" href="%s"%s>Invitaciones</a>' % (pg.u("invitaciones/"), ' aria-current="page"' if cur == "inv" else "")
-    mob = ('<span class="mm-g">Para tu negocio</span>' + "".join('<a href="%s"%s><span>%s<small>%s</small></span><span aria-hidden="true">→</span></a>' % (pg.u(r), ' aria-current="page"' if cur == k else "", n, d) for k, n, r, d in SOL)
-           + '<span class="mm-g">Para tus eventos</span><a href="%s"%s>Invitaciones digitales<span aria-hidden="true">→</span></a>' % (pg.u("invitaciones/"), ' aria-current="page"' if cur == "inv" else ""))
+    inv = '<a class="nav-ev" href="%s"%s>Invitaciones</a>' % (pg.u("invitaciones/"), _cur(pg, cur, "inv", "invitaciones/"))
+    mob = ('<span class="mm-g">Para tu negocio</span>' + "".join('<a href="%s"%s><span>%s<small>%s</small></span><span aria-hidden="true">→</span></a>' % (pg.u(r), _cur(pg, cur, k, r), n, d) for k, n, r, d in SOL)
+           + '<span class="mm-g">Para tus eventos</span><a href="%s"%s>Invitaciones digitales<span aria-hidden="true">→</span></a>' % (pg.u("invitaciones/"), _cur(pg, cur, "inv", "invitaciones/")))
     return ('<header class="top" id="mainNav"><div class="w"><a class="logo" href="%s">Growi<i>.</i></a>'
             '<nav class="nav" aria-label="Principal">%s%s</nav>%s'
             '<button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú">Menú</button></div></header>\n'
-            '<div class="mobile-menu" id="mobileMenu" aria-hidden="true"><div class="mobile-menu-card"><a href="%s">Inicio<span aria-hidden="true">→</span></a>%s%s</div></div>\n'
-            % (pg.u(""), menu, inv, btn("Hola Growi, quiero conocer más sobre sus soluciones.", "nav-whatsapp", "Consultar", "sm"), pg.u(""), mob,
+            '<div class="mobile-menu" id="mobileMenu" aria-hidden="true"><div class="mobile-menu-card"><a href="%s"%s>Inicio<span aria-hidden="true">→</span></a>%s%s</div></div>\n'
+            % (pg.u(""), menu, inv, btn("Hola Growi, quiero conocer más sobre sus soluciones.", "nav-whatsapp", "Consultar", "sm"), pg.u(""), ' aria-current="page"' if pg.path == "" else "", mob,
                btn("Hola Growi, quiero conocer más sobre sus soluciones.", "mobile-menu-whatsapp", "Hablar por WhatsApp", "wide")))
 
 def subnav(items, cur_line):
@@ -149,13 +154,13 @@ def footer(pg, sticky_msg, track):
     pie = "" if CFG["release"] else '<p class="l1" style="margin-top:14px;border:0;padding:0" data-motion>© 2026 Growi · Candidata R3.8, solo local (no publicada).</p>'
     if CFG["release"]: pie = '<p class="l1" style="margin-top:14px;border:0;padding:0">© 2026 Growi</p>'
     return ('<footer class="foot"><div class="w"><div class="cols"><div><a class="logo" href="%s">Growi<i>.</i></a><p style="margin-top:14px;max-width:30ch">Crecé con tu negocio.</p></div>'
-            '<div><h2>Para tu negocio</h2><ul>%s</ul></div><div><h2>GrowiApp por rubro</h2><ul>%s</ul></div>'
-            '<div><h2>Eventos y contacto</h2><ul><li><a href="%s">Invitaciones digitales</a></li><li><a href="%s%s" target="_blank" rel="noopener noreferrer" data-track="%s-footer-whatsapp">WhatsApp</a></li><li><a href="mailto:hola@growi.ar">hola@growi.ar</a></li>'
+            '<div><p class="fh">Para tu negocio</p><ul>%s</ul></div><div><p class="fh">GrowiApp por rubro</p><ul>%s</ul></div>'
+            '<div><p class="fh">Eventos y contacto</p><ul><li><a href="%s">Invitaciones digitales</a></li><li><a href="%s%s" target="_blank" rel="noopener noreferrer" data-track="%s-footer-whatsapp">WhatsApp</a></li><li><a href="mailto:hola@growi.ar">hola@growi.ar</a></li>'
             '<li><a href="%s">Privacidad</a></li><li><a href="%s">Términos</a></li></ul></div></div>'
             '<p class="l1">%s</p>%s</div></footer>\n<div class="sticky-cta">%s</div>\n'
-            '<script src="%s"></script>\n<script src="%s"></script>\n<script src="%sassets/growi360.js" defer></script>\n<script src="%sassets/growi33.js" defer></script>\n<script src="%sassets/growi35.js" defer></script>\n<script src="%sassets/growi36.js" defer></script>\n</body>\n</html>\n'
+            '<script src="%s"></script>\n<script src="%s"></script>\n<script src="%sassets/growi360.js" defer></script>\n<script src="%sassets/growi33.js" defer></script>\n<script src="%sassets/growi35.js" defer></script>\n<script src="%sassets/growi36.js" defer></script>\n<script src="%sassets/growi81.js" defer></script>\n</body>\n</html>\n'
             % (pg.u(""), prod, rub, pg.u("invitaciones/"), WA, quote("Hola Growi, quiero conocer más sobre sus soluciones."), track, pg.legal("privacidad"), pg.legal("terminos"),
-               L1_PIE, pie, btn(sticky_msg, track + "-floating-whatsapp", "Consultar por WhatsApp", "wide"), pg.shared("shared.fx.js"), pg.shared("shared.js"), pg.rel, pg.rel, pg.rel, pg.rel))
+               L1_PIE, pie, btn(sticky_msg, track + "-floating-whatsapp", "Consultar por WhatsApp", "wide"), pg.shared("shared.fx.js"), pg.shared("shared.js"), pg.rel, pg.rel, pg.rel, pg.rel, pg.rel))
 
 # ---------------------------------------------------------------- bloques
 def faq(pares):

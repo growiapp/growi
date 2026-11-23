@@ -34,11 +34,11 @@ def _fields(ev):
 def _draft(ev):
     c = FORMS[ev]
     return ('<div class="ix-dh"><p class="ix-k">Revisá</p><h3 class="ix-h" id="ix-%(ev)s-hm" tabindex="-1">Tu mensaje, <i>listo para enviar</i></h3></div><div class="ix-db">'
-            '<div class="ix-dr"><p class="ix-drh"><span>Para %(dest)s</span><span>Borrador</span></p><p class="ix-resum" data-resum></p><p class="ix-drb" data-msg></p>'
+            '%(bdg)s<div class="ix-dr"><p class="ix-drh"><span>Para %(dest)s</span><span>Borrador</span></p><p class="ix-resum" data-resum></p><p class="ix-drb" data-msg></p>'
             '<p class="ix-drs"><i class="ix-clk" aria-hidden="true"></i><span>Todavía no se envió.</span></p></div>'
             '<p class="ix-note">Se abre WhatsApp con este texto. Lo revisás y lo enviás vos.</p>'
             '<button type="button" class="ix-btn" data-act="wa">Ver cómo se abre WhatsApp</button>'
-            '<button type="button" class="ix-lk ix-lk-c" data-act="editar">Cambiar mi respuesta</button></div>' % dict(ev=ev, dest=c["dest"]))
+            '<button type="button" class="ix-lk ix-lk-c" data-act="editar">Cambiar mi respuesta</button></div>' % dict(ev=ev, dest=c["dest"], bdg='<p class="ix-bdg ix-bdg-r">Con tus respuestas</p>' if ev == "cas" else ""))
 
 def _wa(ev, extra=""):
     c = FORMS[ev]
@@ -104,7 +104,7 @@ def _cas_msg():
 def _cas_ejemplo():
     c = FORMS["cas"]
     return ('<section class="ix-ly ix-l-msj ix-ej" data-ly="ejemplo" id="ix-cas-ejemplo" aria-labelledby="ix-cas-he" hidden><p class="ix-k">Así se vería</p><h3 class="ix-h" id="ix-cas-he" tabindex="-1">Tu mensaje, <i>con tu respuesta</i></h3>'
-            '<div class="ix-dr"><p class="ix-drh"><span>Para %s</span><span>Muestra</span></p><p class="ix-resum">Camila Rossi · %s · 2 personas</p><p class="ix-drb" data-msg-ej></p></div>'
+            '<p class="ix-bdg ix-bdg-m">Muestra · datos ficticios</p><div class="ix-dr"><p class="ix-drh"><span>Para %s</span><span>Muestra</span></p><p class="ix-resum">Camila Rossi · %s · 2 personas</p><p class="ix-drb" data-msg-ej></p></div>'
             '<p class="ix-note">Son datos ficticios. Cuando completás el formulario, el mensaje se arma con lo que pusiste.</p>'
             '<button type="button" class="ix-btn" data-go="confirmar">Completar mi respuesta</button></section>' % (c["dest"], c["si"]))
 
@@ -178,10 +178,10 @@ def empresa():
     return ('<div class="ix-emp-in" data-main><div class="ix-emp-top">%s%s</div>%s%s</div>%s' % (portada, jornada, conf, msg, _wa("emp")))
 
 # ---------------------------------------------------------------- secciones de la página
-ACTOS = [("Llega y se abre.", "El enlace llega por WhatsApp con una vista previa propia. Un toque y la invitación se abre.", "Llega", True, "Probalo: tocá el enlace del chat."),
-         ("El día, en una página.", "Programa, lugar y lo que conviene saber, sin preguntar por el chat.", "El día", True, "Probalo: abrí cualquier momento del programa."),
+ACTOS = [("Llega por WhatsApp.", "El enlace llega por WhatsApp con una vista previa propia. Un toque y la invitación se abre.", "Recibís", True, "Probalo: tocá el enlace del chat."),
+         ("El día, en una página.", "Programa, lugar y lo que conviene saber, sin preguntar por el chat.", "Explorás", True, "Probalo: abrí cualquier momento del programa."),
          ("Confirmar lleva un minuto.", "Tu nombre, si venís y cuántos son. Si falta algo, te avisamos al lado del campo.", "Confirmás", False, "Probalo: tocá «Preparar mi mensaje» sin completar nada."),
-         ("El mensaje sale de tu WhatsApp.", "Lo ves antes de enviarlo. Hasta que no toques Enviar, no se mandó nada.", "Tu mensaje", False, "Probalo: completá tu respuesta y mirá cómo se arma el mensaje.")]
+         ("El mensaje sale de tu WhatsApp.", "Lo ves antes de enviarlo. Hasta que no toques Enviar, no se mandó nada.", "Revisás", False, "Probalo: completá tu respuesta y mirá cómo se arma el mensaje.")]
 
 def historia(hero_html):
     # Hero + recorrido: un único dispositivo protagonista; los cuatro actos acompañan a la pantalla (en escritorio quedan fijos junto a ella).
@@ -193,10 +193,11 @@ def historia(hero_html):
     steps = "".join('<li><button type="button" data-ix-acto="%d"%s>%s</button></li>' % (i + 1, ' aria-current="step"' if i == 0 else "", a[2]) for i, a in enumerate(ACTOS))
     return ('<div class="ixs" id="inicio" data-ix-story data-sticky-hide>'
             '<div class="ixs-l">%s'
-            '<section class="ix-acts" id="recorrido" aria-label="Recorrido de la invitación"><div class="ix-acts-track">%s<div class="ix-acts-pin"><ol class="ix-actl" data-ix-acts>%s</ol>'
+            '<section class="ix-acts" id="recorrido" data-sticky-hide aria-label="Recorrido de la invitación"><div class="ix-acts-track">%s<div class="ix-acts-pin"><ol class="ix-actl" data-ix-acts>%s</ol>'
             '<p class="ix-fic">Invitación de ejemplo, con datos ficticios.</p></div></div></section></div>'
             '<div class="ixs-r"><div class="ix-stage"><div class="ix-stage-bg" aria-hidden="true"></div>%s'
-            '<ol class="ix-steps" aria-label="Pasos del recorrido">%s</ol>'
+            '<ol class="ix-steps" aria-label="Capítulos de la invitación">%s</ol>'
+            '<div class="ix-pn" role="group" aria-label="Cambiar de capítulo"><button type="button" class="ix-pn-b" data-ix-pn="-1"><span aria-hidden="true">←</span> Anterior</button><button type="button" class="ix-pn-b ix-pn-n" data-ix-pn="1">Siguiente <span aria-hidden="true">→</span></button></div>'
             '<button type="button" class="ix-reset" data-ix-reiniciar hidden>Empezar de nuevo</button></div></div></div>\n'
             % (hero_html, sent, items, casamiento(), steps))
 

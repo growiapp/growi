@@ -38,8 +38,8 @@ def app():
                   "Registrás ventas, controlás el stock, llevás los turnos y cerrás la caja desde el celular. Lo armamos con los datos de tu negocio y te confirmamos una fecha estimada de entrega antes de empezar.",
                   btn(msg_demo, "app-hero-demo-whatsapp", "Coordinar una charla de 20 minutos") + '<a class="btn o" href="#precios">Ver precios ↓</a>',
                   "Desde %s por mes + %s de puesta en marcha, una sola vez · Garantía prevista de 7 días · Sin permanencia" % (P(15, True), P(49, True)), scene_app(rel))
-    real = ('<section class="sec real" id="interfaz" aria-labelledby="h-real"><div class="w"><p class="eyebrow">Dos ejemplos funcionando</p><h2 id="h-real">Registrá una venta o agendá un turno. Después mirá qué cambia.</h2>'
-            '<style>.cn2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:8px}@media(max-width:860px){.cn2{grid-template-columns:minmax(0,1fr)}}</style>'
+    real = ('<section class="sec real" id="interfaz" data-sticky-hide aria-labelledby="h-real"><div class="w"><p class="eyebrow">Dos ejemplos funcionando</p><h2 id="h-real">Registrá una venta o agendá un turno. Después mirá qué cambia.</h2>'
+            '<style>.cn2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:8px}@media(max-width:860px){.cn2{grid-template-columns:minmax(0,1fr);gap:40px;margin-top:26px}}</style>'
             '<div class="cn2">%s%s</div>%s</div></section>\n'
             % (sbx_hero("cafeterias", pg, rel, True, False), sbx_hero("peluquerias", pg, rel, False, False), '<p class="cap">Los datos son ficticios y las funciones y el alcance se definen para cada proyecto. Fotografía de ambientación generada con IA.</p>'))
     items =[("Cada venta registrada al momento", "para saber cuánto ganaste, por producto y por hora"), ("Cierre de caja sin cuentas", "sin hacer cuentas al final del día: el sistema suma lo que cargaste"),
@@ -58,7 +58,7 @@ def app():
                 ("Por mes", money(29, "/mes", True)), "+ %s de puesta en marcha, una sola vez%s" % (P(149), per), cta("Pro"), "Recomendado si son varios")
     t3 = ticket("Plan 03", "Multi", "Para más de una sucursal.", ["Hasta 5 usuarios", "Hasta 2 sucursales", "Todo lo de Pro", "Reportes avanzados por sucursal", "WhatsApp prioritario"],
                 ("Por mes", money(49, "/mes", True)), "+ %s de puesta en marcha, una sola vez%s" % (P(249), per), cta("Multi"))
-    precios = ('<section class="sec" id="precios" aria-labelledby="h-pre"><div class="w"><p class="eyebrow">Precios</p><h2 id="h-pre">Puesta en marcha y abono mensual.</h2>'
+    precios = ('<section class="sec" id="precios" data-sticky-hide aria-labelledby="h-pre"><div class="w"><p class="eyebrow">Precios</p><h2 id="h-pre">Puesta en marcha y abono mensual.</h2>'
                '<p class="lead">Un punto de partida para tu negocio. Los planes te ayudan a conocer la inversión y las funcionalidades habituales. Definimos con vos el alcance final, las adaptaciones y el presupuesto por escrito antes de empezar.</p>'
                '<div class="tk-tools">%s<div class="seg" role="group" aria-label="Período de pago"><button type="button" data-period="monthly" class="active" aria-pressed="true">Mensual</button><button type="button" data-period="annual" aria-pressed="false">Anual −15%%</button></div></div>'
                '<div class="tickets">%s%s%s</div>'
@@ -69,7 +69,7 @@ def app():
     faqp = l1_faq("app", [0, 1, 3, 4, 7, 9])
     pre = ('<section class="sec" id="preguntas" aria-labelledby="h-faq"><div class="w faq-g"><div><p class="eyebrow">Preguntas</p><h2 id="h-faq">Lo que todos preguntan antes de empezar.</h2></div>%s</div></section>\n' % faq(faqp))
     cie = cierre("¿Querés contarnos cómo trabajás?", "Conversá 20 minutos con una persona del equipo: nos contás cómo funciona tu negocio y evaluamos qué propuesta tiene sentido para vos. Coordinamos día y horario según disponibilidad.", btn(msg_demo, "app-final-demo-whatsapp", "Coordinar una charla de 20 minutos"))
-    return (head(pg, "GrowiApp: sistema de gestión para comercios | Growi", "Ventas, caja, stock, turnos y clientes en una sola pantalla, desde el celular. Desde USD 15 por mes. Mirá dos ejemplos funcionando.", "og-app.png", l1ld="app", faqs=faqp)
+    return (head(pg, "Sistema de gestión para comercios | GrowiApp", "Ventas, caja, stock, turnos y clientes en una sola pantalla, desde el celular. Desde USD 15 por mes. Mirá dos ejemplos funcionando.", "og-app.png", l1ld="app", faqs=faqp)
             + header(pg, "app") + subnav([("demo", "Cómo funciona"), ("interfaz", "Ejemplos"), ("incluye", "Qué incluye"), ("rubros", "Por rubro"), ("precios", "Precios"), ("preguntas", "Preguntas")], "app")
             + '<main id="contenido">\n' + hero + real + inc + rub + caso_cafe(rel, pg.u("app/cafeterias/")) + precios + flow + pre + cie + otras(pg, "app") + '</main>\n'
             + footer(pg, "Hola Growi, quiero consultar por GrowiApp.\n\nMi rubro:\nCuántas personas lo usarían:", "app"))
@@ -113,6 +113,8 @@ RUB = {
           ("Clientes frecuentes", "Si lo sumamos a tu proyecto, guardás los datos de los clientes que vuelven y qué suelen llevar.", "Atendés mejor sin depender de la memoria."), ("Reportes simples de qué se mueve", "Un vistazo rápido a qué productos salen más y cuáles conviene dejar de reponer.", "Dejás de reponer lo que no sale.")],
    faq=[0, 1, 3, 4]),
 }
+SEO_T = {"cafeterias": "Sistema de gestión para cafeterías y bares | GrowiApp", "peluquerias": "Sistema de turnos y caja para peluquerías | GrowiApp",
+         "talleres": "Sistema para talleres y servicios técnicos | GrowiApp", "retail": "Sistema para kioscos y comercios de barrio | GrowiApp"}
 RUB_PRE = {"cafeterias": 0, "peluquerias": 0, "talleres": 0, "retail": 0}
 
 # ------------------------------------------------------------ Entrada a una sandbox funcional (Cafetería, Peluquería)
@@ -126,27 +128,31 @@ SBX_CSS = ('<style>'
     '.cn-dev::before{content:"";position:absolute;top:clamp(2px,.45vw,4px);left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:#0a0d12}'
     '.cn-ph{display:none}'
     '.cn-ph .cn-dev{padding:clamp(3px,.6vw,5px);border-radius:clamp(12px,2vw,20px)}.cn-ph .cn-dev img{border-radius:clamp(9px,1.5vw,15px)}.cn-ph .cn-dev::before{display:none}'
+    '.cn-nm{display:none;margin:0 0 10px;font:500 14px/1.3 var(--epi);color:var(--gris)}.cn-nm b{color:var(--tinta);font-size:17px;letter-spacing:-.01em}'
     '.cn-txt{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;margin-top:20px}'
     '.cn-txt p{margin:0;flex:1 1 240px;max-width:36ch;font-size:clamp(1.05rem,1.5vw,1.2rem);line-height:1.35;font-weight:600}'
-    '@media(max-width:720px){.cn-tab{display:none}.cn-ph{display:block;width:min(260px,82%);margin:0 auto}.cn-stage{padding-bottom:clamp(18px,5vw,28px)}.cn-txt .btn{width:100%;justify-content:center}}'
+    '@media(max-width:720px){.cn-tab{display:none}.cn-stage{background:none;padding:0;overflow:visible;border-radius:0}.cn-stage::before{display:none}'
+    '.cn-ph{display:block;width:min(340px,100%);margin:0 auto;position:relative}.cn-ph .cn-dev{padding:0;background:#fff;box-shadow:0 22px 44px -26px rgba(12,12,12,.55),0 0 0 1px rgba(12,12,12,.12);border-radius:24px;overflow:hidden;aspect-ratio:1/1.42}'
+    '.cn-ph .cn-dev img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:0}.cn-ph::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;border-radius:0 0 24px 24px;background:linear-gradient(180deg,rgba(246,246,244,0),rgba(246,246,244,.9));pointer-events:none}'
+    '.cn-nm{display:block}.cn-txt{margin-top:16px;flex-direction:column;align-items:stretch}.cn-txt p{max-width:none;flex:none}.cn-txt .btn{width:100%;justify-content:center}}'
     '</style>')
 SBX = {
-    "cafeterias": dict(ruta="demos/sandbox/cafeteria/", bg="url(%sassets/img/cafeteria-sala.webp)", tablet=("cafe-nogal-tablet.webp", 1400, 958), movil=("cafe-nogal-movil.webp", 780, 1580),
+    "cafeterias": dict(nm="Café Nogal", rub="cafetería", ruta="demos/sandbox/cafeteria/", bg="url(%sassets/img/cafeteria-sala.webp)", tablet=("cafe-nogal-tablet.webp", 1400, 958), movil=("cafe-nogal-movil.webp", 780, 1580),
                        frase="Registrá una venta y mirá cómo se actualizan la caja, el stock y el resumen.", cta="Explorar Café Nogal", track="app-cafeterias-sandbox",
                        nota="Los datos son ficticios y las funciones y el alcance se definen para cada proyecto. Fotografía de ambientación generada con IA."),
-    "peluquerias": dict(ruta="demos/sandbox/peluqueria/", bg="linear-gradient(135deg,#3a2159 0%,#5b2f8a 55%,#8a3d62 100%)", tablet=("bruma-tablet.webp", 1500, 1027), movil=("bruma-movil.webp", 782, 1580),
+    "peluquerias": dict(nm="Estudio Bruma", rub="peluquería", ruta="demos/sandbox/peluqueria/", bg="linear-gradient(135deg,#3a2159 0%,#5b2f8a 55%,#8a3d62 100%)", tablet=("bruma-tablet.webp", 1500, 1027), movil=("bruma-movil.webp", 782, 1580),
                         frase="Agendá un turno, atendelo y cobralo: mirá cómo se actualizan la agenda y la caja.", cta="Explorar Estudio Bruma", track="app-peluquerias-sandbox",
                         nota="Los datos son ficticios y las funciones y el alcance se definen para cada proyecto."),
 }
 def sbx_hero(k, pg, rel, css=True, nota=True):
     c = SBX[k]; u = pg.u(c["ruta"]); t, m = c["tablet"], c["movil"]
     bg = c["bg"] % rel if "%s" in c["bg"] else c["bg"]
-    return ((SBX_CSS if css else '') + '<div class="cn"><div class="cn-stage" style="--bg:%s">'
+    return ((SBX_CSS if css else '') + '<div class="cn"><p class="cn-nm"><b>%s</b> · %s, ejemplo ilustrativo</p><div class="cn-stage" style="--bg:%s">'
             '<a class="cn-tab" href="%s" tabindex="-1" aria-hidden="true"><span class="cn-dev"><img src="%sassets/img/%s" width="%d" height="%d" alt=""></span></a>'
             '<a class="cn-ph" href="%s" tabindex="-1" aria-hidden="true"><span class="cn-dev"><img src="%sassets/img/%s" width="%d" height="%d" alt="" loading="lazy"></span></a></div>'
             '<div class="cn-txt"><p>%s</p><a class="btn k" href="%s" data-track="%s">%s</a></div>'
             '%s</div>'
-            % (bg, u, rel, t[0], t[1], t[2], u, rel, m[0], m[1], m[2], c["frase"], u, c["track"], c["cta"], ('<p class="cap">%s</p>' % c["nota"]) if nota else ''))
+            % (c["nm"], c["rub"], bg, u, rel, t[0], t[1], t[2], u, rel, m[0], m[1], m[2], c["frase"], u, c["track"], c["cta"], ('<p class="cap">%s</p>' % c["nota"]) if nota else ''))
 
 
 # ------------------------------------------------------------ Escenas conceptuales por rubro (rubros que todavía no tienen sandbox funcional)
@@ -198,25 +204,28 @@ def rubro(k):
         demo_blk = escena_retail()
     else:
         demo_blk = '%s<p class="cap">%s</p>' % (app_tour(rel, d["demo"]), nota_demo)
+    # F8.1A: la última frase del texto de apertura (la fecha estimada de entrega) pasa a la línea de condiciones junto al precio; el texto es el mismo.
+    _fr = re.split(r"(?<=\.) (?=[A-ZÁÉÍÓÚ])", d["lead"]); assert "fecha estimada de entrega" in _fr[-1], k
+    sub_hero, entrega = " ".join(_fr[:-1]), E(_fr[-1])
     hero = ('<section class="ph" data-sticky-hide aria-labelledby="h1"><div class="w ph-g"><div>%s<h1 id="h1">%s</h1><p class="sub">%s</p>'
             '<div class="cta-row" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">%s<a class="btn o" href="#precio">Ver cuánto sale ↓</a></div>'
-            '<ul class="proof"><li><span>Desde %s por mes + %s de puesta en marcha, una sola vez</span></li><li><span>Garantía prevista de 7 días · Sin permanencia</span></li></ul></div>'
+            '<ul class="proof"><li><span>Desde %s por mes + %s de puesta en marcha, una sola vez</span></li><li><span>%s</span></li><li><span>Garantía prevista de 7 días · Sin permanencia</span></li></ul></div>'
             '<div id="demo">%s</div></div></section>\n'
-            % (ph(pg, d["tit"].replace("GrowiApp para ", "").capitalize(), ("GrowiApp", "app/")), d["h1"], E(d["lead"]), btn(msg, "app-%s-hero-whatsapp" % k, d["cta"]), P(15, True), P(49, True), demo_blk))
+            % (ph(pg, d["tit"].replace("GrowiApp para ", "").capitalize(), ("GrowiApp", "app/")), d["h1"], E(sub_hero), btn(msg, "app-%s-hero-whatsapp" % k, d["cta"]), P(15, True), P(49, True), entrega, demo_blk))
     pains = ('<section class="sec" id="te-suena" aria-labelledby="h-d"><div class="w"><p class="eyebrow">¿Te suena?</p><h2 id="h-d">%s</h2><ul class="feat">%s</ul></div></section>\n'
              % (E(d["intro"]), "".join("<li><div><b>%s</b><span>%s</span></div></li>" % (E(a), E(b)) for a, b in d["pains"])))
     feats = ('<section class="sec tint" id="que-hace" aria-labelledby="h-f"><div class="w"><p class="eyebrow">Lo que hace por tu %s</p><h2 id="h-f">De la libreta al control real, sin cambiar cómo atendés.</h2><p class="lead">Lo que sigue son las posibilidades habituales en tu rubro; en tu proyecto armamos las que necesitás.</p><ul class="ben">%s</ul></div></section>\n'
              % (d["nombre"], "".join("<li><b>%s</b><span>%s</span><em>%s</em></li>" % (E(a), E(b), E(c)) for a, b, c in d["feats"])))
     t1 = ticket("Plan Start", "GrowiApp Start", "Lo armamos, cargamos tus datos y te enseñamos a usarlo.", ["Ventas, caja y stock", "Turnos y reservas", "Ficha de clientes", "Reportes simples", "1 usuario (con varios cargando a la vez, el plan Pro trae hasta 3)", "Soporte por WhatsApp", "Sin permanencia: cancelás cuando quieras"],
                 ("Por mes", money(15, "/mes")), "+ %s de puesta en marcha, una sola vez. Garantía prevista de 7 días desde que queda andando." % P(49), btn("Hola Growi, quiero consultar por GrowiApp, plan Start.\n\nMi negocio: %s" % d["nombre"], "app-%s-pricing-whatsapp" % k, "Consultar por GrowiApp", "wide"))
-    precio = ('<section class="sec" id="precio" aria-labelledby="h-p"><div class="w precio-g"><div><p class="eyebrow">Cuánto sale</p><h2 id="h-p">Puesta en marcha y abono mensual.</h2><p class="lead">Un punto de partida: el alcance final y el presupuesto los definimos con vos, por escrito, antes de empezar. <a href="%s#precios" class="tl">Ver todos los planes</a></p><div class="tk-tools">%s</div></div>'
+    precio = ('<section class="sec" id="precio" data-sticky-hide aria-labelledby="h-p"><div class="w precio-g"><div><p class="eyebrow">Cuánto sale</p><h2 id="h-p">Puesta en marcha y abono mensual.</h2><p class="lead">Un punto de partida: el alcance final y el presupuesto los definimos con vos, por escrito, antes de empezar. <a href="%s#precios" class="tl">Ver todos los planes</a></p><div class="tk-tools">%s</div></div>'
               '<div class="tickets one">%s</div></div><div class="w"><p class="note" style="max-width:86ch;margin-top:26px">%s</p></div></section>\n' % (pg.u("app/"), cur_toggle(), t1, E(L1_PRECIOS)))
     caso = caso_cafe(rel, pg.u("app/")) if k == "cafeterias" else ""
     pre = ('<section class="sec tint" id="preguntas" aria-labelledby="h-faq"><div class="w faq-g"><div><p class="eyebrow">Antes de que preguntes</p><h2 id="h-faq">Lo que se pregunta primero.</h2></div>%s</div></section>\n' % faq(faqp))
     otros = "".join('<a href="%s">%s<i aria-hidden="true">→</i></a>' % (pg.u(r), n) for n, r, t in RUBROS if t != k)
     mas = ('<section class="sec" aria-labelledby="h-o"><div class="w"><h2 id="h-o" class="h-sm">¿Tenés otro tipo de negocio? GrowiApp también se arma para:</h2><div class="rubros2 small">%s<a href="%s">Sistema + sitio web<i aria-hidden="true">→</i></a></div></div></section>\n' % (otros, pg.u("combo/")))
     cie = cierre("Tu %s, lista para empezar a trabajar." % d["nombre"], "Contanos cómo trabajás hoy y lo armamos con tus datos. Sin vueltas, sin letra chica. Te respondemos por WhatsApp de lunes a sábado, de 9 a 19 hs.", btn(msg, "app-%s-final-whatsapp" % k, d["cta"]))
-    return (head(pg, d["tit"] + " | Growi", d["lead"][:155], d["og"], l1ld=d["l1"], faqs=faqp)
+    return (head(pg, SEO_T[k], d["lead"][:155], d["og"], l1ld=d["l1"], faqs=faqp)
             + header(pg, "app") + subnav([("demo", {"cafeterias": "Café Nogal", "peluquerias": "Estudio Bruma", "talleres": "Cómo se ve", "retail": "Cómo se ve"}.get(k, "Demo")), ("te-suena", "¿Te suena?"), ("que-hace", "Qué hace"), ("precio", "Precio"), ("preguntas", "Preguntas")], "app")
             + '<main id="contenido">\n' + hero + pains + feats + caso + precio + pre + mas + cie + '</main>\n'
             + footer(pg, msg, "app-" + k))

@@ -32,3 +32,17 @@ Son la misma prueba con un defecto inyectado; se eligen con el fragmento de la U
 - `…/invitaciones/index.html#control=desborde`: sirve `inv-base.css` sin la regla `@media (max-width:359px){…}`. Deben fallar exactamente `desborde · Home a 320 px` (334/320 px) y `el teaser usa una columna`; todo lo demás, RSVP incluido, pasa (74/76).
 - `…/invitaciones/index.html#control=fuga`: la página «filtra» datos de prueba: un POST a `plausible.io/api/event` con un nombre en el cuerpo y otro a un tercero con el nombre en la URL. Los pedidos se **abortan antes de salir** (error `ERR_BLOCKED_BY_CLIENT`, que explica la falla tolerada de consola).
   Deben fallar las tres comprobaciones de privacidad, con al menos 2 pedidos interceptados y abortados y **0 pedidos con datos de prueba completados**; el flujo RSVP sigue pasando (72/76).
+
+## F8.3B · `f83b-experiencias.playwright.js`
+Regresión funcional de la historia del hero de Home, la arquitectura móvil de Invitaciones (selector, anterior/siguiente, RSVP conservado, muestra vs. real, diálogo modal de WhatsApp, teclado virtual simulado), cumpleaños y empresa en móvil, el menú (texto «Menú»/«Cerrar» y `aria-current`) y el JSON-LD de GrowiFlow.
+1. Servir la candidata (`python -B -m http.server 8840`) o el release.
+2. `browser_navigate` a `<sitio>/` (la raíz) y `browser_run_code_unsafe` con `filename` = este script.
+3. Esperado: `148/148 verificaciones OK`. Dura ~3 min (incluye el relato automático de escritorio, ≈12 s de ciclo).
+Limitación: el teclado virtual se simula reduciendo la ventana; no reemplaza una prueba en dispositivo real.
+
+## F8.4R · `f84r-regresion.playwright.js` (+ `pruebas/validador-jsonld.test.mjs`)
+Reproduce en navegador real los tres hallazgos independientes de Codex:
+- **Home:** la reproducción debe responder a cambios de tamaño SIN recargar (1440→390→1440, 1280→320, 1200→390, 1024→320, 900→1440, 768→1440), a la pausa y a la interacción del usuario, y al movimiento reducido en caliente (`emulateMedia`). Invariante: hay reproducción si y solo si la disposición de la escena es de escritorio (≥ 520 px, el umbral del `@container hs`).
+- **Invitaciones:** tras Anterior/Siguiente/pestañas/teclado en 320×568, 390×667 y 390×844 se miden por separado la cabecera real, el selector completo, la pestaña activa y el título; y no se desplaza la página con el foco en un campo de texto.
+Uso: `browser_navigate` a `<sitio>/#antes` o `#despues` (el fragmento solo etiqueta las capturas) y `browser_run_code_unsafe` con `filename`. Esperado: `50/50`. Dura ~4 min (el cliente MCP lo pasa a segundo plano).
+`validador-jsonld.test.mjs` (Node) construye un release en una carpeta temporal y comprueba que `--validate` falla si la frase aprobada de GrowiFlow solo está en un comentario HTML o en el texto visible, con JSON inválido, sin el objeto Service (incluso dentro de `@graph`), y pasa con el JSON-LD correcto. Nunca toca la candidata.

@@ -14,6 +14,20 @@
   var behavior = function () { return mq.matches ? 'auto' : 'smooth'; };
   var HEADER = 69;   // alto de la cabecera fija del sitio
   function setInert(el, v) { if (!el) return; if ('inert' in el) el.inert = !!v; if (v) el.setAttribute('aria-hidden', 'true'); else el.removeAttribute('aria-hidden'); }
+  // Modal real: todo lo que no es el diálogo ni uno de sus ancestros queda inerte (teclado, toques y lectores de pantalla) mientras está abierto.
+  function fondoInerte(dlg, on) {
+    if (!dlg || !('inert' in dlg)) return;
+    if (on) {
+      if (dlg._fondo) return;
+      var lista = [], n = dlg;
+      while (n && n !== document.documentElement) {
+        var p = n.parentNode;
+        if (p && p.children) Array.prototype.forEach.call(p.children, function (h) { if (h !== n && !h.inert && h.tagName !== 'SCRIPT' && h.tagName !== 'STYLE' && h.tagName !== 'LINK') { h.inert = true; lista.push(h); } });
+        n = p;
+      }
+      dlg._fondo = lista;
+    } else if (dlg._fondo) { dlg._fondo.forEach(function (h) { h.inert = false; }); dlg._fondo = null; }
+  }
   function focusSoft(el) { if (el) { try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } } }
 
   var NOCHE = [['21:00', 'Brindis', 'El brindis es a las 21:00: llegá unos minutos antes.'], ['22:00', 'Cena', 'Mesa larga en la terraza, sin lugares marcados. Cada uno se sienta donde quiera.'], ['00:00', 'Torta y baile', 'Se apaga la luz, se canta y se abre la pista. La música sigue hasta las 2.']];
@@ -53,7 +67,7 @@
     this.root.setAttribute('data-paso', s.paso);
     if (this.flow) this.renderFlow(); else this.renderLayers(prev);
     // la vista previa de WhatsApp es un diálogo: todo lo demás queda inerte mientras está abierta
-    if (this.wa) { this.wa.hidden = !s.wa; setInert(this.wa, !s.wa); }
+    if (this.wa) { if (!s.wa) fondoInerte(this.wa, false); this.wa.hidden = !s.wa; setInert(this.wa, !s.wa); if (s.wa) fondoInerte(this.wa, true); }
     if (this.flow) setInert(this.main, !!s.wa);
     else this.layers.forEach(function (l) { setInert(l, l !== self.layer(self.vis()) || !!s.wa); });
     this.renderForm();
@@ -123,14 +137,25 @@
     focusSoft(t);
   };
 
-  // en pantallas chicas el contenido nuevo debe quedar a la vista (nunca debajo de la cabecera) tras una acción del usuario
+  // en pantallas chicas el contenido nuevo debe quedar a la vista tras una acción del usuario: la cabecera fija NUNCA tapa el selector de capítulos ni el título.
+  // Se mide con los límites reales (cabecera, selector, título); solo se desplaza si algo quedó oculto; jamás mientras la persona escribe en un campo.
   Exp.prototype.aVista = function (a) {
     if (wide.matches && !this.flow) return;
     var tipo = a.tipo; if (!(tipo === 'ir' || tipo === 'acto' || tipo === 'siguiente' || tipo === 'anterior' || tipo === 'abrir' || tipo === 'preparar' || tipo === 'editar')) return;
+    var foco = document.activeElement;
+    if (foco && this.root.contains(foco) && foco.matches && foco.matches('input[type=text],input:not([type]),textarea')) return;   // no se mueve la página mientras se escribe
     var box = this.flow ? this.layer(this.vis()) : this.root; if (!box) return;
-    var r = box.getBoundingClientRect(), top = HEADER + 8, dy = 0;
-    if (r.top < top) dy = r.top - top;                                                             // el título nunca queda bajo la cabecera
-    else if (!this.flow && r.bottom > window.innerHeight - 8) dy = Math.min(r.top - top, r.bottom - window.innerHeight + 16);   // lo mínimo para ver la pantalla entera
+    var cab = $('header.top'), req = (cab ? cab.getBoundingClientRect().bottom : HEADER) + 8, dy = 0, rb = box.getBoundingClientRect(), tope = rb.top;
+    if (this.ev === 'cas') {
+      var sel = $('.ix-steps'), tit = $('.ix-act.on');
+      if (sel && tit && tit.offsetParent) {
+        var sr = sel.getBoundingClientRect(), fijo = window.getComputedStyle(sel).position === 'sticky';
+        if (fijo) { tope = tit.getBoundingClientRect().top; req += sr.height; }   // el selector queda pegado bajo la cabecera: el título debe quedar debajo de él
+        else tope = sr.top;                                                        // el selector se desplaza con la página: él es lo primero que debe verse (el título va justo debajo)
+      }
+    }
+    if (tope < req) dy = tope - req;                                                                                    // algo quedó bajo la cabecera: subir lo mínimo
+    else if (!this.flow && !a.tab && rb.bottom > window.innerHeight - 8) dy = Math.min(tope - req, rb.bottom - window.innerHeight + 16);   // lo mínimo para ver la pantalla entera sin ocultar lo de arriba
     if (dy) window.scrollBy({ top: dy, behavior: behavior() });
   };
 
@@ -168,6 +193,7 @@
     var st = $('[data-ix-story]'); if (st) st.setAttribute('data-act', String(act));
     $$('.ix-act').forEach(function (li) { li.classList.toggle('on', Number(li.getAttribute('data-n')) === act); });
     $$('[data-ix-acto]').forEach(function (b) { if (Number(b.getAttribute('data-ix-acto')) === act) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
+    $$('[data-ix-pn]').forEach(function (b) { var d = Number(b.getAttribute('data-ix-pn')); b.disabled = (d < 0 && act <= 1) || (d > 0 && act >= 4); });
   };
 
   Exp.prototype.bind = function () {
@@ -245,7 +271,17 @@
         var n = Number(b.getAttribute('data-ix-acto'));
         if (wide.matches) { var s = sents[n - 1]; if (s) s.scrollIntoView({ block: 'center', behavior: behavior() }); }
         self.ir(n);
-        if (!wide.matches) cas.aVista({ tipo: 'ir' });
+        if (!wide.matches) cas.aVista({ tipo: 'ir', tab: !b.hasAttribute('data-ix-pn') && !b.classList.contains('ix-act-b') });   // con las pestañas solo se corrige un título que quedó oculto: el selector no se mueve
+      });
+    });
+    // Anterior / Siguiente (solo en pantallas angostas): cambian de capítulo y llevan el foco al título del capítulo nuevo
+    $$('[data-ix-pn]', root).forEach(function (b) {
+      b.addEventListener('click', function (e) {
+        var act = Number(root.getAttribute('data-act')) || 1, n = Math.min(4, Math.max(1, act + Number(b.getAttribute('data-ix-pn'))));
+        if (n === act) return;
+        self.ir(n);
+        var l = cas.layer(cas.vis()); if (e.isTrusted && l) focusSoft($('[tabindex="-1"]', l));
+        cas.aVista({ tipo: 'ir' });
       });
     });
     if ('IntersectionObserver' in window) {
