@@ -80,3 +80,5 @@ No se conserva una verificación de navegador específica de Café Nogal y de lo
 - `f89b-dinamico.playwright.js` (22 verificaciones): las demostraciones nuevas ante cambios de tamaño, movimiento reducido en caliente y salida/vuelta a la vista (lo que cubría F8.4R para el hero anterior).
 - Los CTA de WhatsApp y los menús de todas las páginas, en seis viewports, los cubre `f89b-regresion-sitio.playwright.js`.
 - La muestra de Invitaciones solo prepara el mensaje: `pruebas/f89b.test.mjs` y `invitaciones-estado.playwright.js` verifican que ningún texto promete abrir ni enviar WhatsApp y que no sale ningún pedido a WhatsApp.
+
+**Salidas de los scripts:** ninguno escribe archivos por defecto. `f89b-comercial` acepta una carpeta de capturas en la constante `CAP` (vacía por defecto); si se usa, debe ser una carpeta propia de la corrida y **nunca** la de otra fase. La base por defecto de todos es `http://127.0.0.1:8840/` (ajustar `BASE`).

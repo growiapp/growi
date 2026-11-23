@@ -2,7 +2,7 @@
 // y salir/volver a la vista. Cubre lo que verificaban las regresiones retiradas de F8.4R para el hero anterior, ahora sobre el motor narrativo (narrar.js).
 // Uso: servir la candidata o el release, ajustar BASE y ejecutar con browser_run_code_unsafe (filename). Sin dependencias.
 async (page) => {
-  const BASE = 'http://127.0.0.1:8822/', br = page.context().browser(), res = [];
+  const BASE = 'http://127.0.0.1:8840/', br = page.context().browser(), res = [];
   const T = (n, ok, d) => res.push([n, !!ok, d === undefined ? '' : String(d)]);
   const DEMOS = [['HOME', 'index.html', '[data-ha]', { 0: [1], 1: [2], 2: [0] }], ['INV', 'invitaciones/index.html', '[data-ip]', { 0: [1], 1: [2], 2: [3], 3: [0] }]];
   for (const [tag, ruta, sel, siguiente] of DEMOS) {

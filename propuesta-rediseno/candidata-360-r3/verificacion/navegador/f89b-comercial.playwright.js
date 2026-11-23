@@ -4,7 +4,7 @@
 async (paginaInicial) => {
   const m0 = /^(https?:\/\/[^/?#]+)\//.exec(paginaInicial.url()); if (!m0) throw new Error('Navegar primero a <sitio>/#antes|#despues');
   const TAG = (/#(\w+)/.exec(paginaInicial.url()) || [, 'x'])[1], U = m0[1], br = paginaInicial.context().browser(), res = [];
-  const CAP = 'D:/Documentos/respaldos-growi/f8-9b/capturas/comercial/';
+  const CAP = '';   // carpeta de capturas (opcional): vacía = no se escribe ningún archivo. Si se usa, indicar una carpeta propia de la corrida: nunca la de otra fase.
   const T = (n, ok, d) => res.push([n, !!ok, d === undefined ? '' : String(d)]);
   const abrir = async (w, h, o, ruta) => {
     const ctx = await br.newContext(Object.assign({ viewport: { width: w, height: h }, hasTouch: true, isMobile: w < 768 }, o || {}));
@@ -20,10 +20,10 @@ async (paginaInicial) => {
   const noche = p => ev(p, () => ({ clock: document.querySelector('[data-clock]').textContent, nt: document.querySelector('[data-nt]').textContent, t: document.querySelector('.ix-cum').dataset.t, pp: (() => { const b = document.querySelector('[data-ix-pp]'); return b.hidden ? 'oculto' : (b.classList.contains('is-paused') ? 'pausado' : 'visible'); })(), reinicio: document.querySelector('[data-ix-reiniciar-ev=cum]').hasAttribute('data-off') ? 'oculto' : 'visible' }));
   const aNoche = async p => { await ev(p, () => document.querySelector('#cumple').scrollIntoView({ block: 'start' })); await p.waitForTimeout(900); await ev(p, () => document.querySelector('#ix-cum-portada [data-go=noche]').click()); await p.waitForTimeout(500); };
   let p = await abrir(390, 844, {}, '/invitaciones/'); await aNoche(p);
-  let n0 = await noche(p); await p.screenshot({ path: CAP + TAG + '-f87-cumple-2100.png' });
+  let n0 = await noche(p); if (CAP) await p.screenshot({ path: CAP + TAG + '-f87-cumple-2100.png' });
   T('CUM la noche empieza a las 21:00 · Brindis, con el cielo de la tarde y el control de pausa visible', n0.clock === '21:00' && n0.nt === 'Brindis' && n0.t === '0' && n0.pp === 'visible', JSON.stringify(n0));
   await p.waitForTimeout(6200); let n1 = await noche(p); T('CUM avanza sola a las 22:00 · Cena', n1.clock === '22:00' && n1.nt === 'Cena' && n1.t === '1', JSON.stringify(n1));
-  await p.waitForTimeout(5900); let n2 = await noche(p); await p.screenshot({ path: CAP + TAG + '-f87-cumple-0000.png' });
+  await p.waitForTimeout(5900); let n2 = await noche(p); if (CAP) await p.screenshot({ path: CAP + TAG + '-f87-cumple-0000.png' });
   T('CUM continúa a las 00:00 · Torta y baile', n2.clock === '00:00' && n2.nt === 'Torta y baile' && n2.t === '2', JSON.stringify(n2));
   await p.waitForTimeout(6500); let n3 = await noche(p);
   T('CUM en las 00:00 termina: no vuelve a cambiar, se oculta la pausa y no aparece «Empezar de nuevo» por el avance automático', n3.clock === '00:00' && n3.pp === 'oculto' && n3.reinicio === 'oculto', JSON.stringify(n3));
@@ -49,7 +49,7 @@ async (paginaInicial) => {
     const dest = () => ev(p, () => { const j = document.querySelector('#ix-emp-jornada').getBoundingClientRect(), c = document.querySelector('header.top').getBoundingClientRect().bottom; return { t: Math.round(j.top), c: Math.round(c), ih: innerHeight, foco: document.activeElement && document.activeElement.id }; });
     const BJ = '#empresa .ix-eact .ix-lk', BC = '#empresa .ix-eact .ix-ebtn', centrar = sel => ev(p, s => document.querySelector(s).scrollIntoView({ block: 'center' }), sel);
     await centrar(BJ); await p.waitForTimeout(900); await tocar(p, BJ, 1300); let d = await dest();
-    await p.screenshot({ path: CAP + TAG + '-f87-empresa-' + w + '.png' });
+    if (CAP) await p.screenshot({ path: CAP + TAG + '-f87-empresa-' + w + '.png' });
     T('EMP ' + w + ': «Ver la jornada completa» lleva a la jornada (queda bajo la cabecera y a la vista) y mueve el foco a su título', d.t >= d.c - 2 && d.t < d.ih * 0.75 && d.foco === 'ix-emp-hj', JSON.stringify(d));
     await ev(p, () => document.querySelector('#empresa').scrollIntoView({ block: 'start' })); await p.waitForTimeout(900);
     await centrar(BJ); await p.waitForTimeout(900); await tocar(p, BJ, 1300); d = await dest();
@@ -70,7 +70,7 @@ async (paginaInicial) => {
     if (w < 768) T('COMBO ' + w + ': en móvil se muestra una sola parte por vez', paneles.every(x => x === 1), paneles.join('').slice(0, 40)); else T('COMBO ' + w + ': en escritorio se ven las tres partes a la vez', paneles.every(x => x === 3));
     const tx = await ev(p, () => document.querySelector('.cd').textContent);
     T('COMBO ' + w + ': sin leyendas «Ejemplo ilustrativo» ni «datos ficticios»; identificación «Demo»', !/ejemplo ilustrativo|datos ficticios/i.test(tx) && /Demo/.test(tx));
-    await p.screenshot({ path: CAP + TAG + '-f87-combo-' + w + '.png' });
+    if (CAP) await p.screenshot({ path: CAP + TAG + '-f87-combo-' + w + '.png' });
     const antes = await cdSt(p); await ev(p, () => document.querySelector('[data-cd-pp]').click()); await p.waitForTimeout(5200); const desp = await cdSt(p);
     T('COMBO ' + w + ': con pausa no avanza', antes.s === desp.s && desp.pp === 'pausado', antes.s + ' → ' + desp.s);
     await ev(p, () => document.querySelector('[data-cd-n="3"]').click()); await p.waitForTimeout(5200); const man = await cdSt(p);
@@ -86,7 +86,7 @@ async (paginaInicial) => {
   for (const [ruta, dest, id, alto] of [['/app/cafeterias/', '/demos/sandbox/cafeteria/', 'cafe-nogal', 972], ['/app/peluquerias/', '/demos/sandbox/peluqueria/', 'bruma', 1190]]) {
     p = await abrir(390, 844, {}, ruta); await ev(p, () => document.querySelector('.cn-ph').scrollIntoView({ block: 'center' })); await p.waitForTimeout(900);
     const g = await ev(p, () => { const i = document.querySelector('.cn-ph img'), b = i.getBoundingClientRect(); return { w: Math.round(b.width), h: Math.round(b.height), nat: i.naturalWidth + 'x' + i.naturalHeight, fade: getComputedStyle(document.querySelector('.cn-ph'), '::after').content }; });
-    await p.screenshot({ path: CAP + TAG + '-f87-' + id + '-vista-previa.png' });
+    if (CAP) await p.screenshot({ path: CAP + TAG + '-f87-' + id + '-vista-previa.png' });
     T('APP ' + id + ': la vista previa móvil se ve completa, sin recorte ni degradé (' + g.nat + ', alto/ancho ' + (g.h / g.w).toFixed(3) + ')', g.nat === '780x' + alto && Math.abs(g.h / g.w - alto / 780) < 0.02 && (g.fade === 'none' || g.fade === 'normal'), JSON.stringify(g));
     const ctx2 = await br.newContext({ viewport: { width: 390, height: 790 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true, reducedMotion: 'reduce' }); const q = await ctx2.newPage(); await q.route(/plausible\.io/, r => r.fulfill({ status: 200, body: '' }));
     await q.goto(U + dest, { waitUntil: 'load' }); await q.addStyleTag({ content: '*{scrollbar-width:none!important}::-webkit-scrollbar{display:none!important}' }); await q.waitForTimeout(1800); const buf = (await q.screenshot()).toString('base64'); await ctx2.close();
@@ -111,7 +111,7 @@ async (paginaInicial) => {
     T('PLANES ' + ruta + ': mismos precios aprobados (15/49 · 29/149 · 49/249 USD)', r.precios[0].includes('15') && r.precios[0].includes('49') && r.precios[1].includes('29') && r.precios[1].includes('149') && r.precios[2].includes('49') && r.precios[2].includes('249'), JSON.stringify(r.precios));
     T('PLANES ' + ruta + ': resumen de los tres planes con enlaces a cada uno, sin «Ver todos los planes» ni carrusel', r.res.join(',') === '#plan-start,#plan-pro,#plan-multi' && r.resV && !/Ver todos los planes/.test(r.txt) && r.scroll === 'visible', r.res.join(','));
     if (ruta === '/app/' || ruta === '/app/cafeterias/') {
-      await p.screenshot({ path: CAP + TAG + '-f87-planes' + ruta.replace(/\//g, '-') + '.png' });
+      if (CAP) await p.screenshot({ path: CAP + TAG + '-f87-planes' + ruta.replace(/\//g, '-') + '.png' });
       await ev(p, () => document.querySelector('#precios .pl-res, #precio .pl-res').scrollIntoView({ block: 'center' })); await p.waitForTimeout(700);
       const c = await centro(p, '.pl-res a[href="#plan-multi"]'); await p.touchscreen.tap(c[0], c[1]); await p.waitForTimeout(1200);
       T('PLANES ' + ruta + ': tocar «Multi» en el resumen lleva a ese plan', await ev(p, () => { const t = document.querySelector('#plan-multi').getBoundingClientRect(); return t.top >= 60 && t.top < 220; }));
@@ -125,7 +125,7 @@ async (paginaInicial) => {
   for (const [w, h] of [[390, 844], [1440, 900]]) {
     p = await abrir(w, h, {}, '/flow/'); await ev(p, () => document.querySelector('#bot').scrollIntoView({ block: 'center' })); await p.waitForTimeout(700);
     const fl = await ev(p, () => { const tk = document.querySelector('#bot'), av = [...tk.querySelectorAll('li.av')]; return { n: av.length, soon: tk.querySelectorAll('li.soon').length, sr: av.map(l => l.querySelector('.sr-only').textContent.trim()), marca: av.map(l => l.querySelector('.v').firstChild.textContent), precios: [...tk.querySelectorAll('[data-price]')].map(s => s.getAttribute('data-price')), pagina: document.body.textContent, ld: [...document.querySelectorAll('script[type="application/ld+json"]')].map(s => s.textContent).join(' '), faq: [...document.querySelectorAll('#preguntas summary')].map(s => s.textContent).join('|') }; });
-    await p.screenshot({ path: CAP + TAG + '-f87-flow-bot-' + w + '.png' });
+    if (CAP) await p.screenshot({ path: CAP + TAG + '-f87-flow-bot-' + w + '.png' });
     T('FLOW ' + w + ': las dos líneas del bot son «Disponible» (✓ y texto accesible), ya no «pronto»', fl.n === 2 && fl.soon === 0 && fl.sr.every(x => x === 'Disponible') && fl.marca.every(x => x === '✓'), JSON.stringify({ n: fl.n, soon: fl.soon, sr: fl.sr }));
     T('FLOW ' + w + ': no quedan mensajes contradictorios de disponibilidad (texto visible, JSON-LD y preguntas)', !/pronto|pr[oó]ximamente|aprobaci[oó]n de Meta|sin fecha|todav[ií]a no (est[aá]|hay)|a[uú]n no est[aá] disponible|no tiene garant[ií]a definida|figura como/i.test(fl.pagina + ' ' + fl.ld + ' ' + fl.faq), fl.faq.slice(0, 120));
     T('FLOW ' + w + ': la frase aprobada del JSON-LD («solo se reciben consultas, sin contrataciones ni pagos») y los precios del bot siguen intactos', fl.ld.includes('Actualmente solo se reciben consultas, sin contrataciones ni pagos.') && fl.precios.includes('149') && fl.precios.includes('25'), fl.precios.join(','));

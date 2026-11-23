@@ -3,7 +3,7 @@
 // Cambiar la constante BASE al servidor que se use (candidata o release).
 // Uso: servir la candidata o el release y ejecutar con browser_run_code_unsafe (filename). Sin dependencias. Dura varios minutos.
 async (page) => {
-  const br = page.context().browser(); const BASE = 'http://127.0.0.1:8820/'; const out = []; const T = (n, ok, d) => out.push((ok ? 'OK   ' : 'FALLA') + ' ' + n + (d ? ' · ' + d : ''));
+  const br = page.context().browser(); const BASE = 'http://127.0.0.1:8840/'; const out = []; const T = (n, ok, d) => out.push((ok ? 'OK   ' : 'FALLA') + ' ' + n + (d ? ' · ' + d : ''));
   const nuevo = async (w, h, o) => { const ctx = await br.newContext(Object.assign({ viewport: { width: w, height: h }, isMobile: w < 768, hasTouch: w < 768 }, o || {})); const p = await ctx.newPage(); p._e = []; p._c = ctx; p.on('pageerror', e => p._e.push(e.message)); p.on('console', m => { if (m.type() === 'error') p._e.push('console: ' + m.text()); }); p.on('requestfailed', r => p._e.push('RF ' + r.url())); return p; };
   const ir = async (p, sel) => { await p.goto(BASE + 'invitaciones/index.html', { waitUntil: 'load' }); await p.waitForFunction(() => window.GrowiNar && window.GrowiNar.inv, null, { timeout: 8000 }); await p.evaluate(s => document.querySelector(s).scrollIntoView({ block: 'center' }), sel); await p.waitForTimeout(800); };
   const MSGR = 'Hola, Lucía y Tomás. Soy Camila Ríos y confirmamos que vamos a su casamiento del sábado 20 de marzo. Somos 2. Gracias por invitarnos.';
