@@ -16,7 +16,7 @@ def flow_ld():
     servicio = {
         "@context": "https://schema.org", "@type": "Service", "name": "GrowiFlow",
         "serviceType": "Automatizaciones para negocios", "url": "https://growi.ar/flow/",
-        "description": "Reportes, recordatorios y organización de pedidos y consultas configurados a medida. Los envíos por WhatsApp requieren una cuenta habilitada por Meta; las integraciones con WhatsApp e Instagram se evalúan según la cuenta del cliente. El bot de WhatsApp aún no está disponible. Actualmente solo se reciben consultas, sin contrataciones ni pagos.",
+        "description": "Reportes, recordatorios y organización de pedidos y consultas configurados a medida. Los envíos por WhatsApp requieren una cuenta habilitada por Meta; las integraciones con WhatsApp e Instagram se evalúan según la cuenta del cliente. Actualmente solo se reciben consultas, sin contrataciones ni pagos.",
         "areaServed": {"@type": "Country", "name": "Argentina"},
         "provider": {"@type": "Organization", "name": "Growi", "url": "https://growi.ar/"},
         "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Paquetes GrowiFlow", "itemListElement": [
@@ -25,7 +25,7 @@ def flow_ld():
             oferta("Pedidos y consultas", 79, "Las consultas de un formulario se registran en una planilla y generan un aviso por correo. La integración de WhatsApp e Instagram se evalúa según la cuenta del cliente."),
             oferta("Automatización a medida", 190, "Precio desde USD 190; factibilidad, alcance y precio final se confirman por escrito antes de empezar."),
             oferta("Sesión de ajuste", 29, "Ajuste posterior a la entrega de una automatización existente."),
-            oferta("Bot de WhatsApp para preguntas frecuentes", 25, "Próximamente, sin fecha: requiere aprobación de Meta. Puesta en marcha prevista de USD 149 y mensajes de Meta aparte. Todavía no disponible."),
+            oferta("Bot de WhatsApp para preguntas frecuentes", 25, "Responde horarios, dirección y preguntas frecuentes, y pasa a una persona lo que no sabe. Puesta en marcha de referencia de USD 149, a confirmar al consultar, y mensajes de Meta aparte."),
         ]},
     }
     migas = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
@@ -96,9 +96,9 @@ def flow():
                    ("Pago único", money(79)), ven, cta(m % "Pedidos y consultas", "flow-pricing-whatsapp", "Consultar por pedidos y consultas"), "", 'id="pedidos"')
     t_med = ticket("A medida", "Automatización a medida", "Para esa tarea que es solo de tu negocio.", ["Conectamos las herramientas que ya usás: planillas, mail, WhatsApp, formularios o tu sistema", "Nos contás cómo lo hacés hoy y te decimos si se puede y cuánto sale"],
                    ("Desde", money(190)), "Precio de referencia: el importe final y el alcance se confirman por escrito antes de empezar.", cta("Hola Growi, quiero consultar por una automatización a medida.", "flow-pricing-whatsapp", "Contanos qué querés automatizar"), "", 'id="a-medida"')
-    t_bot = ticket("Bajo consulta", "Bot de WhatsApp", "Para las preguntas de siempre.", ["~Responde horarios, dirección y las preguntas frecuentes", "~Lo que no sabe, te lo pasa a vos"],
+    t_bot = ticket("Bajo consulta", "Bot de WhatsApp", "Para las preguntas de siempre.", ["+Responde horarios, dirección y las preguntas frecuentes", "+Lo que no sabe, te lo pasa a vos"],
                    ("Puesta en marcha", '<strong class="t-num">%s <small>+ %s/mes</small></strong>' % (P(149), P(25, True))),
-                   "Precio de referencia, a confirmar al consultar. Se evalúa caso por caso: depende de una aprobación de Meta y todavía no hay fecha de disponibilidad. Los mensajes los cobra Meta aparte, a cargo del cliente.", btn(BOTMSG, "flow-bot-whatsapp", "Consultar por un bot de WhatsApp", "wide"), "", 'id="bot"')
+                   "Precio de referencia, a confirmar al consultar. Se evalúa caso por caso. Los envíos por WhatsApp requieren una cuenta habilitada por Meta, y los mensajes los cobra Meta aparte, a cargo del cliente.", btn(BOTMSG, "flow-bot-whatsapp", "Consultar por un bot de WhatsApp", "wide"), "", 'id="bot"')
     gl = [("Reportes", "#reportes", P(89, True) + ", pago único"), ("Recordatorios", "#recordatorios", P(89, True) + ", pago único"), ("Pedidos y consultas", "#pedidos", P(79, True) + ", pago único"),
           ("Automatización a medida", "#a-medida", "desde " + P(190, True)), ("Bot de WhatsApp", "#bot", "bajo consulta")]
     glance = ('<table class="extras glance"><caption class="sr-only">Paquetes de GrowiFlow y su precio de referencia, en dólares</caption><thead><tr><th scope="col">Paquete</th><th scope="col">Precio de referencia</th></tr></thead><tbody>%s</tbody></table>'
@@ -111,7 +111,10 @@ def flow():
     pasos = [("01", "Nos contás cómo lo hacés hoy", "Por WhatsApp, sin formularios. Qué tarea te come tiempo, con qué la hacés y cada cuánto."), ("02", "Lo armamos y lo probamos con vos", "Vos no tocás nada técnico. Antes de dejarlo andando lo vemos juntos con tus datos reales."), ("03", "Queda funcionando", "Y si algo falla o querés cambiarlo, hablás por WhatsApp con el mismo equipo que lo armó.")]
     como = ('<section class="sec" id="como" aria-labelledby="h-co"><div class="w"><p class="eyebrow">Cómo lo armamos</p><h2 id="h-co">Tres pasos, sin nada técnico de tu lado.</h2><ol class="feat" style="grid-template-columns:repeat(3,minmax(0,1fr));list-style:none">%s</ol></div></section>\n'
             % "".join('<li><div><b>%s · %s</b><span>%s</span></div></li>' % p for p in pasos))
-    faqp = l1_faq("flow", [0, 1, 3, 4, 5, 6, 7, 8, 9]) + [("¿Qué necesito para los Reportes?", "Los datos tienen que estar en algún lado: en GrowiApp o en una planilla donde ya lleves tus ventas o turnos. Cómo se conectan se define al armarlo, antes de empezar.")]
+    faqp = l1_faq("flow", [0, 1, 3, 4, 5, 6, 7, 8, 9])
+    # F8.7: el bot de WhatsApp está disponible (decisión del propietario): se retira la pregunta «¿Por qué figura como próximamente?» y la frase «todavía no está en venta»
+    faqp = [(q, a.replace(" El bot de WhatsApp todavía no está en venta, por eso no tiene garantía definida.", "")) for q, a in faqp if "figura como" not in q]
+    faqp += [("¿Qué necesito para los Reportes?", "Los datos tienen que estar en algún lado: en GrowiApp o en una planilla donde ya lleves tus ventas o turnos. Cómo se conectan se define al armarlo, antes de empezar.")]
     pre = ('<section class="sec tint" id="preguntas" aria-labelledby="h-faq"><div class="w faq-g"><div><p class="eyebrow">Preguntas</p><h2 id="h-faq">Antes de escribirnos.</h2></div>%s</div></section>\n' % faq(faqp))
     cie = cierre("Contanos qué tarea querés sacarte de encima.", "Te decimos si se puede automatizar y cuánto sale, por escrito, antes de empezar. De lunes a sábado, de 9 a 19 hs.", btn(msg, "flow-final-whatsapp", "Contanos qué querés automatizar"))
     return (head(pg, "Automatizaciones: avisos, reportes y consultas | GrowiFlow", "Avisos de turno, reportes y consultas en orden, armados a medida de tu negocio. Desde USD 79, pago único. Mirá cómo funciona.", "og-flow.png", faqs=faqp, ld_override=flow_ld())
@@ -193,6 +196,7 @@ def invitaciones():
     cie = cierre("Contanos qué celebrás.", "Te respondemos con el presupuesto y el alcance, por WhatsApp, de lunes a sábado de 9 a 19 hs.", btn(msg, "inv-final-whatsapp", "Pedir presupuesto"))
     pagina = (head(pg, "Invitaciones digitales a medida con confirmación | Growi", "Invitaciones digitales a medida para casamientos, cumpleaños, quinceañeras y eventos de empresa. Pedí presupuesto por WhatsApp.", "growi-og-1200x630.png", l1ld="invitaciones", faqs=faqp, cls="inv-page")
               + header(pg, "inv") + subnav([("recorrido", "La experiencia"), ("otros", "Otros eventos"), ("alcance", "Qué incluye"), ("pedido", "Cómo se pide"), ("preguntas", "Preguntas")], "inv")
-              + '<main id="contenido">\n' + _inv.historia(hero) + _inv.otros() + _inv.alcance() + _inv.pedido(boton) + pre + neg + cie + '</main>\n' + footer(pg, msg, "inv"))
+              + '<main id="contenido">\n' + _inv.inicio(hero) + _inv.otros() + _inv.alcance() + _inv.pedido(boton) + pre + neg + cie + '</main>\n' + footer(pg, msg, "inv"))
     pagina = pagina.replace("</head>", '<script>document.documentElement.classList.add("ix-js")</script><link rel="preload" href="%sassets/fonts/syne-800-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="%sassets/fonts/instrument-serif-italic-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="%sassets/invitaciones/inv-base.css"><link rel="stylesheet" href="%sassets/invitaciones/inv.css">\n</head>' % (rel, rel, rel, rel), 1)
-    return pagina.replace("</body>", '<script src="%sassets/invitaciones/inv-core.js"></script>\n<script src="%sassets/invitaciones/inv-ui.js"></script>\n</body>' % (rel, rel), 1)
+    pagina = pagina.replace("</head>", '<link rel="stylesheet" href="%sassets/narrar.css"><link rel="stylesheet" href="%sassets/invitaciones/pelicula.css">\n</head>' % (rel, rel), 1)
+    return pagina.replace("</body>", _inv.dialogo() + '<script src="%sassets/invitaciones/inv-core.js"></script>\n<script src="%sassets/invitaciones/inv-ui.js"></script>\n<script src="%sassets/narrar.js" defer></script>\n<script src="%sassets/invitaciones/pelicula.js" defer></script>\n</body>' % (rel, rel, rel, rel), 1)

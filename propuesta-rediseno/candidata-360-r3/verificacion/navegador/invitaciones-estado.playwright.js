@@ -81,44 +81,11 @@ async (paginaInicial) => {
   const vacio = JSON.stringify(['', [false, false], '1', '']);
   const s0 = await store();
 
-  // ================================================ casamiento
-  T('cas: nace con la portada abierta', await enCapa('cas', 'portada', 'portada') && await paso('cas') === 'portada');
-  await act(3, 'confirmar', 'confirmar');
-  T('cas: el desplazamiento al acto 3 muestra el formulario sin mover el foco', await paso('cas') === 'confirmar' && (await foco()) === 'BODY', await paso('cas') + ' / ' + await foco());
-  await act(4, 'ejemplo', 'confirmar');
-  T('cas: acto 4 sin datos muestra la muestra aparte, el formulario sigue vacío', await vis('#ix-cas-ejemplo') && await paso('cas') === 'confirmar' && await campos() === vacio && (await foco()) === 'BODY', await campos());
-  T('cas: la muestra es distinta y se invita a completar', (await txt('#ix-cas-ejemplo .ix-k')) === 'Así se vería' && (await txt('#ix-cas-ejemplo [data-msg-ej]')).includes('Camila Rossi') && await vis('#ix-cas-ejemplo [data-go=confirmar]'));
-  T('cas: el paso del recorrido marca «Tu mensaje»', await page.evaluate(() => document.querySelector('[data-ix-story]').getAttribute('data-act') === '4'));
-
-  // ---- CASO A (antes inestable): volver al acto 3 deja el formulario vacío y retira la muestra
-  const okA = await act(3, 'confirmar', 'confirmar');
-  const estA = await page.evaluate(() => { const e = document.querySelector('#ix-cas-ejemplo'); return { displayMuestra: getComputedStyle(e).display, claseOut: !!document.querySelector('[data-inv=cas] .ix-out'), capaActiva: document.querySelector('[data-inv=cas] .ix-ly.on').dataset.ly, inertMuestra: e.inert, opacidadForm: getComputedStyle(document.querySelector('#ix-cas-confirmar')).opacity }; });
-  T('CASO A · volver al acto 3 deja el formulario vacío y retira la muestra', okA && await vis('#ix-cas-confirmar') && !(await vis('#ix-cas-ejemplo')) && estA.displayMuestra === 'none' && !estA.claseOut && estA.capaActiva === 'confirmar' && await campos() === vacio, JSON.stringify(estA) + ' · espera ' + tiempos['act3→confirmar'] + ' ms');
-
-  await act(4, 'ejemplo', 'confirmar');
-  await page.locator('#ix-cas-ejemplo [data-go=confirmar]').click(); await enCapa('cas', 'confirmar', 'confirmar', 'completar→confirmar');
-  T('cas: «Completar mi respuesta» vuelve al formulario, vacío y con el foco en el título', await vis('#ix-cas-confirmar') && await campos() === vacio && (await foco()) === 'ix-cas-hc', await foco());
-  await page.locator('#ix-cas-nombre').fill('Ana Gómez'); await page.locator('#ix-cas-confirmar .ix-opt').first().click();
-  await act(3, 'confirmar', 'confirmar');
-
-  // ---- CASO B (antes inestable): con datos válidos el acto 4 muestra el mensaje derivado de ellos
-  await page.evaluate(() => window.scrollTo({ top: pageYOffset + 1, behavior: 'instant' })); await cuadros(3);
-  const okB = await act(4, 'mensaje', 'mensaje');
-  const msgB = await txt('#ix-cas-mensaje [data-msg]');
-  const estB = await page.evaluate(() => ({ paso: document.querySelector('[data-inv=cas]').dataset.paso, capaActiva: document.querySelector('[data-inv=cas] .ix-ly.on').dataset.ly, claseTransicion: !!document.querySelector('[data-inv=cas] .ix-in,[data-inv=cas] .ix-out'), inertMensaje: document.querySelector('#ix-cas-mensaje').inert, opacidad: getComputedStyle(document.querySelector('#ix-cas-mensaje')).opacity }));
-  T('CASO B · con datos válidos el acto 4 muestra el mensaje derivado de ellos', okB && estB.paso === 'mensaje' && estB.capaActiva === 'mensaje' && !estB.claseTransicion && !estB.inertMensaje && msgB === 'Hola, Lucía y Tomás. Soy Ana Gómez y confirmo que voy a su casamiento del sábado 20 de marzo. Gracias por invitarme.', JSON.stringify(estB) + ' · «' + msgB + '» · espera ' + tiempos['act4→mensaje'] + ' ms');
-
-  await act(2, 'programa', 'programa'); await act(3, 'confirmar', 'confirmar');
-  T('cas: cambiar de capítulo conserva las respuestas reales', (await page.evaluate(() => document.querySelector('#ix-cas-nombre').value)) === 'Ana Gómez' && await page.evaluate(() => document.querySelector('#ix-cas-confirmar input[type=radio]').checked));
-  await page.locator('.ix-act-b[data-ix-acto="4"]').click(); await enCapa('cas', 'mensaje', 'mensaje', 'chapter4→mensaje');
-  await page.locator('#ix-cas-mensaje [data-act=editar]').click(); await enCapa('cas', 'confirmar', 'confirmar', 'editar→confirmar');
-  T('cas: corregir sigue funcionando', await paso('cas') === 'confirmar' && (await page.evaluate(() => document.querySelector('#ix-cas-nombre').value)) === 'Ana Gómez');
-  await page.locator('[data-ix-reiniciar]').click(); await enCapa('cas', 'portada', 'portada', 'reiniciar→portada');
-  T('cas: reiniciar vacía todo', await campos() === vacio && await paso('cas') === 'portada');
-  await page.locator('.ix-act-b[data-ix-acto="1"]').click(); await enCapa('cas', 'chat', 'chat', 'acto1→chat');
-  T('cas: el acto 1 muestra el chat', await paso('cas') === 'chat' && await vis('.ix-l-chat'));
-  await page.locator('.ix-ch-lk').click(); await E('apertura', () => !document.querySelector('[data-inv=cas] .ix-opening') && document.querySelector('[data-inv=cas]').dataset.paso === 'portada', null); await enCapa('cas', 'portada', 'portada', 'chat→portada');
-  T('cas: tocar el enlace abre la invitación y enfoca el título', await paso('cas') === 'portada' && (await foco()) === 'ix-cas-hn', await paso('cas') + ' / ' + await foco());
+  // ================================================ casamiento (el módulo real, dentro del diálogo «Probar la invitación completa»)
+  T('cas: la invitación funcional no se ve hasta pedirla (diálogo cerrado)', !(await vis('[data-inv=cas]')) && await page.evaluate(() => document.querySelector('[data-ip-o]').hidden));
+  await page.locator('[data-ip-abrir]').scrollIntoViewIfNeeded(); await page.locator('[data-ip-abrir]').click();
+  await E('dialogo-abierto', () => !document.querySelector('[data-ip-o]').hidden, null); await enCapa('cas', 'portada', 'portada');
+  T('cas: el diálogo abre en la portada, con el foco en «Cerrar», la página de fondo inerte y sin scroll', await paso('cas') === 'portada' && await page.evaluate(() => document.activeElement.hasAttribute('data-ip-cerrar') && document.documentElement.classList.contains('ip-lock') && document.querySelector('main').inert), await foco());
   await page.locator('#ix-cas-portada [data-go=programa]').click(); await enCapa('cas', 'programa', 'programa');
   T('cas: «Ver el programa» lleva al día', await paso('cas') === 'programa' && (await foco()) === 'ix-cas-hp', await foco());
   await page.locator('#ix-cas-programa .ix-tlb').nth(1).click();
@@ -127,7 +94,7 @@ async (paginaInicial) => {
   T('cas: lugar', await paso('cas') === 'lugar' && await vis('#ix-cas-lugar .ix-mapa'));
   await page.locator('[data-act=mapa]').click();
   T('cas: «Cómo llegar» no abre nada y lo aclara', await vis('[data-mapa-nota]') && (await txt('[data-mapa-nota]')) === 'En esta muestra no se abre el mapa.');
-  await page.locator('#ix-cas-lugar [data-go=confirmar]').click(); await enCapa('cas', 'confirmar', 'confirmar'); await act(3, 'confirmar', 'confirmar');
+  await page.locator('#ix-cas-lugar [data-go=confirmar]').click(); await enCapa('cas', 'confirmar', 'confirmar');
   T('cas: confirmar inicial (campos vacíos, sin cantidad)', await paso('cas') === 'confirmar' && !(await vis('#ix-cas-confirmar .ix-pers')));
   await page.locator('#ix-cas-confirmar [type=submit]').click(); await E('errores', () => !document.querySelector('#ix-cas-e-nombre').hidden && !document.querySelector('#ix-cas-e-respuesta').hidden, null);
   T('cas: error de validación junto a cada campo', (await txt('#ix-cas-e-nombre')) === 'Escribí tu nombre para armar el mensaje.' && (await txt('#ix-cas-e-respuesta')) === 'Elegí si podés ir o no.', await txt('#ix-cas-e-nombre'));
@@ -157,13 +124,15 @@ async (paginaInicial) => {
   T('cas: aparece «Empezar de nuevo»', await vis('[data-ix-reiniciar]'));
   await page.locator('[data-ix-reiniciar]').click(); await enCapa('cas', 'portada', 'portada');
   T('cas: reiniciar vuelve a la portada y vacía los datos', await paso('cas') === 'portada' && await page.evaluate(() => document.querySelector('#ix-cas-nombre').value === '') && !(await vis('[data-ix-reiniciar]')));
+  await page.keyboard.press('Escape'); await E('dialogo-cerrado', () => document.querySelector('[data-ip-o]').hidden, null);
+  T('cas: Esc cierra el diálogo, libera la página (sin inert ni bloqueo) y devuelve el foco a «Probar la invitación completa»', await page.evaluate(() => document.querySelector('[data-ip-o]').hidden && !document.documentElement.classList.contains('ip-lock') && ![...document.body.children].some(e => e.inert) && document.activeElement.hasAttribute('data-ip-abrir')));
 
   // ================================================ cumpleaños
   await aId('cumple'); await enCapa('cum', 'portada', 'portada');
   T('cum: nace en la portada', await paso('cum') === 'portada');
   await page.locator('#ix-cum-portada [data-go=noche]').click(); await enCapa('cum', 'noche', 'noche');
   const t = () => page.evaluate(() => document.getElementById('cumple').getAttribute('data-t'));
-  T('cum: «La noche» arranca en la cena (22:00)', await paso('cum') === 'noche' && await t() === '1' && (await txt('[data-clock]')) === '22:00');
+  T('cum: «La noche» arranca en el brindis (21:00)', await paso('cum') === 'noche' && await t() === '0' && (await txt('[data-clock]')) === '21:00');   // F8.7: antes arrancaba en la cena (22:00)
   await page.locator('.ix-stop[data-idx="2"]').click(); await E('stop2', () => document.getElementById('cumple').dataset.t === '2' && document.querySelector('[data-nt]').textContent === 'Torta y baile', null);
   T('cum: tocar una parada cambia cielo, hora y detalle', await t() === '2' && (await txt('[data-clock]')) === '00:00' && (await txt('[data-nt]')) === 'Torta y baile');
   await page.keyboard.press('ArrowLeft'); await page.keyboard.press('ArrowLeft'); await E('stop0', () => document.getElementById('cumple').dataset.t === '0' && document.activeElement.dataset.idx === '0', null);

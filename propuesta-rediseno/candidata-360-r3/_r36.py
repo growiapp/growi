@@ -115,7 +115,9 @@ def scene_combo(rel):
 # ------------------------------------------------------------ Combo (F8.1A): del sitio a la caja, en una sola lámina clara (sin tarjetas oscuras anidadas)
 # Ilustración con datos ficticios. El paso 3 lo hace una persona del centro: no hay conexión automática entre el sitio y el sistema.
 def combo_duo(rel):
-    pasos = "".join('<li%s><i>%d</i><div><b>%s</b><span>%s</span></div></li>' % (' class="hum"' if k == 2 else "", k + 1, t, d) for k, (t, d) in enumerate(COMBO_PASOS))
+    """Demo de un mismo negocio (sitio → WhatsApp → agenda). F8.7: avanza por pasos (data-cd en growi36.js): en móvil muestra una cosa a la vez; sin JavaScript se ven las tres."""
+    pasos = "".join('<li%s><button type="button" class="cd-b" data-cd-n="%d"%s><i>%d</i><div><b>%s</b><span>%s</span></div></button></li>'
+                    % (' class="hum"' if k == 2 else "", k + 1, ' aria-current="step"' if k == 0 else "", k + 1, t, d) for k, (t, d) in enumerate(COMBO_PASOS))
     chat = ('<div class="cd-chat"><p class="cd-who"><b>Centro Ribera</b><span>WhatsApp</span></p>'
             '<div class="cd-m out">Hola, quiero turno para el sábado a la mañana.<small>10:42</small></div>'
             '<div class="cd-m in">¡Hola! Te esperamos el sábado a las 11:15.<small>10:51</small></div>'
@@ -125,11 +127,13 @@ def combo_duo(rel):
               '<ul class="ag-l" aria-hidden="true"><li><time>09:30</time><span><b>Marta</b>Control</span></li><li><time>10:15</time><span><b>Hernán</b>Rehabilitación de rodilla</span></li>'
               '<li class="nw"><time>11:15</time><span><b>Julián</b>Primera consulta</span><em>Nuevo</em></li><li><time>12:00</time><span><b>Lucía</b>Sesión de espalda</span></li></ul>'
               '<div class="ag-r" aria-hidden="true"><small>Registro administrativo</small><b>Consulta inicial · Julián</b><b class="px">$21.000</b></div></div>')
-    return (CB_AG_CSS + '<div class="cd"><p class="cd-k">Ejemplo ilustrativo · un mismo negocio, Centro Ribera (datos ficticios)</p>'
-            '<div class="cd-g"><figure class="cd-f cd-site"><div class="cd-i"><img src="%sassets/img/ribera-m.webp" width="390" height="800" alt="Sitio de muestra de Centro Ribera en el celular: el paciente elige la zona que le molesta." loading="lazy"></div>'
+    pp = ('<button type="button" class="cd-pp" data-cd-pp aria-label="Pausar animación" hidden><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>'
+          '<svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>')
+    return (CB_AG_CSS + '<div class="cd" data-cd><div class="cd-hd"><p class="cd-k">Demo · un mismo negocio, Centro Ribera</p>%s</div>'
+            '<div class="cd-g"><figure class="cd-f cd-site"><div class="cd-i"><img src="%sassets/img/ribera-zona-m.webp" width="390" height="369" alt="Sitio de muestra de Centro Ribera en el celular: la persona elige la zona que le molesta y está marcada la rodilla." loading="lazy"></div>'
             '<figcaption><b>Su sitio</b><span>GrowiWeb</span></figcaption></figure>%s'
             '<figure class="cd-f cd-gest">%s<figcaption><b>Su gestión</b><span>GrowiApp</span></figcaption></figure></div>'
-            '<ol class="cd-s">%s</ol></div>' % (rel, chat, agenda, pasos))
+            '<ol class="cd-s">%s</ol></div>' % (pp, rel, chat, agenda, pasos))
 
 # ------------------------------------------------------------ Invitaciones: tres mundos de evento en un mismo recorrido (portada → programa y lugar → confirmación)
 def _iv_prog(items):
@@ -164,32 +168,40 @@ def scene_inv(rel):
             '<div class="sc-st"><div class="iv-gr"><ul class="iv-idx">%s</ul><div class="iv-stage"><div class="iv-ph"><i class="iv-notch"></i>%s%s%s</div></div><div class="iv-caps">%s</div></div><div class="sc-foot">%s</div></div></div>'
             % (bgs, CHIP, idx, w, b, c, caps, PP))
 
-# ------------------------------------------------------------ Home: hero «Te encuentran → Te consultan → Lo organizás» (F8.3B)
-# Ilustración con datos ficticios. Causalidad real: el sitio lleva a una consulta por WhatsApp, una persona del centro responde y el turno lo anota
-# una persona en su agenda con un botón. No hay cobros, caja ni automatizaciones. El estado lo maneja growi36.js (módulo data-hs).
-HS_PASOS = [("Te encuentran", "Una persona encuentra tu sitio y toca «Pedir turno»."), ("Te consultan", "Te escribe por WhatsApp con su consulta."),
-            ("Lo organizás", "Vos respondés, acordás el horario y lo anotás en tu agenda.")]
+# ------------------------------------------------------------ Home: demostración de Centro Ribera (F8.9B; Home A aprobado en F8.9A)
+# Un celular, tres actos: Presencia → Contacto → Organización. Ilustración con datos ficticios: el sitio lleva a una consulta por WhatsApp,
+# una persona del centro responde y ella anota el turno. Sin cobros ni automatizaciones. Comportamiento: assets/home-demo.js sobre el motor assets/narrar.js.
+_HOME_DEMO = '''<div class="ha-w"><section class="ha" data-ha aria-label="Demo: cómo un sitio lleva a una consulta por WhatsApp y a un turno confirmado.">
+    <div class="ha-bg" aria-hidden="true"></div>
+    <p class="ha-tag">Demo</p>
+    <div class="ha-stg" data-stg aria-hidden="true">
+      <div class="ha-ph"><div class="ha-scr">
+        <div class="ha-site"><img src="@REL@assets/img/ribera-sitio-m.webp" width="375" height="1300" alt=""></div>
+        <i class="ha-tap"></i>
+        <div class="ha-wa"><div class="ha-wh"><i class="ha-lg"><svg viewBox="0 0 34 34" aria-hidden="true" focusable="false"><path class="ha-arc" d="M5 28 A23 23 0 0 1 28 5"/><path class="ha-body" stroke-width="3.5" d="M5 28 H27"/><circle cx="5" cy="28" r="4" fill="#0e2f3b"/></svg></i><div><b>Centro Ribera</b><small>WhatsApp</small></div></div>
+          <div class="ha-wb">
+            <div class="ha-m ha-m1 ha-out">Hola, quiero turno para el sábado a la mañana. Me molesta la rodilla.</div>
+            <div class="ha-m ha-m2 ha-in ha-dots"><b></b><b></b><b></b></div>
+            <div class="ha-m ha-m3 ha-in"><span class="ha-by">Persona del centro</span>Hola, Julián. Tenemos el sábado a las 11:15. ¿Te lo reservamos?</div>
+            <div class="ha-m ha-m4 ha-out">Sí, dale.</div>
+            <div class="ha-m ha-m2b ha-in ha-dots" aria-hidden="true"><b></b><b></b><b></b></div>
+            <div class="ha-m ha-m5 ha-in">¡Perfecto, Julián! Tu turno quedó confirmado para el sábado a las 11:15. ¡Te esperamos!</div>
+          </div>
+          <div class="ha-wi"><p data-inp></p><s data-send><svg viewBox="0 0 24 24"><path d="M3 20l18-8L3 4v6l11 2-11 2z"/></svg></s></div>
+        </div>
+      </div></div>
+      <div class="ha-dk"><p class="ha-dk-c" data-cap></p><div class="ha-dk-t"><div class="ha-dk-h"><small>Sábado</small><b>11:15</b></div><div class="ha-dk-n"><b>Julián</b><span>Primera consulta · rodilla</span><em>✓ Turno confirmado</em><p>Lo registró una persona del centro.</p></div></div></div>
+    </div>
+    <p class="nar-sr" data-sr aria-live="off"></p>
+    <nav class="nar-nv" data-nav aria-label="Pasos de la demostración"><ol class="nar-l">
+      <li><button class="nar-b" type="button" data-i="0"><span class="nar-n">1</span><span class="nar-lb">Presencia</span></button></li>
+      <li><button class="nar-b" type="button" data-i="1"><span class="nar-n">2</span><span class="nar-lb">Contacto</span></button></li>
+      <li><button class="nar-b" type="button" data-i="2"><span class="nar-n">3</span><span class="nar-lb">Organización</span></button></li></ol>
+      <button class="nar-pp" type="button" data-pp hidden aria-label="Pausar animación"><svg class="pa" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg><svg class="pl" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></button></nav>
+  </section></div>'''
 
 def scene_hero(rel):
-    pasos = "".join('<li><button type="button" class="hs-st" data-hs-s="%d"%s><span class="hs-n" aria-hidden="true">%d</span>%s</button></li>'
-                    % (i + 1, ' aria-current="step"' if i == 0 else "", i + 1, n) for i, (n, _) in enumerate(HS_PASOS))
-    sitio = ('<div class="hs-scr hs-site on" data-hs-site><img src="%sassets/img/ribera-m.webp" width="390" height="800" decoding="async" '
-             'alt="Sitio de muestra de Centro Ribera: la persona elige la zona que le molesta y está marcada la rodilla.">'
-             '<div class="hs-pad"><small>Zona elegida: rodilla</small><button type="button" class="hs-cta" data-hs-cta1>Pedir turno por rodilla</button></div></div>' % rel)
-    chat = ('<div class="hs-scr hs-chat" data-hs-chat><div class="hs-wh"><i aria-hidden="true">CR</i><div><b>Centro Ribera</b><small>WhatsApp</small></div></div>'
-            '<div class="hs-msgs"><div class="hs-m out">Hola, quiero turno para el sábado a la mañana. Me molesta la rodilla al correr.<small>10:42</small></div>'
-            '<div class="hs-m in r"><span class="hs-by">Responde una persona del centro</span>Hola, Julián. Tenemos el sábado a las 11:15. ¿Te lo reservamos?<small>10:48</small></div>'
-            '<div class="hs-m out r">Sí, dale.<small>10:49</small></div></div></div>')
-    agenda = ('<div class="hs-agp" data-hs-agp><p class="hs-l">Agenda del centro · sábado</p>'
-              '<ul class="hs-slots"><li><time>10:30</time><span class="lib">Libre</span></li><li class="me" data-hs-slot><time>11:15</time><span class="lib" data-hs-slotx>Libre</span></li><li><time>12:00</time><span class="lib">Libre</span></li></ul>'
-              '<div class="hs-agf"><button type="button" class="hs-cta dark" data-hs-do>Anotar turno de Julián<i class="hs-tap" aria-hidden="true"></i></button><p data-hs-note>Lo anota una persona del centro.</p></div></div>')
-    return ('<div class="hs-w"><section class="hs" data-hs aria-label="Cómo llega un turno a tu agenda. Ejemplo ilustrativo de un centro de kinesiología, con datos ficticios.">'
-            '<div class="hs-bg" style="background-image:url(%sassets/img/ribera-sala.webp)" aria-hidden="true"></div>'
-            '<div class="hs-hd"><p class="hs-tag">Ejemplo ilustrativo · datos ficticios</p>'
-            '<button type="button" class="hs-pp" data-hs-pp aria-label="Pausar animación" hidden><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button></div>'
-            '<ol class="hs-steps" aria-label="Pasos del ejemplo">%s</ol><p class="hs-cap" data-hs-cap aria-live="polite">%s</p>'
-            '<div class="hs-board" data-hs-board><div class="hs-dev"><p class="hs-l" data-hs-devl>Sitio de Centro Ribera</p>%s%s</div>%s</div></section></div>'
-            % (rel, pasos, HS_PASOS[0][1], sitio, chat, agenda))
+    return _HOME_DEMO.replace("@REL@", rel)
 
 # ------------------------------------------------------------ GrowiWeb: exhibición de proyectos completos
 # y de cada capítulo en la captura de página completa (px de la captura) y alto total, para dirigir la cámara por secciones

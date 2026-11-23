@@ -1,6 +1,7 @@
 /* Invitaciones · interacción (F4.2). Une el marcado estático con el núcleo (inv-core.js).
-   Reglas: nada avanza solo; el foco solo se mueve por una acción real del usuario (isTrusted); el desplazamiento de la página nunca enfoca;
-   sin almacenamiento, sin red, sin cookies; movimiento reducido respetado. */
+   Reglas: solo «La noche» de cumpleaños avanza sola (21:00 → 22:00 → 00:00), con pausa, y deja de hacerlo ante cualquier gesto; el foco solo se mueve
+   por una acción real del usuario (isTrusted); el desplazamiento de la página nunca enfoca; sin almacenamiento, sin red, sin cookies;
+   movimiento reducido respetado (también la preferencia del sitio, que solo se lee). */
 (function () {
   'use strict';
   var G = window.GrowiInv;
@@ -38,6 +39,7 @@
     this.root = root; this.ev = root.getAttribute('data-inv'); this.flow = this.ev === 'emp';
     this.s = G.inicial(this.ev);
     if (this.ev === 'cas') this.s = G.reducir(this.s, { tipo: 'abrir' });   // la página nace con la portada abierta; «chat» es el acto 1 del recorrido
+    if (this.ev === 'cum') this.s = G.reducir(this.s, { tipo: 'noche', idx: 0 });   // la noche empieza a las 21:00 (Brindis)
     this.ilus = false; this.ini = this.s; this.cur = null; this.trigger = null; this.timer = null;
     this.layers = $$('[data-ly]', root).filter(function (l) { return l.getAttribute('data-ly') !== 'wa'; });
     this.wa = $('[data-ly=wa]', root); this.form = $('[data-form]', root);
@@ -45,6 +47,7 @@
     this.reiniciar = this.ev === 'cas' ? $('[data-ix-reiniciar]') : document.querySelector('[data-ix-reiniciar-ev="' + this.ev + '"]');
     var self = this; $$('[data-msg-ej]', root).forEach(function (e) { e.textContent = G.mensaje(self.ev, MUESTRA) || ''; });   // texto de la muestra: sale del mismo núcleo, con datos ficticios
     this.bind();
+    if (this.ev === 'cum') this.autoNoche();
     this.render(null, null, false);
     if (this.ev === 'cas') this.abriendo($('[data-ly=portada]', root));
   }
@@ -58,7 +61,7 @@
   Exp.prototype.dispatch = function (a, user) {
     var prev = this.s, era = this.ilus; this.ilus = false;   // cualquier acción real deja la muestra
     this.s = G.reducir(prev, a);
-    if (this.s === prev) { if (a.tipo === 'preparar' || era) this.render(prev, a, user); return; }
+    if (this.s === prev) { if (a.tipo === 'preparar' || era) this.render(prev, a, user); else if (user === true && this.flow && a.tipo === 'ir') this.aVista(a); return; }
     this.render(prev, a, user);
   };
 
@@ -74,7 +77,7 @@
     var rs = this.resumen();
     $$('[data-msg]', this.root).forEach(function (e) { e.textContent = s.mensaje || ''; });
     $$('[data-resum]', this.root).forEach(function (e) { e.textContent = rs; });
-    if (this.ev === 'cum') this.renderNoche();
+    if (this.ev === 'cum') { this.renderNoche(); if (this.au) this.au.plan(); }
     if (this.flow) this.renderDetalle();
     if (a && user === true) { this.foco(prev, a); this.aVista(a); }
     if (this.ev === 'cas') this.renderPanel();
@@ -154,8 +157,10 @@
         else tope = sr.top;                                                        // el selector se desplaza con la página: él es lo primero que debe verse (el título va justo debajo)
       }
     }
+    var pn = this.ev === 'cas' ? $('.ix-pn') : null, barra = pn && pn.offsetParent && window.getComputedStyle(pn).position === 'sticky' ? pn.getBoundingClientRect().height : 0;   // barra Anterior/Siguiente pegada abajo
     if (tope < req) dy = tope - req;                                                                                    // algo quedó bajo la cabecera: subir lo mínimo
-    else if (!this.flow && !a.tab && rb.bottom > window.innerHeight - 8) dy = Math.min(tope - req, rb.bottom - window.innerHeight + 16);   // lo mínimo para ver la pantalla entera sin ocultar lo de arriba
+    else if (this.flow && a.tipo === 'ir' && tope > window.innerHeight * 0.6) dy = tope - req;                          // empresa: el destino está más abajo (jornada, confirmación): llevarlo a la vista
+    else if (!this.flow && !a.tab && rb.bottom > window.innerHeight - 8 - barra) dy = Math.min(tope - req, rb.bottom - window.innerHeight + 16 + barra);   // lo mínimo para ver la pantalla entera sin ocultar lo de arriba
     if (dy) window.scrollBy({ top: dy, behavior: behavior() });
   };
 
@@ -183,6 +188,41 @@
     $$('.ix-stop', root).forEach(function (b) { var on = Number(b.getAttribute('data-idx')) === s.noche; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
   };
 
+  // ---------------------------------------------------------------- cumpleaños: «La noche» avanza sola (21:00 → 22:00 → 00:00) mientras se la mira
+  // Se detiene con cualquier gesto sobre la noche, con la pausa, con movimiento reducido (del sistema o del sitio) y cuando no se ve; en 00:00 termina.
+  var NOCHE_MS = 5600;
+  // la preferencia del sitio ya la resolvió el <head> (clase «mo» en <html>): se la lee de ahí, sin tocar almacenamiento; el sistema se sigue en vivo
+  var rl = document.documentElement.classList, mo = !!(rl && rl.contains && rl.contains('mo')), siempre = mo && mq.matches, nunca = !mo && !mq.matches;
+  function motionOk() { return siempre || (!mq.matches && !nunca); }
+  Exp.prototype.manualNoche = function () { if (this.au) { this.au.manual = true; this.au.plan(); } };
+  Exp.prototype.autoNoche = function () {
+    var self = this, pp = $('[data-ix-pp]', this.root), au = this.au = { manual: false, pausa: false, vis: false, fin: false, t: null };
+    var activo = function () { return !au.manual && !au.fin && motionOk(); };
+    var puede = function () { return activo() && !au.pausa && self.s.paso === 'noche' && !self.s.wa && au.vis && !document.hidden; };
+    function ctl() {
+      if (!pp) return;
+      var on = activo();
+      if (!on && document.activeElement === pp) focusSoft($('.ix-stop[aria-checked=true]', self.root));   // el control se oculta: el foco no se pierde
+      pp.hidden = !on; pp.classList.toggle('is-paused', au.pausa);
+      pp.setAttribute('aria-label', au.pausa ? 'Reanudar el avance de la noche' : 'Pausar el avance de la noche');
+    }
+    au.plan = function () {
+      clearTimeout(au.t); au.t = null;
+      if (self.s.noche >= 2) au.fin = true;
+      ctl(); if (!puede()) return;
+      au.t = setTimeout(function () {
+        au.t = null; if (!puede()) return au.plan();
+        self.dispatch({ tipo: 'noche', idx: self.s.noche + 1 }, false);
+        self.ini = Object.assign({}, self.ini, { noche: self.s.noche });   // el avance automático no cuenta como «tocar»: no aparece «Empezar de nuevo»
+        self.mostrarReinicio(self.tocada());
+      }, NOCHE_MS);
+    };
+    if (pp) pp.addEventListener('click', function () { au.pausa = !au.pausa; au.plan(); });
+    if ('IntersectionObserver' in window && this.sky) new IntersectionObserver(function (es) { au.vis = es[es.length - 1].isIntersecting; au.plan(); }, { threshold: 0.35 }).observe(this.sky); else au.vis = true;
+    document.addEventListener('visibilitychange', au.plan);
+    if (mq.addEventListener) mq.addEventListener('change', au.plan);
+  };
+
   Exp.prototype.renderDetalle = function () {
     var s = this.s;
     $$('.ix-b', this.root).forEach(function (li) { var b = $('[data-bloque]', li), on = String(s.detalle) === b.getAttribute('data-bloque'); li.classList.toggle('on', on); b.setAttribute('aria-expanded', String(on)); });
@@ -201,9 +241,9 @@
     root.addEventListener('click', function (e) {
       var tg = e.target.closest('[data-act],[data-go],[data-bloque],.ix-stop,.ix-tlb'); if (!tg || !root.contains(tg)) return;
       var u = e.isTrusted, act = tg.getAttribute('data-act');
-      if (tg.hasAttribute('data-go')) { self.dispatch({ tipo: 'ir', paso: tg.getAttribute('data-go') }, u); return; }
+      if (tg.hasAttribute('data-go')) { if (self.ev === 'cum' && tg.closest('[data-ly=noche]')) self.manualNoche(); self.dispatch({ tipo: 'ir', paso: tg.getAttribute('data-go') }, u); return; }
       if (tg.hasAttribute('data-bloque')) { self.trigger = tg; var id = tg.getAttribute('data-bloque'); self.dispatch(String(self.s.detalle) === id ? { tipo: 'cerrar-detalle' } : { tipo: 'detalle', id: id }, false); return; }
-      if (tg.classList.contains('ix-stop')) { self.dispatch({ tipo: 'noche', idx: Number(tg.getAttribute('data-idx')) }, false); return; }
+      if (tg.classList.contains('ix-stop')) { self.manualNoche(); self.dispatch({ tipo: 'noche', idx: Number(tg.getAttribute('data-idx')) }, false); return; }
       if (tg.classList.contains('ix-tlb')) { self.toggleMomento(tg); return; }
       if (act === 'abrir') { self.dispatch({ tipo: 'abrir' }, u); return; }
       if (act === 'wa' || act === 'editar' || act === 'cerrar-wa') { self.dispatch({ tipo: act }, u); return; }
@@ -232,7 +272,7 @@
       if (st) {   // grupo de radios: flechas, Inicio y Fin
         var k = e.key, i = self.s.noche, n = null;
         if (k === 'ArrowLeft' || k === 'ArrowUp') n = i - 1; else if (k === 'ArrowRight' || k === 'ArrowDown') n = i + 1; else if (k === 'Home') n = 0; else if (k === 'End') n = 2;
-        if (n === null) return; e.preventDefault(); n = Math.min(2, Math.max(0, n));
+        if (n === null) return; e.preventDefault(); n = Math.min(2, Math.max(0, n)); self.manualNoche();
         self.dispatch({ tipo: 'noche', idx: n }, e.isTrusted); $$('.ix-stop', root)[n].focus();
       }
     });
@@ -249,6 +289,7 @@
   Exp.prototype.reinicio = function () {
     var self = this;
     this.ilus = false; this.s = G.inicial(this.ev); if (this.ev === 'cas') this.s = G.reducir(this.s, { tipo: 'abrir' });
+    if (this.ev === 'cum') { this.s = G.reducir(this.s, { tipo: 'noche', idx: 0 }); this.ini = this.s; if (this.au) { this.au.manual = false; this.au.fin = false; this.au.pausa = false; } }
     if (this.form) this.form.reset();
     $$('.ix-tlb', this.root).forEach(function (b, i) { b.setAttribute('aria-expanded', String(i === 0)); b.parentNode.classList.toggle('on', i === 0); });
     var n = $('[data-mapa-nota]', this.root); if (n) n.hidden = true;
@@ -284,6 +325,14 @@
         cas.aVista({ tipo: 'ir' });
       });
     });
+    // en pantallas angostas, Anterior/Siguiente quedan pegados al borde inferior desde que el selector entra en la pantalla (no antes, para no tapar el comienzo de la página)
+    // con un campo de texto enfocado (teclado móvil abierto) la barra fija se oculta: no tapa el campo ni le quita espacio a una ventana corta. El flujo de la página no cambia.
+    root.addEventListener('focusin', function (e) { if (e.target.matches && e.target.matches('input[type=text],input:not([type]),textarea')) root.classList.add('ix-escribiendo'); });
+    root.addEventListener('focusout', function () { root.classList.remove('ix-escribiendo'); });
+    var selector = $('.ix-steps', root);
+    if (selector && 'IntersectionObserver' in window) new IntersectionObserver(function (es) {
+      var e = es[es.length - 1]; root.classList.toggle('ix-pn-on', e.boundingClientRect.top < (e.rootBounds ? e.rootBounds.height : window.innerHeight));
+    }).observe(selector); else root.classList.add('ix-pn-on');
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (es) {
         es.forEach(function (e) { if (e.isIntersecting && wide.matches) self.ir(e.target === hero ? 0 : Number(e.target.getAttribute('data-n'))); });
