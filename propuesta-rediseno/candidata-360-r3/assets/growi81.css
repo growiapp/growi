@@ -123,7 +123,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,.btn:focus-visible,in
 .cd-s li{display:block}
 .cd-b{all:unset;box-sizing:border-box;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;width:100%;min-height:48px;padding:6px 8px;border-radius:12px;cursor:pointer;transition:opacity .4s,background .4s}
 .cd-b:focus-visible{outline:3px solid var(--tinta);outline-offset:2px}
-.cd[data-cd-s] .cd-b{opacity:.55}.cd[data-cd-s] .cd-b[aria-current]{opacity:1;background:rgba(255,255,255,.75)}
+.cd[data-cd-s] .cd-b{opacity:.8}.cd[data-cd-s] .cd-b[aria-current]{opacity:1;background:rgba(255,255,255,.75)}
 .cd-m,.cd-tag,.cd-f,.cd-chat,.cb-ag .nw,.cb-ag .ag-r{transition:opacity .5s,transform .5s}
 .cd[data-cd-s="1"] .cd-m,.cd[data-cd-s="1"] .cd-tag,.cd[data-cd-s="2"] .cd-m.in,.cd[data-cd-s="2"] .cd-tag{opacity:0;transform:translateY(6px)}
 .cd[data-cd-s]:not([data-cd-s="4"]) .cb-ag .nw,.cd[data-cd-s]:not([data-cd-s="4"]) .cb-ag .ag-r{opacity:.25}
