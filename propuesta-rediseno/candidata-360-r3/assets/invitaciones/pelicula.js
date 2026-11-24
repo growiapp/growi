@@ -78,7 +78,7 @@
   var ov = document.querySelector("[data-ip-o]"), abrir = document.querySelector("[data-ip-abrir]"), cerrar = ov && ov.querySelector("[data-ip-cerrar]"), previo = null, fondo = [];
   if (!ov || !abrir) return;
   function abre() {
-    previo = document.activeElement; ov.hidden = false; document.documentElement.classList.add("ip-lock");
+    previo = abrir; ov.hidden = false;   /* el botón que abrió el diálogo, aunque no haya recibido foco al hacer clic (Safari, iOS) */ document.documentElement.classList.add("ip-lock");
     fondo = [].filter.call(document.body.children, function (e) { return e !== ov && e.tagName !== "SCRIPT" && e.tagName !== "STYLE" && !e.inert; });
     fondo.forEach(function (e) { e.inert = true; });
     var reg = window.GrowiInvUI && GrowiInvUI.cas; if (reg && reg.reinicio) reg.reinicio();   // siempre arranca desde el principio, con la portada abierta
