@@ -28,11 +28,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  # build y deploy en jobs separados: en el mismo job, deploy-pages consulta el artefacto
+  # una fracción de segundo después de finalizarlo y a veces no lo encuentra
+  # (actions/deploy-pages#451). Es el esquema de la documentación oficial de GitHub Pages.
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -59,6 +58,14 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: '_site'
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
